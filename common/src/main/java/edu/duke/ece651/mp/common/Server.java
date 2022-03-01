@@ -1,6 +1,4 @@
-package edu.duke.ece651.mp.server;
-
-import edu.duke.ece651.mp.common.Thing;
+package edu.duke.ece651.mp.common;
 
 public class Server {
   public int factorial(int x) {
