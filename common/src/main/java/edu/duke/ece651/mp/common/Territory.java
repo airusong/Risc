@@ -1,4 +1,5 @@
-package edu.duke.ece651.mp.server;
+package edu.duke.ece651.mp.common;
+
 /*
  * construct a Territory class
  * @param: name

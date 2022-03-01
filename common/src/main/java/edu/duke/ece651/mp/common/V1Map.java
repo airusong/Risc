@@ -1,4 +1,4 @@
-package edu.duke.ece651.mp.server;
+package edu.duke.ece651.mp.common;
 import java.util.ArrayList;
 import java.util.HashMap;
 /* construct a V1Map specified with Territoris in it
