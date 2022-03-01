@@ -3,21 +3,64 @@
  */
 package edu.duke.ece651.mp.client;
 
-import edu.duke.ece651.mp.common.Thing;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.UnknownHostException;
+
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.V1Map;
 
 
 public class Client{
-  public int sum(int n){
-    int ans = 0;
-    while (n > 0){
-      ans = ans + n;
-      n--;
-    }
-    return ans;
+  final TextPlayer theTextPlayer;
+
+  /**
+   * constructor
+   */
+  public Client(String servername, int port, BufferedReader inputReader, PrintStream out) throws IOException,  UnknownHostException{
+    this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
-  public static void main(String[] args) {
-    Thing t = new Thing("client");
-    System.out.println(t); 
+  
+  public static void main(String[] args) throws InterruptedException {
+    try {
+      int port = Integer.parseInt(args[1]);
+      String servername = args[0];
+       BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+       Client theClient = new Client(servername, port, input, System.out );
+      /*
+      // Send message to Server
+      OutputStream os = thePlayer.connectionToMaster.socket.getOutputStream();
+      String msg = "Client is ready.";
+      byte[] sendBytes = msg.getBytes("UTF-8");
+      os.write(sendBytes);
+      os.flush();
+      */
+      
+      // The map should be received from master
+      // using minimal V1Map for now
+      Map<Character> mapFromServer = new V1Map<Character>();
+      theClient.theTextPlayer.updateMap(mapFromServer);
+      theClient.theTextPlayer.printMap();
+
+      // os.close();
+      // thePlayer.connectionToMaster.socket.shutdownOutput();
+      // thePlayer.connectionToMaster.socket.close();
+
+      // Received message from Server
+      /*
+       * InputStream is = thePlayer.connectionToMaster.socket.getInputStream(); BufferedReader br =
+       * new BufferedReader(new InputStreamReader(is)); String info = null;
+       * while((info = br.readLine())!=null){
+       * System.out.println("Received message from Server: "+info); }
+       * 
+       * os.close(); is.close(); br.close(); thePlayer.connectionToMaster.socket.close();
+       */
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
 
