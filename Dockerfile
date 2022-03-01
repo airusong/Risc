@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-MAINTAINER Drew Hilton "adhilton@ee.duke.edu"
+MAINTAINER Drew Hilton "airu.song@duke.edu"
 
 USER root
 
