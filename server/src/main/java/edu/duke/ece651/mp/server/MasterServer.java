@@ -10,8 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.*;
 import java.util.ArrayList;
-
-
+//import edu.duke.ece651.mp.common.Server;
 
 public class MasterServer{
     public int port; 
