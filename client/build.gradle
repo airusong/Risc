@@ -34,9 +34,6 @@ clover{
     compiler {
         additionalArgs = "-g:lines,source,vars"
     }
-     report {
-        xml=true
-        html = true
-    }
+  
 
 }
