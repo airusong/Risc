@@ -20,8 +20,12 @@ public class TextPlayer {
   public TextPlayer(String servername, int port, BufferedReader inputReader, PrintStream out) throws UnknownHostException, IOException {
     this.theMap = null; // will receive from server
     this.view = new MapTextView(theMap);
-    //this.connectionToMaster = new PlayerServer(servername, port);
-    this.connectionToMaster = null; // TEMPORARY.. will create a socket actually
+    if(servername == "null") {
+      this.connectionToMaster = null;
+    }
+    else {
+      this.connectionToMaster = new PlayerServer(servername, port);
+    }
     this.inputReader = inputReader;
     this.out = out;
   }

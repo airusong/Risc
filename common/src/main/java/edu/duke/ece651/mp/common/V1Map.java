@@ -8,9 +8,7 @@ import java.util.HashMap;
 
 public class V1Map<T> implements Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
-    
-  //public HashMap<Territory<T>,ArrayList<Territory<T>>> myTerritory;
-
+  
   /**
    * Constructor
    * construct a V1Map specified with Territoris in it
@@ -20,7 +18,6 @@ public class V1Map<T> implements Map<T>, Serializable {
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
-    // new ArrayList<String> with all the adjacent territory
     myTerritories.put("Narnia", new Territory<T>("Narnia"));
   }
 

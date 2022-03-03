@@ -24,7 +24,7 @@ public class ClientTest {
   @Test
   void test_minimal_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-    Client theClient = new Client(null, 0, input, System.out); // we don't care about server yet!
+    Client theClient = new Client("null", 0, input, System.out); // we don't care about server yet!
     // The map should be received from master
     // using minimal V1Map for now
     Map<Character> mapFromServer = new V1Map<Character>();

@@ -1,0 +1,24 @@
+package edu.duke.ece651.mp.server;
+
+import java.io.IOException;
+
+public class Server {
+  final Master theMaster;
+
+  public Server(int port, int num_players) {
+    this.theMaster = new Master(port, num_players);
+  }
+
+  public static void main(String[] args) {
+    int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
+    int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+    Master theMaster = new Master(port, num_players);
+
+    try {
+      theMaster.theMasterServer.runServer(port);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+}
