@@ -6,10 +6,11 @@ import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.V1Map;
 
 public class TextPlayer {
   final PlayerServer connectionToMaster;
-  Map<Character> theMap;
+  V1Map<Character> theMap;
   MapTextView view;
   final BufferedReader inputReader;
   final PrintStream out;
@@ -33,8 +34,9 @@ public class TextPlayer {
   /** 
    * method to update the copy of the map
    */
-  public void updateMap(Map<Character> newMap) {
+  public void updateMap(V1Map<Character> newMap) {
     theMap = newMap;
+    view.updateTextView(newMap);
   }
 
   /**
@@ -42,6 +44,15 @@ public class TextPlayer {
    */
   public void printMap() {
     out.println(view.displayMap());
+  }
+
+  /**
+   * method to receive map from the server
+   */
+  @SuppressWarnings("unchecked")
+  public void receiveMap() {
+    V1Map<Character> receivedMap = (V1Map<Character>)connectionToMaster.receiveFromServer();
+    updateMap(receivedMap);
   }
   
 }

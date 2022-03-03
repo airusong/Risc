@@ -26,6 +26,9 @@ public class Client {
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
 
+  /**
+   * Main program for Client/Player
+   */
   public static void main(String[] args) throws InterruptedException {
     try {
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
@@ -42,29 +45,35 @@ public class Client {
         out.println(msg);
         out.flush();
 
-        // Received message from Server
-        InputStream is = theClient.theTextPlayer.connectionToMaster.socket.getInputStream();
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        String receivedMsg;
-        while ((receivedMsg = br.readLine()) != null) {
-          System.out.println("Received message from Server: " + receivedMsg);
-        }
+        /*
+         * // Received message from Server InputStream is =
+         * theClient.theTextPlayer.connectionToMaster.socket.getInputStream();
+         * BufferedReader br = new BufferedReader(new InputStreamReader(is)); String
+         * receivedMsg = br.readLine();
+         * System.out.println("Received message from Server: " + receivedMsg);
+         * is.close(); br.close();
+         * 
+         */
+
+        theClient.theTextPlayer.receiveMap();
 
         os.close();
-        is.close();
-        br.close();
 
-        theClient.theTextPlayer.connectionToMaster.socket.shutdownOutput();
+        // theClient.theTextPlayer.connectionToMaster.socket.shutdownOutput();
         theClient.theTextPlayer.connectionToMaster.socket.close();
-      }
 
-      // The map should be received from master
-      // using minimal V1Map for now
-      Map<Character> mapFromServer = new V1Map<Character>();
-      theClient.theTextPlayer.updateMap(mapFromServer);
+      } else {
+
+        // The map should be received from master
+        // using minimal V1Map for now
+        V1Map<Character> mapFromServer = new V1Map<Character>();
+        theClient.theTextPlayer.updateMap(mapFromServer);
+      }
       theClient.theTextPlayer.printMap();
 
-    } catch (Exception e) {
+    } catch (
+
+    Exception e) {
       e.printStackTrace();
     }
   }

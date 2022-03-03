@@ -14,11 +14,8 @@ public class Server {
     int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 1;
     Master theMaster = new Master(port, num_players);
 
-    try {
-      theMaster.theMasterServer.runServer(port);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    theMaster.playGame();
+    
   }
 
 }

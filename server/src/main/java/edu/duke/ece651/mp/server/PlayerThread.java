@@ -24,6 +24,7 @@ public class PlayerThread implements Runnable {
       System.out.println("Received Message: " + msg);
       // player_socket.shutdownInput();
 
+      /*
       // Send message to Client
 
       // OutputStream os = player_socket.getOutputStream();
@@ -31,6 +32,7 @@ public class PlayerThread implements Runnable {
       String msg2 = "Server is ready.";
       os.println(msg2);
       os.flush();
+      */
 
       // is.close();
       // os.close();
