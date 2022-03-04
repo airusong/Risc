@@ -8,20 +8,26 @@ import java.io.Serializable;
 /*
  * construct a Territory class
  * @param: name
+ * @param: color: one color represents one player
  */
 public class Territory<T> implements ITerritory<T>, Serializable {
   private String name;
+  private String color;
   // public ArrayList<String> adjacentTerritories
 
-  public Territory() {
+    public Territory() {
     this.name = null;
-  }
+   }
   
-  public Territory(String name){
+  public Territory(String name,String color){
     this.name=name;
+    this.color=color;
   }
   public String getName(){
     return name;
+  }
+  public String getColor(){
+    return color;
   }
 
   // public void addAdjacentTo

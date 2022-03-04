@@ -18,7 +18,8 @@ public class V1Map<T> implements Map<T>, Serializable {
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
-    myTerritories.put("Narnia", new Territory<T>("Narnia"));
+    myTerritories.put("Narnia", new Territory<T>("Narnia","Green"));
+    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue"));
   }
 
   /**
