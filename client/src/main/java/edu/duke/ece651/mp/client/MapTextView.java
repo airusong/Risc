@@ -1,5 +1,5 @@
 package edu.duke.ece651.mp.client;
-import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.V1Map;
 
 /**
  * This class handles textual display of a Map (i.e. 
@@ -9,15 +9,20 @@ public class MapTextView {
   /**
    * The Map to display
    */
-  private final Map<Character> toDisplay;
+  private V1Map<Character> toDisplay;
 
   /**
    * Constructs a MapView, given the map it will display.
    * 
    * @param toMap is the Map to display
    */
-  public MapTextView(Map<Character> toDisplay) {
+  public MapTextView(V1Map<Character> toDisplay) {
     this.toDisplay = toDisplay;
+  }
+
+  
+  public void updateTextView(V1Map<Character> newMap) {
+    this.toDisplay = newMap;
   }
 
   /**
@@ -46,6 +51,9 @@ public class MapTextView {
     
     ans.append(makePlayerHeader("Blue"));
     // Territory info goes here
+
+    // TEMPORARY FOR MINIMAL MAP
+    ans.append(toDisplay.myTerritories.keySet());
     
     return ans.toString();
   }

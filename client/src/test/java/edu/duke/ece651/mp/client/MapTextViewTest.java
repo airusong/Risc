@@ -9,13 +9,14 @@ import org.junit.jupiter.api.Test;
 public class MapTextViewTest {
   @Test
   public void test_displayEmptyMap() {
-    Map<Character> m = new V1Map<Character>();
+    V1Map<Character> m = new V1Map<Character>();
     MapTextView mapView = new MapTextView(m);
     String expected = "Green player:\n"
       + "-----------\n"
       + "\n"
       + "Blue player:\n"
-      + "-----------\n";
+      + "-----------\n"
+      +"[Narnia]";
     assertEquals(expected, mapView.displayMap());
   }
 }
