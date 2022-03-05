@@ -11,6 +11,13 @@ import org.junit.jupiter.api.Test;
 
 public class V1MapTest {
   @Test
+  public void checkcontents(){
+    V1Map<Character> map=new V1Map<>();
+    assertEquals(map.myTerritories.containsKey("Narnia"),true);
+    assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Midemio"),true);
+    assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Elantris"),true);
+  }
+  @Test
   @SuppressWarnings("unchecked")
   public void test_serialization_basicMap() {
     V1Map<Character> mapOrg = new V1Map<Character>();
