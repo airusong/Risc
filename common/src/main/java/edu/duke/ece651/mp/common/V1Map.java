@@ -13,18 +13,46 @@ public class V1Map<T> implements Map<T>, Serializable {
    * Constructor
    * construct a V1Map specified with Territoris in it
    * @param hashmap myTerritories, 
-   * the key is the territory itself and 
-   * the value is the list of adjancent territories
+   * the key is the territory name 
+   * the value is the territory object
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
-    //will use a function later
-    myTerritories.put("Narnia", new Territory<T>("Narnia","Green"));
-    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue"));
+    setMap();
+    addAdjacency();
   }
-  // protected void setupCreation map(){
-  //  mapCreationFun.put(
+  // public HashMap<String, Territory<T>> getMap(){
+  //  return myTerritories;
   // }
+  /**
+   * function used in constructor to initialize the hashmap
+   *  
+   **/
+  protected void setMap(){
+    myTerritories.put("Narnia", new Territory<>("Narnia","Green",new ArrayList<String>()));
+    myTerritories.put("Midemio", new Territory<>("Midemio","Green",new ArrayList<String>()));
+    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>()));
+    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>()));
+    myTerritories.put("Scadnal", new Territory<T>("Scandal","Blue",new ArrayList<String>()));
+    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>()));
+  }
+  /**
+   * function used to initialize the adjacency information in the map
+   **/
+  protected void addAdjacency(){
+    myTerritories.get("Narnia").addAdjacency("Midemio");
+    myTerritories.get("Narnia").addAdjacency("Elantris");
+    myTerritories.get("Midemio").addAdjacency("Narnia");
+    myTerritories.get("Midemio").addAdjacency("Oz");
+    myTerritories.get("Oz").addAdjacency("Midemio");
+    myTerritories.get("Oz").addAdjacency("Roshar");
+    myTerritories.get("Elantris").addAdjacency("Scadnal");
+    myTerritories.get("Elantris").addAdjacency("Narnia");
+    myTerritories.get("Scadnal").addAdjacency("Roshar");
+    myTerritories.get("Scadnal").addAdjacency("Elantris");
+    myTerritories.get("Roshar").addAdjacency("Oz");
+    myTerritories.get("Roshar").addAdjacency("Scadnal");
+  }
   /**
    * Write out the V1Map object for serialization
    * to the ObjectOutputStream s.
