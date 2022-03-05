@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class V1Map<T> implements Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
-  
+  //public HashMap<String,Function<String,Territory<Character>> mapCreationFun;
   /**
    * Constructor
    * construct a V1Map specified with Territoris in it
@@ -18,10 +18,13 @@ public class V1Map<T> implements Map<T>, Serializable {
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
+    //will use a function later
     myTerritories.put("Narnia", new Territory<T>("Narnia","Green"));
     myTerritories.put("Elantris", new Territory<T>("Elantris","Blue"));
   }
-
+  // protected void setupCreation map(){
+  //  mapCreationFun.put(
+  // }
   /**
    * Write out the V1Map object for serialization
    * to the ObjectOutputStream s.
