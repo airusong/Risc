@@ -16,7 +16,7 @@ public class MapTextViewTest {
       + "\n"
       + "Blue player:\n"
       + "-----------\n"
-      +"[Narnia]";
+      +"[Elantris, Narnia, Midemio, Oz, Roshar, Scadnal]";
     assertEquals(expected, mapView.displayMap());
   }
 }
