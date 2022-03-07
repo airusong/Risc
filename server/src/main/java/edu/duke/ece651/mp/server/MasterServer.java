@@ -43,6 +43,7 @@ public class MasterServer {
     while (connectedPlayers < num_players) {
       System.out.println("Server is waiting...");
       player_socket = server_socket.accept();
+      System.out.println("Server accepted.");
       player_socket_list.add(player_socket);
       connectedPlayers++;
       
@@ -51,7 +52,7 @@ public class MasterServer {
       // Thread t = new Thread();
       // PlayerThread t = new PlayerThread(player_socket);
       // t.start();
-      // player_socket.close();
+      player_socket.close();
     }
     System.out.println("Server is connected to ALL the players.");
     
@@ -78,11 +79,25 @@ public class MasterServer {
 
       s.writeObject(obj);
       s.flush();
-      //s.close();
+      s.close();
     } catch (Exception e) {
           System.out.println(e.getMessage());
           System.out.println("Error during serialization");
           e.printStackTrace();
      }
   }
+
+  /* Close Server Socket. */
+  public void close() throws IOException{
+    server_socket.close();
+    this.close_clients();
+  }
+
+  /* Close All Client Sockets. */
+  public void close_clients() throws IOException{
+    for(int i=0; i<player_socket_list.size(); ++i){
+      player_socket_list.get(i).close();
+    }
+  }
 }
+
