@@ -70,6 +70,17 @@ public class MapTextView {
     playerInfo.append(makePlayerHeader(playerColor));
     for (String terrName : terrList) {
       playerInfo.append(terrName);
+      playerInfo.append(" (next to: ");
+      // neighbours go here
+      ArrayList<String> neighborList = toDisplay.myTerritories.get(terrName).getAdjacency();
+      String sep = "";
+      for (String neighborName: neighborList) {
+        playerInfo.append(sep);
+        playerInfo.append(neighborName);
+        sep = ", ";
+      }
+      
+      playerInfo.append(")");
       playerInfo.append("\n");
     }
     return playerInfo.toString();
