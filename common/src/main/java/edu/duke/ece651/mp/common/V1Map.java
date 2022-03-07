@@ -29,12 +29,12 @@ public class V1Map<T> implements Map<T>, Serializable {
    *  
    **/
   protected void setMap(){
-    myTerritories.put("Narnia", new Territory<>("Narnia","Green",new ArrayList<String>(),8));
-    myTerritories.put("Midemio", new Territory<>("Midemio","Green",new ArrayList<String>(),3));
-    myTerritories.put("Oz", new Territory<>("Oz","Green",new ArrayList<String>(),12));
-    myTerritories.put("Elantris", new Territory<>("Elantris","Blue",new ArrayList<String>(),7));
-    myTerritories.put("Scadnal", new Territory<>("Scandal","Blue",new ArrayList<String>(),10));
-    myTerritories.put("Roshar", new Territory<>("Roshar","Blue",new ArrayList<String>(),4));
+    myTerritories.put("Narnia", new Territory<T>("Narnia","Green",new ArrayList<String>(),8));
+    myTerritories.put("Midemio", new Territory<T>("Midemio","Green",new ArrayList<String>(),3));
+    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>(),12));
+    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>(),7));
+    myTerritories.put("Scadnal", new Territory<T>("Scandal","Blue",new ArrayList<String>(),10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>(),4));
   }
   /**
    * function used to initialize the adjacency information in the map
