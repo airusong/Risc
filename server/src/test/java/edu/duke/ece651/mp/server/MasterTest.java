@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.V1Map;
@@ -28,6 +30,29 @@ public class MasterTest {
     m.close();
     assertNotNull(m.theMasterServer.player_socket_list);
     //assertNull(m.theMasterServer.server_socket.accept());
+
+  }
+
+  //@Disabled
+  @Test
+  public void test_sendMapToAll() throws UnknownHostException, IOException, ClassNotFoundException{
+    Master m = new Master(8005, 1);
+    Socket soc = new Socket("127.0.0.1", 8005);
+    m.acceptPlayers();
+    assertNotNull(m.theMap);
+    m.sendMapToAll();
+    
+    /*
+    InputStream o = soc.getInputStream();
+    ObjectInputStream os = new ObjectInputStream(o);
+    Object obj = os.readObject();
+    assertNotNull(obj);
+    assertEquals(Mymap, obj);
+    os.close();
+    */
+
+    //m.close();
+    //soc.close();
 
   }
 

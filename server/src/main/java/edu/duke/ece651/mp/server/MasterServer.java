@@ -79,7 +79,7 @@ public class MasterServer {
 
       s.writeObject(obj);
       s.flush();
-      s.close();
+      //s.close();
     } catch (Exception e) {
           System.out.println(e.getMessage());
           System.out.println("Error during serialization");
