@@ -22,7 +22,7 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
   @Test
-  void test_minimal_map() throws InterruptedException, IOException, UnknownHostException {
+  void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     Client theClient = new Client("null", 0, input, System.out); // we don't care about server yet!
     // The map should be received from master
@@ -30,17 +30,17 @@ public class ClientTest {
     V1Map<Character> mapFromServer = new V1Map<Character>();
     theClient.theTextPlayer.updateMap(mapFromServer);
     
-    String expected =  "Green player:\n"
+    String expected = "Green player:\n"
       + "-----------\n"
-      + "Narnia\n"
-      + "Midemio\n"
-      + "Oz\n"
+      + "Narnia (next to: Midemio, Elantris)\n"
+      + "Midemio (next to: Narnia, Oz)\n"
+      + "Oz (next to: Midemio, Roshar)\n"
       + "\n"
       + "Blue player:\n"
       + "-----------\n"
-      + "Elantris\n"
-      + "Roshar\n"
-      + "Scadnal\n";
+      + "Elantris (next to: Scadnal, Narnia)\n"
+      + "Roshar (next to: Oz, Scadnal)\n"
+      + "Scadnal (next to: Roshar, Elantris)\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
