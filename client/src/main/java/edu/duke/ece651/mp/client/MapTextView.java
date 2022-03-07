@@ -1,4 +1,5 @@
 package edu.duke.ece651.mp.client;
+import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
 
 /**
@@ -72,4 +73,10 @@ public class MapTextView {
     return header.toString();
   }
 
+  // Receive a Map and display it.(for temp test)
+  // Need to change
+  public String displayMap(Map<Character> map){
+    displayMap();
+    return null;
+  }
 }

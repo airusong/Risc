@@ -46,17 +46,19 @@ public class MasterServer {
       System.out.println("Server accepted.");
       player_socket_list.add(player_socket);
       connectedPlayers++;
+      PlayerThread pth = new PlayerThread(player_socket);
+      //new Thread(new PlayerThread(player_socket)).start();
+      pth.start();
       
-      new Thread(new PlayerThread(player_socket)).start();
-
       // Thread t = new Thread();
       // PlayerThread t = new PlayerThread(player_socket);
       // t.start();
-      player_socket.close();
+      // player_socket.close();
     }
     System.out.println("Server is connected to ALL the players.");
     
   }
+  
   /**
    * Method to send any object over the socket
    * @param Object to send

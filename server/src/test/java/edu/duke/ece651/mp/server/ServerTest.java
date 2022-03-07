@@ -10,8 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.google.common.io.Resources;
-
+import org.junit.jupiter.api.parallel.Resources;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.ResourceAccessMode;
@@ -19,19 +18,20 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 
 import edu.duke.ece651.mp.common.V1Map;
 
+
 public class ServerTest {
     @Disabled
     @Test
-    //@ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
-    void test_main() throws IOException{
+    @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
+    void test_main_1() throws IOException{
         // Output
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(bytes, true);
         // Input
-        InputStream input = getClass().getClassLoader().getResourceAsStream("input.txt");
+        InputStream input = getClass().getClassLoader().getResourceAsStream("input1.txt");
         assertNotNull(input);
         // Ouput
-        InputStream expectedStream = getClass().getClassLoader().getResourceAsStream("output.txt");
+        InputStream expectedStream = getClass().getClassLoader().getResourceAsStream("output1.txt");
         assertNotNull(expectedStream);
 
         InputStream oldIn = System.in;
@@ -40,7 +40,8 @@ public class ServerTest {
         try {
             System.setIn(input);
             System.setOut(out);
-            Server.main(new String[0]);
+            String[] args = {"8080", "1"};
+            Server.main(args);
         }
         finally {
             System.setIn(oldIn);
