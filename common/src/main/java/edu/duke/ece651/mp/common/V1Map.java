@@ -30,12 +30,12 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    *  
    **/
   protected void setMap(){
-    myTerritories.put("Narnia", new Territory<>("Narnia","Green",new ArrayList<String>()));
-    myTerritories.put("Midemio", new Territory<>("Midemio","Green",new ArrayList<String>()));
-    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>()));
-    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>()));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal","Blue",new ArrayList<String>()));
-    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>()));
+    myTerritories.put("Narnia", new Territory<T>("Narnia","Green",new ArrayList<String>(),8));
+    myTerritories.put("Midemio", new Territory<T>("Midemio","Green",new ArrayList<String>(),3));
+    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>(),12));
+    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>(),7));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal","Blue",new ArrayList<String>(),10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>(),4));
   }
   /**
    * function used to initialize the adjacency information in the map
