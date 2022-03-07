@@ -18,7 +18,6 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 
 import edu.duke.ece651.mp.common.V1Map;
 
-
 public class ServerTest {
     @Disabled
     @Test
