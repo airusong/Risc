@@ -13,10 +13,15 @@ public class MapTextViewTest {
     MapTextView mapView = new MapTextView(m);
     String expected = "Green player:\n"
       + "-----------\n"
+      + "Narnia\n"
+      + "Midemio\n"
+      + "Oz\n"
       + "\n"
       + "Blue player:\n"
       + "-----------\n"
-      +"[Elantris, Narnia, Midemio, Oz, Roshar, Scadnal]";
+      + "Elantris\n"
+      + "Roshar\n"
+      + "Scadnal\n";
     assertEquals(expected, mapView.displayMap());
   }
 }

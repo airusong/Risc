@@ -1,4 +1,7 @@
 package edu.duke.ece651.mp.client;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import edu.duke.ece651.mp.common.V1Map;
 
 /**
@@ -43,19 +46,34 @@ public class MapTextView {
    * 5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
    */
   public String displayMap() {
+    HashMap<String, ArrayList<String>> terrGroups = toDisplay.getOwnersTerritoryGroups();
+    
     StringBuilder ans = new StringBuilder(""); // empty at first
-    ans.append(makePlayerHeader("Green"));
-    // Territory info goes here
-
+    
+    ans.append(displayPlayerTerritories("Green", terrGroups));
+    
     ans.append("\n"); // empty line between two players' info
     
-    ans.append(makePlayerHeader("Blue"));
-    // Territory info goes here
-
-    // TEMPORARY FOR MINIMAL MAP
-    ans.append(toDisplay.myTerritories.keySet());
+    ans.append(displayPlayerTerritories("Blue", terrGroups));
     
     return ans.toString();
+  }
+
+  /**
+   * This method displays the map/territory info for each player
+   * @param player's color, HashMap with player's color as key and list of player's territories as value
+   * @return the display info as string
+   */
+  private String displayPlayerTerritories(String playerColor, HashMap<String, ArrayList<String>> terrGroups) {
+    ArrayList<String> terrList = terrGroups.get(playerColor);
+    StringBuilder playerInfo = new StringBuilder("");
+    playerInfo.append(makePlayerHeader(playerColor));
+    for (String terrName : terrList) {
+      playerInfo.append(terrName);
+      playerInfo.append("\n");
+    }
+    return playerInfo.toString();
+
   }
 
   /** This method makes the header for showing each
