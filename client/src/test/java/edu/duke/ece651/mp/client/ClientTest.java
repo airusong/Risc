@@ -30,8 +30,17 @@ public class ClientTest {
     V1Map<Character> mapFromServer = new V1Map<Character>();
     theClient.theTextPlayer.updateMap(mapFromServer);
     
-    String expected = "Green player:\n" + "-----------\n" + "\n" + "Blue player:\n" + "-----------\n"
-      + "[Elantris, Narnia, Midemio, Oz, Roshar, Scadnal]";
+    String expected =  "Green player:\n"
+      + "-----------\n"
+      + "Narnia\n"
+      + "Midemio\n"
+      + "Oz\n"
+      + "\n"
+      + "Blue player:\n"
+      + "-----------\n"
+      + "Elantris\n"
+      + "Roshar\n"
+      + "Scadnal\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
