@@ -14,9 +14,9 @@ public class Master {
   Map<Character> theMap;
   ArrayList<String> players_identity;
 
-
   /**
    * Constructor
+   * 
    * @throws IOException
    */
   public Master(int port, int num_players) throws IOException {
@@ -29,31 +29,48 @@ public class Master {
    * @throws IOException
    *
    */
-  public void acceptPlayers() throws IOException{
+  public void acceptPlayers() throws IOException {
     this.theMasterServer.acceptPlayers();
   }
 
-  
   /**
    * Method to send current version map to ALL the players
+   * 
    * @throws IOException
    */
   public void sendMapToAll() throws IOException {
-    theMasterServer.sendToAll((Object)theMap);
+    theMasterServer.sendToAll((Object) theMap);
   }
-  
-  public void close() throws IOException{
+
+  public void close() throws IOException {
     this.theMasterServer.close();
   }
 
   /**
    * Method to send Player Color to ALL the players
+   * 
    * @throws IOException
    */
-  public void sendPlayerIdentityToAll() throws IOException{
+  public void sendPlayerIdentityToAll() throws IOException {
     theMasterServer.sendPlayerIdentityToAll(players_identity);
   }
 
+  /**
+   * Method to receive orders from ALL players
+   * 
+   * @throws IOException
+   */
+  public void receiveOrderFromAllPlayers() throws IOException {
+    theMasterServer.receiveOrderFromAllPlayers();
+  }
 
-  
+  /**
+   * Method to receive a list of orders from a player
+   * 
+   * @throws IOException
+   */
+  public void receiveOrderFromPlayer() throws ClassNotFoundException, IOException {
+    theMasterServer.receiveOrderFromPlayer();
+  }
+
 }

@@ -12,6 +12,7 @@ public class MoveTurn<T> extends Turn<T>{
     //public TextPlayer player;
     public int player_id;
 
+
     public MoveTurn(String type, Territory<T> dep, Territory<T> des, int num_unit, int player_id){
         this.type = type;
         this.dep = dep;

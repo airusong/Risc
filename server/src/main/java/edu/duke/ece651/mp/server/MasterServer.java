@@ -110,20 +110,14 @@ public class MasterServer {
    * Method to receive Object over the socket
    * 
    * @return Object received from player
+   * @throws IOException
+   * @throws ClassNotFoundException
    */
-  public Object receiveFromPlayer() {
-    try {
-      InputStream o = player_socket.getInputStream();
-      ObjectInputStream s = new ObjectInputStream(o);
-      Object obj = s.readObject();
-      return obj;
-
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      System.out.println("Cannot receive Object from Client");
-      e.printStackTrace();
-      return null;
-    }
+  public Object receiveOrderFromPlayer() throws IOException, ClassNotFoundException {
+    InputStream o = player_socket.getInputStream();
+    ObjectInputStream s = new ObjectInputStream(o);
+    Object obj = s.readObject();
+    return obj;
   }
 
   /**
@@ -131,7 +125,7 @@ public class MasterServer {
    * 
    * @throws IOException
    */
-  public void receiveFromAllPlayers() throws IOException {
+  public void receiveOrderFromAllPlayers() throws IOException {
     int connectedPlayers = 0;
 
     while (connectedPlayers < num_players) {
