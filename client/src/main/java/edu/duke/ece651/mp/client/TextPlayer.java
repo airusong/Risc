@@ -30,6 +30,7 @@ public class TextPlayer {
     }
     this.inputReader = inputReader;
     this.out = out;
+    this.identity = "";
   }
 
   /** 
@@ -55,7 +56,6 @@ public class TextPlayer {
     V1Map<Character> receivedMap = (V1Map<Character>)connectionToMaster.receiveFromServer();
     updateMap(receivedMap);
   }
-
 
 
   /**
