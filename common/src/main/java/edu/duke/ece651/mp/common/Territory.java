@@ -1,13 +1,15 @@
 package edu.duke.ece651.mp.common;
-import java.util.ArrayList;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*
  * construct a Territory class
  * @param: name
+
  * @param: color: one color represents one player
  * @param: adjacentTerritories
  * @param: unit: number
@@ -29,6 +31,7 @@ public class Territory<T> implements ITerritory<T>, Serializable {
   }
   public int getUnit(){
     return unit;
+
   }
   public String getName(){
     return name;
@@ -42,12 +45,16 @@ public class Territory<T> implements ITerritory<T>, Serializable {
    public void addAdjacency(String name){
        adjacentTerritories.add(name);
    }
-  /*
+   /*
    * function to get the adjacency list
    */
-  public ArrayList<String> getAdjacency(){
+   public ArrayList<String> getAdjacency(){
     return adjacentTerritories;
   }
+
+
+  // public void addAdjacentTo
+
    /**
    * Write out the Territory object for serialization
    * to the ObjectOutputStream s.

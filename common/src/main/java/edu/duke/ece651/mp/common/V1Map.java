@@ -9,16 +9,17 @@ import java.util.Map;
 
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
-  //public HashMap<String,Function<String,Territory<Character>> mapCreationFun;
+  
   /**
    * Constructor
    * construct a V1Map specified with Territoris in it
    * @param hashmap myTerritories, 
-   * the key is the territory name 
-   * the value is the territory object
+   * the key is the territory itself and 
+   * the value is the list of adjancent territories
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
+
     setMap();
     addAdjacency();
   }
@@ -53,7 +54,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.get("Scadnal").addAdjacency("Elantris");
     myTerritories.get("Roshar").addAdjacency("Oz");
     myTerritories.get("Roshar").addAdjacency("Scadnal");
+
   }
+
   /**
    * Write out the V1Map object for serialization
    * to the ObjectOutputStream s.
