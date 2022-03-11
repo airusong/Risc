@@ -19,8 +19,14 @@ public class Master {
   }
 
   /**
+   * @throws IOException
    *
    */
+  public void acceptPlayers() throws IOException{
+    this.theMasterServer.acceptPlayers();
+  }
+
+  /*
   public void playGame() {
     try {
       theMasterServer.acceptPlayers();
@@ -29,6 +35,7 @@ public class Master {
       e.printStackTrace();
     }
   }
+  */
   
   /**
    * Method to send current version map to ALL the players
@@ -37,4 +44,7 @@ public class Master {
     theMasterServer.sendToAll((Object)theMap);
   }
   
+  public void close() throws IOException{
+    this.theMasterServer.close();
+  }
 }
