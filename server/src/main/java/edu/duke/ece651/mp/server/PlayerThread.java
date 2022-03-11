@@ -7,8 +7,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.io.*;
 
-public class PlayerThread implements Runnable {
-  public Socket player_socket = null;
+public class PlayerThread extends Thread {
+  // public Socket player_socket = null;
+  public Socket player_socket;
 
   public PlayerThread(Socket player_socket) {
     this.player_socket = player_socket;

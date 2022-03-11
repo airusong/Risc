@@ -43,11 +43,13 @@ public class MasterServer {
     while (connectedPlayers < num_players) {
       System.out.println("Server is waiting...");
       player_socket = server_socket.accept();
+      System.out.println("Server accepted.");
       player_socket_list.add(player_socket);
       connectedPlayers++;
+      PlayerThread pth = new PlayerThread(player_socket);
+      //new Thread(new PlayerThread(player_socket)).start();
+      pth.start();
       
-      new Thread(new PlayerThread(player_socket)).start();
-
       // Thread t = new Thread();
       // PlayerThread t = new PlayerThread(player_socket);
       // t.start();
@@ -56,6 +58,7 @@ public class MasterServer {
     System.out.println("Server is connected to ALL the players.");
     
   }
+  
   /**
    * Method to send any object over the socket
    * @param Object to send
@@ -85,4 +88,18 @@ public class MasterServer {
           e.printStackTrace();
      }
   }
+
+  /* Close Server Socket. */
+  public void close() throws IOException{
+    server_socket.close();
+    this.close_clients();
+  }
+
+  /* Close All Client Sockets. */
+  public void close_clients() throws IOException{
+    for(int i=0; i<player_socket_list.size(); ++i){
+      player_socket_list.get(i).close();
+    }
+  }
 }
+
