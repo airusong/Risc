@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Server {
   final Master theMaster;
 
-  public Server(int port, int num_players) {
+  public Server(int port, int num_players) throws IOException {
     this.theMaster = new Master(port, num_players);
   }
 

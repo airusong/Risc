@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.io.*;
 
-public class PlayerThread extends Thread {
+public class PlayerThread implements Runnable {
   // public Socket player_socket = null;
   public Socket player_socket;
 
@@ -43,3 +43,6 @@ public class PlayerThread extends Thread {
     }
   }
 }
+
+
+

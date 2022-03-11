@@ -17,8 +17,9 @@ public class Master {
 
   /**
    * Constructor
+   * @throws IOException
    */
-  public Master(int port, int num_players) {
+  public Master(int port, int num_players) throws IOException {
     this.theMasterServer = new MasterServer(port, num_players);
     this.theMap = new V1Map<Character>();
     this.players_identity = new ArrayList<String>(Arrays.asList("Yellow", "Green"));
@@ -32,21 +33,12 @@ public class Master {
     this.theMasterServer.acceptPlayers();
   }
 
-  /*
-  public void playGame() {
-    try {
-      theMasterServer.acceptPlayers();
-      sendMapToAll();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  */
   
   /**
    * Method to send current version map to ALL the players
+   * @throws IOException
    */
-  public void sendMapToAll() {
+  public void sendMapToAll() throws IOException {
     theMasterServer.sendToAll((Object)theMap);
   }
   
@@ -54,7 +46,14 @@ public class Master {
     this.theMasterServer.close();
   }
 
-  public void sendPlayerIdentityToAll(){
+  /**
+   * Method to send Player Color to ALL the players
+   * @throws IOException
+   */
+  public void sendPlayerIdentityToAll() throws IOException{
     theMasterServer.sendPlayerIdentityToAll(players_identity);
   }
+
+
+  
 }

@@ -20,6 +20,7 @@ public class MasterTest {
     assertEquals(2, m.theMasterServer.num_players);
     //V1Map<Character> map = new V1Map<Character>();
     //assertEquals(map, m.theMap);
+    assertNotNull(m.players_identity);
     m.close();
   }
 
@@ -58,4 +59,15 @@ public class MasterTest {
 
   }
 
+  @Test
+  public void test_sendPlayerIndentityToAll() throws UnknownHostException, IOException{
+    Master m = new Master(8006, 1);
+    Socket soc = new Socket("127.0.0.1", 8006);
+    m.acceptPlayers();
+    assertNotNull(m.theMap);
+    m.sendPlayerIdentityToAll(); 
+
+    m.close();
+    soc.close();
+  }
 }
