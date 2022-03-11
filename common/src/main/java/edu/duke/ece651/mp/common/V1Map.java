@@ -5,8 +5,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-public class V1Map<T> implements Map<T>, Serializable {
+public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   
   /**
@@ -18,7 +19,42 @@ public class V1Map<T> implements Map<T>, Serializable {
    */
   public V1Map(){
     this.myTerritories = new HashMap<>();
-    myTerritories.put("Narnia", new Territory<T>("Narnia"));
+
+    setMap();
+    addAdjacency();
+  }
+  // public HashMap<String, Territory<T>> getMap(){
+  //  return myTerritories;
+  // }
+  /**
+   * function used in constructor to initialize the hashmap
+   *  
+   **/
+  protected void setMap(){
+    myTerritories.put("Narnia", new Territory<T>("Narnia","Green",new ArrayList<String>(),8));
+    myTerritories.put("Midemio", new Territory<T>("Midemio","Green",new ArrayList<String>(),3));
+    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>(),12));
+    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>(),7));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal","Blue",new ArrayList<String>(),10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>(),4));
+  }
+  /**
+   * function used to initialize the adjacency information in the map
+   **/
+  protected void addAdjacency(){
+    myTerritories.get("Narnia").addAdjacency("Midemio");
+    myTerritories.get("Narnia").addAdjacency("Elantris");
+    myTerritories.get("Midemio").addAdjacency("Narnia");
+    myTerritories.get("Midemio").addAdjacency("Oz");
+    myTerritories.get("Oz").addAdjacency("Midemio");
+    myTerritories.get("Oz").addAdjacency("Roshar");
+    myTerritories.get("Elantris").addAdjacency("Scadnal");
+    myTerritories.get("Elantris").addAdjacency("Narnia");
+    myTerritories.get("Scadnal").addAdjacency("Roshar");
+    myTerritories.get("Scadnal").addAdjacency("Elantris");
+    myTerritories.get("Roshar").addAdjacency("Oz");
+    myTerritories.get("Roshar").addAdjacency("Scadnal");
+
   }
 
   /**
@@ -55,6 +91,26 @@ public class V1Map<T> implements Map<T>, Serializable {
     myTerritories = (HashMap< String, Territory<T> >)s.readObject();
 
     // other fields go here
+  }
+
+  /**
+   * method to get territories grouped by owner
+   * @return hashmap with key as the owner/player color
+   * and value as an ArrayList of territories owned by
+   * the player
+   */
+  public HashMap<String, ArrayList<String>> getOwnersTerritoryGroups() {
+    HashMap<String, ArrayList<String>> territoryGroups= new HashMap<>();
+    territoryGroups.put("Green", new ArrayList<>());
+    territoryGroups.put("Blue", new ArrayList<>());
+
+    for(Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
+      Territory<T> terr = entry.getValue();
+      String terrOwner = terr.getColor();
+      territoryGroups.get(terrOwner).add(terr.getName());      
+    }
+
+    return territoryGroups;
   }
   
 }

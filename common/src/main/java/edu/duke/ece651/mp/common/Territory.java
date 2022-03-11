@@ -4,25 +4,54 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /*
  * construct a Territory class
  * @param: name
+
+ * @param: color: one color represents one player
+ * @param: adjacentTerritories
+ * @param: unit: number
  */
 public class Territory<T> implements ITerritory<T>, Serializable {
   private String name;
-  // public ArrayList<String> adjacentTerritories
-
-  public Territory() {
-    this.name = null;
-  }
+  private String color;
+  private ArrayList<String> adjacentTerritories;
+  private int unit;
+  //  public Territory() {
+  //  this.name = null;
+  // }
   
-  public Territory(String name){
+  public Territory(String name,String color,ArrayList<String> adjacentTerritories,int unit){
     this.name=name;
+    this.color=color;
+    this.adjacentTerritories=new ArrayList<>();
+    this.unit=unit;
+  }
+  public int getUnit(){
+    return unit;
+
   }
   public String getName(){
     return name;
   }
+  public String getColor(){
+    return color;
+  }
+  /**
+   * function to add adjacency to the territory
+   */
+   public void addAdjacency(String name){
+       adjacentTerritories.add(name);
+   }
+   /*
+   * function to get the adjacency list
+   */
+   public ArrayList<String> getAdjacency(){
+    return adjacentTerritories;
+  }
+
 
   // public void addAdjacentTo
 
