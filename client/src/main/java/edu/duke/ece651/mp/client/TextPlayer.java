@@ -14,7 +14,6 @@ public class TextPlayer {
   MapTextView view;
   final BufferedReader inputReader;
   final PrintStream out;
-  private String identity;
 
   /**
    * Constructor
@@ -30,7 +29,6 @@ public class TextPlayer {
     }
     this.inputReader = inputReader;
     this.out = out;
-    this.identity = "";
   }
 
   /** 
@@ -53,17 +51,13 @@ public class TextPlayer {
    */
   @SuppressWarnings("unchecked")
   public void receiveMap() {
-    V1Map<Character> receivedMap = (V1Map<Character>)connectionToMaster.receiveFromServer();
+    // V1Map<Character> receivedMap = (V1Map<Character>)connectionToMaster.receiveFromServer();
+    Object rec_obj = connectionToMaster.receiveFromServer();
+    V1Map<Character> receivedMap = new V1Map<Character>();
+    if(rec_obj instanceof V1Map){
+      receivedMap = (V1Map<Character>)rec_obj;
+    }
     updateMap(receivedMap);
-  }
-
-
-  /**
-   * method to receive Player Color from the server
-   */
-  public void receiveIdentity(){
-    String ident = (String)connectionToMaster.receiveFromServer();
-    this.identity = ident;
   }
   
 }
