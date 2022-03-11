@@ -17,6 +17,7 @@ public class Server {
     Master theMaster = new Master(port, num_players);
 
     theMaster.acceptPlayers();
+    theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
     
   }

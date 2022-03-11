@@ -2,6 +2,9 @@ package edu.duke.ece651.mp.server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
@@ -9,6 +12,8 @@ import edu.duke.ece651.mp.common.V1Map;
 public class Master {
   final MasterServer theMasterServer;
   Map<Character> theMap;
+  ArrayList<String> players_identity;
+
 
   /**
    * Constructor
@@ -16,6 +21,7 @@ public class Master {
   public Master(int port, int num_players) {
     this.theMasterServer = new MasterServer(port, num_players);
     this.theMap = new V1Map<Character>();
+    this.players_identity = new ArrayList<String>(Arrays.asList("Yellow", "Green"));
   }
 
   /**
@@ -46,5 +52,9 @@ public class Master {
   
   public void close() throws IOException{
     this.theMasterServer.close();
+  }
+
+  public void sendPlayerIdentityToAll(){
+    theMasterServer.sendPlayerIdentityToAll(players_identity);
   }
 }

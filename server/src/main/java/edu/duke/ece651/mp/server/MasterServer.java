@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.net.Socket;
 import java.util.ArrayList;
 import edu.duke.ece651.mp.common.V1Map;
@@ -99,6 +100,16 @@ public class MasterServer {
   public void close_clients() throws IOException{
     for(int i=0; i<player_socket_list.size(); ++i){
       player_socket_list.get(i).close();
+    }
+  }
+
+  /**
+   * Method to send Player Identity(Green/Yellow) over the socket
+   * @param Object to send
+   */
+  public void sendPlayerIdentityToAll(List<String> players_identity) {
+    for (int i=0; i<player_socket_list.size(); ++i) {
+      sendToPlayer(players_identity.get(i), player_socket_list.get(i));
     }
   }
 }
