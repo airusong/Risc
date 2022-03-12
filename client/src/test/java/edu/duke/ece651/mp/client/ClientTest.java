@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,6 @@ import org.junit.jupiter.api.parallel.ResourceAccessMode;
 import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
 
-import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
@@ -27,7 +28,8 @@ public class ClientTest {
     Client theClient = new Client("null", 0, input, System.out); // we don't care about server yet!
     // The map should be received from master
     // using minimal V1Map for now
-    V1Map<Character> mapFromServer = new V1Map<Character>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
     theClient.theTextPlayer.updateMap(mapFromServer);
     
     String expected = "Green player:\n"
