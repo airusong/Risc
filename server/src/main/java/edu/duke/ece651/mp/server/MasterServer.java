@@ -109,7 +109,9 @@ public class MasterServer {
    */
   public void sendPlayerIdentityToAll(List<String> players_identity) {
     for (int i=0; i<player_socket_list.size(); ++i) {
-      sendToPlayer(players_identity.get(i), player_socket_list.get(i));
+      String player_color = players_identity.get(i);
+      System.out.println("Sending color to player: " + player_color);
+      sendToPlayer(player_color, player_socket_list.get(i));
     }
   }
 }

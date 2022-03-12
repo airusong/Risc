@@ -64,6 +64,7 @@ public class TextPlayer {
   public void receiveIdentity(){
     String ident = (String)connectionToMaster.receiveFromServer();
     this.identity = ident;
+    out.println("My player's color: " + ident);
   }
   
 }
