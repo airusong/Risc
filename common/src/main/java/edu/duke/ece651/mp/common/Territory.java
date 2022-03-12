@@ -19,48 +19,52 @@ public class Territory<T> implements ITerritory<T>, Serializable {
   private String color;
   private ArrayList<String> adjacentTerritories;
   private int unit;
-  //  public Territory() {
-  //  this.name = null;
+  // public Territory() {
+  // this.name = null;
   // }
-  
-  public Territory(String name,String color,ArrayList<String> adjacentTerritories,int unit){
-    this.name=name;
-    this.color=color;
-    this.adjacentTerritories=new ArrayList<>();
-    this.unit=unit;
-  }
-  public int getUnit(){
-    return unit;
 
+  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int unit) {
+    this.name = name;
+    this.color = color;
+    this.adjacentTerritories = new ArrayList<>();
+    this.unit = unit;
   }
-  public String getName(){
+
+  public int getUnit() {
+    return unit;
+  }
+
+  public String getName() {
     return name;
   }
-  public String getColor(){
+
+  public String getColor() {
     return color;
   }
+
   /**
    * function to add adjacency to the territory
    */
-   public void addAdjacency(String name){
-       adjacentTerritories.add(name);
-   }
-   /*
+  public void addAdjacency(String name) {
+    adjacentTerritories.add(name);
+  }
+
+  /*
    * function to get the adjacency list
    */
-   public ArrayList<String> getAdjacency(){
+  public ArrayList<String> getAdjacency() {
     return adjacentTerritories;
   }
 
-
   // public void addAdjacentTo
 
-   /**
+  /**
    * Write out the Territory object for serialization
    * to the ObjectOutputStream s.
    * readObject depends on this data format.
+   * 
    * @serialData Write serializable fields, if any exist.
-   * Write each field of the Territory Class
+   *             Write each field of the Territory Class
    */
   private void writeObject(ObjectOutputStream s) throws IOException {
     // Call even if there is no default serializable fields.
@@ -72,22 +76,29 @@ public class Territory<T> implements ITerritory<T>, Serializable {
     // New added fields go here
   }
 
-  /** Read in the territory object from the ObjectInputStream s.
+  /**
+   * Read in the territory object from the ObjectInputStream s.
    * Was written to by writeObject.
    * 
    * @serialData Read serializable fields, if any exist.
    */
-  private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException  {
-    /* Call even if there is no default serializable fields.
+  private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+    /*
+     * Call even if there is no default serializable fields.
      * Enables default serializable fields to be added in future versions
      * and skipped by this version which has no default serializable fields.
      */
     s.defaultReadObject();
 
     // restore the name
-    name = (String)s.readObject();
+    name = (String) s.readObject();
 
     // other fields go here
+  }
+
+  /* Method to update the unit according to Move Order */
+  public void updateTerritory(int new_unit_num) {
+    this.unit = new_unit_num;
   }
 
 }

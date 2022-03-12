@@ -29,7 +29,11 @@ public abstract class Turn<T> implements Serializable {
         return this.des;
     }
 
-    public int getUnitNumber(){
+    public int getNumber(){
         return this.num_unit;
+    }
+
+    public int getPlayerID(){
+        return this.player_id;
     }
 }

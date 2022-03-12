@@ -21,7 +21,7 @@ public class Server {
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
     theMaster.receiveTurnListFromAllPlayers();
-    theMaster.handleMoveOrder(theMaster);
+    theMaster.handleOrder();
   }
 
 }

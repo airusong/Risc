@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class Master {
   final MasterServer theMasterServer;
-  public Map<Character> theMap;
+  public V1Map<Character> theMap;
   public ArrayList<String> players_identity;
   public ArrayList<TurnList<Character>> all_order_list;
 
@@ -85,7 +86,7 @@ public class Master {
    * @throws IOException
    * @throws ClassNotFoundException
    */
-  public void handleOrder(ArrayList<TurnList<Character>> all_order_list) {
+  public void handleOrder() {
     for(int i=0; i<all_order_list.size(); i++){
       TurnList curr = all_order_list.get(i);
       for(int j=0; j<curr.getListLength();j++){
@@ -113,9 +114,20 @@ public class Master {
 
   public void handleMoveOrder(Turn moveOrder) {
     // how to handle move action??
-    // TO DO: Check Ruler
+    // TO DO: add RuleChecker
+    int move_num = moveOrder.getNumber();
+    Territory dep = moveOrder.getDep();
+    Territory des = moveOrder.getDes();
+    int player_id = moveOrder.getPlayerID();
     
+    // update Territory & Map
+    int unit_num_dep = theMap.myTerritories.get(dep.getName()).getUnit();
+    int new_unit_num_dep = unit_num_dep - move_num;
+    
+    int unit_num_des = theMap.myTerritories.get(des.getName()).getUnit();
+    int new_unit_num_des = unit_num_des + move_num;
 
+    theMap.updateMap(dep.getName(), des.getName(),new_unit_num_dep, new_unit_num_des);
 
   }
 
