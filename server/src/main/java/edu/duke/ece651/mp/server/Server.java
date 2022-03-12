@@ -16,6 +16,7 @@ public class Server {
     int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 1 ;
     Master theMaster = new Master(port, num_players);
 
+    
     theMaster.acceptPlayers();
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();

@@ -71,15 +71,22 @@ public class MasterServer {
    * @param object to send and player's socket
    * @throws IOException
    */
-  public void sendToPlayer(Object obj, Socket soc) throws IOException {
-    OutputStream o = soc.getOutputStream();
-    ObjectOutputStream s = new ObjectOutputStream(o);
+  public void sendToPlayer(Object obj, Socket soc) {
+    try {
+      OutputStream o = soc.getOutputStream();
+      ObjectOutputStream s = new ObjectOutputStream(o);
 
-    s.writeObject(obj);
-    s.flush();
-    // s.close();
-
+      s.writeObject(obj);
+      s.flush();
+      //s.close();
+    } catch (Exception e) {
+          System.out.println(e.getMessage());
+          System.out.println("Error during serialization");
+          e.printStackTrace();
+     }
   }
+
+
 
   /* Close Server Socket. */
   public void close() throws IOException {
