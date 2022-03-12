@@ -54,7 +54,7 @@ public class Client {
          * is.close(); br.close();
          * 
          */
-
+        theClient.theTextPlayer.receiveInfo();
         theClient.theTextPlayer.receiveInfo();
         theClient.theTextPlayer.receiveMap();
 
