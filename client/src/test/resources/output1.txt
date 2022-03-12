@@ -1,6 +1,47 @@
+Starting a Gradle Daemon, 1 busy and 1 stopped Daemons could not be reused, use --status for details
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :client:compileJava UP-TO-DATE
+> Task :client:processResources NO-SOURCE
+> Task :client:classes UP-TO-DATE
+> Task :common:processResources NO-SOURCE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+
+> Task :client:run
+My player's color: Green
 Green player:
 -----------
+8 units in Narnia (next to: Midemio, Elantris)
+3 units in Midemio (next to: Narnia, Oz)
+12 units in Oz (next to: Midemio, Roshar)
 
 Blue player:
 -----------
+7 units in Elantris (next to: Scadnal, Narnia)
+6 units in Roshar (next to: Oz, Scadnal)
+10 units in Scadnal (next to: Roshar, Elantris)
 
+
+> Task :run-client
+
+BUILD SUCCESSFUL in 5s
+13 actionable tasks: 1 executed, 12 up-to-date

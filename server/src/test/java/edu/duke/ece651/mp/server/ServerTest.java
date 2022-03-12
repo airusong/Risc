@@ -19,7 +19,6 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ServerTest {
-    @Disabled
     @Test
     @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
     void test_main_1() throws IOException{

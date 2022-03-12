@@ -1,0 +1,39 @@
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources NO-SOURCE
+> Task :common:classes UP-TO-DATE
+> Task :common:jar UP-TO-DATE
+> Task :server:compileJava UP-TO-DATE
+> Task :server:processResources NO-SOURCE
+> Task :server:classes UP-TO-DATE
+
+> Task :server:run
+Server is waiting...
+Server accepted.
+Server is connected to ALL the players.
+Sending color to player: Green
+start a new thread.
+Received Message: Client is ready.
+
+> Task :run-server
+
+BUILD SUCCESSFUL in 38s
+13 actionable tasks: 1 executed, 12 up-to-date
