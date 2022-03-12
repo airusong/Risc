@@ -17,12 +17,12 @@ public class PlayerThread extends Thread {
 
   @Override
   public void run() {
-    System.out.println("start a new thread.");
+    //System.out.println("start a new thread.");
     try {
       InputStream is = player_socket.getInputStream();
       BufferedReader br = new BufferedReader(new InputStreamReader(is));
       String msg = br.readLine();
-      System.out.println("Received Message: " + msg);
+      //System.out.println("Received Message: " + msg);
       // player_socket.shutdownInput();
 
       /*
