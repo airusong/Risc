@@ -7,12 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class Master {
   final MasterServer theMasterServer;
   Map<Character> theMap;
   ArrayList<String> players_identity;
+  public ArrayList<TurnList<Character>> all_order_list;
+
 
   /**
    * Constructor
@@ -56,21 +59,26 @@ public class Master {
   }
 
   /**
-   * Method to receive orders from ALL players
-   * 
-   * @throws IOException
-   */
-  public void receiveOrderFromAllPlayers() throws IOException {
-    theMasterServer.receiveOrderFromAllPlayers();
-  }
-
-  /**
    * Method to receive a list of orders from a player
    * 
    * @throws IOException
    */
-  public void receiveOrderFromPlayer() throws ClassNotFoundException, IOException {
-    theMasterServer.receiveOrderFromPlayer();
+  public Object receiveObjectFromPlayer(Socket player_socket) throws ClassNotFoundException, IOException {
+    return theMasterServer.receiveObjectFromPlayer(player_socket);
+  }
+
+  /**
+   * Method to receive orders from ALL players
+   * 
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException {
+    theMasterServer.receiveTurnListFromAllPlayers();
+  }
+
+  public void handleOrder(Object obj) {
+
   }
 
 }

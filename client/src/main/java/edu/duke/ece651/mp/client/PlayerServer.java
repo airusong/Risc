@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -33,5 +35,25 @@ public class PlayerServer {
       return null;
     }
   }
+
+
+  // yy - Testing
+  /*
+  public void sendToServer(Object obj) {
+    try {
+      OutputStream o = socket.getOutputStream();
+      ObjectOutputStream s = new ObjectOutputStream(o);
+
+      s.writeObject(obj);
+      s.flush();
+      //s.close();
+    } catch (Exception e) {
+          System.out.println(e.getMessage());
+          System.out.println("Error during serialization");
+          e.printStackTrace();
+     }
+  }
+  */
+
 
 }

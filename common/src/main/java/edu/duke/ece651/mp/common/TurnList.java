@@ -1,20 +1,20 @@
-package edu.duke.ece651.mp.client;
+package edu.duke.ece651.mp.common;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
-import edu.duke.ece651.mp.common.Territory;
-
-public abstract class Turn<T> implements Serializable {
-    public String type;
-    public Territory<T> dep;
-    public Territory<T> des;
-    public int num_unit;
-    //public TextPlayer player;
-    public int player_id;
+public class TurnList<T> implements Serializable{
+    private String player_info;
+    public ArrayList<Turn<T>> order_list;
     
+    public TurnList(String player_info){
+        this.player_info = player_info;
+        this.order_list = new ArrayList<Turn<T>>();
+    }
+
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
     }
@@ -22,4 +22,5 @@ public abstract class Turn<T> implements Serializable {
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         s.defaultReadObject();
     }
+    
 }

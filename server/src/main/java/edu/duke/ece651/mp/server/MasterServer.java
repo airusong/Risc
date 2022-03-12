@@ -9,10 +9,14 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.net.Socket;
 import java.util.ArrayList;
 import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
 
 public class MasterServer {
   public int port;
@@ -20,6 +24,8 @@ public class MasterServer {
   public int num_players;
   public ArrayList<Socket> player_socket_list;
   public Socket player_socket;
+  public ArrayList<TurnList<Character>> all_order_list;
+  //public ArrayList<Turn<Character>> order_list;
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
@@ -27,6 +33,7 @@ public class MasterServer {
     this.server_socket = new ServerSocket(port);
     this.num_players = num_players;
     this.player_socket_list = new ArrayList<Socket>();
+    this.all_order_list = new ArrayList<TurnList<Character>>();
   }
 
   public int getPort() {
@@ -86,8 +93,6 @@ public class MasterServer {
      }
   }
 
-
-
   /* Close Server Socket. */
   public void close() throws IOException {
     server_socket.close();
@@ -113,6 +118,7 @@ public class MasterServer {
     }
   }
 
+
   /**
    * Method to receive Object over the socket
    * 
@@ -120,7 +126,7 @@ public class MasterServer {
    * @throws IOException
    * @throws ClassNotFoundException
    */
-  public Object receiveOrderFromPlayer() throws IOException, ClassNotFoundException {
+  public Object receiveObjectFromPlayer(Socket player_socket) throws IOException, ClassNotFoundException {
     InputStream o = player_socket.getInputStream();
     ObjectInputStream s = new ObjectInputStream(o);
     Object obj = s.readObject();
@@ -131,22 +137,21 @@ public class MasterServer {
    * Method to receive Object over the socket from all players
    * 
    * @throws IOException
+   * @throws ClassNotFoundException
    */
-  public void receiveOrderFromAllPlayers() throws IOException {
+  @SuppressWarnings("unchecked")
+  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException {
+    // ArrayList<Turn<Character>> order_list = new ArrayList<Turn<Character>>(); 
     int connectedPlayers = 0;
 
     while (connectedPlayers < num_players) {
-      System.out.println("Server is waiting...");
-      player_socket = server_socket.accept();
-      System.out.println("Server accepted.");
-      player_socket_list.add(player_socket);
-      connectedPlayers++;
-      PlayerThread pth = new PlayerThread(player_socket);
-      Thread t = new Thread(pth);
-      // new Thread(new PlayerThread(player_socket)).start();
+      HandleTurnThread<Character> th = new HandleTurnThread<Character>(player_socket_list.get(connectedPlayers));
+      Thread t = new Thread(th);
       t.start();
+      this.all_order_list.add(th.turn_list);
+      connectedPlayers++;
     }
-    System.out.println("Server is connected to ALL the players.");
+    System.out.println("Server received lists of orders from all players.");
   }
 
 }

@@ -9,7 +9,7 @@ public class Server {
     this.theMaster = new Master(port, num_players);
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException {
     //int port = Integer.parseInt(args[0]);
     //int num_players = Integer.parseInt(args[1]);
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
@@ -20,7 +20,8 @@ public class Server {
     theMaster.acceptPlayers();
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
-    
+    theMaster.receiveTurnListFromAllPlayers();
+    theMaster.handleOrder(theMaster);
   }
 
 }

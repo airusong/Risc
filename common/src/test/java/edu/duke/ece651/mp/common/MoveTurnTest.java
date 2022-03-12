@@ -1,4 +1,4 @@
-package edu.duke.ece651.mp.client;
+package edu.duke.ece651.mp.common;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Territory;
 
 public class MoveTurnTest {

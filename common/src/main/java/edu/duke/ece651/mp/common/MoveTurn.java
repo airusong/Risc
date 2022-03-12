@@ -1,8 +1,6 @@
-package edu.duke.ece651.mp.client;
+package edu.duke.ece651.mp.common;
 
 import java.io.Serializable;
-
-import edu.duke.ece651.mp.common.Territory;
 
 public class MoveTurn<T> extends Turn<T>{
     public String type;

@@ -42,24 +42,15 @@ public class Client {
         OutputStream os = theClient.theTextPlayer.connectionToMaster.socket.getOutputStream();
         PrintWriter out = new PrintWriter(os, true);
         String msg = "Client is ready.";
+        System.out.println(msg);
         out.println(msg);
         out.flush();
 
-        /*
-         * // Received message from Server InputStream is =
-         * theClient.theTextPlayer.connectionToMaster.socket.getInputStream();
-         * BufferedReader br = new BufferedReader(new InputStreamReader(is)); String
-         * receivedMsg = br.readLine();
-         * System.out.println("Received message from Server: " + receivedMsg);
-         * is.close(); br.close();
-         * 
-         */
+
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
-
+        // theClient.theTextPlayer.sendTurn(); // yy - testing
         os.close();
-
-        // theClient.theTextPlayer.connectionToMaster.socket.shutdownOutput();
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {

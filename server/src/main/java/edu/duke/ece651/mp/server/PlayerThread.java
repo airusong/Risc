@@ -17,14 +17,15 @@ public class PlayerThread implements Runnable {
 
   @Override
   public void run() {
-    System.out.println("start a new thread.");
+    // System.out.println("start a new thread.");
     try {
+      // Send origin Map to all Players
       InputStream is = player_socket.getInputStream();
       BufferedReader br = new BufferedReader(new InputStreamReader(is));
       String msg = br.readLine();
       System.out.println("Received Message: " + msg);
-      // player_socket.shutdownInput();
-
+      
+      
       /*
       // Send message to Client
 
@@ -38,6 +39,12 @@ public class PlayerThread implements Runnable {
       // is.close();
       // os.close();
       // player_socket.close();
+      /*
+      InputStream is = player_socket.getInputStream();
+      ObjectInputStream s = new ObjectInputStream(is);
+      Object obj = s.readObject();
+      */
+      
     } catch (IOException e) {
       e.printStackTrace();
     }
