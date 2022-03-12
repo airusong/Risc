@@ -55,6 +55,7 @@ public class Client {
          * 
          */
 
+        theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
 
         os.close();
