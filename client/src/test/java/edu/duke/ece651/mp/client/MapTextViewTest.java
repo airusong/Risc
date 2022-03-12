@@ -1,15 +1,18 @@
 package edu.duke.ece651.mp.client;
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.V1Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
+import edu.duke.ece651.mp.common.V1Map;
 
 public class MapTextViewTest {
   @Test
   public void test_displayMap() {
-    V1Map<Character> m = new V1Map<Character>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> m = new V1Map<Character>(players_colors);
     MapTextView mapView = new MapTextView(m);
     String expected = "Green player:\n"
       + "-----------\n"

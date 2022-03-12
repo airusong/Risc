@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,8 @@ public class V1MapTest {
   @Test
 
   public void checkcontents() {
-    V1Map<Character> map = new V1Map<>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> map = new V1Map<>(players_colors);
     assertEquals(map.myTerritories.containsKey("Narnia"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Midemio"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Elantris"), true);
@@ -23,7 +25,8 @@ public class V1MapTest {
   @Test 
   @SuppressWarnings("unchecked")
   public void test_serialization_basicMap() {
-    V1Map<Character> mapOrg = new V1Map<Character>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> mapOrg = new V1Map<Character>(players_colors);
     V1Map<Character> mapNew = null;
 
     // Serialize the original class object
@@ -54,7 +57,8 @@ public class V1MapTest {
 
   @Test
   public void test_territoriesGroupedByOwner() {
-    V1Map<Character> map = new V1Map<>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> map = new V1Map<>(players_colors);
     HashMap<String, ArrayList<String>> terrGroups = map.getOwnersTerritoryGroups();
 
     ArrayList<String> expectedGreenTerritories = new ArrayList<>();

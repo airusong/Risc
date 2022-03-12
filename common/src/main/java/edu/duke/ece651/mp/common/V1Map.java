@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
+  public ArrayList<String> players_colors;
   
   /**
    * Constructor
@@ -17,9 +18,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    * the key is the territory itself and 
    * the value is the list of adjancent territories
    */
-  public V1Map(){
+  public V1Map(ArrayList<String> players_colors){
     this.myTerritories = new HashMap<>();
-
+    this.players_colors = players_colors;
     setMap();
     addAdjacency();
   }
@@ -31,12 +32,17 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    *  
    **/
   protected void setMap(){
-    myTerritories.put("Narnia", new Territory<T>("Narnia","Green",new ArrayList<String>(),8));
-    myTerritories.put("Midemio", new Territory<T>("Midemio","Green",new ArrayList<String>(),3));
-    myTerritories.put("Oz", new Territory<T>("Oz","Green",new ArrayList<String>(),12));
-    myTerritories.put("Elantris", new Territory<T>("Elantris","Blue",new ArrayList<String>(),7));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal","Blue",new ArrayList<String>(),10));
-    myTerritories.put("Roshar", new Territory<T>("Roshar","Blue",new ArrayList<String>(),4));
+    // PLAYER 1
+    String player_color = players_colors.get(0);
+    myTerritories.put("Narnia", new Territory<T>("Narnia",player_color,new ArrayList<String>(),8));
+    myTerritories.put("Midemio", new Territory<T>("Midemio",player_color,new ArrayList<String>(),3));
+    myTerritories.put("Oz", new Territory<T>("Oz",player_color,new ArrayList<String>(),12));
+
+    // PLAYER 2
+    player_color = players_colors.get(1);
+    myTerritories.put("Elantris", new Territory<T>("Elantris",player_color,new ArrayList<String>(),7));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal",player_color,new ArrayList<String>(),10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar",player_color,new ArrayList<String>(),4));
   }
   /**
    * function used to initialize the adjacency information in the map

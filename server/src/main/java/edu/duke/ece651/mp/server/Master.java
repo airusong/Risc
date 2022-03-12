@@ -11,17 +11,16 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class Master {
   final MasterServer theMasterServer;
-  Map<Character> theMap;
   ArrayList<String> players_identity;
-
+  Map<Character> theMap;
 
   /**
    * Constructor
    */
   public Master(int port, int num_players) {
     this.theMasterServer = new MasterServer(port, num_players);
-    this.theMap = new V1Map<Character>();
-    this.players_identity = new ArrayList<String>(Arrays.asList("Yellow", "Green"));
+    this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    this.theMap = new V1Map<Character>(this.players_identity);
   }
 
   /**

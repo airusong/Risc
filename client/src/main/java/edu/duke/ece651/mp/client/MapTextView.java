@@ -51,13 +51,13 @@ public class MapTextView {
     HashMap<String, ArrayList<String>> terrGroups = toDisplay.getOwnersTerritoryGroups();
     
     StringBuilder ans = new StringBuilder(""); // empty at first
-    
-    ans.append(displayPlayerTerritories("Green", terrGroups));
-    
-    ans.append("\n"); // empty line between two players' info
-    
-    ans.append(displayPlayerTerritories("Blue", terrGroups));
-    
+    String separator = "";
+
+    for (String player_color : toDisplay.players_colors) {
+      ans.append(separator); 
+      ans.append(displayPlayerTerritories(player_color, terrGroups));
+      separator = "\n"; // empty line between two players' info
+    }
     return ans.toString();
   }
 

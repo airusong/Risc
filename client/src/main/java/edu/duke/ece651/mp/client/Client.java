@@ -5,12 +5,13 @@ package edu.duke.ece651.mp.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
@@ -67,7 +68,8 @@ public class Client {
 
         // The map should be received from master
         // using minimal V1Map for now
-        V1Map<Character> mapFromServer = new V1Map<Character>();
+        ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+        V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
         theClient.theTextPlayer.updateMap(mapFromServer);
       }
       theClient.theTextPlayer.printMap();
