@@ -20,4 +20,16 @@ public abstract class Turn<T> implements Serializable {
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         s.defaultReadObject();
     }
+
+    public Territory<T> getDep(){
+        return this.dep;
+    }
+
+    public Territory<T> getDes(){
+        return this.des;
+    }
+
+    public int getUnitNumber(){
+        return this.num_unit;
+    }
 }

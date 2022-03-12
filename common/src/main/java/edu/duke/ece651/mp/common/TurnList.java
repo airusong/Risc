@@ -23,4 +23,7 @@ public class TurnList<T> implements Serializable{
         s.defaultReadObject();
     }
     
+    public int getListLength(){
+        return order_list.size();
+    }
 }
