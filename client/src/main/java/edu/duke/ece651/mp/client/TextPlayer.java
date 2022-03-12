@@ -17,7 +17,7 @@ public class TextPlayer {
   final BufferedReader inputReader;
   final PrintStream out;
 
-  String player_info;
+  private String identity;
 
   /**
    * Constructor
@@ -33,7 +33,7 @@ public class TextPlayer {
     }
     this.inputReader = inputReader;
     this.out = out;
-    this.player_info = "";
+    this.identity = "";
   }
 
   /**
@@ -67,14 +67,11 @@ public class TextPlayer {
   }
 
   /**
-   * method to receive PlayerInfo from the server
+   * method to receive Player Color from the server
    */
-  public void receiveInfo() {
-    Object rec_obj = connectionToMaster.receiveFromServer();
-    String receivedInfo = "";
-    if (rec_obj instanceof String) {
-      receivedInfo = (String) rec_obj;
-    }
-    this.player_info = receivedInfo;
+  public void receiveIdentity() {
+    String ident = (String) connectionToMaster.receiveFromServer();
+    this.identity = ident;
   }
+
 }
