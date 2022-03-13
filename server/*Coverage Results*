@@ -1,0 +1,24 @@
++---------------------------+-----------------+------------+-----------+-----------+---------+
+|        Class Name         | Total Coverage% | Cvrd Stmts | Ttl Stmts | Cvrdd Brs | Ttl Brs |
++---------------------------+-----------------+------------+-----------+-----------+---------+
+|  mp.server.MoveChecking   |       10        |     1      |     6     |     0     |    4    |
+|     mp.server.Server      |       72        |     6      |     7     |     2     |    4    |
+|  mp.server.MasterServer   |       77        |     29     |    37     |     6     |    8    |
+|  mp.server.OwnerChecking  |       83        |     7      |     8     |     3     |    4    |
+|  mp.server.PathChecking   |       90        |     13     |    14     |     5     |    6    |
+|mp.server.MockMasterServer |       92        |     10     |    11     |     2     |    2    |
+|     mp.server.Master      |       100       |     9      |     9     |     2     |    2    |
+|  mp.server.PlayerThread   |       100       |     6      |     6     |     0     |    0    |
+|   mp.server.MasterTest    |       100       |     16     |    16     |     0     |    0    |
+|   mp.server.ServerTest    |       100       |     18     |    18     |     0     |    0    |
+|mp.server.PathCheckingTest |       100       |     9      |     9     |     0     |    0    |
+|mp.server.MasterServerTest |       100       |     28     |    28     |     0     |    0    |
+|mp.server.OwnerCheckingTest|       100       |     10     |    10     |     0     |    0    |
++---------------------------+-----------------+------------+-----------+-----------+---------+
+|          Totals           |       87        |    162     |    179    |    20     |   30    |
++---------------------------+-----------------+------------+-----------+-----------+---------+
+
+
+Remove Colors From All Buffers
+
+Fundamental finished at Sun Mar 13 12:23:03
