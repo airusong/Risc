@@ -67,7 +67,8 @@ public class Client {
       } else {
 
         // The map should be received from master
-        // using minimal V1Map for now
+        // Here we are mocking receiving player's color and map from server
+        System.out.println("My player's color: Green");
         ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
         V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
         theClient.theTextPlayer.updateMap(mapFromServer);
