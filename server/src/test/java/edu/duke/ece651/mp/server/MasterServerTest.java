@@ -1,6 +1,7 @@
 package edu.duke.ece651.mp.server;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +9,8 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.V1Map;
@@ -44,7 +45,8 @@ public class MasterServerTest {
     ms.acceptPlayers();
     assertNotNull(ms.player_socket_list);
 
-    V1Map<Character> Mymap = new V1Map<Character>();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> Mymap = new V1Map<Character>(players_colors);
     ms.sendToAll(Mymap);
     assertNotNull(ms.player_socket_list);
      

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.sound.midi.Receiver;
 
@@ -63,7 +64,9 @@ public class TextPlayer {
     // V1Map<Character> receivedMap =
     // (V1Map<Character>)connectionToMaster.receiveFromServer();
     Object rec_obj = connectionToMaster.receiveFromServer();
-    V1Map<Character> receivedMap = new V1Map<Character>();
+    // 
+    ArrayList<String> players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    V1Map<Character> receivedMap = new V1Map<Character>(players_identity);
     if (rec_obj instanceof V1Map) {
       receivedMap = (V1Map<Character>) rec_obj;
     }
@@ -76,6 +79,7 @@ public class TextPlayer {
   public void receiveIdentity() {
     String ident = (String) connectionToMaster.receiveFromServer();
     this.identity = ident;
+    out.println("My player's color: " + ident);
   }
 
 

@@ -25,9 +25,10 @@ public class Master {
    */
   public Master(int port, int num_players) throws IOException {
     this.theMasterServer = new MasterServer(port, num_players);
-    this.theMap = new V1Map<Character>();
-    this.players_identity = new ArrayList<String>(Arrays.asList("Yellow", "Green"));
+    this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList<Character>>();
+    
   }
 
   /**
