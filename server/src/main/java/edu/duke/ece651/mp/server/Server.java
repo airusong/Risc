@@ -9,7 +9,7 @@ public class Server {
     this.theMaster = new Master(port, num_players);
   }
 
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
     //int port = Integer.parseInt(args[0]);
     //int num_players = Integer.parseInt(args[1]);
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;

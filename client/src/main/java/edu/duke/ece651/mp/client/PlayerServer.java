@@ -38,12 +38,11 @@ public class PlayerServer {
 
 
   // yy - Testing
-  /*
+  
   public void sendToServer(Object obj) {
     try {
       OutputStream o = socket.getOutputStream();
       ObjectOutputStream s = new ObjectOutputStream(o);
-
       s.writeObject(obj);
       s.flush();
       //s.close();
@@ -53,7 +52,7 @@ public class PlayerServer {
           e.printStackTrace();
      }
   }
-  */
+  
 
 
 }

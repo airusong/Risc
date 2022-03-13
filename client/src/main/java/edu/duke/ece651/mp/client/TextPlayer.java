@@ -84,22 +84,22 @@ public class TextPlayer {
 
 
   // yy - Testing
-  /*
+  
   public Turn createTurn() {
     Territory<Character> t1 = new Territory<Character>("Narnia","Green",new ArrayList<String>(),8);
     Territory<Character> t2 = new Territory<Character>("Midemio","Green",new ArrayList<String>(),3);
     MoveTurn<Character> mt = new MoveTurn<Character>("move", t1, t2, 2, 1);
     return (Turn) mt;
   }
-  */
+  
 
   // yy - Testing
-  /*
+  
   public void sendTurn(){
     Turn t  = createTurn();
     TurnList t_list = new TurnList<>("player_info");
     t_list.order_list.add(t);
     connectionToMaster.sendToServer(t_list);
   }
-  */
+  
 }

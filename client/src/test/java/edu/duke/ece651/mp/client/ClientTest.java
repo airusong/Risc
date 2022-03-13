@@ -22,6 +22,7 @@ import org.junit.jupiter.api.parallel.Resources;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
+  
   @Test
   void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));

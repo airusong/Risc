@@ -22,7 +22,7 @@ public class ServerTest {
     @Disabled
     @Test
     @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
-    void test_main_1() throws IOException, ClassNotFoundException{
+    void test_main_1() throws IOException, ClassNotFoundException, InterruptedException{
         // Output
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(bytes, true);

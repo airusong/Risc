@@ -40,18 +40,13 @@ public class Client {
 
       if (servername != "null") {
         // Send "Ready "message to Server
-        OutputStream os = theClient.theTextPlayer.connectionToMaster.socket.getOutputStream();
-        PrintWriter out = new PrintWriter(os, true);
+
         String msg = "Client is ready.";
-        System.out.println(msg);
-        out.println(msg);
-        out.flush();
-
-
+        theClient.theTextPlayer.connectionToMaster.sendToServer(msg);
+        
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
-        // theClient.theTextPlayer.sendTurn(); // yy - testing
-        os.close();
+        theClient.theTextPlayer.sendTurn(); // yy - testing
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {

@@ -40,7 +40,7 @@ public class MasterServer {
     return this.port;
   }
 
-  public void acceptPlayers() throws IOException {
+  public void acceptPlayers() throws IOException, InterruptedException {
     // ExecutorService threadPool = Executors.newFixedThreadPool(num_players);
     // Socket player_socket;
     int connectedPlayers = 0;
@@ -55,6 +55,9 @@ public class MasterServer {
       Thread t = new Thread(pth);
       // new Thread(new PlayerThread(player_socket)).start();
       t.start();
+      t.join();
+      String rev = (String)pth.obj;
+      System.out.print(rev);
     }
     System.out.println("Server is connected to ALL the players.");
   }
@@ -140,17 +143,20 @@ public class MasterServer {
    * 
    * @throws IOException
    * @throws ClassNotFoundException
+   * @throws InterruptedException
    */
   @SuppressWarnings("unchecked")
-  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException {
+  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
     // ArrayList<Turn<Character>> order_list = new ArrayList<Turn<Character>>(); 
     int connectedPlayers = 0;
 
     while (connectedPlayers < num_players) {
-      HandleTurnThread<Character> th = new HandleTurnThread<Character>(player_socket_list.get(connectedPlayers));
+      PlayerThread<Character> th = new PlayerThread<Character>(player_socket_list.get(connectedPlayers));
       Thread t = new Thread(th);
       t.start();
-      this.all_order_list.add(th.turn_list);
+      t.join();
+      TurnList turn_list = (TurnList)th.obj;
+      this.all_order_list.add(turn_list);
       connectedPlayers++;
     }
     System.out.println("Server received lists of orders from all players.");

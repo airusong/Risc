@@ -33,9 +33,10 @@ public class Master {
 
   /**
    * @throws IOException
+   * @throws InterruptedException
    *
    */
-  public void acceptPlayers() throws IOException {
+  public void acceptPlayers() throws IOException, InterruptedException {
     this.theMasterServer.acceptPlayers();
   }
 
@@ -75,8 +76,9 @@ public class Master {
    * 
    * @throws IOException
    * @throws ClassNotFoundException
+   * @throws InterruptedException
    */
-  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException {
+  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
     theMasterServer.receiveTurnListFromAllPlayers();
     this.all_order_list = theMasterServer.all_order_list;
   }
