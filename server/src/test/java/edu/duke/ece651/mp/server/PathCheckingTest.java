@@ -16,6 +16,7 @@ public class PathCheckingTest {
     V1Map<Character> map = new V1Map<>(players_colors);
     PathChecking<Character> check=new PathChecking<>(null); 
     assertEquals(check.checkMyRule(map,"Narnia","Midemio",2), null);
+    assertEquals(check.checkMyRule(map,"Narnia","Oz",2), null);
   }
   @Test
   public void test_chain(){
@@ -24,6 +25,7 @@ public class PathCheckingTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     V1Map<Character> map = new V1Map<>(players_colors);
     assertEquals(mcheck.checkMyRule(map,"Narnia","Midemio",2),null);
+    //assertEquals(mcheck.checkMyRule(map,"Narnia","Elantris",2), "no valid path exists");
   }
 
 }

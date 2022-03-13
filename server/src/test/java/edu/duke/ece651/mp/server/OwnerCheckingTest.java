@@ -27,5 +27,6 @@ public class OwnerCheckingTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     V1Map<Character> map = new V1Map<>(players_colors);
     assertEquals(mcheck.checkMyRule(map,"Narnia","Midemio",3),null);
+    assertEquals(mcheck.checkMyRule(map,"Narnia","Elantris",3),"not same owner");
   }
 }

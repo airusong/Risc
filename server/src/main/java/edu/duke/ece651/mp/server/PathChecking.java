@@ -12,8 +12,9 @@ public class PathChecking<T> extends MoveChecking<T>{
   public String checkMyRule(V1Map<T> map,String source,String destination,int movingunits){
     Deque<Territory<T>> stack=new ArrayDeque<>();
     HashSet<Territory<T>> visited=new HashSet<>();
-    stack.push(map.myTerritories.get(source));
-    
+    Territory<T> start=map.myTerritories.get(source);
+    stack.push(start);
+    String colorID=start.getColor();
     while(!stack.isEmpty()){
       Territory<T> currTerritory=stack.pop();
       String currname=currTerritory.getName();
@@ -23,7 +24,8 @@ public class PathChecking<T> extends MoveChecking<T>{
       if(!visited.contains(currTerritory)){
         visited.add(currTerritory);
         for(String s:currTerritory.getAdjacency()){
-          stack.push(map.myTerritories.get(s));
+          Territory<T> thisTerritory=map.myTerritories.get(s);
+          if(thisTerritory.getColor().equals(colorID)) stack.push(thisTerritory);
         }
       }
     }

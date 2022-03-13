@@ -11,7 +11,7 @@ public class OwnerChecking<T> extends MoveChecking<T>{
     Territory<T> s=map.myTerritories.get(source);
     Territory<T> d=map.myTerritories.get(destination);
     if(!s.getColor().equals(d.getColor())){
-      return "not same onwer";
+      return "not same owner";
     }else if(s.getUnit()<movingunit){
       return "Insuffcient units";
     }else{
