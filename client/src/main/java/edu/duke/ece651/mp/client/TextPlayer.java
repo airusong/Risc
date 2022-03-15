@@ -84,7 +84,7 @@ public class TextPlayer {
 
 
   // yy - Testing
-  
+  /* method to create Turn. */
   public Turn createTurn() {
     Territory<Character> t1 = new Territory<Character>("Narnia","Green",new ArrayList<String>(),8);
     Territory<Character> t2 = new Territory<Character>("Midemio","Green",new ArrayList<String>(),3);
@@ -94,6 +94,7 @@ public class TextPlayer {
   
 
   // yy - Testing
+  /* method to send the turn */
   public void sendTurn(){
     Turn t  = createTurn();
     TurnList t_list = new TurnList<>("player_info");

@@ -20,12 +20,17 @@ public class PlayerServer {
     this.socket = new Socket(servername, port);
   }
 
+  /**
+   * Method to receive Object from Server
+   * 
+   * @return Object
+   */
   public Object receiveFromServer() {
     try {
       InputStream o = socket.getInputStream();
       ObjectInputStream s = new ObjectInputStream(o);
       Object obj = s.readObject();
-      //s.close();
+      // s.close();
       return obj;
 
     } catch (Exception e) {
@@ -36,21 +41,23 @@ public class PlayerServer {
     }
   }
 
-  // yy - Testing
+  /**
+   * Method to send Object from Server
+   * 
+   * @input Object 
+   */
   public void sendToServer(Object obj) {
     try {
       OutputStream o = socket.getOutputStream();
       ObjectOutputStream s = new ObjectOutputStream(o);
       s.writeObject(obj);
       s.flush();
-      //s.close();
+      // s.close();
     } catch (Exception e) {
-          System.out.println(e.getMessage());
-          System.out.println("Error during serialization");
-          e.printStackTrace();
-     }
+      System.out.println(e.getMessage());
+      System.out.println("Error during serialization");
+      e.printStackTrace();
+    }
   }
-  
-
 
 }

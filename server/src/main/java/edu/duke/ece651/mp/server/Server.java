@@ -15,7 +15,6 @@ public class Server {
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
     int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 2 ;
     Master theMaster = new Master(port, num_players);
-
     
     theMaster.acceptPlayers();
     theMaster.sendPlayerIdentityToAll();
