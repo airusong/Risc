@@ -17,6 +17,7 @@ public class Master {
   public V1Map<Character> theMap;
   public ArrayList<String> players_identity;
   public ArrayList<TurnList<Character>> all_order_list;
+  HandleOrder theHandleOrder;
 
   /**
    * Constructor
@@ -28,7 +29,7 @@ public class Master {
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList<Character>>();
-    
+    this.theHandleOrder = new HandleOrder(all_order_list, theMap);
   }
 
   /**
@@ -84,54 +85,10 @@ public class Master {
   }
 
   /**
-   * Method to handle Orders
+   * Method to handle orders
    * 
-   * @throws IOException
-   * @throws ClassNotFoundException
    */
-  public void handleOrder() {
-    for(int i=0; i<all_order_list.size(); i++){
-      TurnList curr = all_order_list.get(i);
-      for(int j=0; j<curr.getListLength();j++){
-        Turn curr_turn = (Turn) curr.order_list.get(j);
-        if(curr_turn.type == "move"){
-          handleMoveOrder(curr_turn);
-        }
-        else if(curr_turn.type == "attack"){
-          // handleAttackOrder(curr_turn);
-        }
-        else{
-          // handle others Action
-        }
-      }
-    }
-
+  public void handleOrders() {
+    theHandleOrder.handleOrders();
   }
-
-  /**
-   * Method to handle Move Orders
-   * 
-   * @throws IOException
-   * @throws ClassNotFoundException
-   */
-
-  public void handleMoveOrder(Turn moveOrder) {
-    // how to handle move action??
-    // TO DO: add RuleChecker
-    int move_num = moveOrder.getNumber();
-    Territory dep = moveOrder.getDep();
-    Territory des = moveOrder.getDes();
-    int player_id = moveOrder.getPlayerID();
-    
-    // update Territory & Map
-    int unit_num_dep = theMap.myTerritories.get(dep.getName()).getUnit();
-    int new_unit_num_dep = unit_num_dep - move_num;
-    
-    int unit_num_des = theMap.myTerritories.get(des.getName()).getUnit();
-    int new_unit_num_des = unit_num_des + move_num;
-
-    theMap.updateMap(dep.getName(), des.getName(),new_unit_num_dep, new_unit_num_des);
-
-  }
-
 }

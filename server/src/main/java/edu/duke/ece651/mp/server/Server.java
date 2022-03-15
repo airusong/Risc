@@ -20,7 +20,7 @@ public class Server {
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
     theMaster.receiveTurnListFromAllPlayers();
-    theMaster.handleOrder();
+    theMaster.handleOrders();
   }
 
 }

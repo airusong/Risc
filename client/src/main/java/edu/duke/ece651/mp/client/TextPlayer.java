@@ -64,7 +64,7 @@ public class TextPlayer {
     // V1Map<Character> receivedMap =
     // (V1Map<Character>)connectionToMaster.receiveFromServer();
     Object rec_obj = connectionToMaster.receiveFromServer();
-    // 
+    //
     ArrayList<String> players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     V1Map<Character> receivedMap = new V1Map<Character>(players_identity);
     if (rec_obj instanceof V1Map) {
@@ -82,24 +82,20 @@ public class TextPlayer {
     out.println("My player's color: " + ident);
   }
 
-
   // yy - Testing
-  /* method to create Turn. */
   public Turn createTurn() {
-    Territory<Character> t1 = new Territory<Character>("Narnia","Green",new ArrayList<String>(),8);
-    Territory<Character> t2 = new Territory<Character>("Midemio","Green",new ArrayList<String>(),3);
+    Territory<Character> t1 = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 8);
+    Territory<Character> t2 = new Territory<Character>("Midemio", "Green", new ArrayList<String>(), 3);
     MoveTurn<Character> mt = new MoveTurn<Character>("move", t1, t2, 2, 1);
     return (Turn) mt;
   }
-  
 
   // yy - Testing
-  /* method to send the turn */
-  public void sendTurn(){
-    Turn t  = createTurn();
+  public void sendTurn() {
+    Turn t = createTurn();
     TurnList t_list = new TurnList<>("player_info");
     t_list.order_list.add(t);
     connectionToMaster.sendToServer(t_list);
   }
-  
+
 }

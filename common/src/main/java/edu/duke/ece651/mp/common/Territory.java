@@ -96,9 +96,12 @@ public class Territory<T> implements ITerritory<T>, Serializable {
     // other fields go here
   }
 
-  /* Method to update the unit according to Move Order */
-  public void updateTerritory(int new_unit_num) {
-    this.unit = new_unit_num;
+  public void updateUnit(int new_unit){
+    this.unit = new_unit;
+  }
+
+  public void updateColor(String new_color){
+    this.color = new_color;
   }
 
 }
