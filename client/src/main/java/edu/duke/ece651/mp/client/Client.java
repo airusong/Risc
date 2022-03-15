@@ -40,10 +40,8 @@ public class Client {
 
       if (servername != "null") {
         // Send "Ready "message to Server
-
         String msg = "Client is ready.";
         theClient.theTextPlayer.connectionToMaster.sendToServer(msg);
-        
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
         theClient.theTextPlayer.sendTurn(); // yy - testing

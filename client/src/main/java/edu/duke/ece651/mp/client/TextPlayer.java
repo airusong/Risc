@@ -94,7 +94,6 @@ public class TextPlayer {
   
 
   // yy - Testing
-  
   public void sendTurn(){
     Turn t  = createTurn();
     TurnList t_list = new TurnList<>("player_info");

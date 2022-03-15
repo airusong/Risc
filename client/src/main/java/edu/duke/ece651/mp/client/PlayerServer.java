@@ -36,9 +36,7 @@ public class PlayerServer {
     }
   }
 
-
   // yy - Testing
-  
   public void sendToServer(Object obj) {
     try {
       OutputStream o = socket.getOutputStream();

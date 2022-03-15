@@ -25,7 +25,6 @@ public class MasterServer {
   public ArrayList<Socket> player_socket_list;
   public Socket player_socket;
   public ArrayList<TurnList<Character>> all_order_list;
-  //public ArrayList<Turn<Character>> order_list;
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
@@ -45,10 +44,9 @@ public class MasterServer {
     // Socket player_socket;
     int connectedPlayers = 0;
 
+    System.out.println("Server is waiting...");
     while (connectedPlayers < num_players) {
-      System.out.println("Server is waiting...");
       player_socket = server_socket.accept();
-      System.out.println("Server accepted.");
       player_socket_list.add(player_socket);
       connectedPlayers++;
       PlayerThread pth = new PlayerThread(player_socket);
@@ -56,8 +54,8 @@ public class MasterServer {
       // new Thread(new PlayerThread(player_socket)).start();
       t.start();
       t.join();
-      String rev = (String)pth.obj;
-      System.out.print(rev);
+      // String rev = (String)pth.obj;
+      // System.out.print(rev);
     }
     System.out.println("Server is connected to ALL the players.");
   }
@@ -122,7 +120,6 @@ public class MasterServer {
       sendToPlayer(player_color, player_socket_list.get(i));
     }
   }
-
 
   /**
    * Method to receive Object over the socket
