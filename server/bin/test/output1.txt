@@ -1,4 +1,0 @@
-Server is waiting...
-Server accepted.
-Server is connected to ALL the players.
-Sending color to player: Green
