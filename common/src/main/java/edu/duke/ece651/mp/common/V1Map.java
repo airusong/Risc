@@ -131,6 +131,8 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     Territory t2 = myTerritories.get(des);
     t1.updateUnit(n1);
     t2.updateUnit(n2);
+    myTerritories.put(t1.getName(), t1);
+    myTerritories.put(t2.getName(), t2);
   }
 
   /* Increase #Units after fighting */

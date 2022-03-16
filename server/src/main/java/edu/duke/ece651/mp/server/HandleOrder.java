@@ -60,7 +60,7 @@ public class HandleOrder {
         int move_num = moveOrder.getNumber();
         Territory dep = moveOrder.getDep();
         Territory des = moveOrder.getDes();
-        int player_id = moveOrder.getPlayerID();
+        String player_color = moveOrder.getPlayerColor();
 
         // update Territory & Map
         int unit_num_dep = ((Territory) theMap.myTerritories.get(dep.getName())).getUnit();
@@ -81,7 +81,8 @@ public class HandleOrder {
         int attack_num = attackOrder.getNumber();
         Territory dep = attackOrder.getDep();
         Territory des = attackOrder.getDes();
-        int player_id = attackOrder.getPlayerID();
+        String player_color = attackOrder.getPlayerColor();
+        // TO DO: 
     }
 
 

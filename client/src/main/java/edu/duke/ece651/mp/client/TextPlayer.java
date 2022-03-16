@@ -86,7 +86,7 @@ public class TextPlayer {
   public Turn createTurn() {
     Territory<Character> t1 = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 8);
     Territory<Character> t2 = new Territory<Character>("Midemio", "Green", new ArrayList<String>(), 3);
-    MoveTurn<Character> mt = new MoveTurn<Character>("move", t1, t2, 2, 1);
+    MoveTurn<Character> mt = new MoveTurn<Character>("move", t1, t2, 2, "Green");
     return (Turn) mt;
   }
 

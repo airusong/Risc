@@ -11,7 +11,8 @@ public abstract class Turn<T> implements Serializable {
     public Territory<T> des;
     public int num_unit;
     //public TextPlayer player;
-    public int player_id;
+    //public int player_id;
+    public String player_color;
     
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
@@ -33,7 +34,12 @@ public abstract class Turn<T> implements Serializable {
         return this.num_unit;
     }
 
+    /*
     public int getPlayerID(){
         return this.player_id;
+    }
+    */
+    public String getPlayerColor(){
+        return this.player_color;
     }
 }
