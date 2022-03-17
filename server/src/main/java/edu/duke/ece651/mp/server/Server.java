@@ -17,7 +17,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
     int port = args.length > 1 ? Integer.parseInt(args[0]) : 8080;
-    int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 2 ;
+    int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 1 ;
     //int port = Integer.parseInt(args[0]);
     //int num_players = Integer.parseInt(args[1]);
     Master theMaster = new Master(port, num_players);
@@ -25,8 +25,8 @@ public class Server {
     theMaster.acceptPlayers();
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
-    //theMaster.receiveTurnListFromAllPlayers();
-    //theMaster.handleOrders();
+    theMaster.receiveTurnListFromAllPlayers();
+    theMaster.handleOrders();
   }
 
 }
