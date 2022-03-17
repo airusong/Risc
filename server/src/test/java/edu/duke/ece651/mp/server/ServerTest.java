@@ -19,7 +19,7 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ServerTest {
-    @Disabled
+    //@Disabled
     @Test
     @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
     void test_main_1() throws IOException, ClassNotFoundException, InterruptedException{
@@ -41,7 +41,9 @@ public class ServerTest {
             System.setOut(out);
             //String[] args = {"8080","2"};
             String[] args = {"0"};
+            //assertNotNull(Server.theMaster.theMasterServer.server_socket);
             Server.main(args);
+
         }
         finally {
             System.setIn(oldIn);

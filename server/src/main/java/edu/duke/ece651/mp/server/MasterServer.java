@@ -28,6 +28,7 @@ public class MasterServer {
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
+    
     if (port != 0) {
       try {
         // create socket and bind it to port
@@ -40,6 +41,7 @@ public class MasterServer {
     else {
       this.server_socket = null;
     }
+
     this.num_players = num_players;
     this.player_socket_list = new ArrayList<Socket>();
     this.all_order_list = new ArrayList<TurnList>();

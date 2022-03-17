@@ -16,7 +16,6 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class HandleOrderTest {
     
-    //@Disabled
     @Test
     public void test_handleAllMoveOrder(){
         V1Map theMap = new V1Map();
@@ -29,8 +28,8 @@ public class HandleOrderTest {
         assertNotNull(all_order_list);
         HandleOrder ho = new HandleOrder(all_order_list, theMap);
         ho.handleAllMoveOrder();
-        assertEquals(7, ((Territory<Character>) theMap.myTerritories.get("Narnia")).getUnit());
-        assertEquals(4, ((Territory<Character>) theMap.myTerritories.get("Midemio")).getUnit());
+        assertEquals(7, ((Territory<Character>) ho.theMap.myTerritories.get("Narnia")).getUnit());
+        assertEquals(4, ((Territory<Character>) ho.theMap.myTerritories.get("Midemio")).getUnit());
     }
     
     @Test
@@ -55,11 +54,9 @@ public class HandleOrderTest {
 
     @Test
     public void test_updateMapbyOneUnit(){
-        V1Map theMap = new V1Map();
-        assertNotNull(theMap);
         HandleOrder ho = new HandleOrder();
-        ho.updateMapbyOneUnit(theMap);
-        assertEquals(9, ((Territory<Character>) theMap.myTerritories.get("Narnia")).getUnit());
+        ho.updateMapbyOneUnit();
+        assertEquals(9, ((Territory<Character>) ho.theMap.myTerritories.get("Narnia")).getUnit());
     }
 
 }

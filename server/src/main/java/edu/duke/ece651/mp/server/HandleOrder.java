@@ -32,8 +32,7 @@ public class HandleOrder {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) (curr.order_list.get(j));
-                System.out.println(curr_turn.type);
-                if (curr_turn.getTurnType().equals("move")) {
+                if (curr_turn.getTurnType().equals("Move")) {
                     handleSingleMoveOrder(curr_turn);
                 }
             }
@@ -49,7 +48,7 @@ public class HandleOrder {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
-                if (curr_turn.getTurnType().equals("attack")) {
+                if (curr_turn.getTurnType().equals("Attack")) {
                     handleSingleAttackOrder(curr_turn);
                 }
             }
@@ -71,7 +70,7 @@ public class HandleOrder {
         int new_unit_num_dep = unit_num_dep - move_num;
         int unit_num_des = ((Territory) theMap.myTerritories.get(des)).getUnit();
         int new_unit_num_des = unit_num_des + move_num;
-        theMap.updateMap(theMap, dep, des, new_unit_num_dep, new_unit_num_des);
+        theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
     }
 
     /**
@@ -92,8 +91,8 @@ public class HandleOrder {
      * Method to handle Attack Order
      * 
      */
-    public void updateMapbyOneUnit(V1Map theMap){
-        theMap.updateMapbyOneUnit(theMap);
+    public void updateMapbyOneUnit(){
+        theMap.updateMapbyOneUnit();
     }
 
     /**

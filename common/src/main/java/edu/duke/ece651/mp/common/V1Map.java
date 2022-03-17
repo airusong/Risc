@@ -136,22 +136,23 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /* Update Map according to move order */
-  public void updateMap(V1Map theMap, String dep, String des, int n1, int n2) {
-    Territory t1 = (Territory) theMap.myTerritories.get(dep);
-    Territory t2 = (Territory) theMap.myTerritories.get(des);
+  public void updateMap(String dep, String des, int n1, int n2) {
+    Territory t1 = myTerritories.get(dep);
+    Territory t2 = myTerritories.get(des);
+    
     t1.updateUnit(n1);
     t2.updateUnit(n2);
-    theMap.myTerritories.put(dep, t1);
-    theMap.myTerritories.put(des, t2);
+    myTerritories.put(dep, t1);
+    myTerritories.put(des, t2);
   }
 
   /* Increase #Units after fighting */
-  public void updateMapbyOneUnit(V1Map theMap) {
-    HashMap<String, Territory<T>> myT = theMap.myTerritories;
+  public void updateMapbyOneUnit() {
+    HashMap<String, Territory<T>> myT = myTerritories;
     for(Map.Entry<String,Territory<T>> set: myT.entrySet()){
       Territory<T> temp = set.getValue();
       temp.updateUnit(temp.getUnit() + 1);
-      theMap.myTerritories.put(temp.getName(), temp);
+      myTerritories.put(temp.getName(), temp);
     }
   }
 

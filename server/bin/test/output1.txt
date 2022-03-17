@@ -1,7 +1,1 @@
 Server is waiting...
-<<<<<<< HEAD
-=======
-Server accepted.
-Server is connected to ALL the players.
-Sending color to player: Green
->>>>>>> ecd724b1f6bfd9fe707fe08129fd4fe91f42abd0

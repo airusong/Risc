@@ -18,10 +18,14 @@ public class Server {
   public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
     int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 2 ;
+    System.out.println("Test");
+    System.out.println(port);
+    System.out.println(num_players);
     //int port = Integer.parseInt(args[0]);
     //int num_players = Integer.parseInt(args[1]);
     Master theMaster = new Master(port, num_players);
-  
+    //System.out.println(theMaster.theMasterServer.getPort());
+    //System.out.println(theMaster.theMasterServer.num_players);
     theMaster.acceptPlayers();
     theMaster.sendPlayerIdentityToAll();
     theMaster.sendMapToAll();
