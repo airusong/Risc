@@ -1,6 +1,13 @@
+My player's color: Green
 Green player:
 -----------
+8 units in Narnia (next to: Midemio, Elantris)
+3 units in Midemio (next to: Narnia, Oz)
+12 units in Oz (next to: Midemio, Roshar)
 
 Blue player:
 -----------
+7 units in Elantris (next to: Scadnal, Narnia)
+6 units in Roshar (next to: Oz, Scadnal)
+10 units in Scadnal (next to: Roshar, Elantris)
 

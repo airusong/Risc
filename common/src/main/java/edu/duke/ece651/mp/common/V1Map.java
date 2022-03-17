@@ -43,9 +43,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     // PLAYER 2
     player_color = players_colors.get(1);
-    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10));
-    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 4));
+    myTerritories.put("Elantris", new Territory<T>("Elantris",player_color,new ArrayList<String>(),7));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal",player_color,new ArrayList<String>(),10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar",player_color,new ArrayList<String>(),6));
   }
 
   /**

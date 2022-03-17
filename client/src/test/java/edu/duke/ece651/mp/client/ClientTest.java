@@ -35,19 +35,18 @@ public class ClientTest {
     
     String expected = "Green player:\n"
       + "-----------\n"
-      + "Narnia (next to: Midemio, Elantris)\n"
-      + "Midemio (next to: Narnia, Oz)\n"
-      + "Oz (next to: Midemio, Roshar)\n"
+      + "8 units in Narnia (next to: Midemio, Elantris)\n"
+      + "3 units in Midemio (next to: Narnia, Oz)\n"
+      + "12 units in Oz (next to: Midemio, Roshar)\n"
       + "\n"
       + "Blue player:\n"
       + "-----------\n"
-      + "Elantris (next to: Scadnal, Narnia)\n"
-      + "Roshar (next to: Oz, Scadnal)\n"
-      + "Scadnal (next to: Roshar, Elantris)\n";
+      + "7 units in Elantris (next to: Scadnal, Narnia)\n"
+      + "6 units in Roshar (next to: Oz, Scadnal)\n"
+      + "10 units in Scadnal (next to: Roshar, Elantris)\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
-  @Disabled
   @Test
   @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
   void test_main_V1() throws IOException, InterruptedException {

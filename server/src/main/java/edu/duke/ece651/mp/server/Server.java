@@ -9,9 +9,13 @@ public class Server {
     this.theMaster = new Master(port, num_players);
   }
 
-  public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-    //int port = Integer.parseInt(args[0]);
-    //int num_players = Integer.parseInt(args[1]);
+
+  /**
+   * Main program for Server
+   * @throws InterruptedException
+   * @throws ClassNotFoundException
+   */
+  public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
     int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 2 ;
     Master theMaster = new Master(port, num_players);

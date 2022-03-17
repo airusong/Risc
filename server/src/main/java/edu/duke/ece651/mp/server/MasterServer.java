@@ -28,8 +28,18 @@ public class MasterServer {
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
-    // create socket and bind it to port
-    this.server_socket = new ServerSocket(port);
+    if (port != 0) {
+      try {
+        // create socket and bind it to port
+        this.server_socket = new ServerSocket(port);
+      } catch (Exception e) {
+        // print exception message about Throwable object
+        e.printStackTrace();
+      }
+    }
+    else {
+      this.server_socket = null;
+    }
     this.num_players = num_players;
     this.player_socket_list = new ArrayList<Socket>();
     this.all_order_list = new ArrayList<TurnList<Character>>();
@@ -86,12 +96,12 @@ public class MasterServer {
 
       s.writeObject(obj);
       s.flush();
-      //s.close();
+      // s.close();
     } catch (Exception e) {
-          System.out.println(e.getMessage());
-          System.out.println("Error during serialization");
-          e.printStackTrace();
-     }
+      System.out.println(e.getMessage());
+      System.out.println("Error during serialization");
+      e.printStackTrace();
+    }
   }
 
   /* Close Server Socket. */
@@ -114,7 +124,7 @@ public class MasterServer {
    * @throws IOException
    */
   public void sendPlayerIdentityToAll(List<String> players_identity) {
-    for (int i=0; i<player_socket_list.size(); ++i) {
+    for (int i = 0; i < player_socket_list.size(); ++i) {
       String player_color = players_identity.get(i);
       System.out.println("Sending color to player: " + player_color);
       sendToPlayer(player_color, player_socket_list.get(i));
