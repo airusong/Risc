@@ -155,4 +155,11 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     }
   }
 
+  public ArrayList<String> getPlayerTerritories(String player_color) {
+        HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
+    ArrayList<String> terrList = terrGroups.get(player_color);
+    return terrList;
+
+  }
+  
 }

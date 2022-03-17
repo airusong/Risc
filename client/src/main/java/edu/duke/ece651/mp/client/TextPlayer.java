@@ -1,14 +1,15 @@
 package edu.duke.ece651.mp.client;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
+import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
@@ -58,15 +59,7 @@ public class TextPlayer {
    */
   @SuppressWarnings("unchecked")
   public void receiveMap() {
-    // V1Map<Character> receivedMap =
-    // (V1Map<Character>)connectionToMaster.receiveFromServer();
-    Object rec_obj = connectionToMaster.receiveFromServer();
-    //
-    ArrayList<String> players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
-    V1Map<Character> receivedMap = new V1Map<Character>(players_identity);
-    if (rec_obj instanceof V1Map) {
-      receivedMap = (V1Map<Character>) rec_obj;
-    }
+    V1Map<Character> receivedMap = (V1Map<Character>) connectionToMaster.receiveFromServer();
     updateMap(receivedMap);
   }
 
@@ -75,24 +68,164 @@ public class TextPlayer {
    */
   public void receiveIdentity() {
     String ident = (String) connectionToMaster.receiveFromServer();
-    this.identity = ident;
+    setIdentity(ident);
     out.println("My player's color: " + ident);
   }
 
-  // yy - Testing
-  public Turn createTurn() {
-    Territory<Character> t1 = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 8);
-    Territory<Character> t2 = new Territory<Character>("Midemio", "Green", new ArrayList<String>(), 3);
-    MoveTurn<Character> mt = new MoveTurn<Character>("move", "Narnia", "Midemio", 2, "Green");
-    return (Turn) mt;
+  public void setIdentity(String ident) {
+    this.identity = ident;
+
   }
 
-  // yy - Testing
-  public void sendTurn() {
-    Turn t = createTurn();
-    TurnList t_list = new TurnList<>("player_info");
-    t_list.order_list.add(t);
-    connectionToMaster.sendToServer(t_list);
+  public void takeAndSendTurn() throws IOException {
+    TurnList newTurn = takeTurn();
+    connectionToMaster.sendToServer(newTurn);
+  }
+
+  /**
+   * method to ask player for entering their turn
+   */
+  public TurnList takeTurn() throws IOException {
+    TurnList myTurn = new TurnList(identity);
+
+    out.println("You are the " + identity + " player and it's time to take your turn!.\n"
+        + "There are two types of orders that you may issue: move and attack."
+        + "You may issue any number of each type of these orders in a turn."
+        + "Once you're done enetering your orders, hit D and your turn will be sent to the server.\n");
+
+    char enteredOrder = 'D'; // by default
+    do {
+      try {
+        out.println("\nEnter new order (M or A or D)\n" + "(M)ove\n" + "(A)ttack\n" + "(D)one");
+        enteredOrder = readOrder();
+        switch (enteredOrder) {
+        case 'M':
+        case 'A':
+          Turn newOrder = readOrderDetails(enteredOrder);
+          myTurn.addTurn(newOrder);
+          break;
+
+        case 'D':
+          break;
+        }
+
+      } catch (IllegalArgumentException ex) {
+        out.println(ex.getMessage());
+        out.println("Please re-enter correctly!");
+        continue;
+      }
+    } while (enteredOrder != 'D');
+    return myTurn;
+  }
+
+  /**
+   * method to read only the order type from the player
+   */
+  private char readOrder() throws IOException, EOFException {
+    String s = inputReader.readLine();
+    if (s == null) {
+      throw new EOFException("Error in input readline.");
+    }
+
+    String invalidFormatException = "That order is invalid: it does not have the correct format.";
+    if (s.length() != 1) {
+      throw new IllegalArgumentException(invalidFormatException);
+    }
+
+    char enteredLetter = s.toUpperCase().charAt(0);
+    if (enteredLetter != 'M' && enteredLetter != 'A' && enteredLetter != 'D') {
+      throw new IllegalArgumentException(invalidFormatException);
+    } else if (enteredLetter == 'M') {
+      out.println("Requested order: Move");
+    }
+
+    else if (enteredLetter == 'A') {
+      out.println("Requested order: Attack");
+    } else { // 'D'
+      out.println("Done with the turn!");
+    }
+
+    return enteredLetter;
+  }
+
+  /**
+   * method to read details about move and attack orders and add the order to the
+   * TurnList
+   * 
+   * @return the Turn object (Move or Attack)
+   */
+  private Turn readOrderDetails(char orderType) throws IOException, EOFException {
+    Turn newOrder;
+    ArrayList<String> terrOptions = new ArrayList<String>();
+    int enteredOption;
+
+    // from which territory (only player's own territories)
+    out.println("- From which territory? (Enter the option# from following list)");
+    terrOptions = getMyOwnTerritories();
+    out.print(view.displayTerritoriesAsList(terrOptions));
+    enteredOption = readOption(terrOptions.size());
+    String fromTerritory = terrOptions.get(enteredOption - 1);
+    out.println("You selected " + fromTerritory + " as the source.");
+
+    // to which territory (only other players' territories)
+    out.println("- To which territory? (Enter the option# from following list)");
+    terrOptions = getOthersTerritories();
+    out.print(view.displayTerritoriesAsList(terrOptions));
+    enteredOption = readOption(terrOptions.size());
+    String toTerritory = terrOptions.get(enteredOption - 1);
+    out.println("You selected " + toTerritory + " as the destination.");
+
+    // how many units?
+    out.println("- How many units?");
+    int units = readOption(0);
+    out.println("Requested " + units + " units.");
+
+    if (orderType == 'M') {
+      newOrder = new MoveTurn(fromTerritory, toTerritory, units, identity);
+    } else { // 'A'
+      newOrder = new AttackTurn(fromTerritory, toTerritory, units, identity);
+    }
+
+    return newOrder;
+  }
+
+  /**
+   * this method takes an input number from the user
+   * 
+   * @param totalOptions (if 0, this is ignored)
+   */
+  private int readOption(int totalOptions) throws IOException, EOFException {
+    int enteredOption;
+    while (true) {
+      String s = inputReader.readLine();
+      if (s == null) {
+        throw new EOFException("Error in input readline.");
+      }
+
+      enteredOption = Integer.valueOf(s);
+      if (enteredOption < 1 || (totalOptions != 0 && enteredOption > totalOptions)) {
+        out.println("Invalid option: please enter again!");
+        continue;
+      }
+      break;
+    }
+
+    return enteredOption;
+  }
+
+  private ArrayList<String> getMyOwnTerritories() {
+    return theMap.getPlayerTerritories(identity);
+  }
+
+  private ArrayList<String> getOthersTerritories() {
+    String player_color = identity; // just for init
+    for (int index = 0; index < 2; index++) {
+      String color = theMap.players_colors.get(index);
+      if (color != identity) {
+        player_color = color;
+      }
+    }
+    return theMap.getPlayerTerritories(player_color);
   }
 
 }

@@ -24,7 +24,7 @@ public class MasterServer {
   public int num_players;
   public ArrayList<Socket> player_socket_list;
   public Socket player_socket;
-  public ArrayList<TurnList<Character>> all_order_list;
+  public ArrayList<TurnList> all_order_list;
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
@@ -42,7 +42,7 @@ public class MasterServer {
     }
     this.num_players = num_players;
     this.player_socket_list = new ArrayList<Socket>();
-    this.all_order_list = new ArrayList<TurnList<Character>>();
+    this.all_order_list = new ArrayList<TurnList>();
   }
 
   public int getPort() {

@@ -15,7 +15,7 @@ public class Master {
   final MasterServer theMasterServer;
   public V1Map<Character> theMap;
   public ArrayList<String> players_identity;
-  public ArrayList<TurnList<Character>> all_order_list;
+  public ArrayList<TurnList> all_order_list;
   HandleOrder theHandleOrder;
 
   /**
@@ -27,7 +27,7 @@ public class Master {
     this.theMasterServer = new MasterServer(port, num_players);
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
-    this.all_order_list = new ArrayList<TurnList<Character>>();
+    this.all_order_list = new ArrayList<TurnList>();
     this.theHandleOrder = new HandleOrder(all_order_list, theMap);
   }
 

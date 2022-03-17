@@ -2,7 +2,6 @@ package edu.duke.ece651.mp.client;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -21,9 +20,8 @@ public class PlayerServer {
   }
 
   /**
-   * Method to receive Object from Server
-   * 
-   * @return Object
+   * method to receive anything from server
+   * @return received object
    */
   public Object receiveFromServer() {
     try {
@@ -41,15 +39,16 @@ public class PlayerServer {
     }
   }
 
-  /**
-   * Method to send Object from Server
+    /**
+   * Method to send object to server
    * 
-   * @input Object 
+   * @param object to send
    */
   public void sendToServer(Object obj) {
     try {
       OutputStream o = socket.getOutputStream();
       ObjectOutputStream s = new ObjectOutputStream(o);
+      
       s.writeObject(obj);
       s.flush();
       // s.close();

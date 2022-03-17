@@ -1,19 +1,14 @@
 package edu.duke.ece651.mp.common;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
 
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Territory;
-
-public class MoveTurnTest {
+public class AttackTurnTest {
   @Test
-  public void test_MoveTurn() throws UnknownHostException, IOException{
+  public void test_AttackTurn() throws UnknownHostException, IOException{
         String t1 = "Narnia";
         String t2 = "Midemio";
         MoveTurn mt = new MoveTurn(t1, t2, 2, "Green");
@@ -24,3 +19,4 @@ public class MoveTurnTest {
         assertEquals("Green", mt.getPlayerColor());
     }
 }
+

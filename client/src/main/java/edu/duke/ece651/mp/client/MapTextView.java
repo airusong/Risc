@@ -7,8 +7,9 @@ import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
 
 /**
- * This class handles textual display of a Map (i.e. 
- * converting a Map class to a string to show to the user).  */
+ * This class handles textual display of a Map (i.e. converting a Map class to a
+ * string to show to the user).
+ */
 
 public class MapTextView {
   /**
@@ -25,7 +26,6 @@ public class MapTextView {
     this.toDisplay = toDisplay;
   }
 
-  
   public void updateTextView(V1Map<Character> newMap) {
     this.toDisplay = newMap;
   }
@@ -35,26 +35,23 @@ public class MapTextView {
    * 
    * Example format:
    * 
-   * Green player:
-   * ------------
-   * 10 units in Narnia (next to: Elantris, Midkemia)
-   * 12 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
-   * 8 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+   * Green player: ------------ 10 units in Narnia (next to: Elantris, Midkemia)
+   * 12 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz) 8 units in Oz
+   * (next to: Midkemia, Scadrial, Mordor, Gondor)
    * 
-   * Blue player:
-   * -----------
-   * 6 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia)
-   * 3 units in Roshar (next to: Hogwarts, Scadrial, Elantris)
-   * 5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+   * Blue player: ----------- 6 units in Elantris (next to: Roshar, Scadrial,
+   * Midkemia, Narnia) 3 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 5
+   * units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia,
+   * Elantris)
    */
   public String displayMap() {
     HashMap<String, ArrayList<String>> terrGroups = toDisplay.getOwnersTerritoryGroups();
-    
+
     StringBuilder ans = new StringBuilder(""); // empty at first
     String separator = "";
 
     for (String player_color : toDisplay.players_colors) {
-      ans.append(separator); 
+      ans.append(separator);
       ans.append(displayPlayerTerritories(player_color, terrGroups));
       separator = "\n"; // empty line between two players' info
     }
@@ -63,7 +60,9 @@ public class MapTextView {
 
   /**
    * This method displays the map/territory info for each player
-   * @param player's color, HashMap with player's color as key and list of player's territories as value
+   * 
+   * @param player's color, HashMap with player's color as key and list of
+   *                 player's territories as value
    * @return the display info as string
    */
   private String displayPlayerTerritories(String playerColor, HashMap<String, ArrayList<String>> terrGroups) {
@@ -78,12 +77,12 @@ public class MapTextView {
       // neighbours go here
       ArrayList<String> neighborList = toDisplay.myTerritories.get(terrName).getAdjacency();
       String sep = "";
-      for (String neighborName: neighborList) {
+      for (String neighborName : neighborList) {
         playerInfo.append(sep);
         playerInfo.append(neighborName);
         sep = ", ";
       }
-      
+
       playerInfo.append(")");
       playerInfo.append("\n");
     }
@@ -91,8 +90,8 @@ public class MapTextView {
 
   }
 
-  /** This method makes the header for showing each
-   * player's territory information
+  /**
+   * This method makes the header for showing each player's territory information
    */
   private String makePlayerHeader(String playerName) {
     StringBuilder header = new StringBuilder(""); // empty at first
@@ -107,8 +106,26 @@ public class MapTextView {
 
   // Receive a Map and display it.(for temp test)
   // Need to change
-  public String displayMap(Map<Character> map){
+  public String displayMap(Map<Character> map) {
     displayMap();
     return null;
   }
+
+  /**
+   * method to list player's own territory as a list
+   */
+  public String displayTerritoriesAsList(ArrayList<String> terrList) {
+    StringBuilder options = new StringBuilder("");
+    int i = 1;
+    for (String terrName : terrList) {
+      options.append("(" + i + ") ");
+      options.append(terrName);
+      options.append("\n");
+      i++;
+    }
+
+    return options.toString();
+
+  }
+
 }

@@ -5,38 +5,47 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Turn<T> implements Serializable {
-    public String type;
-    public String dep;
-    public String des;
-    public int num_unit;
-    public String player_color;
-    
-    private void writeObject(ObjectOutputStream s) throws IOException {
-        s.defaultWriteObject();
-    }
+public abstract class Turn implements Serializable {
+  public String type;
+  public String fromTerritory;
+  public String toTerritory;
+  public int num_unit;
+  // public TextPlayer player;
+  public String player_color;
 
-    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-        s.defaultReadObject();
-    }
+  public Turn(String type, String fromTerritory, String toTerritory, int num_unit, String player_color) {
+    this.type = type;
+    this.fromTerritory = fromTerritory;
+    this.toTerritory = toTerritory;
+    this.num_unit = num_unit;
+    this.player_color = player_color;
+  }
 
-    public String getDep(){
-        return this.dep;
-    }
+  private void writeObject(ObjectOutputStream s) throws IOException {
+    s.defaultWriteObject();
+  }
 
-    public String getDes(){
-        return this.des;
-    }
+  private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+    s.defaultReadObject();
+  }
 
-    public int getNumber(){
-        return this.num_unit;
-    }
+  public String getSource() {
+    return this.fromTerritory;
+  }
 
-    public String getPlayerColor(){
-        return this.player_color;
-    }
+  public String getDestination() {
+    return this.toTerritory;
+  }
 
-    public Object getType() {
-        return this.type;
-    }
+  public int getNumber() {
+    return this.num_unit;
+  }
+
+  public String getPlayerColor() {
+    return this.player_color;
+  }
+
+  public String getTurnType(){
+    return this.type;
+  }
 }

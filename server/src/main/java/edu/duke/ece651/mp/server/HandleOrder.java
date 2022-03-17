@@ -10,15 +10,15 @@ import edu.duke.ece651.mp.common.V1Map;
 import edu.duke.ece651.mp.common.Territory;
 
 public class HandleOrder {
-    public ArrayList<TurnList<Character>> all_order_list;
+    public ArrayList<TurnList> all_order_list;
     V1Map theMap;
     
     HandleOrder(){
-        this.all_order_list = new ArrayList<TurnList<Character>>();
+        this.all_order_list = new ArrayList<TurnList>();
         this.theMap = new V1Map();
     }
 
-    HandleOrder(ArrayList<TurnList<Character>> all_order_list, V1Map theMap){
+    HandleOrder(ArrayList<TurnList> all_order_list, V1Map theMap){
         this.all_order_list = all_order_list;
         this.theMap = theMap;
     }
@@ -33,7 +33,7 @@ public class HandleOrder {
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) (curr.order_list.get(j));
                 System.out.println(curr_turn.type);
-                if (curr_turn.getType().equals("move")) {
+                if (curr_turn.getTurnType().equals("move")) {
                     handleSingleMoveOrder(curr_turn);
                 }
             }
@@ -49,7 +49,7 @@ public class HandleOrder {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
-                if (curr_turn.getType().equals("attack")) {
+                if (curr_turn.getTurnType().equals("attack")) {
                     handleSingleAttackOrder(curr_turn);
                 }
             }
@@ -63,8 +63,8 @@ public class HandleOrder {
     public void handleSingleMoveOrder(Turn moveOrder) {
         // TO DO: add RuleChecker
         int move_num = moveOrder.getNumber();
-        String dep = moveOrder.getDep();
-        String des = moveOrder.getDes();
+        String dep = moveOrder.getSource();
+        String des = moveOrder.getDestination();
         String player_color = moveOrder.getPlayerColor();
         // update Territory & Map
         int unit_num_dep = ((Territory) theMap.myTerritories.get(dep)).getUnit();
@@ -81,8 +81,8 @@ public class HandleOrder {
     public void handleSingleAttackOrder(Turn attackOrder) {
         // handle attack order
         int attack_num = attackOrder.getNumber();
-        String dep = attackOrder.getDep();
-        String des = attackOrder.getDes();
+        String dep = attackOrder.getSource();
+        String des = attackOrder.getDestination();
         String player_color = attackOrder.getPlayerColor();
         // TO DO: 
     }
@@ -100,7 +100,7 @@ public class HandleOrder {
      * Method to handle All kinds of Orders
      * 
      */
-    public void handleOrders(ArrayList<TurnList<Character>>all_order_list, V1Map<Character> theMap) {
+    public void handleOrders(ArrayList<TurnList>all_order_list, V1Map<Character> theMap) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
         handleAllMoveOrder();

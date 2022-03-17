@@ -44,20 +44,30 @@ public class Client {
         theClient.theTextPlayer.connectionToMaster.sendToServer(msg);
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
-        theClient.theTextPlayer.sendTurn(); // yy - testing
+        theClient.theTextPlayer.printMap();
+
+        // In reality, server will send a request to the player for entering turn
+        // for test purpose, we're just taking turn manually
+        //theClient.theTextPlayer.takeAndSendTurn();
+        
+        theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
+
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {
 
         // The map should be received from master
         // Here we are mocking receiving player's color and map from server
-        System.out.println("My player's color: Green");
+        String test_color = "Green";
+        theClient.theTextPlayer.setIdentity(test_color);
+        System.out.println("My player's color: " + test_color);
         ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
         V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
         theClient.theTextPlayer.updateMap(mapFromServer);
+        theClient.theTextPlayer.printMap();
+        theClient.theTextPlayer.takeTurn();
       }
-      theClient.theTextPlayer.printMap();
-
+      
     } catch (
 
     Exception e) {
