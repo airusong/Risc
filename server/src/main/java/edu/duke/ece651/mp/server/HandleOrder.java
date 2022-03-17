@@ -63,20 +63,14 @@ public class HandleOrder {
     public void handleSingleMoveOrder(Turn moveOrder) {
         // TO DO: add RuleChecker
         int move_num = moveOrder.getNumber();
-        System.out.println(move_num);
         String dep = moveOrder.getDep();
-        System.out.println(dep);
         String des = moveOrder.getDes();
-        System.out.println(des);
         String player_color = moveOrder.getPlayerColor();
-        System.out.println(player_color);
         // update Territory & Map
         int unit_num_dep = ((Territory) theMap.myTerritories.get(dep)).getUnit();
         int new_unit_num_dep = unit_num_dep - move_num;
-        System.out.println(new_unit_num_dep);
         int unit_num_des = ((Territory) theMap.myTerritories.get(des)).getUnit();
         int new_unit_num_des = unit_num_des + move_num;
-        System.out.println(new_unit_num_des);
         theMap.updateMap(theMap, dep, des, new_unit_num_dep, new_unit_num_des);
     }
 
