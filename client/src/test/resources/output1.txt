@@ -11,3 +11,85 @@ Blue player:
 6 units in Roshar (next to: Oz, Scadnal)
 10 units in Scadnal (next to: Roshar, Elantris)
 
+You are the Green player and it's time to take your turn!.
+There are two types of orders that you may issue: move and attack.You may issue any number of each type of these orders in a turn.Once you're done enetering your orders, hit D and your turn will be sent to the server.
+
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Requested order: Move
+- From which territory? (Enter the option# from following list)
+(1) Narnia
+(2) Midemio
+(3) Oz
+You selected Narnia as the source.
+- To which territory? (Enter the option# from following list)
+(1) Elantris
+(2) Roshar
+(3) Scadnal
+You selected Elantris as the destination.
+- How many units?
+Requested 2 units.
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+That order is invalid: it does not have the correct format.
+Please re-enter correctly!
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Requested order: Attack
+- From which territory? (Enter the option# from following list)
+(1) Narnia
+(2) Midemio
+(3) Oz
+You selected Midemio as the source.
+- To which territory? (Enter the option# from following list)
+(1) Elantris
+(2) Roshar
+(3) Scadnal
+You selected Roshar as the destination.
+- How many units?
+Requested 3 units.
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Requested order: Move
+- From which territory? (Enter the option# from following list)
+(1) Narnia
+(2) Midemio
+(3) Oz
+For input string: "df"
+Please re-enter correctly!
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Requested order: Move
+- From which territory? (Enter the option# from following list)
+(1) Narnia
+(2) Midemio
+(3) Oz
+You selected Narnia as the source.
+- To which territory? (Enter the option# from following list)
+(1) Elantris
+(2) Roshar
+(3) Scadnal
+You selected Elantris as the destination.
+- How many units?
+Requested 1 units.
+
+Enter new order (M or A or D)
+(M)ove
+(A)ttack
+(D)one
+Done with the turn!

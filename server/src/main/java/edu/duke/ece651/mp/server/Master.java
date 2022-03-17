@@ -55,4 +55,5 @@ public class Master {
   public void sendPlayerIdentityToAll() {
     theMasterServer.sendPlayerIdentityToAll(players_identity);
   }
+
 }

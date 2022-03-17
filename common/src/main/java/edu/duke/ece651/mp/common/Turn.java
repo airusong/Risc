@@ -5,20 +5,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Turn<T> implements Serializable {
+public abstract class Turn implements Serializable {
   public String type;
-  public Territory<T> fromTerritory;
-  public Territory<T> toTerritory;
+  public String fromTerritory;
+  public String toTerritory;
   public int num_unit;
   // public TextPlayer player;
-  public int player_id;
+  public String player_color;
 
-  public Turn(String type, Territory<T> fromTerritory, Territory<T> toTerritory, int num_unit, int player_id) {
+  public Turn(String type, String fromTerritory, String toTerritory, int num_unit, String player_color) {
     this.type = type;
     this.fromTerritory = fromTerritory;
     this.toTerritory = toTerritory;
     this.num_unit = num_unit;
-    this.player_id = player_id;
+    this.player_color = player_color;
   }
 
   private void writeObject(ObjectOutputStream s) throws IOException {
@@ -29,11 +29,11 @@ public abstract class Turn<T> implements Serializable {
     s.defaultReadObject();
   }
 
-  public Territory<T> getSource() {
+  public String getSource() {
     return this.fromTerritory;
   }
 
-  public Territory<T> getDestination() {
+  public String getDestination() {
     return this.toTerritory;
   }
 
@@ -41,7 +41,7 @@ public abstract class Turn<T> implements Serializable {
     return this.num_unit;
   }
 
-  public int getPlayerID() {
-    return this.player_id;
+  public String getPlayerColor() {
+    return this.player_color;
   }
 }

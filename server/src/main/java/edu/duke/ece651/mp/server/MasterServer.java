@@ -29,8 +29,7 @@ public class MasterServer {
         // print exception message about Throwable object
         e.printStackTrace();
       }
-    }
-    else {
+    } else {
       this.server_socket = null;
     }
     this.num_players = num_players;
