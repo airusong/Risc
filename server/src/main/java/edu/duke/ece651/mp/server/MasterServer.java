@@ -50,10 +50,7 @@ public class MasterServer {
   }
 
   public void acceptPlayers() throws IOException, InterruptedException {
-    // ExecutorService threadPool = Executors.newFixedThreadPool(num_players);
-    // Socket player_socket;
     int connectedPlayers = 0;
-
     System.out.println("Server is waiting...");
     while (connectedPlayers < num_players) {
       player_socket = server_socket.accept();
@@ -61,7 +58,7 @@ public class MasterServer {
       connectedPlayers++;
       PlayerThread pth = new PlayerThread(player_socket);
       Thread t = new Thread(pth);
-      // new Thread(new PlayerThread(player_socket)).start();
+      
       t.start();
       t.join();
       // String rev = (String)pth.obj;

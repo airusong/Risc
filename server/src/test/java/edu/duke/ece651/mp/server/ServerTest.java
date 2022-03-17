@@ -38,6 +38,7 @@ public class ServerTest {
         try {
             System.setIn(input);
             System.setOut(out);
+            //String[] args = {"8080","2"};
             String[] args = {"0"};
             Server.main(args);
         }
