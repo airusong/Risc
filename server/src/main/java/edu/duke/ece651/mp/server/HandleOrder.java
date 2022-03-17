@@ -90,17 +90,19 @@ public class HandleOrder {
      * Method to handle Attack Order
      * 
      */
-    public void updateMapbyOneUnit(){
-        theMap.updateMapbyOneUnit();
+    public void updateMapbyOneUnit(V1Map theMap){
+        theMap.updateMapbyOneUnit(theMap);
     }
 
     /**
      * Method to handle All kinds of Orders
      * 
      */
-    public void handleOrders() {
+    public void handleOrders(ArrayList<TurnList<Character>>all_order_list, V1Map<Character> theMap) {
+        this.all_order_list = all_order_list;
+        this.theMap = theMap;
         handleAllMoveOrder();
-        handleAllAttackOrder();
-        updateMapbyOneUnit();
+        //handleAllAttackOrder();
+        //updateMapbyOneUnit(theMap);
     }
 }

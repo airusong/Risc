@@ -89,6 +89,6 @@ public class Master {
    * 
    */
   public void handleOrders() {
-    this.theHandleOrder.handleOrders();
+    this.theHandleOrder.handleOrders(all_order_list, theMap);
   }
 }
