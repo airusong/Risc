@@ -77,10 +77,15 @@ public class TextPlayer {
 
   }
 
+  public void takeAndSendTurn() throws IOException {
+    TurnList newTurn = takeTurn();
+    connectionToMaster.sendToServer(newTurn);
+  }
+
   /**
    * method to ask player for entering their turn
    */
-  public TurnList playOneTurn() throws IOException {
+  public TurnList takeTurn() throws IOException {
     TurnList myTurn = new TurnList(identity);
 
     out.println("You are the " + identity + " player and it's time to take your turn!.\n"
@@ -89,10 +94,9 @@ public class TextPlayer {
         + "Once you're done enetering your orders, hit D and your turn will be sent to the server.\n");
 
     char enteredOrder = 'D'; // by default
-    String next = "";
     do {
-      out.println("\nEnter your" + next + " order (M or A or D)\n" + "(M)ove\n" + "(A)ttack\n" + "(D)one");
       try {
+        out.println("\nEnter new order (M or A or D)\n" + "(M)ove\n" + "(A)ttack\n" + "(D)one");
         enteredOrder = readOrder();
         switch (enteredOrder) {
         case 'M':
@@ -110,11 +114,13 @@ public class TextPlayer {
         out.println("Please re-enter correctly!");
         continue;
       }
-      next = " next";
     } while (enteredOrder != 'D');
     return myTurn;
   }
 
+  /**
+   * method to read only the order type from the player
+   */
   private char readOrder() throws IOException, EOFException {
     String s = inputReader.readLine();
     if (s == null) {
@@ -129,15 +135,13 @@ public class TextPlayer {
     char enteredLetter = s.toUpperCase().charAt(0);
     if (enteredLetter != 'M' && enteredLetter != 'A' && enteredLetter != 'D') {
       throw new IllegalArgumentException(invalidFormatException);
-    }
-    else if (enteredLetter == 'M') {
+    } else if (enteredLetter == 'M') {
       out.println("Requested order: Move");
     }
-    
+
     else if (enteredLetter == 'A') {
       out.println("Requested order: Attack");
-    }
-    else { // 'D'
+    } else { // 'D'
       out.println("Done with the turn!");
     }
 

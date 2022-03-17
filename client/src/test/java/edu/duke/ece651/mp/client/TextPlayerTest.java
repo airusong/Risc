@@ -16,7 +16,7 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class TextPlayerTest {
   @Test
-  void test_playOneTurn() throws IOException {
+  void test_takeTurn() throws IOException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream output = new PrintStream(bytes, true);
     String dummy_input = "M\n1\n1\n1\n1\nA\n1\n1\n1\nghj\nD\n1\n";
@@ -28,10 +28,10 @@ public class TextPlayerTest {
     player.setIdentity("Green");
     player.updateMap(m);
 
-    player.playOneTurn();
+    player.takeTurn();
     String expected = "You are the Green player and it's time to take your turn!.\n"
       + "There are two types of orders that you may issue: move and attack.You may issue any number of each type of these orders in a turn.Once you're done enetering your orders, hit D and your turn will be sent to the server.\n\n"
-      + "\nEnter your order (M or A or D)\n"
+      + "\nEnter new order (M or A or D)\n"
       + "(M)ove\n"
       + "(A)ttack\n"
       + "(D)one\n"
@@ -48,13 +48,13 @@ public class TextPlayerTest {
       + "You selected Elantris as the destination.\n"
       + "- How many units?\n"
       + "Requested 1 units.\n"
-      + "\nEnter your next order (M or A or D)\n"
+      + "\nEnter new order (M or A or D)\n"
       + "(M)ove\n"
       + "(A)ttack\n"
       + "(D)one\n"
       + "That order is invalid: it does not have the correct format.\n"
       + "Please re-enter correctly!\n"
-      + "\nEnter your next order (M or A or D)\n"
+      + "\nEnter new order (M or A or D)\n"
       + "(M)ove\n"
       + "(A)ttack\n"
       + "(D)one\n"
@@ -71,13 +71,13 @@ public class TextPlayerTest {
       + "You selected Elantris as the destination.\n"
       + "- How many units?\n"
       + "Requested 1 units.\n"
-      + "\nEnter your next order (M or A or D)\n"
+      + "\nEnter new order (M or A or D)\n"
       + "(M)ove\n"
       + "(A)ttack\n"
       + "(D)one\n"
       + "That order is invalid: it does not have the correct format.\n"
       + "Please re-enter correctly!\n"
-      + "\nEnter your next order (M or A or D)\n"
+      + "\nEnter new order (M or A or D)\n"
       + "(M)ove\n"
       + "(A)ttack\n"
       + "(D)one\n"

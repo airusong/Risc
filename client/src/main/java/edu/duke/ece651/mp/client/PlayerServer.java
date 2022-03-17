@@ -2,8 +2,9 @@ package edu.duke.ece651.mp.client;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -18,6 +19,10 @@ public class PlayerServer {
     this.socket = new Socket(servername, port);
   }
 
+  /**
+   * method to receive anything from server
+   * @return received object
+   */
   public Object receiveFromServer() {
     try {
       InputStream o = socket.getInputStream();
@@ -33,5 +38,26 @@ public class PlayerServer {
       return null;
     }
   }
+
+    /**
+   * Method to send object to server
+   * 
+   * @param object to send
+   */
+  public void sendToServer(Object obj) {
+    try {
+      OutputStream o = socket.getOutputStream();
+      ObjectOutputStream s = new ObjectOutputStream(o);
+
+      s.writeObject(obj);
+      s.flush();
+      // s.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      System.out.println("Error during serialization");
+      e.printStackTrace();
+    }
+  }
+
 
 }
