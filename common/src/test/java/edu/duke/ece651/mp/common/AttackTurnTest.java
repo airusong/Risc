@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
 
-public class MoveTurnTest {
+public class AttackTurnTest {
   @Test
-  public void test_MoveTurn() throws UnknownHostException, IOException{
+  public void test_AttackTurn() throws UnknownHostException, IOException{
         String t1 = "Narnia";
         String t2 = "Midemio";
         MoveTurn mt = new MoveTurn(t1, t2, 2, "Green");
@@ -19,3 +19,4 @@ public class MoveTurnTest {
         assertEquals("Green", mt.getPlayerColor());
     }
 }
+
