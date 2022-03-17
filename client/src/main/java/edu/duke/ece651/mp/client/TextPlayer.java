@@ -7,9 +7,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.sound.midi.Receiver;
-
-import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
@@ -22,7 +19,7 @@ public class TextPlayer {
   MapTextView view;
   final BufferedReader inputReader;
   final PrintStream out;
-  private String identity; // color
+  protected String identity; // color
 
   /**
    * Constructor
@@ -86,7 +83,7 @@ public class TextPlayer {
   public Turn createTurn() {
     Territory<Character> t1 = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 8);
     Territory<Character> t2 = new Territory<Character>("Midemio", "Green", new ArrayList<String>(), 3);
-    MoveTurn<Character> mt = new MoveTurn<Character>("move", t1, t2, 2, "Green");
+    MoveTurn<Character> mt = new MoveTurn<Character>("move", "Narnia", "Midemio", 2, "Green");
     return (Turn) mt;
   }
 

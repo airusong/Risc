@@ -13,11 +13,16 @@ public class HandleOrder {
     public ArrayList<TurnList<Character>> all_order_list;
     V1Map theMap;
     
+    HandleOrder(){
+        this.all_order_list = new ArrayList<TurnList<Character>>();
+        this.theMap = new V1Map();
+    }
+
     HandleOrder(ArrayList<TurnList<Character>> all_order_list, V1Map theMap){
         this.all_order_list = all_order_list;
         this.theMap = theMap;
-        
     }
+    
     /**
      * Method to handle All Move Orders
      * 
@@ -26,8 +31,9 @@ public class HandleOrder {
         for (int i = 0; i < all_order_list.size(); i++) {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
-                Turn curr_turn = (Turn) curr.order_list.get(j);
-                if (curr_turn.type == "move") {
+                Turn curr_turn = (Turn) (curr.order_list.get(j));
+                System.out.println(curr_turn.type);
+                if (curr_turn.getType().equals("move")) {
                     handleSingleMoveOrder(curr_turn);
                 }
             }
@@ -43,7 +49,7 @@ public class HandleOrder {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
-                if (curr_turn.type == "attack") {
+                if (curr_turn.getType().equals("attack")) {
                     handleSingleAttackOrder(curr_turn);
                 }
             }
@@ -55,21 +61,23 @@ public class HandleOrder {
      * 
      */
     public void handleSingleMoveOrder(Turn moveOrder) {
-        // how to handle move action??
         // TO DO: add RuleChecker
         int move_num = moveOrder.getNumber();
-        Territory dep = moveOrder.getDep();
-        Territory des = moveOrder.getDes();
+        System.out.println(move_num);
+        String dep = moveOrder.getDep();
+        System.out.println(dep);
+        String des = moveOrder.getDes();
+        System.out.println(des);
         String player_color = moveOrder.getPlayerColor();
-
+        System.out.println(player_color);
         // update Territory & Map
-        int unit_num_dep = ((Territory) theMap.myTerritories.get(dep.getName())).getUnit();
+        int unit_num_dep = ((Territory) theMap.myTerritories.get(dep)).getUnit();
         int new_unit_num_dep = unit_num_dep - move_num;
-
-        int unit_num_des = ((Territory) theMap.myTerritories.get(des.getName())).getUnit();
+        System.out.println(new_unit_num_dep);
+        int unit_num_des = ((Territory) theMap.myTerritories.get(des)).getUnit();
         int new_unit_num_des = unit_num_des + move_num;
-
-        theMap.updateMap(dep.getName(), des.getName(), new_unit_num_dep, new_unit_num_des);
+        System.out.println(new_unit_num_des);
+        theMap.updateMap(theMap, dep, des, new_unit_num_dep, new_unit_num_des);
     }
 
     /**
@@ -79,8 +87,8 @@ public class HandleOrder {
     public void handleSingleAttackOrder(Turn attackOrder) {
         // handle attack order
         int attack_num = attackOrder.getNumber();
-        Territory dep = attackOrder.getDep();
-        Territory des = attackOrder.getDes();
+        String dep = attackOrder.getDep();
+        String des = attackOrder.getDes();
         String player_color = attackOrder.getPlayerColor();
         // TO DO: 
     }

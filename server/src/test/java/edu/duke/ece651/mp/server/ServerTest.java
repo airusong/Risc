@@ -42,6 +42,7 @@ public class ServerTest {
             //String[] args = {"8080","2"};
             String[] args = {"0"};
             Server.main(args);
+            //MockMasterServer.main(args);
         }
         finally {
             System.setIn(oldIn);

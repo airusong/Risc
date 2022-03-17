@@ -7,8 +7,8 @@ import java.io.Serializable;
 
 public abstract class Turn<T> implements Serializable {
     public String type;
-    public Territory<T> dep;
-    public Territory<T> des;
+    public String dep;
+    public String des;
     public int num_unit;
     public String player_color;
     
@@ -20,11 +20,11 @@ public abstract class Turn<T> implements Serializable {
         s.defaultReadObject();
     }
 
-    public Territory<T> getDep(){
+    public String getDep(){
         return this.dep;
     }
 
-    public Territory<T> getDes(){
+    public String getDes(){
         return this.des;
     }
 
@@ -34,5 +34,9 @@ public abstract class Turn<T> implements Serializable {
 
     public String getPlayerColor(){
         return this.player_color;
+    }
+
+    public Object getType() {
+        return this.type;
     }
 }

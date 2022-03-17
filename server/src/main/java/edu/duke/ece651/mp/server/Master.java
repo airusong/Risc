@@ -1,5 +1,4 @@
 package edu.duke.ece651.mp.server;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -68,9 +67,10 @@ public class Master {
    * 
    * @throws IOException
    */
+  /*
   public Object receiveObjectFromPlayer(Socket player_socket) throws ClassNotFoundException, IOException {
     return theMasterServer.receiveObjectFromPlayer(player_socket);
-  }
+  }*/
 
   /**
    * Method to receive and update orders from ALL players

@@ -27,6 +27,16 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addAdjacency();
   }
 
+  public V1Map() {
+    this.myTerritories = new HashMap<>();
+    ArrayList<String> players_colors = new ArrayList<String>();
+    players_colors.add("Green");
+    players_colors.add("Blue");
+    this.players_colors = players_colors;
+    setMap();
+    addAdjacency();
+  }
+
   // public HashMap<String, Territory<T>> getMap(){
   // return myTerritories;
   // }
@@ -43,9 +53,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     // PLAYER 2
     player_color = players_colors.get(1);
-    myTerritories.put("Elantris", new Territory<T>("Elantris",player_color,new ArrayList<String>(),7));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal",player_color,new ArrayList<String>(),10));
-    myTerritories.put("Roshar", new Territory<T>("Roshar",player_color,new ArrayList<String>(),6));
+    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10));
+    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 6));
   }
 
   /**
@@ -126,19 +136,20 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /* Update Map according to move order */
-  public void updateMap(String dep, String des, int n1, int n2) {
-    Territory t1 = myTerritories.get(dep);
-    Territory t2 = myTerritories.get(des);
+  public void updateMap(V1Map theMap, String dep, String des, int n1, int n2) {
+    Territory t1 = (Territory) theMap.myTerritories.get(dep);
+    Territory t2 = (Territory) theMap.myTerritories.get(des);
     t1.updateUnit(n1);
     t2.updateUnit(n2);
-    myTerritories.put(t1.getName(), t1);
-    myTerritories.put(t2.getName(), t2);
+    theMap.myTerritories.put(dep, t1);
+    theMap.myTerritories.put(des, t2);
   }
 
   /* Increase #Units after fighting */
-  public void updateMapbyOneUnit(V1Map theMap){
-    for(int i=0; i<theMap.myTerritories.size(); i++){
-      Territory<T> temp = (Territory<T>) theMap.myTerritories.get(i);
+  public void updateMapbyOneUnit(V1Map theMap) {
+    HashMap<String, Territory<T>> myT = theMap.myTerritories;
+    for(Map.Entry<String,Territory<T>> set: myT.entrySet()){
+      Territory<T> temp = set.getValue();
       temp.updateUnit(temp.getUnit() + 1);
       theMap.myTerritories.put(temp.getName(), temp);
     }
