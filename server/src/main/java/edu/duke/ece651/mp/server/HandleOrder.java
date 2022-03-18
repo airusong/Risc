@@ -6,19 +6,19 @@ import java.util.Set;
 
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.Territory;
 
-public class HandleOrder {
+public class HandleOrder<T> {
     public ArrayList<TurnList> all_order_list;
-    V1Map theMap;
+    Map<T> theMap;
     
     HandleOrder(){
         this.all_order_list = new ArrayList<TurnList>();
-        this.theMap = new V1Map();
+        this.theMap = null;
     }
 
-    HandleOrder(ArrayList<TurnList> all_order_list, V1Map theMap){
+    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap){
         this.all_order_list = all_order_list;
         this.theMap = theMap;
     }
@@ -66,9 +66,9 @@ public class HandleOrder {
         String des = moveOrder.getDestination();
         String player_color = moveOrder.getPlayerColor();
         // update Territory & Map
-        int unit_num_dep = ((Territory) theMap.myTerritories.get(dep)).getUnit();
+        int unit_num_dep = ((Territory<T>) theMap.getAllTerritories().get(dep)).getUnit();
         int new_unit_num_dep = unit_num_dep - move_num;
-        int unit_num_des = ((Territory) theMap.myTerritories.get(des)).getUnit();
+        int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
         int new_unit_num_des = unit_num_des + move_num;
         theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
     }
@@ -83,7 +83,8 @@ public class HandleOrder {
         String dep = attackOrder.getSource();
         String des = attackOrder.getDestination();
         String player_color = attackOrder.getPlayerColor();
-        // TO DO: 
+
+        AttackChecking<T> ruleChecker = new AttackChecking<>();
     }
 
 
@@ -99,7 +100,7 @@ public class HandleOrder {
      * Method to handle All kinds of Orders
      * 
      */
-    public void handleOrders(ArrayList<TurnList>all_order_list, V1Map<Character> theMap) {
+    public void handleOrders(ArrayList<TurnList>all_order_list, Map<T> theMap) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
         handleAllMoveOrder();
