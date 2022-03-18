@@ -35,9 +35,9 @@ public class Master {
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
-    OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
-    PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-    this.theHandleOrder = new HandleOrder(all_order_list, theMap,pcheck);
+    PathChecking<Character> pcheck = new PathChecking<>(null);
+    OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
+    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck);
   }
 
   /**
@@ -103,7 +103,6 @@ public class Master {
     System.out.println("\n");
   }
 
-  
   /**
    * Method to handle orders
    * 
@@ -114,19 +113,11 @@ public class Master {
     theMap = updatedMap;
 
     theMasterServer.all_order_list.clear(); // reset the turn list
-    
+
     ArrayList<String> status_list = new ArrayList<String>(theHandleOrder.turnStatus);
     theHandleOrder.turnStatus.clear(); // reset the list
     return status_list;
   }
-  /*
-  public void handleOrders() {
-    //System.out.println("For test: gonna handle orders.");
-    PathChecking<Character> pcheck=new PathChecking<>(null);
-    OwnerChecking<Character> ocheck=new OwnerChecking<>(pcheck);
-    this.theHandleOrder = new HandleOrder(this.all_order_list, theMap,ocheck);
-    this.theHandleOrder.handleOrders();
-    }*/
 
   /**
    * Method to start a game by accepting players sending the players their colors
