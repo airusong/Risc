@@ -19,9 +19,10 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ServerTest {
+    //@Disabled
     @Test
     @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
-    void test_main_1() throws IOException{
+    void test_main_1() throws IOException, ClassNotFoundException, InterruptedException{
         // Output
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(bytes, true);
@@ -38,8 +39,10 @@ public class ServerTest {
         try {
             System.setIn(input);
             System.setOut(out);
+            //String[] args = {};
             String[] args = {"0"};
             Server.main(args);
+
         }
         finally {
             System.setIn(oldIn);

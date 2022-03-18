@@ -1,10 +1,7 @@
-package edu.duke.ece651.mp.server;
+package edu.duke.ece651.mp.common;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
-
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.V1Map;
 public class PathChecking<T> extends MoveChecking<T>{
   public PathChecking(MoveChecking<T> next){
     super(next);

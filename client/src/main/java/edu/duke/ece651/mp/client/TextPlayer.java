@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import edu.duke.ece651.mp.common.AttackTurn;
+import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
@@ -20,7 +21,7 @@ public class TextPlayer {
   MapTextView view;
   final BufferedReader inputReader;
   final PrintStream out;
-  private String identity;
+  protected String identity; // color
 
   /**
    * Constructor
@@ -100,6 +101,9 @@ public class TextPlayer {
         enteredOrder = readOrder();
         switch (enteredOrder) {
         case 'M':
+          Turn newMoveOrder = readOrderDetails(enteredOrder);
+          myTurn.addTurn(newMoveOrder);
+          break;
         case 'A':
           Turn newOrder = readOrderDetails(enteredOrder);
           myTurn.addTurn(newOrder);

@@ -40,22 +40,8 @@ public class Client {
 
       if (servername != "null") {
         // Send "Ready "message to Server
-        OutputStream os = theClient.theTextPlayer.connectionToMaster.socket.getOutputStream();
-        PrintWriter out = new PrintWriter(os, true);
         String msg = "Client is ready.";
-        out.println(msg);
-        out.flush();
-
-        /*
-         * // Received message from Server InputStream is =
-         * theClient.theTextPlayer.connectionToMaster.socket.getInputStream();
-         * BufferedReader br = new BufferedReader(new InputStreamReader(is)); String
-         * receivedMsg = br.readLine();
-         * System.out.println("Received message from Server: " + receivedMsg);
-         * is.close(); br.close();
-         * 
-         */
-
+        theClient.theTextPlayer.connectionToMaster.sendToServer(msg);
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
         theClient.theTextPlayer.printMap();
@@ -64,11 +50,9 @@ public class Client {
         // for test purpose, we're just taking turn manually
         //theClient.theTextPlayer.takeAndSendTurn();
         
-        theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
-        
-        os.close();
+        //theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
+        theClient.theTextPlayer.takeAndSendTurn();
 
-        // theClient.theTextPlayer.connectionToMaster.socket.shutdownOutput();
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {

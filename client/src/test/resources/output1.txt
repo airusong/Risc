@@ -29,64 +29,9 @@ You selected Narnia as the source.
 (1) Elantris
 (2) Roshar
 (3) Scadnal
-You selected Elantris as the destination.
-- How many units?
-Requested 2 units.
-
-Enter new order (M or A or D)
-(M)ove
-(A)ttack
-(D)one
-That order is invalid: it does not have the correct format.
-Please re-enter correctly!
-
-Enter new order (M or A or D)
-(M)ove
-(A)ttack
-(D)one
-Requested order: Attack
-- From which territory? (Enter the option# from following list)
-(1) Narnia
-(2) Midemio
-(3) Oz
-You selected Midemio as the source.
-- To which territory? (Enter the option# from following list)
-(1) Elantris
-(2) Roshar
-(3) Scadnal
 You selected Roshar as the destination.
 - How many units?
 Requested 3 units.
-
-Enter new order (M or A or D)
-(M)ove
-(A)ttack
-(D)one
-Requested order: Move
-- From which territory? (Enter the option# from following list)
-(1) Narnia
-(2) Midemio
-(3) Oz
-For input string: "df"
-Please re-enter correctly!
-
-Enter new order (M or A or D)
-(M)ove
-(A)ttack
-(D)one
-Requested order: Move
-- From which territory? (Enter the option# from following list)
-(1) Narnia
-(2) Midemio
-(3) Oz
-You selected Narnia as the source.
-- To which territory? (Enter the option# from following list)
-(1) Elantris
-(2) Roshar
-(3) Scadnal
-You selected Elantris as the destination.
-- How many units?
-Requested 1 units.
 
 Enter new order (M or A or D)
 (M)ove

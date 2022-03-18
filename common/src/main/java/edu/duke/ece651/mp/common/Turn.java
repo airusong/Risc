@@ -44,4 +44,8 @@ public abstract class Turn implements Serializable {
   public String getPlayerColor() {
     return this.player_color;
   }
+
+  public String getTurnType(){
+    return this.type;
+  }
 }

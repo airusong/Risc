@@ -1,10 +1,15 @@
 package edu.duke.ece651.mp.common;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.UnknownHostException;
 import org.junit.jupiter.api.Test;
+
+import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
 
 public class MoveTurnTest {
   @Test

@@ -28,7 +28,7 @@ public class PlayerServer {
       InputStream o = socket.getInputStream();
       ObjectInputStream s = new ObjectInputStream(o);
       Object obj = s.readObject();
-      //s.close();
+      // s.close();
       return obj;
 
     } catch (Exception e) {
@@ -48,7 +48,7 @@ public class PlayerServer {
     try {
       OutputStream o = socket.getOutputStream();
       ObjectOutputStream s = new ObjectOutputStream(o);
-
+      
       s.writeObject(obj);
       s.flush();
       // s.close();
@@ -58,6 +58,5 @@ public class PlayerServer {
       e.printStackTrace();
     }
   }
-
 
 }

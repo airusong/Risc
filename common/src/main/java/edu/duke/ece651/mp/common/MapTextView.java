@@ -1,10 +1,7 @@
-package edu.duke.ece651.mp.client;
+package edu.duke.ece651.mp.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.V1Map;
 
 /**
  * This class handles textual display of a Map (i.e. converting a Map class to a

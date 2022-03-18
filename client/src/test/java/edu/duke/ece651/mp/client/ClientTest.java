@@ -22,6 +22,7 @@ import org.junit.jupiter.api.parallel.Resources;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
+  
   @Test
   void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -46,6 +47,7 @@ public class ClientTest {
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
+  
   @Test
   @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
   void test_main_V1() throws IOException, InterruptedException {
