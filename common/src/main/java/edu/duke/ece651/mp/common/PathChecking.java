@@ -3,10 +3,12 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
 public class PathChecking<T> extends MoveChecking<T>{
+  
   public PathChecking(MoveChecking<T> next){
     super(next);
   };
-  public String checkMyRule(V1Map<T> map,String source,String destination,int movingunits){
+
+  public String checkMyRule(Map<T> map,String source,String destination,int movingunits){
     Deque<Territory<T>> stack=new ArrayDeque<>();
     HashSet<Territory<T>> visited=new HashSet<>();
     Territory<T> start=map.getAllTerritories().get(source);

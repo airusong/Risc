@@ -31,4 +31,9 @@ public class TurnList implements Serializable {
     order_list.add(newTurn);
   }
 
+  public void printTurnList(){
+    for(Turn t: order_list){
+      t.printTurn();
+    }
+  }
 }

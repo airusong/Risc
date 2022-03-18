@@ -48,4 +48,13 @@ public abstract class Turn implements Serializable {
   public String getTurnType(){
     return this.type;
   }
+
+  public void printTurn(){
+    System.out.println("Turn: ");
+    System.out.println(this.type);
+    System.out.println(this.fromTerritory);
+    System.out.println(this.toTerritory);
+    System.out.println(this.num_unit);
+    System.out.println(this.player_color);
+  }
 }

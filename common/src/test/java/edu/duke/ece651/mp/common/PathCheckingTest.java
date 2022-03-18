@@ -16,19 +16,19 @@ public class PathCheckingTest {
   @Test
   public void test_path() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
-    V1Map<Character> map = new V1Map<>(players_colors);
     PathChecking<Character> check=new PathChecking<>(null); 
+    V1Map<Character> map = new V1Map<>(players_colors);
     assertEquals(check.checkMyRule(map,"Narnia","Midemio",2), null);
     assertEquals(check.checkMyRule(map,"Narnia","Oz",2), null);
   }
   @Test
   public void test_chain(){
     OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
-    MoveChecking<Character> mcheck=new PathChecking<>(ocheck);
+    PathChecking<Character> pcheck = new PathChecking<>(ocheck);
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     V1Map<Character> map = new V1Map<>(players_colors);
-    assertEquals(mcheck.checkMyRule(map,"Narnia","Midemio",2),null);
-    //assertEquals(mcheck.checkMyRule(map,"Narnia","Elantris",2), "no valid path exists");
+    assertEquals(pcheck.checkMyRule(map,"Narnia","Midemio",2),null);
+    //assertEquals(pcheck.checkMyRule(map,"Narnia","Elantris",2), "no valid path exists");
   }
 
 }

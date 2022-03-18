@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
@@ -33,7 +35,9 @@ public class Master {
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
-    this.theHandleOrder = new HandleOrder<Character>(all_order_list, theMap);
+    PathChecking<Character> pcheck = new PathChecking<>(null);
+    OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
+    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck);
   }
 
   /**
@@ -89,6 +93,17 @@ public class Master {
   }
 
   /**
+   * Display in the server console the status of each order in the turn
+   */
+  private void displayTurnStatus(ArrayList<String> status_list) {
+    System.out.println("--------------\nTurn Status:\n--------------\n");
+    for (String turn_status : status_list) {
+      System.out.println(turn_status);
+    }
+    System.out.println("\n");
+  }
+
+  /**
    * Method to handle orders
    * 
    * @return list of turn result
@@ -98,21 +113,10 @@ public class Master {
     theMap = updatedMap;
 
     theMasterServer.all_order_list.clear(); // reset the turn list
-    
+
     ArrayList<String> status_list = new ArrayList<String>(theHandleOrder.turnStatus);
     theHandleOrder.turnStatus.clear(); // reset the list
     return status_list;
-  }
-
-  /**
-   * Display in the server console the status of each order in the turn
-   */
-  private void displayTurnStatus(ArrayList<String> status_list) {
-    System.out.println("--------------\nTurn Status:\n--------------\n");
-    for (String turn_status : status_list) {
-      System.out.println(turn_status);
-    }
-    System.out.println("\n");
   }
 
   /**
@@ -157,11 +161,18 @@ public class Master {
         // Step-5:
         // check victory and defeat
         // update gameStatus if needed
-        this.theMasterServer.detectresult(theMap);
-        this.theMasterServer.sendresult(theMap);
+        String winning_color = this.theMasterServer.detectresult(theMap);
+        if(winning_color != null) {
+          gameStatus = winning_color + " player has won!";
+        }
+        else {
+          // add one unit to each territory
+          theMap.updateMapbyOneUnit();
+        }
       } else {
         break;
       }
     }
   }
+
 }

@@ -13,6 +13,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class TextPlayerTest {
@@ -26,6 +28,8 @@ public class TextPlayerTest {
     TextPlayer player = new TextPlayer("null", 0, input, output);
 
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
+    //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
     V1Map<Character> m = new V1Map<Character>(players_colors);
     player.setIdentity("Green");
     player.updateMap(m);

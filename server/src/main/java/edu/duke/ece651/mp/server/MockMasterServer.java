@@ -56,6 +56,7 @@ public class MockMasterServer extends MasterServer{
   @Override
   public void sendPlayerIdentityToAll(List<String> players_identity) {
     System.out.println("Sending color to player: Green");
+    System.out.println("Sending color to player: Blue");
   }
 
   @Override

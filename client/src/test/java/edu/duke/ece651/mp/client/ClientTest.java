@@ -19,6 +19,8 @@ import org.junit.jupiter.api.parallel.ResourceAccessMode;
 import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.api.parallel.Resources;
 
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
@@ -30,6 +32,9 @@ public class ClientTest {
     // The map should be received from master
     // using minimal V1Map for now
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+
+    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
+    //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
     V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
     theClient.theTextPlayer.updateMap(mapFromServer);
 
