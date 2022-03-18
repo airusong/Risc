@@ -21,8 +21,6 @@ public class MockMasterServer extends MasterServer{
 
   @Override
   public void acceptPlayers() throws IOException {
-    // ExecutorService threadPool = Executors.newFixedThreadPool(num_players);
-    // Socket player_socket;
     int connectedPlayers = 0;
     System.out.println("Server is waiting...");
     while (connectedPlayers < num_players) {

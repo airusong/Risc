@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.ObjectInputFilter.Status;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -230,6 +231,54 @@ public class TextPlayer {
       }
     }
     return theMap.getPlayerTerritories(player_color);
+  }
+
+  /**
+   * Method to initiate game with the Server
+   */
+  public void initiateGame() {
+    // Step-1:
+    // Send "Ready "message to Server
+    String msg = "Client is ready.";
+    connectionToMaster.sendToServer(msg);
+
+    // Step-2:
+    receiveIdentity();
+  }
+
+  /**
+   * Method to play the game
+   * 
+   * @throws IOException
+   */
+  public void playGame() throws IOException {
+    while (true) { // main loop to play
+      // Step-1:
+      receiveMap();
+      printMap();
+
+      // Step-2:
+      // Receive game status from server
+      String status = receiveGameStatus();
+
+      if (status == "Ready for accepting turn!") {
+        // Step-3:
+        takeAndSendTurn();
+      } else {
+        break;
+      }
+    }
+  }
+
+  /**
+   * method to receive Player Color from the server
+   * 
+   * @return game status in string format
+   */
+  public String receiveGameStatus() {
+    String status = (String) connectionToMaster.receiveFromServer();
+    out.println(status);
+    return status;
   }
 
 }
