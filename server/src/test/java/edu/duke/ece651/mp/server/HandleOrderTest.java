@@ -14,6 +14,7 @@ import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class HandleOrderTest {

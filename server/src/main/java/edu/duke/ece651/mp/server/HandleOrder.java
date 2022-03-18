@@ -84,9 +84,9 @@ public class HandleOrder<T> {
         String des = moveOrder.getDestination();
         String player_color = moveOrder.getPlayerColor();
         // update Territory & Map
-        int unit_num_dep = ((Territory) theMap.getAllTerritories().get(dep)).getUnit();
+        int unit_num_dep = ((Territory<T>) theMap.getAllTerritories().get(dep)).getUnit();
         int new_unit_num_dep = unit_num_dep - move_num;
-        int unit_num_des = ((Territory) theMap.getAllTerritories().get(des)).getUnit();
+        int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
         int new_unit_num_des = unit_num_des + move_num;
         theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
     }
@@ -101,7 +101,8 @@ public class HandleOrder<T> {
         String dep = attackOrder.getSource();
         String des = attackOrder.getDestination();
         String player_color = attackOrder.getPlayerColor();
-        // TO DO:
+
+        AttackChecking<T> ruleChecker = new AttackChecking<>();
     }
 
     /**

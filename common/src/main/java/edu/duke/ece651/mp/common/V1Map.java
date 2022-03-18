@@ -16,19 +16,17 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   // private final MoveChecking<T> moveChecker;
 
   /**
-   * Constructor
-   * construct a V1Map specified with Territoris in it
+   * Constructor construct a V1Map specified with Territoris in it
    * 
-   * @param hashmap myTerritories,
-   *                the key is the territory itself and
-   *                the value is the list of adjancent territories
+   * @param hashmap myTerritories, the key is the territory itself and the value
+   *                is the list of adjancent territories
    */
   public V1Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
-    //this.moveChecker = moveChecker;
+    // this.moveChecker = moveChecker;
   }
 
   public V1Map() {
@@ -91,8 +89,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /**
-   * Write out the V1Map object for serialization
-   * to the ObjectOutputStream s.
+   * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
    */
   private void writeObject(ObjectOutputStream s) throws IOException {
@@ -108,17 +105,17 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /**
-   * Read in the V1Map object from the ObjectInputStream s.
-   * Was written to by writeObject.
+   * Read in the V1Map object from the ObjectInputStream s. Was written to by
+   * writeObject.
    * 
    * @serialData Read serializable fields, if any exist.
    */
   @SuppressWarnings({ "unchecked" })
   private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
     /*
-     * Call even if there is no default serializable fields.
-     * Enables default serializable fields to be added in future versions
-     * and skipped by this version which has no default serializable fields.
+     * Call even if there is no default serializable fields. Enables default
+     * serializable fields to be added in future versions and skipped by this
+     * version which has no default serializable fields.
      */
     s.defaultReadObject();
 
@@ -130,9 +127,8 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * method to get territories grouped by owner
    * 
-   * @return hashmap with key as the owner/player color
-   *         and value as an ArrayList of territories owned by
-   *         the player
+   * @return hashmap with key as the owner/player color and value as an ArrayList
+   *         of territories owned by the player
    */
   public HashMap<String, ArrayList<String>> getOwnersTerritoryGroups() {
     HashMap<String, ArrayList<String>> territoryGroups = new HashMap<>();
