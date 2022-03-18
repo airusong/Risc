@@ -15,51 +15,50 @@ import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 
 public class HandleOrder<T> {
-    public ArrayList<TurnList> all_order_list;
-    Map<T> theMap;
-    private final MoveChecking<T> moveChecker;
-    ArrayList<String> turnStatus;
+  public ArrayList<TurnList> all_order_list;
+  Map<T> theMap;
+  private final MoveChecking<T> moveChecker;
+  ArrayList<String> turnStatus;
 
-    HandleOrder() {
-        this.all_order_list = new ArrayList<TurnList>();
-        this.theMap = new V1Map<>();
-        this.moveChecker = null;
-        this.turnStatus = new ArrayList<>();
-    }
+  HandleOrder() {
+    this.all_order_list = new ArrayList<TurnList>();
+    this.theMap = new V1Map<>();
+    this.moveChecker = null;
+    this.turnStatus = new ArrayList<>();
+  }
 
-    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker) {
-        this.all_order_list = all_order_list;
-        this.theMap = theMap;
-        this.moveChecker = moveChecker;
-        this.turnStatus = new ArrayList<>();
-    }
+  HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker) {
+    this.all_order_list = all_order_list;
+    this.theMap = theMap;
+    this.moveChecker = moveChecker;
+    this.turnStatus = new ArrayList<>();
+  }
 
-    /**
-     * Method to handle All Move Orders
-     * 
-     */
-    public String handleAllMoveOrder() {
-        for (int i = 0; i < all_order_list.size(); i++) {
-            TurnList curr = all_order_list.get(i);
-            for (int j = 0; j < curr.getListLength(); j++) {
-                Turn curr_turn = (Turn) (curr.order_list.get(j));
-                if (curr_turn.getTurnType().equals("Move")) {
-                    // Check Rules
-                    String moveProblem = moveChecker.checkMoving(theMap, curr_turn.getSource(),
-                            curr_turn.getDestination(), curr_turn.getNumber());
-                    if (moveProblem == null) {
-                        handleSingleMoveOrder(curr_turn);
-                        continue;
-                    } else {
-                        //System.out.println(moveProblem);
-                        return moveProblem;
-                    }
-                }
-            }
+  /**
+   * Method to handle All Move Orders
+   * 
+   */
+  public String handleAllMoveOrder() {
+    for (int i = 0; i < all_order_list.size(); i++) {
+      TurnList curr = all_order_list.get(i);
+      for (int j = 0; j < curr.getListLength(); j++) {
+        Turn curr_turn = (Turn) (curr.order_list.get(j));
+        if (curr_turn.getTurnType().equals("Move")) {
+          // Check Rules
+          String moveProblem = moveChecker.checkMoving(theMap, curr_turn.getSource(), curr_turn.getDestination(),
+              curr_turn.getNumber());
+          if (moveProblem == null) {
+            handleSingleMoveOrder(curr_turn);
+            continue;
+          } else {
+            // System.out.println(moveProblem);
+            return moveProblem;
+          }
         }
-        // System.out.println("All valid");
-        return null;
+      }
     }
+    // System.out.println("All valid");
+    return null;
   }
 
   /**
@@ -95,15 +94,6 @@ public class HandleOrder<T> {
     int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
     int new_unit_num_des = unit_num_des + move_num;
     theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
-
-<<<<<<< server/src/main/java/edu/duke/ece651/mp/server/HandleOrder.java
-    /**
-     * Method to handle Attack Order
-     * 
-     */
-    public void updateMapbyOneUnit() {
-        theMap.updateMapbyOneUnit();
-=======
     // TO-DO: add this line after adding rule checker
     // turnStatus.add(ruleChecker.moveStatus);
   }
@@ -118,7 +108,6 @@ public class HandleOrder<T> {
     String attackResult = "";
     if (ruleChecker.checkMyRule(theMap, attackOrder)) { // rule is VALID
       attackResult += resolveCombat(attackOrder);
->>>>>>> server/src/main/java/edu/duke/ece651/mp/server/HandleOrder.java
     }
     turnStatus.add(ruleChecker.attackStatus + attackResult);
   }
@@ -147,26 +136,6 @@ public class HandleOrder<T> {
       int attackerDiceVal = attackerDice.nextInt(diceSides);
       int defenderDiceVal = defenderDice.nextInt(diceSides);
 
-<<<<<<< server/src/main/java/edu/duke/ece651/mp/server/HandleOrder.java
-    /**
-     * Method to handle All kinds of Orders
-     * 
-     */
-    public String handleOrders() {
-        String moveProblem = this.handleAllMoveOrder();
-        // System.out.println(moveProblem);
-        /*
-         * if(moveProblem != null){
-         * System.out.println("Move Order invalid.");
-         * }
-         * else{
-         * System.out.println("Successfully moved.");
-         * }
-         */
-        handleAllAttackOrder();
-        updateMapbyOneUnit();
-        return moveProblem;
-=======
       // step-2: compare dice values. Lower loses 1 unit
       String loserTerr;
       int loserTerrRemainingUnits;
@@ -204,9 +173,9 @@ public class HandleOrder<T> {
         }
         break;
       }
->>>>>>> server/src/main/java/edu/duke/ece651/mp/server/HandleOrder.java
     }
     return combatResult;
+
   }
 
   /**
@@ -232,4 +201,21 @@ public class HandleOrder<T> {
     // NEED TO RETURN UPDATED MAP
     return theMap;
   }
+
+  /**
+   * Method to handle All kinds of Orders
+   * 
+   */
+  public String handleOrders() {
+    String moveProblem = this.handleAllMoveOrder();
+    // System.out.println(moveProblem);
+    /*
+     * if(moveProblem != null){ System.out.println("Move Order invalid."); } else{
+     * System.out.println("Successfully moved."); }
+     */
+    handleAllAttackOrder();
+    updateMapbyOneUnit();
+    return moveProblem;
+  }
+
 }

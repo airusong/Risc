@@ -93,6 +93,18 @@ public class Master {
   }
 
   /**
+   * Display in the server console the status of each order in the turn
+   */
+  private void displayTurnStatus(ArrayList<String> status_list) {
+    System.out.println("--------------\nTurn Status:\n--------------\n");
+    for (String turn_status : status_list) {
+      System.out.println(turn_status);
+    }
+    System.out.println("\n");
+  }
+
+  
+  /**
    * Method to handle orders
    * 
    * @return list of turn result
@@ -107,24 +119,14 @@ public class Master {
     theHandleOrder.turnStatus.clear(); // reset the list
     return status_list;
   }
-
-  /**
-   * Display in the server console the status of each order in the turn
-   */
-  private void displayTurnStatus(ArrayList<String> status_list) {
-    System.out.println("--------------\nTurn Status:\n--------------\n");
-    for (String turn_status : status_list) {
-      System.out.println(turn_status);
-    }
-    System.out.println("\n");
-  }
-
+  /*
   public void handleOrders() {
     //System.out.println("For test: gonna handle orders.");
     PathChecking<Character> pcheck=new PathChecking<>(null);
     OwnerChecking<Character> ocheck=new OwnerChecking<>(pcheck);
     this.theHandleOrder = new HandleOrder(this.all_order_list, theMap,ocheck);
     this.theHandleOrder.handleOrders();
+    }*/
 
   /**
    * Method to start a game by accepting players sending the players their colors
