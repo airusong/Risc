@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.MapTextView;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class MasterServerTest {
@@ -85,6 +87,8 @@ public class MasterServerTest {
     assertNotNull(ms.player_socket_list);
 
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    PathChecking<Character> pcheck=new PathChecking<>(ocheck);
     V1Map<Character> Mymap = new V1Map<Character>(players_colors);
     ms.sendToAll(Mymap);
     
@@ -102,10 +106,10 @@ public class MasterServerTest {
     
     //assertEquals(expected, obj);
     V1Map<Character> actual = (V1Map<Character>)rec_obj;
-    
+    assertNotNull(actual);
     // To Do: transfer obj to string display.
     MapTextView map_view = new MapTextView(actual);
-    
+    assertNotNull(actual);
     assertEquals(expected, map_view.displayMap());
     ms.close();
     soc.close();

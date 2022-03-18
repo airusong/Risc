@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
@@ -33,7 +35,9 @@ public class Master {
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
-    this.theHandleOrder = new HandleOrder(all_order_list, theMap);
+    OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    PathChecking<Character> pcheck=new PathChecking<>(ocheck);
+    this.theHandleOrder = new HandleOrder(all_order_list, theMap,pcheck);
   }
 
   /**
@@ -94,6 +98,7 @@ public class Master {
    * 
    */
   public void handleOrders() {
+    //System.out.println("For test: gonna handle orders.");
     this.theHandleOrder.handleOrders(all_order_list, theMap);
   }
 }

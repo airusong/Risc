@@ -17,7 +17,7 @@ public class Server {
    */
   public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
     int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
-    int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 1 ;
+    int num_players = args.length > 1 ? Integer.parseInt(args[1]) : 2 ;
     
     //System.out.println("Test");
     //System.out.println(port);

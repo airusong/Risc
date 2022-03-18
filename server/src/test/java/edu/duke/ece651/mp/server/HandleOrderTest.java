@@ -10,14 +10,16 @@ import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class HandleOrderTest {
-    
+
     @Test
-    public void test_handleAllMoveOrder(){
+    public void test_handleAllMoveOrder() {
         V1Map theMap = new V1Map();
         assertNotNull(theMap);
         MoveTurn mo = new MoveTurn("Narnia", "Midemio", 1, "Green");
@@ -26,16 +28,18 @@ public class HandleOrderTest {
         tl.order_list.add(mo);
         all_order_list.add(tl);
         assertNotNull(all_order_list);
-        HandleOrder ho = new HandleOrder(all_order_list, theMap);
+        OwnerChecking<Character> ocheck = new OwnerChecking<>(null);
+        PathChecking<Character> pcheck = new PathChecking<>(ocheck);
+        HandleOrder ho = new HandleOrder(all_order_list, theMap, pcheck);
         ho.handleAllMoveOrder();
-        assertEquals(7, ((Territory<Character>) ho.theMap.myTerritories.get("Narnia")).getUnit());
-        assertEquals(4, ((Territory<Character>) ho.theMap.myTerritories.get("Midemio")).getUnit());
+        assertEquals(7, ((Territory<Character>) ho.theMap.getAllTerritories().get("Narnia")).getUnit());
+        assertEquals(4, ((Territory<Character>) ho.theMap.getAllTerritories().get("Midemio")).getUnit());
     }
-    
+
     @Test
-    public void test_handleAllAttackOrder(){
-        Territory<Character> dep = new Territory<Character>("Narnia","Green",new ArrayList<String>(), 2);
-        Territory<Character> des = new Territory<Character>("Midemio","Blue", new ArrayList<String>(), 3);
+    public void test_handleAllAttackOrder() {
+        Territory<Character> dep = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 2);
+        Territory<Character> des = new Territory<Character>("Midemio", "Blue", new ArrayList<String>(), 3);
         AttackTurn mo = new AttackTurn("Narnia", "Midemio", 1, "Green");
         ArrayList<TurnList> all_order_list = new ArrayList<TurnList>();
         TurnList tl = new TurnList("Green");
@@ -45,18 +49,19 @@ public class HandleOrderTest {
         players_colors.add("Green");
         players_colors.add("Blue");
         V1Map theMap = new V1Map(players_colors);
-
-        HandleOrder ho = new HandleOrder(all_order_list, theMap);
+        OwnerChecking<Character> ocheck = new OwnerChecking<>(null);
+        PathChecking<Character> pcheck = new PathChecking<>(ocheck);
+        HandleOrder ho = new HandleOrder(all_order_list, theMap, pcheck);
         ho.handleAllAttackOrder();
         // To add assert
-        
+
     }
 
     @Test
-    public void test_updateMapbyOneUnit(){
+    public void test_updateMapbyOneUnit() {
         HandleOrder ho = new HandleOrder();
         ho.updateMapbyOneUnit();
-        assertEquals(9, ((Territory<Character>) ho.theMap.myTerritories.get("Narnia")).getUnit());
+        assertEquals(9, ((Territory<Character>) ho.theMap.getAllTerritories().get("Narnia")).getUnit());
     }
 
 }
