@@ -8,9 +8,9 @@ public abstract class MoveChecking<T> {
     this.next = next;
   }
 
-  protected abstract String checkMyRule(V1Map<T> map, String source, String destination, int movingunits);
+  protected abstract String checkMyRule(Map<T> map, String source, String destination, int movingunits);
 
-  public String checkMoving(V1Map<T> map, String source, String destination, int movingunits) {
+  public String checkMoving(Map<T> map, String source, String destination, int movingunits) {
     // update moveStatus
     moveStatus = "player color placeholder: Move order from " + source + " into " + destination + " with " + movingunits
         + " units was ";
