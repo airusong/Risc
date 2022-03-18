@@ -39,20 +39,10 @@ public class Client {
       Client theClient = new Client(servername, port, input, System.out);
 
       if (servername != "null") {
-        // Send "Ready "message to Server
-        String msg = "Client is ready.";
-        theClient.theTextPlayer.connectionToMaster.sendToServer(msg);
-        theClient.theTextPlayer.receiveIdentity();
-        theClient.theTextPlayer.receiveMap();
-        theClient.theTextPlayer.printMap();
+        theClient.theTextPlayer.initiateGame();
 
-        // In reality, server will send a request to the player for entering turn
-        // for test purpose, we're just taking turn manually
-        //theClient.theTextPlayer.takeAndSendTurn();
+        theClient.theTextPlayer.playGame();
         
-        //theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
-        theClient.theTextPlayer.takeAndSendTurn();
-
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {

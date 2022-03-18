@@ -172,15 +172,9 @@ public class TextPlayer {
     String fromTerritory = terrOptions.get(enteredOption - 1);
     out.println("You selected " + fromTerritory + " as the source.");
 
-    // to which territory
+    // to which territory (only other players' territories)
     out.println("- To which territory? (Enter the option# from following list)");
-    if (orderType == 'A') { // For attack: only other players' territories
-      terrOptions = getOthersTerritories();
-    } else { // For move: only my own territories
-      terrOptions = getMyOwnTerritories();
-      ;
-    }
-
+    terrOptions = getOthersTerritories();
     out.print(view.displayTerritoriesAsList(terrOptions));
     enteredOption = readOption(terrOptions.size());
     String toTerritory = terrOptions.get(enteredOption - 1);
@@ -229,14 +223,14 @@ public class TextPlayer {
   }
 
   private ArrayList<String> getOthersTerritories() {
+    String player_color = identity; // just for init
     for (int index = 0; index < 2; index++) {
       String color = theMap.players_colors.get(index);
-      if (!color.equals(identity)) {
-        return theMap.getPlayerTerritories(color);
+      if (color != identity) {
+        player_color = color;
       }
     }
-    return null;
-
+    return theMap.getPlayerTerritories(player_color);
   }
 
   /**
@@ -258,31 +252,27 @@ public class TextPlayer {
    * @throws IOException
    */
   public void playGame() throws IOException {
-    while (true) { // main loop to play
-      // Step-1:
-      receiveMap();
-      printMap();
+    while(true) { // main loop to play
+    // Step-1:
+    receiveMap();
+    printMap();
 
-      // Step-2:
-      // Receive game status from server
-      String status = receiveGameStatus();
+    // Step-2:
+    // Receive game status from server
+    String status = receiveGameStatus();
 
-      if (status.startsWith("Ready")) {
-        // Step-3:
-        takeAndSendTurn();
-
-        // Step-4:
-        ArrayList<String> turnResult = receiveTurnStatus();
-        printTurnStatus(turnResult);
-
-      } else {
-        break;
-      }
+    if (status == "Ready for accepting turn!") {
+      // Step-3:
+      takeAndSendTurn();
+    }
+    else {
+      break;
+    }
     }
   }
 
   /**
-   * method to receive game status from the server
+   * method to receive Player Color from the server
    * 
    * @return game status in string format
    */
@@ -290,29 +280,6 @@ public class TextPlayer {
     String status = (String) connectionToMaster.receiveFromServer();
     out.println(status);
     return status;
-  }
-
-  /**
-   * method to receive turn status from the server
-   * 
-   */
-  @SuppressWarnings("unchecked")
-  public ArrayList<String> receiveTurnStatus() {
-    ArrayList<String> turnStatus = (ArrayList<String>) connectionToMaster.receiveFromServer();
-    return turnStatus;
-  }
-
-  /**
-   * method to receive turn status from the server
-   * 
-   */
-
-  private void printTurnStatus(ArrayList<String> status_list) {
-    out.println("--------------\nTurn Status:\n--------------\n");
-    for (String turn_status : status_list) {
-      out.println(turn_status);
-    }
-    out.print("\n");
   }
 
 }

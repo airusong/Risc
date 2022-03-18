@@ -1,4 +1,5 @@
 package edu.duke.ece651.mp.server;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class Master {
   final MasterServer theMasterServer;
-  public V1Map<Character> theMap;
+  public Map<Character> theMap;
   public ArrayList<String> players_identity;
   public ArrayList<TurnList> all_order_list;
-  HandleOrder theHandleOrder;
+  HandleOrder<Character> theHandleOrder;
 
   /**
    * Constructor
@@ -24,16 +25,15 @@ public class Master {
    * @throws IOException
    */
   public Master(int port, int num_players) throws IOException {
-     if (port != 0) {
+    if (port != 0) {
       this.theMasterServer = new MasterServer(port, num_players);
-    }
-    else {
+    } else {
       this.theMasterServer = new MockMasterServer(port, num_players);
     }
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
-    this.theHandleOrder = new HandleOrder(all_order_list, theMap);
+    this.theHandleOrder = new HandleOrder<Character>(all_order_list, theMap);
   }
 
   /**
@@ -68,14 +68,13 @@ public class Master {
   }
 
   /**
-   * Method to receive a list of orders from a player
+   * Method to send Player Color to ALL the players
    * 
    * @throws IOException
    */
-  /*
-  public Object receiveObjectFromPlayer(Socket player_socket) throws ClassNotFoundException, IOException {
-    return theMasterServer.receiveObjectFromPlayer(player_socket);
-  }*/
+  public void sendTurnStatusToAll(ArrayList<String> turnStatus) throws IOException {
+    theMasterServer.sendToAll(turnStatus);
+  }
 
   /**
    * Method to receive and update orders from ALL players
@@ -84,7 +83,7 @@ public class Master {
    * @throws ClassNotFoundException
    * @throws InterruptedException
    */
-  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
+  private void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
     theMasterServer.receiveTurnListFromAllPlayers();
     this.all_order_list = theMasterServer.all_order_list;
   }
@@ -92,8 +91,75 @@ public class Master {
   /**
    * Method to handle orders
    * 
+   * @return list of turn result
    */
-  public void handleOrders() {
-    this.theHandleOrder.handleOrders(all_order_list, theMap);
+  private ArrayList<String> handleOrders() {
+    Map<Character> updatedMap = theHandleOrder.handleOrders(all_order_list, theMap);
+    theMap = updatedMap;
+
+    theMasterServer.all_order_list.clear(); // reset the turn list
+    
+    ArrayList<String> status_list = new ArrayList<String>(theHandleOrder.turnStatus);
+    theHandleOrder.turnStatus.clear(); // reset the list
+    return status_list;
+  }
+
+  /**
+   * Display in the server console the status of each order in the turn
+   */
+  private void displayTurnStatus(ArrayList<String> status_list) {
+    System.out.println("--------------\nTurn Status:\n--------------\n");
+    for (String turn_status : status_list) {
+      System.out.println(turn_status);
+    }
+    System.out.println("\n");
+  }
+
+  /**
+   * Method to start a game by accepting players sending the players their colors
+   * 
+   * @throws IOException, InterruptedException
+   */
+  public void initiateGame() throws IOException, InterruptedException {
+    // Step-1:
+    acceptPlayers();
+
+    // Step-2:
+    sendPlayerIdentityToAll();
+  }
+
+  /**
+   * Method to play the game
+   * 
+   * @throws IOException, ClassNotFoundException, InterruptedException
+   */
+  public void playGame() throws IOException, ClassNotFoundException, InterruptedException {
+    String gameStatus = "Ready for accepting turn!";
+    while (true) { // main playing loop
+      // Step-1:
+      sendMapToAll();
+
+      // Step-2:
+      // Send game status to all players
+      // Options: "Ready for accepting turn"
+      // OR a player lost
+      theMasterServer.sendToAll(gameStatus);
+
+      if (gameStatus == "Ready for accepting turn!") {
+        // Step-3:
+        receiveTurnListFromAllPlayers();
+
+        // Step-4:
+        ArrayList<String> turnResult = handleOrders();
+        sendTurnStatusToAll(turnResult);
+        displayTurnStatus(turnResult);
+
+        // Step-5:
+        // check victory and defeat
+        // update gameStatus if needed
+      } else {
+        break;
+      }
+    }
   }
 }
