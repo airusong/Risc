@@ -11,10 +11,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.net.Socket;
 import java.util.ArrayList;
 import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 
@@ -167,5 +170,50 @@ public class MasterServer {
     }
     System.out.println("Server received lists of orders from all players.");
   }
+  /**                                                                                                                 
+   *                                                                                                                   
+   * method to detect which player has won                                                                             
+   * return the winner color                                                                                           
+   * return null: no player has won                                                                                    
+   *                                                                                                                   
+   */
+  public String detectresult(Map<Character> theMap){
+    String color=null;
+    HashMap<String, Territory<Character>> myTerritories=theMap.getAllTerritories();
+    for(String s:myTerritories.keySet()){
+      Territory<Character> terr=myTerritories.get(s);
+      if(!terr.getColor().equals(color)&&color!=null){
+        color="no";
+      }else if(color==null){
+        color=terr.getColor();
+      }
+    }
+    return color;
+  }
+ /*                                                                                                                   
+   * method to send the winner result to player                                                                        
+   */
+  public String sendresult(Map<Character> theMap){
+    //sendToPlayer(player_socket_list, player_socket);
+    
+    String color =detectresult(theMap);
+    String result=null; 
+     for (int i = 0; i < player_socket_list.size(); ++i) {
+       //if one player has won, send winner color to both player
+       if(!color.equals("no")){
+         //          System.out.println(color+"player has won");
+          sendToPlayer(color,player_socket_list.get(i));
+          result=color+" player has won";
+       }else{
+         //if no player has won, prompt them to continue
+         //          System.out.println("Please continue");
+          sendToPlayer(color,player_socket_list.get(i));
+          result="Please continue";
+       }
+    }
+     return result;
+
+  }
+
 
 }
