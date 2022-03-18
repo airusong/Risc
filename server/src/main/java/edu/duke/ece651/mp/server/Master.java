@@ -165,6 +165,10 @@ public class Master {
         if(winning_color != null) {
           gameStatus = winning_color + " player has won!";
         }
+        else {
+          // add one unit to each territory
+          theMap.updateMapbyOneUnit();
+        }
       } else {
         break;
       }

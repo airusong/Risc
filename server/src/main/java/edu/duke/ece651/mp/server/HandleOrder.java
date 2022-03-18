@@ -55,12 +55,13 @@ public class HandleOrder<T> {
    * 
    */
   public void handleAllAttackOrder() {
+    // create a temporary map with correct attacker and defender unit number (requirement 5d)
     for (int i = 0; i < all_order_list.size(); i++) {
       TurnList curr = all_order_list.get(i);
       for (int j = 0; j < curr.getListLength(); j++) {
         Turn curr_turn = (Turn) curr.order_list.get(j);
         if (curr_turn.getTurnType().equals("Attack")) {
-          handleSingleAttackOrder(curr_turn);
+          handleSingleAttackOrder(curr_turn); // take an extra parameter for the temporary map
         }
       }
     }

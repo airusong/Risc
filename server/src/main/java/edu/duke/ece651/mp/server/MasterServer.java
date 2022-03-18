@@ -175,8 +175,8 @@ public class MasterServer {
 
   /**
    * 
-   * method to detect which player has won return the winner color return null: no
-   * player has won
+   * method to detect which player has won return the winner color 
+   * @returns player's color if they won OR null
    * 
    */
   public String detectresult(Map<Character> theMap) {
