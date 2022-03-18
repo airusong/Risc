@@ -13,10 +13,10 @@ import edu.duke.ece651.mp.common.V1Map;
 
 public class Master {
   final MasterServer theMasterServer;
-  public V1Map<Character> theMap;
+  public Map<Character> theMap;
   public ArrayList<String> players_identity;
   public ArrayList<TurnList> all_order_list;
-  HandleOrder theHandleOrder;
+  HandleOrder<Character> theHandleOrder;
 
   /**
    * Constructor
@@ -33,7 +33,7 @@ public class Master {
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
-    this.theHandleOrder = new HandleOrder(all_order_list, theMap);
+    this.theHandleOrder = new HandleOrder<Character>(all_order_list, theMap);
   }
 
   /**
@@ -94,6 +94,18 @@ public class Master {
    * 
    */
   public void handleOrders() {
-    this.theHandleOrder.handleOrders(all_order_list, theMap);
+    Map<Character> updatedMap = this.theHandleOrder.handleOrders(all_order_list, theMap);
+    displayTurnStatus();
+    theMap = updatedMap;
+  }
+
+  /**
+   * Display in the server console the status of each order in the turn
+   */
+  public void displayTurnStatus() {
+    ArrayList<String> status_list = theHandleOrder.turnStatus;
+    for (String turn_status : status_list) {
+      System.out.println(turn_status);
+    }
   }
 }

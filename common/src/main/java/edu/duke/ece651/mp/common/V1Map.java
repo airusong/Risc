@@ -153,6 +153,22 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(des, t2);
   }
 
+  public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor) {
+    Territory<T> terr = myTerritories.get(territoryName);
+    int currUnits = terr.getUnit();
+    int newUnits = currUnits + unitChage;
+    terr.updateUnit(newUnits);
+    if (newOwnerColor != "Unchanged") {
+      terr.updateColor(newOwnerColor);
+    }
+    myTerritories.put(territoryName, terr);
+    updateTerritoryInMap(territoryName, unitChage);
+  }
+
+  public void updateTerritoryInMap(String territoryName, int unitChage) {
+    updateTerritoryInMap(territoryName, unitChage, "Unchanged");
+  }
+
   /* Increase #Units after fighting */
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
