@@ -24,7 +24,7 @@ import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class ClientTest {
-  
+
   @Test
   void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -37,18 +37,11 @@ public class ClientTest {
     //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
     V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
     theClient.theTextPlayer.updateMap(mapFromServer);
-    
-    String expected = "Green player:\n"
-      + "-----------\n"
-      + "8 units in Narnia (next to: Midemio, Elantris)\n"
-      + "3 units in Midemio (next to: Narnia, Oz)\n"
-      + "12 units in Oz (next to: Midemio, Roshar)\n"
-      + "\n"
-      + "Blue player:\n"
-      + "-----------\n"
-      + "7 units in Elantris (next to: Scadnal, Narnia)\n"
-      + "6 units in Roshar (next to: Oz, Scadnal)\n"
-      + "10 units in Scadnal (next to: Roshar, Elantris)\n";
+
+    String expected = "Green player:\n" + "-----------\n" + "8 units in Narnia (next to: Midemio, Elantris)\n"
+        + "3 units in Midemio (next to: Narnia, Oz)\n" + "12 units in Oz (next to: Midemio, Roshar)\n" + "\n"
+        + "Blue player:\n" + "-----------\n" + "7 units in Elantris (next to: Scadnal, Narnia)\n"
+        + "6 units in Roshar (next to: Oz, Scadnal)\n" + "10 units in Scadnal (next to: Roshar, Elantris)\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
@@ -67,7 +60,7 @@ public class ClientTest {
     try {
       System.setIn(input);
       System.setOut(out);
-      String[] args = {"null", "0"};
+      String[] args = { "null", "0" };
       Client.main(args);
     } finally {
       System.setIn(oldIn);
