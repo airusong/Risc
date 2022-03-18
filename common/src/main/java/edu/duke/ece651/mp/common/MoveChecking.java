@@ -7,9 +7,9 @@ public abstract class MoveChecking<T> {
     this.next=next;
   }
 
-  protected abstract String checkMyRule(V1Map<T>map,String source,String destination,int movingunits);
+  protected abstract String checkMyRule(Map<T>map,String source,String destination,int movingunits);
   
-  public String checkMoving(V1Map<T>map,String source,String destination,int movingunits){
+  public String checkMoving(Map<T>map,String source,String destination,int movingunits){
     if (checkMyRule(map,source,destination,movingunits)!=null) {
       return checkMyRule(map,source,destination,movingunits);
     }

@@ -80,9 +80,6 @@ public class HandleOrder<T> {
      */
     public void handleSingleMoveOrder(Turn moveOrder) {
         // TO DO: add RuleChecker
-        //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
-        //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-
         int move_num = moveOrder.getNumber();
         String dep = moveOrder.getSource();
         String des = moveOrder.getDestination();

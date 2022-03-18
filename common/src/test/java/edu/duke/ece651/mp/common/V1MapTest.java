@@ -17,6 +17,8 @@ public class V1MapTest {
 
   public void checkcontents() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
     V1Map<Character> map = new V1Map<>(players_colors);
     assertEquals(map.myTerritories.containsKey("Narnia"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Midemio"), true);
@@ -26,6 +28,8 @@ public class V1MapTest {
   @SuppressWarnings("unchecked")
   public void test_serialization_basicMap() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
     V1Map<Character> mapOrg = new V1Map<Character>(players_colors);
     V1Map<Character> mapNew = null;
 
@@ -58,6 +62,8 @@ public class V1MapTest {
   @Test
   public void test_territoriesGroupedByOwner() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    //PathChecking<Character> pcheck=new PathChecking<>(ocheck);
     V1Map<Character> map = new V1Map<>(players_colors);
     HashMap<String, ArrayList<String>> terrGroups = map.getOwnersTerritoryGroups();
 

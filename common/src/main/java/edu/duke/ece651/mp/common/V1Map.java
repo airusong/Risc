@@ -9,12 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import edu.duke.ece651.mp.common.MoveChecking;
 
-
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
 
-  //private final MoveChecking<T> moveChecker;
+  // private final MoveChecking<T> moveChecker;
 
   /**
    * Constructor
@@ -32,7 +31,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     //this.moveChecker = moveChecker;
   }
 
-
   public V1Map() {
     this.myTerritories = new HashMap<>();
     ArrayList<String> players_colors = new ArrayList<String>();
@@ -41,6 +39,15 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
+    //this.moveChecker = null;
+  }
+
+  public HashMap<String, Territory<T>> getAllTerritories() {
+    return myTerritories;
+  }
+
+  public ArrayList<String> getPlayerColors() {
+    return players_colors;
   }
 
   // public HashMap<String, Territory<T>> getMap(){
@@ -96,7 +103,8 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     s.writeObject(myTerritories);
 
     // otehr fields go here
-
+    s.writeObject(players_colors);
+    // s.writeObject(moveChecker);
   }
 
   /**
@@ -116,7 +124,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     // restore the HashMap
     myTerritories = (HashMap<String, Territory<T>>) s.readObject();
-
     // other fields go here
   }
 
@@ -143,9 +150,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   /* Update Map according to move order */
   public void updateMap(String dep, String des, int n1, int n2) {
-    Territory t1 = myTerritories.get(dep);
-    Territory t2 = myTerritories.get(des);
-    
+    Territory<T> t1 = myTerritories.get(dep);
+    Territory<T> t2 = myTerritories.get(des);
+
     t1.updateUnit(n1);
     t2.updateUnit(n2);
     myTerritories.put(dep, t1);
@@ -155,7 +162,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /* Increase #Units after fighting */
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
-    for(Map.Entry<String,Territory<T>> set: myT.entrySet()){
+    for (Map.Entry<String, Territory<T>> set : myT.entrySet()) {
       Territory<T> temp = set.getValue();
       temp.updateUnit(temp.getUnit() + 1);
       myTerritories.put(temp.getName(), temp);
@@ -163,10 +170,10 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   public ArrayList<String> getPlayerTerritories(String player_color) {
-        HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
+    HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);
     return terrList;
 
   }
-  
+
 }

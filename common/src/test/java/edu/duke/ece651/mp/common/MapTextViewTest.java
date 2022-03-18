@@ -13,6 +13,8 @@ public class MapTextViewTest {
   @Test
   public void test_displayMap() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
+    //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
     V1Map<Character> m = new V1Map<Character>(players_colors);
     MapTextView mapView = new MapTextView(m);
     String expected = "Green player:\n"

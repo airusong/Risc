@@ -170,7 +170,7 @@ public class TextPlayer {
     enteredOption = readOption(terrOptions.size());
     String fromTerritory = terrOptions.get(enteredOption - 1);
     out.println("You selected " + fromTerritory + " as the source.");
-
+  
     // to which territory (only other players' territories)
     out.println("- To which territory? (Enter the option# from following list)");
     terrOptions = getOthersTerritories();

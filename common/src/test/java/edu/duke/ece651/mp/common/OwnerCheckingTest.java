@@ -16,6 +16,7 @@ public class OwnerCheckingTest {
   @Test
   public void test_owner() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
     V1Map<Character> map = new V1Map<>(players_colors);
     OwnerChecking<Character> check=new OwnerChecking<>(null);
     assertEquals(check.checkMyRule(map,"Narnia","Midemio",2),null);
@@ -25,11 +26,12 @@ public class OwnerCheckingTest {
   }
   @Test
   public void test_chain(){
-    PathChecking<Character> pcheck=new PathChecking<>(null);
-    MoveChecking<Character> mcheck=new OwnerChecking<>(pcheck);
+    OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
+    PathChecking<Character> pathchcker = new PathChecking<>(ownerchecker);
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    
     V1Map<Character> map = new V1Map<>(players_colors);
-    assertEquals(mcheck.checkMyRule(map,"Narnia","Midemio",3),null);
-    assertEquals(mcheck.checkMyRule(map,"Narnia","Elantris",3),"not same owner");
+    assertEquals(pathchcker.checkMyRule(map,"Narnia","Midemio",3),null);
+    assertEquals(pathchcker.checkMyRule(map,"Narnia","Elantris",3),"no valid path exists");
   }
 }
