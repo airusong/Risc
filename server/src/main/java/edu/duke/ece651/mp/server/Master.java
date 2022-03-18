@@ -24,7 +24,12 @@ public class Master {
    * @throws IOException
    */
   public Master(int port, int num_players) throws IOException {
-    this.theMasterServer = new MasterServer(port, num_players);
+     if (port != 0) {
+      this.theMasterServer = new MasterServer(port, num_players);
+    }
+    else {
+      this.theMasterServer = new MockMasterServer(port, num_players);
+    }
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     this.theMap = new V1Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
