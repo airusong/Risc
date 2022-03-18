@@ -65,6 +65,7 @@ public class HandleOrder<T> {
    */
   public void handleSingleMoveOrder(Turn moveOrder) {
     // TO DO: add RuleChecker
+
     int move_num = moveOrder.getNumber();
     String dep = moveOrder.getSource();
     String des = moveOrder.getDestination();
@@ -75,6 +76,9 @@ public class HandleOrder<T> {
     int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
     int new_unit_num_des = unit_num_des + move_num;
     theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
+
+    // TO-DO: add this line after adding rule checker
+    // turnStatus.add(ruleChecker.moveStatus);
   }
 
   /**
@@ -83,18 +87,19 @@ public class HandleOrder<T> {
    */
   public void handleSingleAttackOrder(Turn attackOrder) {
     // handle attack order
-
     AttackChecking<T> ruleChecker = new AttackChecking<>();
+    String attackResult = "";
     if (ruleChecker.checkMyRule(theMap, attackOrder)) { // rule is VALID
-      resolveCombat(attackOrder);
+      attackResult += resolveCombat(attackOrder);
     }
-    turnStatus.add(ruleChecker.attackStatus);
+    turnStatus.add(ruleChecker.attackStatus + attackResult);
   }
 
   /**
    * Method to resolve combat in any one territory
    */
-  private void resolveCombat(Turn attackOrder) {
+  private String resolveCombat(Turn attackOrder) {
+    String combatResult;
     int attacking_units = attackOrder.getNumber();
     String attackerTerritory = attackOrder.getSource();
     String defenderTerritory = attackOrder.getDestination();
@@ -107,6 +112,7 @@ public class HandleOrder<T> {
     Random attackerDice = new Random();
     Random defenderDice = new Random();
     int diceSides = 20;
+    System.out.println("Starting combat...");
     while (true) { // start combat
 
       // step-1: role a 20 sided twice for both players
@@ -120,7 +126,9 @@ public class HandleOrder<T> {
         loserTerr = attackerTerritory;
         attacking_units--;
         loserTerrRemainingUnits = attacking_units;
-      } else { // (attackerDiceVal > defenderDiceVal) - defender lost
+      }
+
+      else { // (attackerDiceVal > defenderDiceVal) - defender lost
         loserTerr = defenderTerritory;
         defending_units--;
         loserTerrRemainingUnits = defending_units;
@@ -128,32 +136,32 @@ public class HandleOrder<T> {
 
       // step-3: check if the loser territory ran out of units
       // if no, continue. If yes, update map with result
-      if(loserTerrRemainingUnits > 0) {
+      if (loserTerrRemainingUnits > 0) {
         continue;
-      }
-      else {
+      } else {
         // attacker territory lost the units no matter what
-        theMap.updateTerritoryInMap(attackerTerritory, attacking_units*(-1)); // -1 for making it negative
+        theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) * (-1)); // -1 for making it negative
 
         int unitChange;
-        if(loserTerr == attackerTerritory) {
+        if (loserTerr == attackerTerritory) {
           unitChange = defending_units - defender.getUnit();
           theMap.updateTerritoryInMap(defenderTerritory, unitChange);
+          combatResult = "Defender won!";
         }
-        
+
         else { // loserTerr == defenderTerritory
           unitChange = attacking_units - defender.getUnit();
-          theMap.updateTerritoryInMap(defenderTerritory, unitChange, player_color);          
+          theMap.updateTerritoryInMap(defenderTerritory, unitChange, player_color);
+          combatResult = "Attacker won!";
         }
-        
         break;
       }
     }
-
+    return combatResult;
   }
 
   /**
-   * Method to handle Attack Order
+   * Method to decrease one unit from each territory Used after each turn
    * 
    */
   public void updateMapbyOneUnit() {
@@ -168,7 +176,8 @@ public class HandleOrder<T> {
     this.all_order_list = all_order_list;
     this.theMap = theMap;
     handleAllMoveOrder();
-    // handleAllAttackOrder();
+    handleAllAttackOrder();
+
     // updateMapbyOneUnit(theMap);
 
     // NEED TO RETURN UPDATED MAP

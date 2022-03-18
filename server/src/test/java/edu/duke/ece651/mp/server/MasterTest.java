@@ -61,10 +61,16 @@ public class MasterTest {
 
   @Test
   public void test_acceptplayers() throws IOException, InterruptedException {
-    Master m = new Master(0, 1);
+    Master m = new Master(8001, 1);
+    Socket s1 = new Socket("127.0.0.1", 8001);
+    String msg = "for testing";
+    sendToServer_helper(s1, msg);
     m.acceptPlayers();
+    // m.close();
     assertNotNull(m.theMasterServer.player_socket_list);
+    // assertNull(m.theMasterServer.server_socket.accept());
     m.close();
+    s1.close();
   }
 
   @Test

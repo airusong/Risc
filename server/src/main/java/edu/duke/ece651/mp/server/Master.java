@@ -68,6 +68,15 @@ public class Master {
   }
 
   /**
+   * Method to send Player Color to ALL the players
+   * 
+   * @throws IOException
+   */
+  public void sendTurnStatusToAll(ArrayList<String> turnStatus) throws IOException {
+    theMasterServer.sendToAll(turnStatus);
+  }
+
+  /**
    * Method to receive and update orders from ALL players
    * 
    * @throws IOException
@@ -82,21 +91,28 @@ public class Master {
   /**
    * Method to handle orders
    * 
+   * @return list of turn result
    */
-  private void handleOrders() {
-    Map<Character> updatedMap = this.theHandleOrder.handleOrders(all_order_list, theMap);
-    displayTurnStatus();
+  private ArrayList<String> handleOrders() {
+    Map<Character> updatedMap = theHandleOrder.handleOrders(all_order_list, theMap);
     theMap = updatedMap;
+
+    theMasterServer.all_order_list.clear(); // reset the turn list
+    
+    ArrayList<String> status_list = new ArrayList<String>(theHandleOrder.turnStatus);
+    theHandleOrder.turnStatus.clear(); // reset the list
+    return status_list;
   }
 
   /**
    * Display in the server console the status of each order in the turn
    */
-  private void displayTurnStatus() {
-    ArrayList<String> status_list = theHandleOrder.turnStatus;
+  private void displayTurnStatus(ArrayList<String> status_list) {
+    System.out.println("--------------\nTurn Status:\n--------------\n");
     for (String turn_status : status_list) {
       System.out.println(turn_status);
     }
+    System.out.println("\n");
   }
 
   /**
@@ -134,13 +150,14 @@ public class Master {
         receiveTurnListFromAllPlayers();
 
         // Step-4:
-        handleOrders();
+        ArrayList<String> turnResult = handleOrders();
+        sendTurnStatusToAll(turnResult);
+        displayTurnStatus(turnResult);
 
         // Step-5:
         // check victory and defeat
         // update gameStatus if needed
-      }
-      else  {
+      } else {
         break;
       }
     }

@@ -18,7 +18,7 @@ public class AttackChecking<T> {
 
     attackStatus = player_color + ": Attack order from "
       + source + " into " + destination + " with "
-      + attackingunits + " was ";
+      + attackingunits + " units was ";
 
     // check if the source belongs to the attacker
     if (!attacker.getColor().equals(player_color)) {
@@ -46,7 +46,7 @@ public class AttackChecking<T> {
     }
 
     // passed all rules!
-    attackStatus += "successful!";
+    attackStatus += "valid - ";
     return true;
   }
 }
