@@ -1,24 +1,23 @@
-+---------------------------+-----------------+------------+-----------+-----------+---------+
-|        Class Name         | Total Coverage% | Cvrd Stmts | Ttl Stmts | Cvrdd Brs | Ttl Brs |
-+---------------------------+-----------------+------------+-----------+-----------+---------+
-|  mp.server.MoveChecking   |       10        |     1      |     6     |     0     |    4    |
-|     mp.server.Server      |       72        |     6      |     7     |     2     |    4    |
-|  mp.server.MasterServer   |       77        |     29     |    37     |     6     |    8    |
-|  mp.server.PathChecking   |       88        |     17     |    18     |     6     |    8    |
-|mp.server.MockMasterServer |       92        |     10     |    11     |     2     |    2    |
-|  mp.server.OwnerChecking  |       100       |     8      |     8     |     4     |    4    |
-|     mp.server.Master      |       100       |     9      |     9     |     2     |    2    |
-|  mp.server.PlayerThread   |       100       |     6      |     6     |     0     |    0    |
-|   mp.server.MasterTest    |       100       |     16     |    16     |     0     |    0    |
-|   mp.server.ServerTest    |       100       |     18     |    18     |     0     |    0    |
-|mp.server.PathCheckingTest |       100       |     10     |    10     |     0     |    0    |
-|mp.server.MasterServerTest |       100       |     28     |    28     |     0     |    0    |
-|mp.server.OwnerCheckingTest|       100       |     11     |    11     |     0     |    0    |
-+---------------------------+-----------------+------------+-----------+-----------+---------+
-|          Totals           |       88        |    169     |    185    |    22     |   32    |
-+---------------------------+-----------------+------------+-----------+-----------+---------+
++----------------------------+-----------------+------------+-----------+-----------+---------+
+|        Class Name          | Total Coverage% | Cvrd Stmts | Ttl Stmts | Cvrdd Brs | Ttl Brs |
++----------------------------+-----------------+------------+-----------+-----------+---------+
+| mp.server.MockMasterServer |        0        |     0      |    19     |     0     |    4    |
+|      mp.server.Server      |        0        |     0      |     6     |     0     |    4    |
+|    mp.server.ServerTest    |        0        |     0      |    18     |     0     |    0    |
+|      mp.server.Master      |       26        |     10     |    38     |     1     |    4    |
+|   mp.server.HandleOrder    |       42        |     29     |    75     |    11     |   20    |
+|   mp.server.MasterServer   |       61        |     47     |    76     |    12     |   20    |
+|  mp.server.AttackChecking  |       79        |     17     |    21     |     6     |    8    |
+|   mp.server.PlayerThread   |       85        |     6      |     7     |     0     |    0    |
+|    mp.server.MasterTest    |       86        |     45     |    52     |     0     |    0    |
+| mp.server.MasterServerTest |       91        |     56     |    61     |     0     |    0    |
+| mp.server.HandleOrderTest  |       100       |     30     |    30     |     0     |    0    |
+|mp.server.AttackCheckingTest|       100       |     11     |    11     |     0     |    0    |
++----------------------------+-----------------+------------+-----------+-----------+---------+
+|           Totals           |       59        |    251     |    414    |    30     |   60    |
++----------------------------+-----------------+------------+-----------+-----------+---------+
 
 
 Remove Colors From All Buffers
 
-Fundamental finished at Sun Mar 13 18:12:01
+Fundamental finished at Fri Mar 18 19:50:14
