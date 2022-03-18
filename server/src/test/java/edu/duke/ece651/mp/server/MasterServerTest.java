@@ -22,7 +22,7 @@ import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
-
+import edu.duke.ece651.mp.common.Territory;   
 public class MasterServerTest {
   @Test
   public void test_getPort() throws IOException {
@@ -114,5 +114,25 @@ public class MasterServerTest {
     ms.close();
     soc.close();
   }
+  @Test
+  public void test_detect() throws  UnknownHostException, IOException, ClassNotFoundException,InterruptedException{
+    MasterServer m = new MasterServer(8008, 1);
+    Socket soc = new Socket("127.0.0.1", 8008);
+    String msg = "for testing";                                                                         sendToServer_helper(soc, msg);
+    m.acceptPlayers();
+    ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));           V1Map<Character> Mymap = new V1Map<Character>(players_colors);                                      HashMap<String, Territory<Character>> myTerritories=Mymap.getAllTerritories();    
+    m.sendToAll(Mymap);    
+    assertEquals(m.detectresult(Mymap),"no");
+    assertEquals(m.sendresult(Mymap), "Please continue");
+    for(String s:myTerritories.keySet()){
+      Territory<Character> terr=myTerritories.get(s);
+      terr.updateColor("Blue");
+    }
+    assertEquals(m.detectresult(Mymap),"Blue");
+    assertEquals(m.sendresult(Mymap), "Blue player has won"); 
+    m.close();
+    soc.close();
 
-}
+  }
+
+} 
