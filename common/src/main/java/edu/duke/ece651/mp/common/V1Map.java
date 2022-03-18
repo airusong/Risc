@@ -7,31 +7,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import edu.duke.ece651.mp.common.MoveChecking;
-
 
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
 
-  //private final MoveChecking<T> moveChecker;
+  // private final MoveChecking<T> moveChecker;
 
   /**
-   * Constructor
-   * construct a V1Map specified with Territoris in it
+   * Constructor construct a V1Map specified with Territoris in it
    * 
-   * @param hashmap myTerritories,
-   *                the key is the territory itself and
-   *                the value is the list of adjancent territories
+   * @param hashmap myTerritories, the key is the territory itself and the value
+   *                is the list of adjancent territories
    */
   public V1Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
-    //this.moveChecker = moveChecker;
+    // this.moveChecker = moveChecker;
   }
-
 
   public V1Map() {
     this.myTerritories = new HashMap<>();
@@ -41,6 +36,14 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
+  }
+
+  public HashMap<String, Territory<T>> getAllTerritories() {
+    return myTerritories;
+  }
+
+  public ArrayList<String> getPlayerColors() {
+    return players_colors;
   }
 
   // public HashMap<String, Territory<T>> getMap(){
@@ -84,8 +87,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /**
-   * Write out the V1Map object for serialization
-   * to the ObjectOutputStream s.
+   * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
    */
   private void writeObject(ObjectOutputStream s) throws IOException {
@@ -100,17 +102,17 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /**
-   * Read in the V1Map object from the ObjectInputStream s.
-   * Was written to by writeObject.
+   * Read in the V1Map object from the ObjectInputStream s. Was written to by
+   * writeObject.
    * 
    * @serialData Read serializable fields, if any exist.
    */
   @SuppressWarnings({ "unchecked" })
   private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
     /*
-     * Call even if there is no default serializable fields.
-     * Enables default serializable fields to be added in future versions
-     * and skipped by this version which has no default serializable fields.
+     * Call even if there is no default serializable fields. Enables default
+     * serializable fields to be added in future versions and skipped by this
+     * version which has no default serializable fields.
      */
     s.defaultReadObject();
 
@@ -123,9 +125,8 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * method to get territories grouped by owner
    * 
-   * @return hashmap with key as the owner/player color
-   *         and value as an ArrayList of territories owned by
-   *         the player
+   * @return hashmap with key as the owner/player color and value as an ArrayList
+   *         of territories owned by the player
    */
   public HashMap<String, ArrayList<String>> getOwnersTerritoryGroups() {
     HashMap<String, ArrayList<String>> territoryGroups = new HashMap<>();
@@ -143,9 +144,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   /* Update Map according to move order */
   public void updateMap(String dep, String des, int n1, int n2) {
-    Territory t1 = myTerritories.get(dep);
-    Territory t2 = myTerritories.get(des);
-    
+    Territory<T> t1 = myTerritories.get(dep);
+    Territory<T> t2 = myTerritories.get(des);
+
     t1.updateUnit(n1);
     t2.updateUnit(n2);
     myTerritories.put(dep, t1);
@@ -155,7 +156,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /* Increase #Units after fighting */
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
-    for(Map.Entry<String,Territory<T>> set: myT.entrySet()){
+    for (Map.Entry<String, Territory<T>> set : myT.entrySet()) {
       Territory<T> temp = set.getValue();
       temp.updateUnit(temp.getUnit() + 1);
       myTerritories.put(temp.getName(), temp);
@@ -163,10 +164,10 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   public ArrayList<String> getPlayerTerritories(String player_color) {
-        HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
+    HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);
     return terrList;
 
   }
-  
+
 }

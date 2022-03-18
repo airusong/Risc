@@ -47,7 +47,7 @@ public class MapTextView {
     StringBuilder ans = new StringBuilder(""); // empty at first
     String separator = "";
 
-    for (String player_color : toDisplay.players_colors) {
+    for (String player_color : toDisplay.getPlayerColors()) {
       ans.append(separator);
       ans.append(displayPlayerTerritories(player_color, terrGroups));
       separator = "\n"; // empty line between two players' info
@@ -67,12 +67,12 @@ public class MapTextView {
     StringBuilder playerInfo = new StringBuilder("");
     playerInfo.append(makePlayerHeader(playerColor));
     for (String terrName : terrList) {
-      playerInfo.append(toDisplay.myTerritories.get(terrName).getUnit());
+      playerInfo.append(toDisplay.getAllTerritories().get(terrName).getUnit());
       playerInfo.append(" units in ");
       playerInfo.append(terrName);
       playerInfo.append(" (next to: ");
       // neighbours go here
-      ArrayList<String> neighborList = toDisplay.myTerritories.get(terrName).getAdjacency();
+      ArrayList<String> neighborList = toDisplay.getAllTerritories().get(terrName).getAdjacency();
       String sep = "";
       for (String neighborName : neighborList) {
         playerInfo.append(sep);
