@@ -161,8 +161,10 @@ public class Master {
         // Step-5:
         // check victory and defeat
         // update gameStatus if needed
-        this.theMasterServer.detectresult(theMap);
-        this.theMasterServer.sendresult(theMap);
+        String winning_color = this.theMasterServer.detectresult(theMap);
+        if(winning_color != null) {
+          gameStatus = winning_color + " player has won!";
+        }
       } else {
         break;
       }
