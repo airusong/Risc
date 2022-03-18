@@ -52,7 +52,7 @@ public class ClientTest {
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
-  
+  @Disabled
   @Test
   @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
   void test_main_V1() throws IOException, InterruptedException {

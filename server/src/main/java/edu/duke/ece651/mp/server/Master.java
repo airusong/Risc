@@ -99,6 +99,10 @@ public class Master {
    */
   public void handleOrders() {
     //System.out.println("For test: gonna handle orders.");
-    this.theHandleOrder.handleOrders(all_order_list, theMap);
+    PathChecking<Character> pcheck=new PathChecking<>(null);
+    OwnerChecking<Character> ocheck=new OwnerChecking<>(pcheck);
+    this.theHandleOrder = new HandleOrder(this.all_order_list, theMap,ocheck);
+    this.theHandleOrder.handleOrders();
   }
+
 }

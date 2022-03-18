@@ -18,19 +18,18 @@ public class HandleOrder<T> {
     Map<T> theMap;
     private final MoveChecking<T> moveChecker;
 
-    
-    HandleOrder(){
+    HandleOrder() {
         this.all_order_list = new ArrayList<TurnList>();
         this.theMap = new V1Map<>();
         this.moveChecker = null;
     }
 
-    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker){
+    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
         this.moveChecker = moveChecker;
     }
-    
+
     /**
      * Method to handle All Move Orders
      * 
@@ -42,19 +41,19 @@ public class HandleOrder<T> {
                 Turn curr_turn = (Turn) (curr.order_list.get(j));
                 if (curr_turn.getTurnType().equals("Move")) {
                     // Check Rules
-                    //System.out.println("For Test: gonna check Move rule");
-                    String moveProblem = moveChecker.checkMoving(theMap, curr_turn.getSource(), curr_turn.getDestination(), curr_turn.getNumber());
-                    if(moveProblem == null){
+                    String moveProblem = moveChecker.checkMoving(theMap, curr_turn.getSource(),
+                            curr_turn.getDestination(), curr_turn.getNumber());
+                    if (moveProblem == null) {
                         handleSingleMoveOrder(curr_turn);
                         continue;
-                    }
-                    else{
+                    } else {
+                        //System.out.println(moveProblem);
                         return moveProblem;
                     }
                 }
             }
         }
-        //System.out.println("All valid");
+        // System.out.println("All valid");
         return null;
     }
 
@@ -102,15 +101,14 @@ public class HandleOrder<T> {
         String dep = attackOrder.getSource();
         String des = attackOrder.getDestination();
         String player_color = attackOrder.getPlayerColor();
-        // TO DO: 
+        // TO DO:
     }
-
 
     /**
      * Method to handle Attack Order
      * 
      */
-    public void updateMapbyOneUnit(){
+    public void updateMapbyOneUnit() {
         theMap.updateMapbyOneUnit();
     }
 
@@ -118,11 +116,19 @@ public class HandleOrder<T> {
      * Method to handle All kinds of Orders
      * 
      */
-    public void handleOrders(ArrayList<TurnList>all_order_list, Map<T> theMap) {
-        this.all_order_list = all_order_list;
-        this.theMap = theMap;
-        handleAllMoveOrder();
+    public String handleOrders() {
+        String moveProblem = this.handleAllMoveOrder();
+        // System.out.println(moveProblem);
+        /*
+         * if(moveProblem != null){
+         * System.out.println("Move Order invalid.");
+         * }
+         * else{
+         * System.out.println("Successfully moved.");
+         * }
+         */
         handleAllAttackOrder();
         updateMapbyOneUnit();
+        return moveProblem;
     }
 }

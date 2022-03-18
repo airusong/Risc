@@ -47,7 +47,7 @@ public class Client {
         theClient.theTextPlayer.receiveIdentity();
         theClient.theTextPlayer.receiveMap();
         theClient.theTextPlayer.printMap();
-
+        
         // In reality, server will send a request to the player for entering turn
         // for test purpose, we're just taking turn manually
         //theClient.theTextPlayer.takeAndSendTurn();
@@ -58,7 +58,6 @@ public class Client {
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {
-
         // The map should be received from master
         // Here we are mocking receiving player's color and map from server
         String test_color = "Green";

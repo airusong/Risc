@@ -164,8 +164,17 @@ public class MasterServer {
       TurnList turn_list = (TurnList)th.obj;
       this.all_order_list.add(turn_list);
       connectedPlayers++;
+      //System.out.println("receive TurnList");
+      //printTurnList();
+
     }
     System.out.println("Server received lists of orders from all players.");
+  }
+
+  public void printTurnList(){
+    for(TurnList tl: all_order_list){
+      tl.printTurnList();
+    }
   }
 
 }
