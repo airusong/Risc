@@ -1,4 +1,4 @@
-package edu.duke.ece651.mp.server;
+package edu.duke.ece651.mp.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -7,6 +7,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import edu.duke.ece651.mp.common.MoveChecking;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class OwnerCheckingTest {

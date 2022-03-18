@@ -101,6 +101,9 @@ public class TextPlayer {
         enteredOrder = readOrder();
         switch (enteredOrder) {
         case 'M':
+          Turn newMoveOrder = readOrderDetails(enteredOrder);
+          myTurn.addTurn(newMoveOrder);
+          break;
         case 'A':
           Turn newOrder = readOrderDetails(enteredOrder);
           myTurn.addTurn(newOrder);

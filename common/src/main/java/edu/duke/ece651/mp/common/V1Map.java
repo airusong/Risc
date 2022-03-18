@@ -7,10 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import edu.duke.ece651.mp.common.MoveChecking;
+
 
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
+
+  //private final MoveChecking<T> moveChecker;
 
   /**
    * Constructor
@@ -25,7 +29,9 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
+    //this.moveChecker = moveChecker;
   }
+
 
   public V1Map() {
     this.myTerritories = new HashMap<>();

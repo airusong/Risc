@@ -50,7 +50,8 @@ public class Client {
         // for test purpose, we're just taking turn manually
         //theClient.theTextPlayer.takeAndSendTurn();
         
-        theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
+        //theClient.theTextPlayer.takeTurn(); // TEMPORARY --- use takeAndSendTurn()
+        theClient.theTextPlayer.takeAndSendTurn();
 
         theClient.theTextPlayer.connectionToMaster.socket.close();
 

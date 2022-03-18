@@ -1,8 +1,4 @@
-package edu.duke.ece651.mp.server;
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.V1Map;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.ITerritory;
+package edu.duke.ece651.mp.common;
 
 public class OwnerChecking<T> extends MoveChecking<T>{
   //  public OwnerChecking(){};

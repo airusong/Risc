@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
+
 public class MockMasterServer extends MasterServer{
   public MockMasterServer(int port, int num_players) throws IOException {
     super(port, num_players);
@@ -21,11 +24,9 @@ public class MockMasterServer extends MasterServer{
     // ExecutorService threadPool = Executors.newFixedThreadPool(num_players);
     // Socket player_socket;
     int connectedPlayers = 0;
-
+    System.out.println("Server is waiting...");
     while (connectedPlayers < num_players) {
-      System.out.println("Server is waiting...");
       player_socket = null;
-      System.out.println("Server accepted.");
       player_socket_list.add(player_socket);
       connectedPlayers++;
     }
@@ -58,4 +59,22 @@ public class MockMasterServer extends MasterServer{
   public void sendPlayerIdentityToAll(List<String> players_identity) {
     System.out.println("Sending color to player: Green");
   }
+
+  @Override
+  public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
+    int connectedPlayers = 0;
+    ArrayList<String> players_colors = new ArrayList<String>();
+    players_colors.add("Green");
+    players_colors.add("Blue");
+
+    while (connectedPlayers < num_players) {
+      TurnList turn_list = new TurnList(players_colors.get(connectedPlayers));
+      this.all_order_list.add(turn_list);
+      connectedPlayers++;
+    }
+    System.out.println("Server received lists of orders from all players.");
+  }
+
+
+
 }
