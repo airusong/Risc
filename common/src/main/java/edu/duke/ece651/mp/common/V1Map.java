@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import edu.duke.ece651.mp.common.MoveChecking;
 
 public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
@@ -36,6 +37,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
+    //this.moveChecker = null;
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -98,7 +100,8 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     s.writeObject(myTerritories);
 
     // otehr fields go here
-
+    s.writeObject(players_colors);
+    // s.writeObject(moveChecker);
   }
 
   /**
@@ -118,7 +121,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     // restore the HashMap
     myTerritories = (HashMap<String, Territory<T>>) s.readObject();
-
     // other fields go here
   }
 

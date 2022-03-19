@@ -31,7 +31,7 @@ public class MasterServer {
 
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
-    
+
     if (port != 0) {
       try {
         // create socket and bind it to port
@@ -40,8 +40,7 @@ public class MasterServer {
         // print exception message about Throwable object
         e.printStackTrace();
       }
-    }
-    else {
+    } else {
       this.server_socket = null;
     }
 
@@ -63,7 +62,7 @@ public class MasterServer {
       connectedPlayers++;
       PlayerThread pth = new PlayerThread(player_socket);
       Thread t = new Thread(pth);
-      
+
       t.start();
       t.join();
       // String rev = (String)pth.obj;
@@ -156,7 +155,7 @@ public class MasterServer {
    */
   @SuppressWarnings("unchecked")
   public void receiveTurnListFromAllPlayers() throws IOException, ClassNotFoundException, InterruptedException {
-    // ArrayList<Turn<Character>> order_list = new ArrayList<Turn<Character>>(); 
+    // ArrayList<Turn<Character>> order_list = new ArrayList<Turn<Character>>();
     int connectedPlayers = 0;
 
     while (connectedPlayers < num_players) {
@@ -164,19 +163,23 @@ public class MasterServer {
       Thread t = new Thread(th);
       t.start();
       t.join();
-      TurnList turn_list = (TurnList)th.obj;
+      TurnList turn_list = (TurnList) th.obj;
       this.all_order_list.add(turn_list);
       connectedPlayers++;
+      // System.out.println("receive TurnList");
+      // printTurnList();
+
     }
     System.out.println("Server received lists of orders from all players.");
   }
-  /**                                                                                                                 
-   *                                                                                                                   
-   * method to detect which player has won                                                                             
-   * return the winner color                                                                                           
-   * return null: no player has won                                                                                    
-   *                                                                                                                   
+
+  /**
+   * 
+   * method to detect which player has won return the winner color 
+   * @returns player's color if they won OR null
+   * 
    */
+
   public String detectresult(Map<Character> theMap){
     String color=null;
     int flag=0;//one winner has lost
@@ -195,30 +198,12 @@ public class MasterServer {
     return color;
 
   }
- 
- /*                                                                                                                   
-   * method to send the winner result to player                                                                        
-   
-  public String sendresult(Map<Character> theMap){
-    //sendToPlayer(player_socket_list, player_socket);
-    
-    String color =detectresult(theMap);
-    String result=null; 
-     for (int i = 0; i < player_socket_list.size(); ++i) {
-       //if one player has won, send winner color to both player
-       if(!color.equals("no")){
-         //          System.out.println(color+"player has won");
-          sendToPlayer(color,player_socket_list.get(i));
-          result=color+" player has won";
-       }else{
-         //if no player has won, prompt them to continue
-         //          System.out.println("Please continue");
-          sendToPlayer(color,player_socket_list.get(i));
-          result="Please continue";
-       }
-    }
-     return result;
 
+  public void printTurnList() {
+    for (TurnList tl : all_order_list) {
+      tl.printTurnList();
+    }
   }
- */
+
+
 }

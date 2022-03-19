@@ -2,6 +2,7 @@ package edu.duke.ece651.mp.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.MapTextView;
+import edu.duke.ece651.mp.common.OwnerChecking;
+import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 import edu.duke.ece651.mp.common.Territory;   
 public class MasterServerTest {
@@ -85,6 +88,8 @@ public class MasterServerTest {
     assertNotNull(ms.player_socket_list);
 
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
+    OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
+    PathChecking<Character> pcheck=new PathChecking<>(ocheck);
     V1Map<Character> Mymap = new V1Map<Character>(players_colors);
     ms.sendToAll(Mymap);
     
@@ -102,10 +107,10 @@ public class MasterServerTest {
     
     //assertEquals(expected, obj);
     V1Map<Character> actual = (V1Map<Character>)rec_obj;
-    
+    assertNotNull(actual);
     // To Do: transfer obj to string display.
     MapTextView map_view = new MapTextView(actual);
-    
+    assertNotNull(actual);
     assertEquals(expected, map_view.displayMap());
     ms.close();
     soc.close();
@@ -118,8 +123,13 @@ public class MasterServerTest {
     m.acceptPlayers();
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));           V1Map<Character> Mymap = new V1Map<Character>(players_colors);                                      HashMap<String, Territory<Character>> myTerritories=Mymap.getAllTerritories();    
     m.sendToAll(Mymap);    
+
     assertEquals(m.detectresult(Mymap),null);
     //    assertEquals(m.sendresult(Mymap), "Please continue");
+
+    assertNull(m.detectresult(Mymap));
+    //assertEquals(m.sendresult(Mymap), "Please continue");
+
     for(String s:myTerritories.keySet()){
       Territory<Character> terr=myTerritories.get(s);
       terr.updateColor("Blue");

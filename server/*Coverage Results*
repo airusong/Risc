@@ -1,23 +1,23 @@
 +----------------------------+-----------------+------------+-----------+-----------+---------+
 |        Class Name          | Total Coverage% | Cvrd Stmts | Ttl Stmts | Cvrdd Brs | Ttl Brs |
 +----------------------------+-----------------+------------+-----------+-----------+---------+
-| mp.server.MockMasterServer |        0        |     0      |    19     |     0     |    4    |
+| mp.server.MockMasterServer |        0        |     0      |    20     |     0     |    4    |
 |      mp.server.Server      |        0        |     0      |     6     |     0     |    4    |
 |    mp.server.ServerTest    |        0        |     0      |    18     |     0     |    0    |
-|      mp.server.Master      |       26        |     10     |    38     |     1     |    4    |
-|   mp.server.HandleOrder    |       42        |     29     |    75     |    11     |   20    |
-|   mp.server.MasterServer   |       61        |     47     |    76     |    12     |   20    |
+|      mp.server.Master      |       27        |     12     |    42     |     1     |    6    |
+| mp.server.HandleOrderTest  |       36        |     29     |    79     |     0     |    0    |
+|   mp.server.HandleOrder    |       43        |     33     |    82     |    12     |   22    |
+|   mp.server.MasterServer   |       69        |     47     |    69     |    12     |   16    |
 |  mp.server.AttackChecking  |       79        |     17     |    21     |     6     |    8    |
 |   mp.server.PlayerThread   |       85        |     6      |     7     |     0     |    0    |
 |    mp.server.MasterTest    |       86        |     45     |    52     |     0     |    0    |
-| mp.server.MasterServerTest |       91        |     56     |    61     |     0     |    0    |
-| mp.server.HandleOrderTest  |       100       |     30     |    30     |     0     |    0    |
+| mp.server.MasterServerTest |       92        |     61     |    66     |     0     |    0    |
 |mp.server.AttackCheckingTest|       100       |     11     |    11     |     0     |    0    |
 +----------------------------+-----------------+------------+-----------+-----------+---------+
-|           Totals           |       59        |    251     |    414    |    30     |   60    |
+|           Totals           |       54        |    261     |    473    |    31     |   60    |
 +----------------------------+-----------------+------------+-----------+-----------+---------+
 
 
 Remove Colors From All Buffers
 
-Fundamental finished at Fri Mar 18 19:50:14
+Fundamental finished at Fri Mar 18 20:34:52
