@@ -80,14 +80,16 @@ public class HandleOrder<T> {
         attack_order_list = valid_attack_order_list;
 
 
-        // // sort attack turns for the same player.
+        // // sort attack turns for the same player. & Update the tempMap.
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
             TurnList curr = valid_attack_order_list.get(i);
             HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
-                // Update the map
-
+                // Generate/Update the temp map
+                int move_units = curr_turn.getNumber();
+                int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit() - move_units;
+                tempMap.updateTempMap(curr_turn.getSource(), new_units);
 
                 String des = curr_turn.getDestination();
                 if (temp.get(des) != null) {

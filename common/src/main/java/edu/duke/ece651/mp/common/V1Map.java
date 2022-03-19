@@ -155,6 +155,11 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(des, t2);
   }
 
+  public void updateTempMap(String dep, int n){
+    Territory<T> t = myTerritories.get(dep);
+    t.updateUnit(n);
+  }
+  
   public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor) {
     System.out.println("Updating " + territoryName + " by " + unitChage + " with player " + newOwnerColor);
 
