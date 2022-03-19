@@ -148,6 +148,7 @@ public class Master {
       // Options: "Ready for accepting turn"
       // OR a player lost
       theMasterServer.sendToAll(gameStatus);
+      System.out.println(gameStatus);
 
       if (gameStatus == "Ready for accepting turn!") {
         // Step-3:
