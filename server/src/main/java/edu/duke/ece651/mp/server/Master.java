@@ -157,8 +157,8 @@ public class Master {
         // Step-5:
         // check victory and defeat
         // update gameStatus if needed
-        this.theMasterServer.detectresult(theMap);
-        this.theMasterServer.sendresult(theMap);
+
+
       } else {
         break;
       }
