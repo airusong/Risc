@@ -156,8 +156,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor) {
-    System.out.println("Updating " + territoryName + " by " + unitChage + " with player " + newOwnerColor);
-
     Territory<T> terr = myTerritories.get(territoryName);
     int currUnits = terr.getUnit();
     int newUnits = currUnits + unitChage;
