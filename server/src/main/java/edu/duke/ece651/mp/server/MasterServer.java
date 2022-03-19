@@ -179,48 +179,23 @@ public class MasterServer {
    * @returns player's color if they won OR null
    * 
    */
-  public String detectresult(Map<Character> theMap) {
-    String color = null;
-    HashMap<String, Territory<Character>> myTerritories = theMap.getAllTerritories();
-    
-    for (String s : myTerritories.keySet()) {
-      Territory<Character> terr = myTerritories.get(s);
-      if (color == null) { // first iteration
-        color = terr.getColor();
-        continue;
-      }
-      else if (!terr.getColor().equals(color)) {
-        // any territory having different color means
-        // nobody has won
-        color = null;
+
+  public String detectresult(Map<Character> theMap){
+    String color=null;
+    int flag=0;//one winner has lost
+    HashMap<String, Territory<Character>> myTerritories=theMap.getAllTerritories();
+    for(String s:myTerritories.keySet()){
+      Territory<Character> terr=myTerritories.get(s);
+      if(terr.getUnit()==0){continue;}
+      if(!terr.getColor().equals(color)&&color!=null){
+        flag=1;
+        color=null;
         break;
+      }else if(color==null&&flag==0){
+        color=terr.getColor();
       }
     }
     return color;
-  }
-
-  /*
-   * method to send the winner result to player
-   */
-  public String sendresult(Map<Character> theMap) {
-    // sendToPlayer(player_socket_list, player_socket);
-
-    String color = detectresult(theMap);
-    String result = null;
-    for (int i = 0; i < player_socket_list.size(); ++i) {
-      // if one player has won, send winner color to both player
-      if (!color.equals("no")) {
-        // System.out.println(color+"player has won");
-        sendToPlayer(color, player_socket_list.get(i));
-        result = color + " player has won";
-      } else {
-        // if no player has won, prompt them to continue
-        // System.out.println("Please continue");
-        sendToPlayer(color, player_socket_list.get(i));
-        result = "Please continue";
-      }
-    }
-    return result;
 
   }
 
@@ -229,5 +204,6 @@ public class MasterServer {
       tl.printTurnList();
     }
   }
+
 
 }
