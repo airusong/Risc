@@ -161,6 +161,7 @@ public class Master {
         // Step-5:
         // check victory and defeat
         // update gameStatus if needed
+
         String winning_color = this.theMasterServer.detectresult(theMap);
         if(winning_color != null) {
           gameStatus = winning_color + " player has won!";
@@ -169,6 +170,7 @@ public class Master {
           // add one unit to each territory
           theMap.updateMapbyOneUnit();
         }
+
       } else {
         break;
       }
