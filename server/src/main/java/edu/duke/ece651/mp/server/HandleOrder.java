@@ -148,6 +148,12 @@ public class HandleOrder<T> {
       
       moveResult = "successful";
     }
+     else {
+      moveResult = "invalid (Reason: " + moveProblem + ")";
+    }
+
+   turnStatus.add(moveChecker.moveStatus + moveResult);
+    
   }
 
     /**
