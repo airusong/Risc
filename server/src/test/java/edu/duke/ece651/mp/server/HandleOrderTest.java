@@ -20,6 +20,7 @@ import edu.duke.ece651.mp.common.V1Map;
 public class HandleOrderTest {
 
   @Test
+  @SuppressWarnings("unchecked")
   public void test_handleAllMoveOrder() {
     V1Map theMap = new V1Map();
     assertNotNull(theMap);
@@ -37,6 +38,8 @@ public class HandleOrderTest {
     assertEquals(4, ((Territory<Character>) ho.theMap.getAllTerritories().get("Midemio")).getUnit());
   }
 
+  
+  @SuppressWarnings("unchecked")
   @Test
   public void test_handleAllAttackOrder() {
     Territory<Character> dep = new Territory<Character>("Narnia", "Green", new ArrayList<String>(), 2);
@@ -58,7 +61,6 @@ public class HandleOrderTest {
 
   }
 
-  @Disabled
   @Test
   public void test_updateMapbyOneUnit() {
     HandleOrder ho = new HandleOrder();
@@ -66,11 +68,10 @@ public class HandleOrderTest {
     assertEquals(9, ((Territory<Character>) ho.theMap.getAllTerritories().get("Narnia")).getUnit());
   }
 
-  @Disabled
   @Test
   public void test_handleOrders_Insuffcient_units() {
     // Test Move Orders with checker
-    V1Map theMap = new V1Map();
+    Map<Character> theMap = new V1Map();
     assertNotNull(theMap);
     // valid
     MoveTurn mo1 = new MoveTurn("Narnia", "Midemio", 1, "Green");
@@ -91,9 +92,9 @@ public class HandleOrderTest {
     assertNotNull(all_order_list);
     PathChecking<Character> pcheck = new PathChecking<>(null);
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
-    HandleOrder ho = new HandleOrder(all_order_list, theMap, ocheck);
+    HandleOrder<Character> ho = new HandleOrder<Character>(all_order_list, theMap, ocheck);
     String actual = ""; // FIX!!!
-    //ho.handleOrders();
+    ho.handleOrders(all_order_list, theMap);
     String expected = "Insuffcient units";
     assertEquals(expected, actual);
     // TO DO : test attack orders with checker
