@@ -68,6 +68,7 @@ public class HandleOrderTest {
     assertEquals(9, ((Territory<Character>) ho.theMap.getAllTerritories().get("Narnia")).getUnit());
   }
 
+  @Disabled
   @Test
   public void test_handleOrders_Insuffcient_units() {
     // Test Move Orders with checker
