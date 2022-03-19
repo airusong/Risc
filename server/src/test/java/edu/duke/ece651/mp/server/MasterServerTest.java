@@ -123,14 +123,19 @@ public class MasterServerTest {
     m.acceptPlayers();
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));           V1Map<Character> Mymap = new V1Map<Character>(players_colors);                                      HashMap<String, Territory<Character>> myTerritories=Mymap.getAllTerritories();    
     m.sendToAll(Mymap);    
+
+    assertEquals(m.detectresult(Mymap),null);
+    //    assertEquals(m.sendresult(Mymap), "Please continue");
+
     assertNull(m.detectresult(Mymap));
     //assertEquals(m.sendresult(Mymap), "Please continue");
+
     for(String s:myTerritories.keySet()){
       Territory<Character> terr=myTerritories.get(s);
       terr.updateColor("Blue");
     }
     assertEquals(m.detectresult(Mymap),"Blue");
-    assertEquals(m.sendresult(Mymap), "Blue player has won"); 
+    // assertEquals(m.sendresult(Mymap), "Blue player has won"); 
     m.close();
     soc.close();
 

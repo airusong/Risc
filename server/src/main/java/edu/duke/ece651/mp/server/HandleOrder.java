@@ -121,36 +121,34 @@ public class HandleOrder<T> {
             }
         }
 
+  }
+
+  /**
+   * Method to handle Move Order
+   * 
+   */
+  public void handleSingleMoveOrder(Turn moveOrder) {
+    int unitsToMove = moveOrder.getNumber();
+    String dep = moveOrder.getSource();
+    String des = moveOrder.getDestination();
+    String player_color = moveOrder.getPlayerColor();
+
+    // Check Rules
+    String moveProblem = moveChecker.checkMoving(theMap, dep, des, unitsToMove, player_color);
+
+    String moveResult;
+
+    if (moveProblem == null) {
+      // update Territory & Map
+
+      // update source territory
+      theMap.updateTerritoryInMap(dep, unitsToMove*(-1)); // -1 for taking units out
+      // update destination territory
+      theMap.updateTerritoryInMap(des, unitsToMove); //  for adding
+      
+      moveResult = "successful";
     }
-
-    /**
-     * Method to handle Move Order
-     * 
-     */
-    public void handleSingleMoveOrder(Turn moveOrder) {
-        int unitsToMove = moveOrder.getNumber();
-        String dep = moveOrder.getSource();
-        String des = moveOrder.getDestination();
-        String player_color = moveOrder.getPlayerColor();
-
-        // Check Rules
-        String moveProblem = moveChecker.checkMoving(theMap, dep, des, unitsToMove, player_color);
-
-        String moveResult = "";
-
-        if (moveProblem == null) {
-            // update Territory & Map
-            int unit_num_dep = ((Territory<T>) theMap.getAllTerritories().get(dep)).getUnit();
-            int new_unit_num_dep = unit_num_dep - unitsToMove;
-            int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
-            int new_unit_num_des = unit_num_des + unitsToMove;
-            theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
-        } else {
-            moveResult = "invalid (Reason: " + moveProblem + ")";
-        }
-
-        turnStatus.add(moveChecker.moveStatus + moveResult);
-    }
+  }
 
     /**
      * Method to handle Attack Order
