@@ -80,15 +80,17 @@ public class HandleOrder<T> {
     // Check Rules
     String moveProblem = moveChecker.checkMoving(theMap, dep, des, unitsToMove, player_color);
 
-    String moveResult = "";
+    String moveResult;
 
     if (moveProblem == null) {
       // update Territory & Map
-      int unit_num_dep = ((Territory<T>) theMap.getAllTerritories().get(dep)).getUnit();
-      int new_unit_num_dep = unit_num_dep - unitsToMove;
-      int unit_num_des = ((Territory<T>) theMap.getAllTerritories().get(des)).getUnit();
-      int new_unit_num_des = unit_num_des + unitsToMove;
-      theMap.updateMap(dep, des, new_unit_num_dep, new_unit_num_des);
+
+      // update source territory
+      theMap.updateTerritoryInMap(dep, unitsToMove*(-1)); // -1 for taking units out
+      // update destination territory
+      theMap.updateTerritoryInMap(des, unitsToMove); //  for adding
+      
+      moveResult = "successful";
     }
     else {
       moveResult = "invalid (Reason: " + moveProblem + ")";

@@ -21,7 +21,6 @@ public abstract class MoveChecking<T> {
     if (next != null) {
       return next.checkMoving(map, source, destination, movingunits, player_color);
     }
-    moveStatus += "successful!";
     return null;
   }
 }

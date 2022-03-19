@@ -265,8 +265,8 @@ public class TextPlayer {
 
       // Step-2:
       // Receive game status from server
-      String status = receiveGameStatus();
-
+      String status = receiveAndPrintGameStatus();
+      
       if (status.startsWith("Ready")) {
         // Step-3:
         takeAndSendTurn();
@@ -276,6 +276,7 @@ public class TextPlayer {
         printTurnStatus(turnResult);
 
       } else {
+        // game ended
         break;
       }
     }
@@ -286,7 +287,7 @@ public class TextPlayer {
    * 
    * @return game status in string format
    */
-  public String receiveGameStatus() {
+  public String receiveAndPrintGameStatus() {
     String status = (String) connectionToMaster.receiveFromServer();
     out.println(status);
     return status;

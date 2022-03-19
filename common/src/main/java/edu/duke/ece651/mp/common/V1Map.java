@@ -37,7 +37,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
-    //this.moveChecker = null;
+    // this.moveChecker = null;
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -147,11 +147,11 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /* Update Map according to move order */
   public void updateMap(String dep, String des, int n1, int n2) {
     Territory<T> t1 = myTerritories.get(dep);
-    Territory<T> t2 = myTerritories.get(des);
-
     t1.updateUnit(n1);
-    t2.updateUnit(n2);
     myTerritories.put(dep, t1);
+
+    Territory<T> t2 = myTerritories.get(des);
+    t2.updateUnit(n2);
     myTerritories.put(des, t2);
   }
 
@@ -180,6 +180,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       temp.updateUnit(temp.getUnit() + 1);
       myTerritories.put(temp.getName(), temp);
     }
+    System.out.println("End of turn: Added one unit to each territory.");
   }
 
   public ArrayList<String> getPlayerTerritories(String player_color) {
