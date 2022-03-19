@@ -9,6 +9,7 @@ import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
 import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.MoveChecking;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
@@ -30,6 +31,11 @@ public class HandleOrder<T> {
     HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
+        // Test
+        System.out.println("The True MAP: ");
+        MapTextView test = new MapTextView((V1Map)theMap);
+        test.displayMap();
+
         this.moveChecker = moveChecker;
         this.turnStatus = new ArrayList<>();
     }
@@ -57,7 +63,9 @@ public class HandleOrder<T> {
     public void handleAllAttackOrder() {
         // create a temporary map with correct attacker and defender unit number
         // (requirement 5d)
+        
         Map<T> tempMap = theMap;
+
         ArrayList<TurnList> attack_order_list;
         TurnList attack_list;
         ArrayList<TurnList> valid_attack_order_list = new ArrayList<TurnList>();
@@ -73,15 +81,17 @@ public class HandleOrder<T> {
                 if (curr_turn.getTurnType().equals("Attack") && ruleChecker.checkMyRule(theMap, curr_turn)) {
                     curr_valid.order_list.add(curr_turn);
                 }
+                turnStatus.add(ruleChecker.attackStatus);
             }
             valid_attack_order_list.add(curr_valid);
         }
         // update valid order lists
         attack_order_list = valid_attack_order_list;
 
-
+        ArrayList<HashMap<String, ArrayList<Turn>>> res = new ArrayList<HashMap<String, ArrayList<Turn>>>();
         // // sort attack turns for the same player. & Update the tempMap.
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
+            //System.out.println("sort attack orders: ");
             TurnList curr = valid_attack_order_list.get(i);
             HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
@@ -103,10 +113,14 @@ public class HandleOrder<T> {
                 // handleSingleAttackOrder(curr_turn, tempMap); // take an extra parameter for
                 // the temporary map
             }
-            for (ArrayList<Turn> t : temp.values()) {
+            res.add(temp);
+        }
+        for(HashMap<String, ArrayList<Turn>> hm: res){
+            for (ArrayList<Turn> t : hm.values()) {
                 handleSingleAttackOrder(t, tempMap);
             }
         }
+
     }
 
     /**
@@ -144,18 +158,19 @@ public class HandleOrder<T> {
      */
     public void handleSingleAttackOrder(ArrayList<Turn> attackOrder, Map<T> tempMap) {
         // handle attack order
-        AttackChecking<T> ruleChecker = new AttackChecking<>();
+        //AttackChecking<T> ruleChecker = new AttackChecking<>();
         String attackResult = "";
-        if (ruleChecker.checkMyRule(theMap, attackOrder) != null) { // rule is VALID
+        //if (ruleChecker.checkMyRule(theMap, attackOrder) != null) { // rule is VALID
             attackResult += resolveCombat(attackOrder,tempMap);
-        }
-        turnStatus.add(ruleChecker.attackStatus + attackResult);
+        //}
+        turnStatus.add(attackResult);
     }
-
+    
     /**
      * Method to resolve combat in any one territory
      */
     private String resolveCombat(ArrayList<Turn> attackOrder, Map<T> tempMap) {
+
         String combatResult;
         int attacking_units = 0;
         String attackerTerritory = "";
@@ -210,12 +225,16 @@ public class HandleOrder<T> {
 
                 int unitChange;
                 if (loserTerr == attackerTerritory) {
+                    //System.out.println("defending_units is: " + defending_units);
+                    //System.out.println("defenders units is: " + defender.getUnit());
                     unitChange = defending_units - defender.getUnit();
                     tempMap.updateTerritoryInMap(defenderTerritory, unitChange);
                     combatResult = "Defender won!";
                 }
 
                 else { // loserTerr == defenderTerritory
+                    //System.out.println("defending_units is: " + defending_units);
+                    //System.out.println("defenders units is: " + defender.getUnit());
                     unitChange = attacking_units - defender.getUnit();
                     tempMap.updateTerritoryInMap(defenderTerritory, unitChange, player_color);
                     combatResult = "Attacker won!";
