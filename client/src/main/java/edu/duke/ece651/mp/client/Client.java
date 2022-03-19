@@ -34,6 +34,7 @@ public class Client {
    */
   public static void main(String[] args) throws InterruptedException {
     try {
+      System.out.println("Welcome to our game!");
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
       String servername = args.length > 1 ? args[0] : "127.0.0.1";
 
