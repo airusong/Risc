@@ -70,7 +70,7 @@ public class HandleOrder<T> {
         TurnList attack_list;
         ArrayList<TurnList> valid_attack_order_list = new ArrayList<TurnList>();
 
-        AttackChecking<T> ruleChecker = new AttackChecking<>();
+        AttackChecking<T> ruleChecker = new AttackChecking<>(); 
 
         // filter out valid attack orders from same player
         for (int i = 0; i < all_order_list.size(); i++) {
@@ -78,10 +78,12 @@ public class HandleOrder<T> {
             TurnList curr_valid = new TurnList(curr.player_info);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
-                if (curr_turn.getTurnType().equals("Attack") && ruleChecker.checkMyRule(theMap, curr_turn)) {
-                    curr_valid.order_list.add(curr_turn);
+                if (curr_turn.getTurnType().equals("Attack")){
+                    if(ruleChecker.checkMyRule(theMap, curr_turn)){
+                        curr_valid.order_list.add(curr_turn);
+                    }
+                    turnStatus.add(ruleChecker.attackStatus);
                 }
-                turnStatus.add(ruleChecker.attackStatus);
             }
             valid_attack_order_list.add(curr_valid);
         }
@@ -89,7 +91,7 @@ public class HandleOrder<T> {
         attack_order_list = valid_attack_order_list;
 
         ArrayList<HashMap<String, ArrayList<Turn>>> res = new ArrayList<HashMap<String, ArrayList<Turn>>>();
-        // // sort attack turns for the same player. & Update the tempMap.
+        // sort attack turns for the same player. & Update the tempMap.
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
             //System.out.println("sort attack orders: ");
             TurnList curr = valid_attack_order_list.get(i);
@@ -151,9 +153,7 @@ public class HandleOrder<T> {
      else {
       moveResult = "invalid (Reason: " + moveProblem + ")";
     }
-
    turnStatus.add(moveChecker.moveStatus + moveResult);
-    
   }
 
     /**
@@ -167,6 +167,7 @@ public class HandleOrder<T> {
         //if (ruleChecker.checkMyRule(theMap, attackOrder) != null) { // rule is VALID
             attackResult += resolveCombat(attackOrder,tempMap);
         //}
+        //System.out.print("The attackResult is: " ) ;
         turnStatus.add(attackResult);
     }
     
