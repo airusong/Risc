@@ -22,10 +22,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Client extends Application {
+public class Client{
   final TextPlayer theTextPlayer;
 
   /**
@@ -36,27 +37,29 @@ public class Client extends Application {
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
 
+
+
   public TextPlayer getTheTextPlayer() {
     return theTextPlayer;
   }
-  @Override
-  public void start(Stage stage) throws IOException {
-       String javaVersion = System.getProperty("java.version");
-       String javafxVersion = System.getProperty("javafx.version");
-       Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-       URL xmlResource = getClass().getResource("/ui/firstpage.xml");
-       GridPane gp = FXMLLoader.load(xmlResource);
-       Scene scene = new Scene(gp, 640, 480);
-       stage.setScene(scene);
-       stage.show();
-  }
+//  @Override
+//  public void start(Stage stage) throws IOException {
+//       String javaVersion = System.getProperty("java.version");
+//       String javafxVersion = System.getProperty("javafx.version");
+//       Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+//       URL xmlResource = getClass().getResource("/ui/firstpage.fxml");
+//       AnchorPane gp = FXMLLoader.load(xmlResource);
+//       Scene scene = new Scene(gp, 640, 480);
+//       stage.setScene(scene);
+//       stage.show();
+//  }
 
 
   /**
      * Main program for Client/Player
      */
   public static void main(String[] args) throws InterruptedException {
-    launch();
+    Application.launch(startpage.class, args);
     try {
       System.out.println("Welcome to our game!");
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
@@ -69,7 +72,7 @@ public class Client extends Application {
         theClient.theTextPlayer.initiateGame();
 
         theClient.theTextPlayer.playGame();
-        
+
         theClient.theTextPlayer.connectionToMaster.socket.close();
 
       } else {
@@ -88,7 +91,7 @@ public class Client extends Application {
         theClient.theTextPlayer.printMap();
         theClient.theTextPlayer.takeTurn();
       }
-      
+
     } catch (
 
     Exception e) {
