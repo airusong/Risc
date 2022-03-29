@@ -1,4 +1,4 @@
-buildscript {
+Abuildscript {
     repositories {
         mavenCentral()
         gradlePluginPortal()

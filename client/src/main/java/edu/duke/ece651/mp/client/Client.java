@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +18,14 @@ import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
-public class Client {
+public class Client extends Application {
   final TextPlayer theTextPlayer;
 
   /**
@@ -29,10 +36,27 @@ public class Client {
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
 
+  public TextPlayer getTheTextPlayer() {
+    return theTextPlayer;
+  }
+  @Override
+  public void start(Stage stage) throws IOException {
+       String javaVersion = System.getProperty("java.version");
+       String javafxVersion = System.getProperty("javafx.version");
+       Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+       URL xmlResource = getClass().getResource("/ui/firstpage.xml");
+       GridPane gp = FXMLLoader.load(xmlResource);
+       Scene scene = new Scene(gp, 640, 480);
+       stage.setScene(scene);
+       stage.show();
+  }
+
+
   /**
-   * Main program for Client/Player
-   */
+     * Main program for Client/Player
+     */
   public static void main(String[] args) throws InterruptedException {
+    launch();
     try {
       System.out.println("Welcome to our game!");
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
