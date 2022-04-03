@@ -2,6 +2,7 @@ package edu.duke.ece651.mp.client;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -17,8 +18,7 @@ public class startGameButtonController {
 
     @FXML
     private Button startGame;
-    @FXML
-    private TextField player_info;
+
 
     @FXML
     void onStartGameButton(MouseEvent event) {
@@ -34,20 +34,29 @@ public class startGameButtonController {
             System.out.println("Successfully connect to Server!");
 
             // switch to gamepage.fxml
-            Stage primaryStage = (Stage)startGame.getScene().getWindow();
-            // primaryStage.hide();
+            //Stage primaryStage = (Stage)startGame.getScene().getWindow();
+            //primaryStage.close();
 
             try {
-                URL xmlResource = getClass().getResource("/ui/gamepage.fxml");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
                 String player_color = theClient.theTextPlayer.identity;
                 System.out.println("The player's color is: " + player_color);
-                player_info.setText(player_color);
+                //primaryStage.setTitle("RISC GAME");
+                Parent root = loader.load();
+                //Scene scene = new Scene(root, 640, 480);
+                //stage.setScene(scene);
 
-                primaryStage.setTitle("RISC GAME");
-                AnchorPane gp = FXMLLoader.load(xmlResource);
-                Scene scene = new Scene(gp, 640, 480);
-                primaryStage.setScene(scene);
-                primaryStage.show();
+                GameController gameController = loader.getController();
+
+                String player_info = theClient.theTextPlayer.identity;
+                gameController.setName(player_info);
+
+                startGame.getScene().setRoot(root);
+
+                //Scene scene = new Scene(gp, 640, 480);
+                //primaryStage.setScene(scene);
+                //player_info.setText(player_color);
+                //primaryStage.show();
 
 
             }catch(Exception e){
