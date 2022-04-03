@@ -60,6 +60,9 @@ public class Client{
      */
   public static void main(String[] args) throws InterruptedException {
     Application.launch(startpage.class, args);
+
+
+    /*
     try {
       System.out.println("Welcome to our game!");
       int port = args.length > 0 ? Integer.parseInt(args[1]) : 8080;
@@ -97,5 +100,7 @@ public class Client{
     Exception e) {
       e.printStackTrace();
     }
+
+     */
   }
 }
