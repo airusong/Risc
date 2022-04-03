@@ -2,13 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.startGameButtonController">
    <children>
-      <ChoiceBox fx:id="playeraction" layoutX="360.0" layoutY="84.0" prefWidth="150.0" />
-      <Button layoutX="394.0" layoutY="309.0" mnemonicParsing="false" text="Done with turn. Commit!" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="53.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+      <ChoiceBox fx:id="playeraction" layoutX="393.0" layoutY="92.0" prefWidth="150.0" />
+      <Button layoutX="394.0" layoutY="302.0" mnemonicParsing="false" text="Done with turn. Commit!" />
+      <AnchorPane layoutX="45.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextField fx:id="player_info" layoutX="394.0" layoutY="52.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " />
    </children>
 </AnchorPane>
