@@ -41,7 +41,7 @@ public class startGameButtonController {
                 URL xmlResource = getClass().getResource("/ui/gamepage.fxml");
                 String player_color = theClient.theTextPlayer.identity;
                 System.out.println("The player's color is: " + player_color);
-                // player_info.setText(player_color);
+                player_info.setText(player_color);
 
                 primaryStage.setTitle("RISC GAME");
                 AnchorPane gp = FXMLLoader.load(xmlResource);
