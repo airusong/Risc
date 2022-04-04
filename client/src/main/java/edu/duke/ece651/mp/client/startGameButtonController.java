@@ -50,6 +50,8 @@ public class startGameButtonController {
 
                 String player_info = theClient.theTextPlayer.identity;
                 gameController.setName(player_info);
+                theClient.theTextPlayer.receiveMap();
+                gameController.setUpMap(theClient.theTextPlayer);
 
                 startGame.getScene().setRoot(root);
 
