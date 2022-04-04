@@ -47,19 +47,18 @@ public class startGameButtonController {
                 //stage.setScene(scene);
 
                 GameController gameController = loader.getController();
-
                 //String player_info = theClient.theTextPlayer.identity;
                 //gameController.setName(player_info);
 
                 gameController.setPlayer(theClient.theTextPlayer);
                 gameController.initGame();
+                gameController.setUpMap(theClient.theTextPlayer);
                 /*
                 gameController.setName();
                 gameController.setActionBox();
                 gameController.setSourceBox();
                 gameController.setDestinationBox();
                 */
-
                 startGame.getScene().setRoot(root);
 
                 //Scene scene = new Scene(gp, 640, 480);

@@ -17,7 +17,7 @@ public class startpage extends Application {
 
         URL xmlResource = getClass().getResource("/ui/firstpage.fxml");
         AnchorPane root = FXMLLoader.load(xmlResource);
-        Scene scene = new Scene(root,600,400);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
