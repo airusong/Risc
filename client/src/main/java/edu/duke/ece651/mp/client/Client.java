@@ -87,7 +87,6 @@ public class Client{
     Exception e) {
       e.printStackTrace();
     }
-
      */
   }
 }

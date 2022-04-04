@@ -80,7 +80,7 @@ public class Master {
     theMasterServer.sendToAll(turnStatus);
   }
 
-  /**
+  /**int
    * Method to receive and update orders from ALL players
    * 
    * @throws IOException

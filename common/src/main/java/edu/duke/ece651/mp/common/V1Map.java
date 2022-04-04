@@ -13,8 +13,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
 
-  // private final MoveChecking<T> moveChecker;
-
   /**
    * Constructor construct a V1Map specified with Territoris in it
    * 
@@ -26,7 +24,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
-    // this.moveChecker = moveChecker;
   }
 
   public V1Map() {
@@ -37,7 +34,6 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
-    // this.moveChecker = null;
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -48,9 +44,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     return players_colors;
   }
 
-  // public HashMap<String, Territory<T>> getMap(){
-  // return myTerritories;
-  // }
+
   /**
    * function used in constructor to initialize the hashmap
    * 

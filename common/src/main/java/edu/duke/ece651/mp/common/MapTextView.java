@@ -101,8 +101,7 @@ public class MapTextView {
     return header.toString();
   }
 
-  // Receive a Map and display it.(for temp test)
-  // Need to change
+  // Receive a Map and display it.
   public String displayMap(Map<Character> map) {
     displayMap();
     return null;

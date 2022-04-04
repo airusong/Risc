@@ -33,40 +33,19 @@ public class startGameButtonController {
             theClient.theTextPlayer.initiateGame();
             System.out.println("Successfully connect to Server!");
 
-            // switch to gamepage.fxml
-            //Stage primaryStage = (Stage)startGame.getScene().getWindow();
-            //primaryStage.close();
-
+            // switch to gamepage.fxml;
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
                 String player_color = theClient.theTextPlayer.identity;
                 System.out.println("The player's color is: " + player_color);
                 //primaryStage.setTitle("RISC GAME")
                 AnchorPane root = (AnchorPane) loader.load();
-                //Scene scene = new Scene(root);
-                //stage.setScene(scene);
 
                 GameController gameController = loader.getController();
-
-                //String player_info = theClient.theTextPlayer.identity;
-                //gameController.setName(player_info);
-
                 gameController.setPlayer(theClient.theTextPlayer);
                 gameController.initGame();
-                /*
-                gameController.setName();
-                gameController.setActionBox();
-                gameController.setSourceBox();
-                gameController.setDestinationBox();
-                */
 
                 startGame.getScene().setRoot(root);
-
-                //Scene scene = new Scene(gp, 640, 480);
-                //primaryStage.setScene(scene);
-                //player_info.setText(player_color);
-                //primaryStage.show();
-
 
             }catch(Exception e){
                 e.printStackTrace();
@@ -75,18 +54,7 @@ public class startGameButtonController {
         }catch(Exception e){
             e.printStackTrace();
         }
-
-
-
-
-
-
     }
-
-
-
-
-
 }
 
 

@@ -19,9 +19,7 @@ public class Territory<T> implements ITerritory<T>, Serializable {
   private String color;
   private ArrayList<String> adjacentTerritories;
   private int unit;
-  // public Territory() {
-  // this.name = null;
-  // }
+
 
   public Territory(String name, String color, ArrayList<String> adjacentTerritories, int unit) {
     this.name = name;
@@ -56,7 +54,6 @@ public class Territory<T> implements ITerritory<T>, Serializable {
     return adjacentTerritories;
   }
 
-  // public void addAdjacentTo
 
   /**
    * Write out the Territory object for serialization

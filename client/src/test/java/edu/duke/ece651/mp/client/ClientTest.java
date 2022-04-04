@@ -28,12 +28,10 @@ public class ClientTest {
   void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     Client theClient = new Client("null", 0, input, System.out); // we don't care about server yet!
-    // The map should be received from master
-    // using minimal V1Map for now
+    // The map should be received from master using minimal V1Map for now
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
 
-    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
-    //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
+
     V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
     theClient.theTextPlayer.updateMap(mapFromServer);
 

@@ -10,7 +10,6 @@ public abstract class Turn implements Serializable {
   public String fromTerritory;
   public String toTerritory;
   public int num_unit;
-  // public TextPlayer player;
   public String player_color;
 
   public Turn(String type, String fromTerritory, String toTerritory, int num_unit, String player_color) {
