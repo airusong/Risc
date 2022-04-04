@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
       <ChoiceBox fx:id="playeraction" layoutX="393.0" layoutY="92.0" prefWidth="150.0" />
       <Button layoutX="394.0" layoutY="302.0" mnemonicParsing="false" text="Done with turn. Commit!" />
@@ -28,70 +28,70 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <StackPane id="Territory5" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="2">
+            <StackPane id="Territory5" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Elantris" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr4Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr4Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text id="TerrUnits" fx:id="Terr4Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" />
                </children>
             </StackPane>
-            <StackPane id="Territory1" layoutX="10.0" layoutY="132.0">
+            <StackPane id="Territory1" fx:id="Territory1" layoutX="10.0" layoutY="132.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Narnia" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr1Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr1Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text id="TerrUnits" fx:id="Terr1Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" />
                </children>
             </StackPane>
-            <StackPane id="Territory2" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1">
+            <StackPane id="Territory2" fx:id="Territory2" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Midkemia" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr2Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr2Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="22.13671875" />
+                  <Text id="TerrUnits" fx:id="Terr2Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" wrappingWidth="22.13671875" />
                </children>
             </StackPane>
-            <StackPane id="Territory3" layoutX="118.0" layoutY="10.0" GridPane.columnIndex="2">
+            <StackPane id="Territory3" fx:id="Territory3" layoutX="118.0" layoutY="10.0" GridPane.columnIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Oz" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr3Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr3Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text id="TerrUnits" fx:id="Terr3Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </StackPane>
-            <StackPane id="Territory6" layoutX="226.0" layoutY="10.0" prefHeight="42.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <StackPane id="Territory6" fx:id="Territory5" layoutX="226.0" layoutY="10.0" prefHeight="42.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Roshar" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr5Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr5Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text id="TerrUnits" fx:id="Terr5Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" />
                </children>
             </StackPane>
-            <StackPane id="Territory4" layoutX="118.0" layoutY="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <StackPane id="Territory4" fx:id="Territory6" layoutX="118.0" layoutY="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
-                  <Text id="TerrName" strokeType="OUTSIDE" strokeWidth="0.0" text="Scadrial" StackPane.alignment="TOP_CENTER">
+                  <Rectangle fx:id="Terr6Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" strokeType="INSIDE" width="94.0" />
+                  <Text id="TerrName" fx:id="Terr6Name" strokeType="OUTSIDE" strokeWidth="0.0" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text id="TerrUnits" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text id="TerrUnits" fx:id="Terr6Units" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" />
                </children>
             </StackPane>
          </children>
