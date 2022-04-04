@@ -23,7 +23,7 @@ public class Server {
 
     theMaster.initiateGame();
     
-    //theMaster.playGame();
+    theMaster.playGame();
   }
 
 }

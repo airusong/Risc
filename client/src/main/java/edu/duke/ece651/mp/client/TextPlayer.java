@@ -226,11 +226,11 @@ public class TextPlayer {
     return enteredOption;
   }
 
-  private ArrayList<String> getMyOwnTerritories() {
+  protected ArrayList<String> getMyOwnTerritories() {
     return theMap.getPlayerTerritories(identity);
   }
 
-  private ArrayList<String> getOthersTerritories() {
+  protected ArrayList<String> getOthersTerritories() {
     for (int index = 0; index < 2; index++) {
       String color = theMap.players_colors.get(index);
       if (!color.equals(identity)) {

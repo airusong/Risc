@@ -43,13 +43,11 @@ public class Client{
     return theTextPlayer;
   }
 
-
   /**
      * Main program for Client/Player
      */
   public static void main(String[] args) throws InterruptedException {
     Application.launch(startpage.class, args);
-
 
     /*
     try {
