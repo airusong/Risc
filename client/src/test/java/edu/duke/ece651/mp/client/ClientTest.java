@@ -45,7 +45,7 @@ public class ClientTest {
       + "Blue player:\n" + "-----------\n"
       + "7 units in Elantris (next to: Scadnal, Narnia, Roshar, Midemio)\n"
       + "6 units in Roshar (next to: Elantris, Scadnal)\n"
-      + "10 units in Scadnal (next to: Roshar, Elantris, Oz, Midemio)";
+      + "10 units in Scadnal (next to: Roshar, Elantris, Oz, Midemio)\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
