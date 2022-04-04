@@ -4,6 +4,8 @@ import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,16 +49,13 @@ public class GameController{
 
     public void setPlayer(TextPlayer player){
         theTextPlayer = player;
-        System.out.print("Successfully transfer the textplayer.");
     }
 
     public void initGame() {
-        System.out.print("Successfully transfer the textplayer.");
         theTextPlayer.receiveMap();
 
         setName();
         setActionBox();
-        //from.OnMoveAction(MouseEvent event);
         setSourceBox();
         setDestinationBox();
     }
@@ -70,6 +69,13 @@ public class GameController{
     public void setActionBox(){
         playeraction.setValue("Move");
         playeraction.setItems(playeraction_list);
+        playeraction.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                setSourceBox();
+                setDestinationBox();
+            }
+        });
     }
 
     public String getAction(){
@@ -79,9 +85,8 @@ public class GameController{
     @FXML
     public void setSourceBox(){
         ArrayList<String> own_territory_list =  theTextPlayer.getMyOwnTerritories();
-        for(String sour: own_territory_list){
-            source_list.add(sour);
-        }
+        source_list.clear();
+        source_list.addAll(own_territory_list);
         from.setItems(source_list);
     }
 
@@ -98,6 +103,7 @@ public class GameController{
         else if(getAction().equals("Attack")){
             des_territory_list = theTextPlayer.getOthersTerritories();
         }
+        destination_list.clear();
         destination_list.addAll(des_territory_list);
         to.setItems(destination_list);
     }
@@ -116,7 +122,7 @@ public class GameController{
 
     @FXML
     void onAddOrderButton(MouseEvent event){
-        if(getAction().equals("Move")) {
+        if(getAction().equals("Move") || getAction().equals("Upgrade")) {
             Turn newOrder = new MoveTurn(getSource(), getDestination(),getUnitNum(),getPlayerColor());
             myTurn.addTurn(newOrder);
         }
@@ -125,15 +131,15 @@ public class GameController{
             myTurn.addTurn(newOrder);
         }
         // theClient.theTextPlayer.takeAndSendTurn();
+        System.out.println("Add a New Order");
     }
 
     @FXML
     void onCommitButton(MouseEvent event){
         // send TurnList to Server
         theTextPlayer.connectionToMaster.sendToServer(myTurn);
+        System.out.println("Send the TurnList");
     }
-
-
 
 
 }
