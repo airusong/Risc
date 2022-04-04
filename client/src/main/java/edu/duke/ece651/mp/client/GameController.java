@@ -6,9 +6,12 @@ import java.util.HashMap;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.V1Map;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class GameController {
@@ -31,9 +34,7 @@ public class GameController {
   @FXML
   private StackPane Territory6;
 
-  private StackPane[] terrStackPanes = { Territory1, Territory2, Territory3, Territory4, Territory5, Territory6 };
-
-  // Nodes for rectangular boxes in the map representing territories
+  // Shaped for rectangular boxes in the map representing territories
   @FXML
   private Shape Terr1Box;
   @FXML
@@ -85,6 +86,45 @@ public class GameController {
   private HashMap<String, TextField> TerritoryNames;
   private HashMap<String, TextField> TerritoryUnits;
 
+  // Lines between rectangles to show adjacency
+  @FXML
+  private Line Line1to2;
+  @FXML
+  private Line Line1to3;
+  @FXML
+  private Line Line1to4;
+  @FXML
+  private Line Line1to5;
+  @FXML
+  private Line Line1to6;
+  @FXML
+  private Line Line2to3;
+  @FXML
+  private Line Line2to4;
+  @FXML
+  private Line Line2to5;
+  @FXML
+  private Line Line2to6;
+  @FXML
+  private Line Line3to4;
+  @FXML
+  private Line Line3to5;
+  @FXML
+  private Line Line3to6;
+  @FXML
+  private Line Line4to5;
+  @FXML
+  private Line Line4to6;
+  @FXML
+  private Line Line5to6;
+
+  // The first key in the string is from territory, and the second key is to
+  // territory
+  private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
+
+  /**
+   * Method to set player color
+   */
   public void setName(String name) {
     player_info.setText(name);
   }
@@ -103,13 +143,11 @@ public class GameController {
    * Method to setup territories
    */
   private void setUpTerritories(V1Map<Character> initialMap) {
-    // init lists with Java FX components
-    initLists();
-
     // setup name, units and color of each territory first
     initTerritories(initialMap);
 
     // draw lines between territories for showing adjacency
+    setAdjacency(initialMap);
 
   }
 
@@ -117,6 +155,9 @@ public class GameController {
    * Method to initialize the hashmaps
    */
   private void initTerritories(V1Map<Character> initialMap) {
+    // init lists with Java FX components
+    initLists();
+
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
 
     // organize the territories according to player color
@@ -128,12 +169,11 @@ public class GameController {
     int i = 0;
     for (String player_color : initialMap.getPlayerColors()) {
       Color terrColor = Color.WHITE; // default
-         if(player_color.equals("Green")) {
+      if (player_color.equals("Green")) {
         terrColor = Color.GREEN;
+      } else if (player_color.equals("Blue")) {
+        terrColor = Color.BLUE;
       }
-         else if(player_color.equals("Blue")) {
-           terrColor = Color.BLUE;
-         }
       // get territories of this player color
       ArrayList<String> terrList = terrGroups.get(player_color);
       for (String terrName : terrList) {
@@ -150,7 +190,7 @@ public class GameController {
   }
 
   /**
-   *
+   * Method to initialize the lists of Java FX components
    */
   private void initLists() {
     // Add rectangles
@@ -179,6 +219,94 @@ public class GameController {
     terrUnits.add(Terr4Units);
     terrUnits.add(Terr5Units);
     terrUnits.add(Terr6Units);
+  }
+
+  /**
+   * Method to draw lines between territories in the UI based on their adjacency
+   */
+  private void setAdjacency(V1Map<Character> initialMap) {
+    initAdjacencyList();
+
+    HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
+    // get adjacency for each
+    for (String terrName : allTerritories.keySet()) {
+      ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
+      // for each adjacent territory
+      for (String adjTerr : adjacentTerr) {
+        TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
+        ;
+      }
+    }
+  }
+
+  /**
+   * method to create the adjacency map
+   */
+  private void initAdjacencyList() {
+    String fromTerritory;
+
+    TerritoryAdjacency = new HashMap<>();
+
+    // Territory 1
+    fromTerritory = terrNames.get(0).getText();
+    HashMap<String, Line> terr1Adj = new HashMap<>();
+    terr1Adj.put(terrNames.get(1).getText(), Line1to2);
+    terr1Adj.put(terrNames.get(2).getText(), Line1to3);
+    terr1Adj.put(terrNames.get(3).getText(), Line1to4);
+    terr1Adj.put(terrNames.get(4).getText(), Line1to5);
+    terr1Adj.put(terrNames.get(5).getText(), Line1to6);
+    TerritoryAdjacency.put(fromTerritory, terr1Adj);
+
+    // Territory 2
+    fromTerritory = terrNames.get(1).getText();
+    HashMap<String, Line> terr2Adj = new HashMap<>();
+    terr2Adj.put(terrNames.get(0).getText(), Line1to2);
+    terr2Adj.put(terrNames.get(2).getText(), Line2to3);
+    terr2Adj.put(terrNames.get(3).getText(), Line2to4);
+    terr2Adj.put(terrNames.get(4).getText(), Line2to5);
+    terr2Adj.put(terrNames.get(5).getText(), Line2to6);
+    TerritoryAdjacency.put(fromTerritory, terr2Adj);
+
+    // Territory 3
+    fromTerritory = terrNames.get(2).getText();
+    HashMap<String, Line> terr3Adj = new HashMap<>();
+    terr3Adj.put(terrNames.get(0).getText(), Line1to3);
+    terr3Adj.put(terrNames.get(1).getText(), Line2to3);
+    terr3Adj.put(terrNames.get(3).getText(), Line3to4);
+    terr3Adj.put(terrNames.get(4).getText(), Line3to5);
+    terr3Adj.put(terrNames.get(5).getText(), Line3to6);
+    TerritoryAdjacency.put(fromTerritory, terr3Adj);
+
+    // Territory 4
+    fromTerritory = terrNames.get(3).getText();
+    HashMap<String, Line> terr4Adj = new HashMap<>();
+    terr4Adj.put(terrNames.get(0).getText(), Line1to4);
+    terr4Adj.put(terrNames.get(1).getText(), Line2to4);
+    terr4Adj.put(terrNames.get(2).getText(), Line3to4);
+    terr4Adj.put(terrNames.get(4).getText(), Line4to5);
+    terr4Adj.put(terrNames.get(5).getText(), Line4to6);
+    TerritoryAdjacency.put(fromTerritory, terr4Adj);
+
+    // Territory 5
+    fromTerritory = terrNames.get(4).getText();
+    HashMap<String, Line> terr5Adj = new HashMap<>();
+    terr5Adj.put(terrNames.get(0).getText(), Line1to5);
+    terr5Adj.put(terrNames.get(1).getText(), Line2to5);
+    terr5Adj.put(terrNames.get(2).getText(), Line3to5);
+    terr5Adj.put(terrNames.get(3).getText(), Line4to5);
+    terr5Adj.put(terrNames.get(5).getText(), Line5to6);
+    TerritoryAdjacency.put(fromTerritory, terr5Adj);
+
+    // Territory 6
+    fromTerritory = terrNames.get(5).getText();
+    HashMap<String, Line> terr6Adj = new HashMap<>();
+    terr6Adj.put(terrNames.get(0).getText(), Line1to6);
+    terr6Adj.put(terrNames.get(1).getText(), Line2to6);
+    terr6Adj.put(terrNames.get(2).getText(), Line3to6);
+    terr6Adj.put(terrNames.get(3).getText(), Line4to6);
+    terr6Adj.put(terrNames.get(4).getText(), Line5to6);
+    TerritoryAdjacency.put(fromTerritory, terr6Adj);
+
   }
 
 }
