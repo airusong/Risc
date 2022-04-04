@@ -34,14 +34,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController {
-
-  private TextPlayer theTextPlayer;
-  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
-  ObservableList<String> source_list = FXCollections.observableArrayList();
-  ObservableList<String> destination_list = FXCollections.observableArrayList();
-
-  TurnList myTurn = new TurnList();
-
   // Stack panes holding all territory elements
   @FXML
   private StackPane Territory1;
@@ -203,40 +195,7 @@ public class GameController {
     }
   }
 
-  @FXML
-  private TextField player_info;
-  @FXML
-  private ChoiceBox<String> playeraction;
-  @FXML
-  private ChoiceBox<String> from;
-  @FXML
-  private ChoiceBox<String> to;
-  @FXML
-  private TextField unit;
-  @FXML
-  private Button order;
-  @FXML
-  private Button commit;
-
-  public void setPlayer(TextPlayer player) {
-    theTextPlayer = player;
-  }
-
-  public void initGame() {
-    theTextPlayer.receiveMap();
-
-    setName();
-    setActionBox();
-    setSourceBox();
-    setDestinationBox();
-  }
-
-  public void setName() {
-    String name = theTextPlayer.identity;
-    player_info.setText(name);
-  }
-
-  /**
+    /**
    * Method to initialize the lists of Java FX components
    */
   private void initLists() {
@@ -354,6 +313,47 @@ public class GameController {
     terr6Adj.put(terrNames.get(4).getText(), Line5to6);
     TerritoryAdjacency.put(fromTerritory, terr6Adj);
 
+  }
+
+
+  private TextPlayer theTextPlayer;
+  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
+  ObservableList<String> source_list = FXCollections.observableArrayList();
+  ObservableList<String> destination_list = FXCollections.observableArrayList();
+
+  TurnList myTurn = new TurnList();
+
+  @FXML
+  private TextField player_info;
+  @FXML
+  private ChoiceBox<String> playeraction;
+  @FXML
+  private ChoiceBox<String> from;
+  @FXML
+  private ChoiceBox<String> to;
+  @FXML
+  private TextField unit;
+  @FXML
+  private Button order;
+  @FXML
+  private Button commit;
+
+  public void setPlayer(TextPlayer player) {
+    theTextPlayer = player;
+  }
+
+  public void initGame() {
+    theTextPlayer.receiveMap();
+
+    setName();
+    setActionBox();
+    setSourceBox();
+    setDestinationBox();
+  }
+
+  public void setName() {
+    String name = theTextPlayer.identity;
+    player_info.setText(name);
   }
 
   @FXML
