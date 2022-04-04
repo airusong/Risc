@@ -52,6 +52,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   protected void setMap() {
     // PLAYER 1
     String player_color = players_colors.get(0);
+    ArrayList<Unit> unit_list = new ArrayList<Unit>();
     myTerritories.put("Narnia", new Territory<T>("Narnia", player_color, new ArrayList<String>(), 8));
     myTerritories.put("Midemio", new Territory<T>("Midemio", player_color, new ArrayList<String>(), 3));
     myTerritories.put("Oz", new Territory<T>("Oz", player_color, new ArrayList<String>(), 12));
@@ -79,9 +80,26 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.get("Scadnal").addAdjacency("Elantris");
     myTerritories.get("Roshar").addAdjacency("Oz");
     myTerritories.get("Roshar").addAdjacency("Scadnal");
-
   }
 
+  /**
+   * function used to initialize the Resource information in the map
+   **/
+  protected void addResources() {
+    myTerritories.get("Narnia").addResource(new Resource("food",10));
+    myTerritories.get("Narnia").addResource(new Resource("tech",20));
+    myTerritories.get("Midemio").addResource(new Resource("food",20));
+    myTerritories.get("Midemio").addResource(new Resource("tech",10));
+    myTerritories.get("Oz").addResource(new Resource("food",20));
+    myTerritories.get("Oz").addResource(new Resource("tech",20));
+
+    myTerritories.get("Elantris").addResource(new Resource("food",20));
+    myTerritories.get("Elantris").addResource(new Resource("tech",15));
+    myTerritories.get("Scadnal").addResource(new Resource("food",15));
+    myTerritories.get("Scadnal").addResource(new Resource("tech",15));
+    myTerritories.get("Roshar").addResource(new Resource("food",15));
+    myTerritories.get("Roshar").addResource(new Resource("tech",20));
+  }
   /**
    * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
@@ -139,13 +157,13 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /* Update Map according to move order */
-  public void updateMap(String dep, String des, int n1, int n2) {
+  public void updateMap(String dep, String des, String unit_type, int n1, int n2) {
     Territory<T> t1 = myTerritories.get(dep);
-    t1.updateUnit(n1);
+    t1.updateTerritory(unit_type, n1);
     myTerritories.put(dep, t1);
 
     Territory<T> t2 = myTerritories.get(des);
-    t2.updateUnit(n2);
+    t2.updateTerritory(unit_type,n2);
     myTerritories.put(des, t2);
   }
 

@@ -14,22 +14,25 @@ import java.util.ArrayList;
  * @param: adjacentTerritories
  * @param: unit: number
  */
-public class Territory<T> implements ITerritory<T>, Serializable {
+public class Territory<T> implements IITerritory<T>, Serializable {
   private String name;
   private String color;
   private ArrayList<String> adjacentTerritories;
-  private int unit;
+  private ArrayList<Unit> unit_list;
+  private ArrayList<Resource> resources_list;
+  private int size;
 
-
-  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int unit) {
+  public Territory(String name, String color, ArrayList<String> adjacentTerritories,int size) {
     this.name = name;
     this.color = color;
     this.adjacentTerritories = new ArrayList<>();
-    this.unit = unit;
+    this.unit_list = new ArrayList<Unit>();
+    this.resources_list = new ArrayList<Resource>();
+    this.size = size;
   }
 
-  public int getUnit() {
-    return unit;
+  public ArrayList<Unit> getUnitList() {
+    return unit_list;
   }
 
   public String getName() {
@@ -46,6 +49,13 @@ public class Territory<T> implements ITerritory<T>, Serializable {
   public void addAdjacency(String name) {
     adjacentTerritories.add(name);
   }
+
+   /**
+   * function to add resources to the territory
+   */
+  public void addResource(Resource resource) {
+    resources_list.add(resource);
+  } 
 
   /*
    * function to get the adjacency list
@@ -93,12 +103,42 @@ public class Territory<T> implements ITerritory<T>, Serializable {
     // other fields go here
   }
 
+  /*
   public void updateUnit(int new_unit){
     this.unit = new_unit;
+  }*/
+
+  /* Update Territory according to move order */
+  public void updateTerritory(String unit_type, int new_unit){
+    int index = hasUnitType(unit_type);
+    if(index>=0){
+      unit_list.set(index,new Unit(unit_type, new_unit));
+    }
+    else{
+      unit_list.add(new Unit(unit_type, new_unit));
+    }
   }
+
 
   public void updateColor(String new_color){
     this.color = new_color;
   }
 
+  public int hasUnitType(String unit_type){
+    for(int index=0; index<unit_list.size(); index++){
+      if(unit_list.get(index).getUnitType().equals(unit_type)){
+        return index;
+      }
+    }
+    return -1;
+  }
+
+  public int getUnit(String unit_type){
+    for(Unit unit: unit_list){
+      if(unit.getUnitType().equals(unit_type)){
+        return unit.getUnitNum();
+      }
+    }
+    return 0;
+  }
 }
