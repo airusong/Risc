@@ -42,17 +42,6 @@ public class Client{
   public TextPlayer getTheTextPlayer() {
     return theTextPlayer;
   }
-//  @Override
-//  public void start(Stage stage) throws IOException {
-//       String javaVersion = System.getProperty("java.version");
-//       String javafxVersion = System.getProperty("javafx.version");
-//       Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-//       URL xmlResource = getClass().getResource("/ui/firstpage.fxml");
-//       AnchorPane gp = FXMLLoader.load(xmlResource);
-//       Scene scene = new Scene(gp, 640, 480);
-//       stage.setScene(scene);
-//       stage.show();
-//  }
 
 
   /**
