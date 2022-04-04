@@ -41,18 +41,24 @@ public class startGameButtonController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
                 String player_color = theClient.theTextPlayer.identity;
                 System.out.println("The player's color is: " + player_color);
-                //primaryStage.setTitle("RISC GAME");
-                Parent root = loader.load();
-                //Scene scene = new Scene(root, 640, 480);
+                //primaryStage.setTitle("RISC GAME")
+                AnchorPane root = (AnchorPane) loader.load();
+                //Scene scene = new Scene(root);
                 //stage.setScene(scene);
 
                 GameController gameController = loader.getController();
+                //String player_info = theClient.theTextPlayer.identity;
+                //gameController.setName(player_info);
 
-                String player_info = theClient.theTextPlayer.identity;
-                gameController.setName(player_info);
-                theClient.theTextPlayer.receiveMap();
+                gameController.setPlayer(theClient.theTextPlayer);
+                gameController.initGame();
                 gameController.setUpMap(theClient.theTextPlayer);
-
+                /*
+                gameController.setName();
+                gameController.setActionBox();
+                gameController.setSourceBox();
+                gameController.setDestinationBox();
+                */
                 startGame.getScene().setRoot(root);
 
                 //Scene scene = new Scene(gp, 640, 480);

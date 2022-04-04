@@ -22,10 +22,6 @@ public class Server {
     Master theMaster = new Master(port, num_players);
 
     theMaster.initiateGame();
-    // TEMPORRILY COMMENTING OUT
-    //theMaster.playGame();
-    theMaster.sendMapToAll(); // remove this when playGame is added
-    
+    theMaster.playGame();
   }
-
 }

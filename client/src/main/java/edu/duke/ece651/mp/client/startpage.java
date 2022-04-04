@@ -16,8 +16,8 @@ public class startpage extends Application {
     public void start(Stage stage) throws IOException {
 
         URL xmlResource = getClass().getResource("/ui/firstpage.fxml");
-        Parent root = FXMLLoader.load(xmlResource);
-        Scene scene = new Scene(root);
+        AnchorPane root = FXMLLoader.load(xmlResource);
+        Scene scene = new Scene(root,600,400);
         stage.setScene(scene);
         stage.show();
 
