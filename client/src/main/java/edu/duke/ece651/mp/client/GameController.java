@@ -15,8 +15,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -132,6 +134,7 @@ public class GameController {
 
   /**
    * Method to setup the map in the UI
+   * 
    */
   public void setUpMap() {
     V1Map<Character> initialMap = theTextPlayer.theMap;
@@ -316,13 +319,13 @@ public class GameController {
   TurnList myTurn = new TurnList();
 
   @FXML
-  private Label player_info;
+  private TextField player_info;
   @FXML
-  private ComboBox<String> playeraction;
+  private ChoiceBox<String> playeraction;
   @FXML
-  private ComboBox<String> from;
+  private ChoiceBox<String> from;
   @FXML
-  private ComboBox<String> to;
+  private ChoiceBox<String> to;
   @FXML
   private TextField unit;
   @FXML
@@ -377,16 +380,14 @@ public class GameController {
     source_list.clear();
     source_list.addAll(own_territory_list);
     from.setItems(source_list);
-    from.setPromptText("From Territory.");
   }
 
-
-  public String getSource () {
+  public String getSource() {
     return (String) from.getValue();
   }
 
   @FXML
-  public void setDestinationBox () {
+  public void setDestinationBox() {
     ArrayList<String> des_territory_list = new ArrayList<String>();
     if (getAction().equals("Move")) {
       des_territory_list = theTextPlayer.getMyOwnTerritories();
@@ -396,40 +397,37 @@ public class GameController {
     destination_list.clear();
     destination_list.addAll(des_territory_list);
     to.setItems(destination_list);
-    to.setPromptText("To Territory.");
   }
 
-  public String getDestination () {
+  public String getDestination() {
     return (String) to.getValue();
   }
 
-  public int getUnitNum () {
+  public int getUnitNum() {
     return Integer.parseInt(unit.getText());
   }
 
-
-  public String getPlayerColor () {
+  public String getPlayerColor() {
     return theTextPlayer.identity;
-
   }
   /*
    * prompt if the user input negative unit
    */
   @FXML
-  boolean errorMessageShowing () {
-    boolean result = true;
-    if (getUnitNum() < 0) {
+  boolean errorMessageShowing(){
+    boolean result=true;
+    if(getUnitNum()<0) {
       errormessage.appendText(getUnitNum() + " is less than 0");
-      result = false;
+      result=false;
     }
     return result;
   }
 
   @FXML
-  void onAddOrderButton (MouseEvent event){
-    boolean result = errorMessageShowing();
-    turnstatus.deleteText(0, turnstatus.getLength());
-    if (result) {
+  void onAddOrderButton(MouseEvent event) {
+    boolean result=errorMessageShowing();
+    turnstatus.deleteText(0,turnstatus.getLength());
+    if(result) {
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
@@ -443,7 +441,7 @@ public class GameController {
   }
 
   @FXML
-  void onCommitButton (MouseEvent event){
+  void onCommitButton(MouseEvent event) {
     errormessage.clear();
     // send TurnList to Server
     // Step-3 in Master playGame() in server
@@ -461,8 +459,8 @@ public class GameController {
     // display the turn status in UI
     // TO-DO
     //turnstatus.deleteText(0,turnstatus.getLength());
-    for (String s : turnResult) {
-      turnstatus.appendText(s + "\n");
+    for(String s:turnResult) {
+      turnstatus.appendText(s+"\n");
     }
     //remove the current turnlist
     myTurn.order_list.clear();
@@ -482,13 +480,14 @@ public class GameController {
       commit.setDisable(false);
       // ready for next turn
       // re-enable commit button
+    } else {
     }
   }
 
   /**
    * method to update the map after each turn
    */
-  private void updateUIMap(){
+  private void updateUIMap() {
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryUnits.keySet()) {
       TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
@@ -496,4 +495,3 @@ public class GameController {
   }
 
 }
-
