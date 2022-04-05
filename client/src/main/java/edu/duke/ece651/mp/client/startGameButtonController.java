@@ -42,8 +42,10 @@ public class startGameButtonController {
                 AnchorPane root = (AnchorPane) loader.load();
 
                 GameController gameController = loader.getController();
+
                 gameController.setPlayer(theClient.theTextPlayer);
                 gameController.initGame();
+                gameController.setUpMap(theClient.theTextPlayer);
 
                 startGame.getScene().setRoot(root);
 

@@ -152,53 +152,80 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       String terrOwner = terr.getColor();
       territoryGroups.get(terrOwner).add(terr.getName());
     }
-
     return territoryGroups;
+  }
+
+  /*
+  method to get units' types of specific territory
+  @input String: the name of territory
+  @return ArrayList<String> consist of units' types
+  */
+  public ArrayList<String> getTerritoryUnitType(String currTerritory){
+    ArrayList<String> unit_type_list = new ArrayList<String>();
+    for (Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
+      Territory<T> terr = entry.getValue();
+      if(terr.getName().equals(currTerritory)){
+        ArrayList<Unit> unit_list = terr.getUnitList();
+          for(Unit unit: unit_list){
+            unit_type_list.add(unit.getUnitType());
+          }
+      }
+    }
+    return unit_type_list;
   }
 
   /* Update Map according to move order */
   public void updateMap(String dep, String des, String unit_type, int n1, int n2) {
     Territory<T> t1 = myTerritories.get(dep);
-    t1.updateTerritory(unit_type, n1);
+    t1.updateUnit(unit_type, n1);
     myTerritories.put(dep, t1);
 
     Territory<T> t2 = myTerritories.get(des);
-    t2.updateTerritory(unit_type,n2);
+    t2.updateUnit(unit_type,n2);
     myTerritories.put(des, t2);
   }
 
-  /*
-  public void updateTempMap(String dep, int n){
+  
+  public void updateTempMap(String dep, String unit_type, int n){
     Territory<T> t = myTerritories.get(dep);
-    t.updateUnit(n);
+    t.updateUnit(unit_type, n);
   }
   
-  public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor) {
+  
+  public void updateTerritoryInMap(String territoryName, String unitType, int unitChage, String newOwnerColor) {
     Territory<T> terr = myTerritories.get(territoryName);
-    int currUnits = terr.getUnit();
+    int currUnits = terr.getUnit(unitType);
     int newUnits = currUnits + unitChage;
-    terr.updateUnit(newUnits);
+    terr.updateUnit(unitType, newUnits);
     if (newOwnerColor != "Unchanged") {
       terr.updateColor(newOwnerColor);
     }
     myTerritories.put(territoryName, terr);
   }
-
-  public void updateTerritoryInMap(String territoryName, int unitChage) {
-    updateTerritoryInMap(territoryName, unitChage, "Unchanged");
+  
+  public void updateTerritoryInMap(String territoryName, String unitType, int unitChage) {
+    updateTerritoryInMap(territoryName, unitType, unitChage, "Unchanged");
   }
+
 
   // Increase #Units after fighting 
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
+    int basic_unit_num = 0;
     for (Map.Entry<String, Territory<T>> set : myT.entrySet()) {
       Territory<T> temp = set.getValue();
-      temp.updateUnit(temp.getUnit() + 1);
+      // just add One basic Unit to Territory
+      for(Unit unit: temp.getUnitList()){
+        if(unit.getUnitType().equals("Alevel")){
+          basic_unit_num = unit.getUnitNum();
+        }
+      }
+      temp.updateUnit("Alevel", basic_unit_num + 1);
       myTerritories.put(temp.getName(), temp);
     }
     System.out.println("End of turn: Added one unit to each territory.");
   }
-  */
+  
   public ArrayList<String> getPlayerTerritories(String player_color) {
     HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);

@@ -20,6 +20,7 @@ import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.Unit;
 
 public class MasterServer {
   public int port;
@@ -186,17 +187,18 @@ public class MasterServer {
     HashMap<String, Territory<Character>> myTerritories=theMap.getAllTerritories();
     for(String s:myTerritories.keySet()){
       Territory<Character> terr=myTerritories.get(s);
-      if(terr.getUnit()==0){continue;}
-      if(!terr.getColor().equals(color)&&color!=null){
-        flag=1;
-        color=null;
-        break;
-      }else if(color==null&&flag==0){
-        color=terr.getColor();
+      for(Unit unit: terr.getUnitList()){
+        if(terr.getUnit(unit.getUnitType())==0){continue;}
+        if(!terr.getColor().equals(color)&&color!=null){
+          flag=1;
+          color=null;
+          break;
+        }else if(color==null&&flag==0){
+          color=terr.getColor();
+        }
       }
     }
     return color;
-
   }
 
   public void printTurnList() {

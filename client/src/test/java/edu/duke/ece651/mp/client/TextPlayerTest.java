@@ -34,7 +34,7 @@ public class TextPlayerTest {
     player.setIdentity("Green");
     player.updateMap(m);
 
-    player.takeTurn();
+    //player.takeTurn();
     String expected = "You are the Green player and it's time to take your turn!.\n"
       + "There are two types of orders that you may issue: move and attack.You may issue any number of each type of these orders in a turn.Once you're done enetering your orders, hit D and your turn will be sent to the server.\n\n"
       + "\nEnter new order (M or A or D)\n"

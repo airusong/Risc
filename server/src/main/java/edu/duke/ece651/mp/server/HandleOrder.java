@@ -99,9 +99,10 @@ public class HandleOrder<T> {
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
                 // Generate/Update the temp map
+                String move_unit_type = curr_turn.getUnitType();
                 int move_units = curr_turn.getNumber();
-                int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit() - move_units;
-                tempMap.updateTempMap(curr_turn.getSource(), new_units);
+                int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type) - move_units;
+                tempMap.updateTempMap(curr_turn.getSource(), move_unit_type, new_units);
 
                 String des = curr_turn.getDestination();
                 if (temp.get(des) != null) {
@@ -119,7 +120,8 @@ public class HandleOrder<T> {
         }
         for(HashMap<String, ArrayList<Turn>> hm: res){
             for (ArrayList<Turn> t : hm.values()) {
-                handleSingleAttackOrder(t, tempMap);
+                //handleSingleAttackOrder(t, tempMap);
+                System.out.print("To Do: Handle Single Attack Order");
             }
         }
 
@@ -133,10 +135,11 @@ public class HandleOrder<T> {
     int unitsToMove = moveOrder.getNumber();
     String dep = moveOrder.getSource();
     String des = moveOrder.getDestination();
+    String unit_type = moveOrder.getUnitType();
     String player_color = moveOrder.getPlayerColor();
 
     // Check Rules
-    String moveProblem = moveChecker.checkMoving(theMap, dep, des, unitsToMove, player_color);
+    String moveProblem = moveChecker.checkMoving(theMap, dep, des, unit_type, unitsToMove, player_color);
 
     String moveResult;
 
@@ -144,9 +147,9 @@ public class HandleOrder<T> {
       // update Territory & Map
 
       // update source territory
-      theMap.updateTerritoryInMap(dep, unitsToMove*(-1)); // -1 for taking units out
+      theMap.updateTerritoryInMap(dep, unit_type, unitsToMove*(-1)); // -1 for taking units out
       // update destination territory
-      theMap.updateTerritoryInMap(des, unitsToMove); //  for adding
+      theMap.updateTerritoryInMap(des, unit_type, unitsToMove); //  for adding
       
       moveResult = "successful";
     }
@@ -160,6 +163,7 @@ public class HandleOrder<T> {
      * Method to handle Attack Order
      * 
      */
+    /*
     public void handleSingleAttackOrder(ArrayList<Turn> attackOrder, Map<T> tempMap) {
         // handle attack order
         //AttackChecking<T> ruleChecker = new AttackChecking<>();
@@ -170,10 +174,15 @@ public class HandleOrder<T> {
         //System.out.print("The attackResult is: " ) ;
         turnStatus.add(attackResult);
     }
+    */
     
     /**
      * Method to resolve combat in any one territory
      */
+
+     // To Do: The Algorithm of combat has to change.
+
+    /*
     private String resolveCombat(ArrayList<Turn> attackOrder, Map<T> tempMap) {
 
         String combatResult;
@@ -252,6 +261,8 @@ public class HandleOrder<T> {
         return combatResult;
 
     }
+    */
+
 
     /**
      * Method to decrease one unit from each territory Used after each turn

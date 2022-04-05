@@ -18,7 +18,7 @@ import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class HandleOrderTest {
-
+  /*
   @Test
   @SuppressWarnings("unchecked")
   public void test_handleAllMoveOrder() {
@@ -151,5 +151,6 @@ public class HandleOrderTest {
     assertEquals(expected, actual);
     // TO DO : test attack orders with checker
   }
+  */
 
 }
