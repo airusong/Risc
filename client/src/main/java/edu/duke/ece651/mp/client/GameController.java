@@ -9,8 +9,6 @@ import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V1Map;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,8 +23,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 public class GameController {
   // Stack panes holding all territory elements
@@ -186,11 +182,6 @@ public class GameController {
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
         TerritoryUnits.put(terrName, terrUnits.get(i));
-
-        // Bind the territory unit text field
-        //terrUnitsList.add(new SimpleStringProperty());
-        //terrUnits.get(i).textProperty().bind(terrUnitsList.get(i));
-
         i++;
       }
     }
@@ -342,8 +333,12 @@ public class GameController {
   }
 
   public void initGame() {
+    // Step-1 of playGame()
     theTextPlayer.receiveMap();
     setUpMap();
+
+    // Step-2 of playGame()
+    // Receive Game Status from server
     theTextPlayer.receiveAndPrintGameStatus();
 
     setName();
@@ -428,6 +423,7 @@ public class GameController {
   void onCommitButton(MouseEvent event) {
     // send TurnList to Server
     // Step-3 in Master playGame() in server
+    // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
     System.out.println("Sent the TurnList");
 
