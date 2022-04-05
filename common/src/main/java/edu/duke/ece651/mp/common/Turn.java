@@ -7,17 +7,11 @@ import java.io.Serializable;
 
 public abstract class Turn implements Serializable {
   public String type;
-  public String fromTerritory;
-  public String toTerritory;
-  public String unit_type;
   public int num_unit;
   public String player_color;
 
-  public Turn(String type, String fromTerritory, String toTerritory, String unit_type, int num_unit, String player_color) {
+  public Turn(String type, int num_unit, String player_color) {
     this.type = type;
-    this.fromTerritory = fromTerritory;
-    this.toTerritory = toTerritory;
-    this.unit_type = unit_type;
     this.num_unit = num_unit;
     this.player_color = player_color;
   }
@@ -28,18 +22,6 @@ public abstract class Turn implements Serializable {
 
   private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
     s.defaultReadObject();
-  }
-
-  public String getSource() {
-    return this.fromTerritory;
-  }
-
-  public String getDestination() {
-    return this.toTerritory;
-  }
-
-  public String getUnitType(){
-    return this.unit_type;
   }
 
   public int getNumber() {
@@ -57,10 +39,8 @@ public abstract class Turn implements Serializable {
   public void printTurn(){
     System.out.println("Turn: ");
     System.out.println(this.type);
-    System.out.println(this.fromTerritory);
-    System.out.println(this.toTerritory);
-    System.out.println(this.unit_type);
     System.out.println(this.num_unit);
     System.out.println(this.player_color);
   }
+
 }

@@ -8,10 +8,28 @@ import java.util.ArrayList;
 
 public class Unit implements Serializable{
     private String type;
+    private int bonus;
     private int number;
 
     public Unit(String type, int number){
         this.type = type;
+        switch (this.type) {
+            case "Alevel":
+                this.bonus = 0;
+                break;
+            case "Blevel":
+                this.bonus = 1;
+            case "Clevel":
+                this.bonus = 3;
+            case "Dlevel":
+                this.bonus = 5;
+            case "Elevel":
+                this.bonus = 8;
+            case "Flevel":
+                this.bonus = 11;
+            case "Glevel":
+                this.bonus = 15;
+        }
         this.number = number;
     }
 
@@ -28,6 +46,8 @@ public class Unit implements Serializable{
     public String getUnitType(){
         return this.type;
     }
+
+    public int getBonus(){return this.bonus;}
 
     public int getUnitNum(){
         return this.number;

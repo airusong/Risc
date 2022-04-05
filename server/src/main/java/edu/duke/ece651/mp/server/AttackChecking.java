@@ -2,18 +2,15 @@ package edu.duke.ece651.mp.server;
 
 import java.util.ArrayList;
 
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.*;
 
 public class AttackChecking<T> {
   String attackStatus;
 
 
-  public ArrayList<Turn> checkMyRule(Map<T> map, ArrayList<Turn> attackOrder) {
-    ArrayList<Turn> ans = new ArrayList<Turn>();
-    for (Turn t : attackOrder) {
+  public ArrayList<AttackTurn> checkMyRule(Map<T> map, ArrayList<AttackTurn> attackOrder) {
+    ArrayList<AttackTurn> ans = new ArrayList<AttackTurn>();
+    for (AttackTurn t : attackOrder) {
       boolean b = checkMyRule(map, t);
       if (b) {
         ans.add(t);
@@ -22,7 +19,7 @@ public class AttackChecking<T> {
     return ans;
   }
 
-  public boolean checkMyRule(Map<T> map, Turn attackOrder) {
+  public boolean checkMyRule(Map<T> map, AttackTurn attackOrder) {
     int attackingunits = attackOrder.getNumber();
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();

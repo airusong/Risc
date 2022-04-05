@@ -112,7 +112,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /* Update Unit of Territory according to move order */
-  public void updateUnit(String unit_type, int new_unit){
+  public void updateUnit(String unit_type,  int new_unit){
     int index = hasUnitType(unit_type);
     if(index>=0){
       unit_list.set(index,new Unit(unit_type, new_unit));

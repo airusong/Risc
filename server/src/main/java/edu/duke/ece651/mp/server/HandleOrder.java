@@ -5,15 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V2Map;
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.MoveChecking;
-import edu.duke.ece651.mp.common.OwnerChecking;
-import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.*;
 
 public class HandleOrder<T> {
     public ArrayList<TurnList> all_order_list;
@@ -48,7 +40,7 @@ public class HandleOrder<T> {
         for (int i = 0; i < all_order_list.size(); i++) {
             TurnList curr = all_order_list.get(i);
             for (int j = 0; j < curr.getListLength(); j++) {
-                Turn curr_turn = (Turn) (curr.order_list.get(j));
+                MoveTurn curr_turn = (MoveTurn) (curr.order_list.get(j));
                 if (curr_turn.getTurnType().equals("Move")) {
                     handleSingleMoveOrder(curr_turn);
                 }
@@ -79,7 +71,7 @@ public class HandleOrder<T> {
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = (Turn) curr.order_list.get(j);
                 if (curr_turn.getTurnType().equals("Attack")){
-                    if(ruleChecker.checkMyRule(theMap, curr_turn)){
+                    if(ruleChecker.checkMyRule(theMap, (AttackTurn) curr_turn)){
                         curr_valid.order_list.add(curr_turn);
                     }
                     turnStatus.add(ruleChecker.attackStatus);
@@ -97,7 +89,7 @@ public class HandleOrder<T> {
             TurnList curr = valid_attack_order_list.get(i);
             HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
-                Turn curr_turn = (Turn) curr.order_list.get(j);
+                MoveTurn curr_turn = (MoveTurn) curr.order_list.get(j);
                 // Generate/Update the temp map
                 String move_unit_type = curr_turn.getUnitType();
                 int move_units = curr_turn.getNumber();
@@ -131,7 +123,7 @@ public class HandleOrder<T> {
    * Method to handle Move Order
    * 
    */
-  public void handleSingleMoveOrder(Turn moveOrder) {
+  public void handleSingleMoveOrder(MoveTurn moveOrder) {
     int unitsToMove = moveOrder.getNumber();
     String dep = moveOrder.getSource();
     String des = moveOrder.getDestination();
