@@ -2,6 +2,7 @@ package edu.duke.ece651.mp.client;
 
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import javafx.beans.value.ChangeListener;
@@ -117,9 +118,10 @@ public class GameController{
     }
 
     public void setUnitType(){
-        ArrayList<String> own_territory_list =  theTextPlayer.getMyOwnTerritories();
-        source_list.clear();
-        source_list.addAll(own_territory_list);
+        String curTerritory = getSource();
+        ArrayList<Unit> own_unitType_list = theTextPlayer.getTerritoryUnitList();
+        unitType_list.clear();
+        unitType_list.addAll(own_unitType_list);
         from.setItems(source_list);
     }
 
