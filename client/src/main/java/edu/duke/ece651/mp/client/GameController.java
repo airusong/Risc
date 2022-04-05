@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import javax.print.attribute.HashPrintServiceAttributeSet;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -139,7 +140,7 @@ public class GameController {
   /**
    * Method to setup the map in the UI
    * 
-   * @param TextPlayer
+   * @param player
    */
   public void setUpMap(TextPlayer player) {
     V2Map<Character> initialMap = player.theMap;
@@ -348,11 +349,11 @@ public class GameController {
 
   public void initGame() {
     theTextPlayer.receiveMap();
-
     setName();
     setActionBox();
     setSourceBox();
     setDestinationBox();
+    setUnitTypeBox();
   }
 
   public void setName() {
@@ -369,7 +370,6 @@ public class GameController {
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         setSourceBox();
         setDestinationBox();
-        setUnitType();
       }
     });
   }
@@ -384,6 +384,12 @@ public class GameController {
     source_list.clear();
     source_list.addAll(own_territory_list);
     from.setItems(source_list);
+    from.valueProperty().addListener(new ChangeListener<String>(){
+      @Override
+      public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        setUnitTypeBox();
+      }
+    });
   }
 
   public String getSource() {
@@ -407,7 +413,7 @@ public class GameController {
     return (String) to.getValue();
   }
 
-  public void setUnitType(){
+  public void setUnitTypeBox(){
     ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
@@ -443,6 +449,25 @@ public class GameController {
     // send TurnList to Server
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
     System.out.println("Send the TurnList");
+
+    // Disable the Button
+    order.setDisable(true);
+    commit.setDisable(true);
+
+    // receive turn status
+    ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
+    // display the turn status in UI
+
+    // receive updated map
+    theTextPlayer.receiveMap();
+
+    // recieve game status
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    if(gamestatus.startsWith("Ready")){
+      order.setDisable(false);
+      commit.setDisable(false);
+    }
+
   }
 
 }

@@ -35,7 +35,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     return unit_list;
   }
 
-
   public String getName() {
     return name;
   }
@@ -62,6 +61,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
    * function to add Units to the territory
    */
   public void addUnit(Unit unit) {
+    System.out.println("add Unit to territory" + unit.getUnitType());
     unit_list.add(unit);
   }
 
@@ -111,11 +111,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     // other fields go here
   }
 
-  /*
-  public void updateUnit(int new_unit){
-    this.unit = new_unit;
-  }*/
-
   /* Update Unit of Territory according to move order */
   public void updateUnit(String unit_type, int new_unit){
     int index = hasUnitType(unit_type);
@@ -148,5 +143,9 @@ public class Territory<T> implements IITerritory<T>, Serializable {
       }
     }
     return 0;
+  }
+
+  public int getSize(){
+    return this.size;
   }
 }
