@@ -52,7 +52,6 @@ public class startGameButtonController {
 
                 gameController.setPlayer(theClient.theTextPlayer);
                 gameController.initGame();
-                gameController.setUpMap(theClient.theTextPlayer);
                 /*
                 gameController.setName();
                 gameController.setActionBox();

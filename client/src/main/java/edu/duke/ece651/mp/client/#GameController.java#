@@ -342,8 +342,12 @@ public class GameController {
   }
 
   public void initGame() {
+    // Step-1 of playGame()
     theTextPlayer.receiveMap();
     setUpMap();
+
+    // Step-2 of playGame()
+    // Receive Game Status from server
     theTextPlayer.receiveAndPrintGameStatus();
 
     setName();
@@ -428,6 +432,7 @@ public class GameController {
   void onCommitButton(MouseEvent event) {
     // send TurnList to Server
     // Step-3 in Master playGame() in server
+    // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
     System.out.println("Sent the TurnList");
 
