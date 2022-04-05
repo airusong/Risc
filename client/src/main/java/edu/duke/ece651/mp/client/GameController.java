@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -32,13 +29,13 @@ public class GameController{
 
 
     @FXML
-    private TextField player_info;
+    private Label player_info;
     @FXML
-    private ChoiceBox<String> playeraction;
+    private ComboBox<String> playeraction;
     @FXML
-    private ChoiceBox<String> from;
+    private ComboBox<String> from;
     @FXML
-    private ChoiceBox<String> to;
+    private ComboBox<String> to;
     @FXML
     private TextField unit;
     @FXML
@@ -62,6 +59,7 @@ public class GameController{
 
     public void setName(){
         String name = theTextPlayer.identity;
+        System.out.println("THe name of player is:" + name);
         player_info.setText(name);
     }
 
@@ -69,6 +67,7 @@ public class GameController{
     public void setActionBox(){
         playeraction.setValue("Move");
         playeraction.setItems(playeraction_list);
+        playeraction.setPromptText("Please select a Action.");
         playeraction.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -88,6 +87,7 @@ public class GameController{
         source_list.clear();
         source_list.addAll(own_territory_list);
         from.setItems(source_list);
+        from.setPromptText("From Territory.");
     }
 
     public String getSource(){
@@ -106,6 +106,7 @@ public class GameController{
         destination_list.clear();
         destination_list.addAll(des_territory_list);
         to.setItems(destination_list);
+        to.setPromptText("To Territory.");
     }
 
     public String getDestination(){
@@ -135,11 +136,34 @@ public class GameController{
     }
 
     @FXML
-    void onCommitButton(MouseEvent event){
+    void onCommitButton(MouseEvent event) {
         // send TurnList to Server
         theTextPlayer.connectionToMaster.sendToServer(myTurn);
+        // empty TurnList
+        myTurn = new TurnList();
         System.out.println("Send the TurnList");
+
+        // Disable the Button
+        order.setDisable(true);
+        commit.setDisable(true);
+
+        // receive turn status
+        ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
+        // display the turn status in UI
+
+        // receive updated map
+        theTextPlayer.receiveMap();
+
     }
 
+      /*
+      // TO Do: bind it with the game status Box
+      // recieve game status
+      String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+        if(gamestatus.startsWith("Ready")){
+        order.setDisable(false);
+        commit.setDisable(false);
+      }
+      */
 
 }
