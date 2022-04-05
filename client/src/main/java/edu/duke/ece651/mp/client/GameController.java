@@ -27,6 +27,7 @@ public class GameController{
     ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move","Attack","Upgrade");
     ObservableList<String> source_list = FXCollections.observableArrayList();
     ObservableList<String> destination_list = FXCollections.observableArrayList();
+    ObservableList<String> unitType_list = FXCollections.observableArrayList();
 
     TurnList myTurn = new TurnList();
 
@@ -39,6 +40,8 @@ public class GameController{
     private ChoiceBox<String> from;
     @FXML
     private ChoiceBox<String> to;
+    @FXML
+    private ChoiceBox<String> unitType;
     @FXML
     private TextField unit;
     @FXML
@@ -74,6 +77,7 @@ public class GameController{
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 setSourceBox();
                 setDestinationBox();
+                setUnitType();
             }
         });
     }
@@ -112,6 +116,17 @@ public class GameController{
         return (String) to.getValue();
     }
 
+    public void setUnitType(){
+        ArrayList<String> own_territory_list =  theTextPlayer.getMyOwnTerritories();
+        source_list.clear();
+        source_list.addAll(own_territory_list);
+        from.setItems(source_list);
+    }
+
+    public String getUnitType(){
+        return (String)unitType.getValue();
+    }
+
     public int getUnitNum(){
         return Integer.parseInt(unit.getText());
     }
@@ -123,11 +138,11 @@ public class GameController{
     @FXML
     void onAddOrderButton(MouseEvent event){
         if(getAction().equals("Move") || getAction().equals("Upgrade")) {
-            Turn newOrder = new MoveTurn(getSource(), getDestination(),getUnitNum(),getPlayerColor());
+            Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(),getPlayerColor());
             myTurn.addTurn(newOrder);
         }
         else if(getAction().equals("Attack")){
-            Turn newOrder = new AttackTurn(getSource(), getDestination(),getUnitNum(),getPlayerColor());
+            Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(),getUnitNum(),getPlayerColor());
             myTurn.addTurn(newOrder);
         }
         // theClient.theTextPlayer.takeAndSendTurn();

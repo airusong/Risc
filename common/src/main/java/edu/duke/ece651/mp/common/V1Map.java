@@ -167,6 +167,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(des, t2);
   }
 
+  /*
   public void updateTempMap(String dep, int n){
     Territory<T> t = myTerritories.get(dep);
     t.updateUnit(n);
@@ -187,7 +188,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     updateTerritoryInMap(territoryName, unitChage, "Unchanged");
   }
 
-  /* Increase #Units after fighting */
+  // Increase #Units after fighting 
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
     for (Map.Entry<String, Territory<T>> set : myT.entrySet()) {
@@ -197,7 +198,7 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     }
     System.out.println("End of turn: Added one unit to each territory.");
   }
-
+  */
   public ArrayList<String> getPlayerTerritories(String player_color) {
     HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);

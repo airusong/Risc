@@ -13,6 +13,7 @@ import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 public class PathCheckingTest {
+  /*
   @Test
   public void test_path() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
@@ -30,5 +31,6 @@ public class PathCheckingTest {
     assertEquals(pcheck.checkMyRule(map,"Narnia","Midemio",2),null);
     //assertEquals(pcheck.checkMyRule(map,"Narnia","Elantris",2), "no valid path exists");
   }
+  */
 
 }

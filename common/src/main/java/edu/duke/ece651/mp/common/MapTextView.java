@@ -67,7 +67,7 @@ public class MapTextView {
     StringBuilder playerInfo = new StringBuilder("");
     playerInfo.append(makePlayerHeader(playerColor));
     for (String terrName : terrList) {
-      playerInfo.append(toDisplay.getAllTerritories().get(terrName).getUnit());
+      playerInfo.append(toDisplay.getAllTerritories().get(terrName).getUnitList());
       playerInfo.append(" units in ");
       playerInfo.append(terrName);
       playerInfo.append(" (next to: ");

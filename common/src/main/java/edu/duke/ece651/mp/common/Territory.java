@@ -35,6 +35,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     return unit_list;
   }
 
+
   public String getName() {
     return name;
   }

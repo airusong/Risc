@@ -54,7 +54,7 @@ public class AttackChecking<T> {
     }
 
     // check if the attcker has enough units
-    if (attacker.getUnit() < attackingunits) {
+    if (attacker.getUnit(unit_type) < attackingunits) {
       attackStatus += "invalid as attacker doesn't have enough units";
       return false;
     }

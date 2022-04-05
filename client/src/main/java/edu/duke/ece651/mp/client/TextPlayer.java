@@ -81,14 +81,18 @@ public class TextPlayer {
 
   }
 
+  /*
   public void takeAndSendTurn() throws IOException {
     TurnList newTurn = takeTurn();
     connectionToMaster.sendToServer(newTurn);
   }
+  */
 
   /**
    * method to ask player for entering their turn
    */
+  // No need anymore in Eval 2 since we read the TurnList information from the GUI
+  /*
   public TurnList takeTurn() throws IOException {
     TurnList myTurn = new TurnList(identity);
 
@@ -124,7 +128,7 @@ public class TextPlayer {
     } while (enteredOrder != 'D');
     return myTurn;
   }
-
+  */
   /**
    * method to read only the order type from the player
    */
@@ -161,6 +165,8 @@ public class TextPlayer {
    * 
    * @return the Turn object (Move or Attack)
    */
+  // No need anymore in Eval 2 since we read the TurnList information from the GUI
+  /*
   private Turn readOrderDetails(char orderType) throws IOException, EOFException {
     Turn newOrder;
     ArrayList<String> terrOptions = new ArrayList<String>();
@@ -201,6 +207,7 @@ public class TextPlayer {
 
     return newOrder;
   }
+  */
 
   /**
    * this method takes an input number from the user
@@ -271,7 +278,7 @@ public class TextPlayer {
       
       if (status.startsWith("Ready")) {
         // Step-3:
-        takeAndSendTurn();
+        // takeAndSendTurn(); - Done By GUI for Eval 2
 
         // Step-4:
         ArrayList<String> turnResult = receiveTurnStatus();

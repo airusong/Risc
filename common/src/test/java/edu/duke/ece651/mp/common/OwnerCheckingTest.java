@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import edu.duke.ece651.mp.common.MoveChecking;
@@ -13,6 +14,7 @@ import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.V1Map;
 
 public class OwnerCheckingTest {
+  /*
   @Test
   public void test_owner() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
@@ -34,4 +36,5 @@ public class OwnerCheckingTest {
     assertEquals(pathchcker.checkMyRule(map,"Narnia","Midemio",3),null);
     assertEquals(pathchcker.checkMyRule(map,"Narnia","Elantris",3),"no valid path exists");
   }
+  */
 }

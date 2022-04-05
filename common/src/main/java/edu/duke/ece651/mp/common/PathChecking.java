@@ -8,7 +8,7 @@ public class PathChecking<T> extends MoveChecking<T>{
     super(next);
   };
 
-  public String checkMyRule(Map<T> map,String source,String destination,int movingunits){
+  public String checkMyRule(Map<T> map,String source,String destination, String unit_type, int movingunits){
     Deque<Territory<T>> stack=new ArrayDeque<>();
     HashSet<Territory<T>> visited=new HashSet<>();
     Territory<T> start=map.getAllTerritories().get(source);
@@ -30,4 +30,5 @@ public class PathChecking<T> extends MoveChecking<T>{
     }
     return "no valid path exists";
   }
+
 }
