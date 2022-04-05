@@ -7,7 +7,7 @@ import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.V2Map;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -23,9 +23,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -326,15 +323,15 @@ public class GameController {
   TurnList myTurn = new TurnList();
 
   @FXML
-  private TextField player_info;
+  private Label player_info;
   @FXML
-  private ChoiceBox<String> playeraction;
+  private ComboBox<String> playeraction;
   @FXML
-  private ChoiceBox<String> from;
+  private ComboBox<String> from;
   @FXML
-  private ChoiceBox<String> to;
+  private ComboBox<String> to;
   @FXML
-  private ChoiceBox<String> type;
+  private ComboBox<String> type;
   @FXML
   private TextField unit;
   @FXML
