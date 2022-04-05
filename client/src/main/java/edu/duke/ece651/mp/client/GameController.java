@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -25,6 +26,10 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class GameController {
+  @FXML
+  public TextArea turnstatus;
+  @FXML
+  public TextArea errormessage;
   // Stack panes holding all territory elements
   @FXML
   private StackPane Territory1;
@@ -409,36 +414,60 @@ public class GameController {
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
+  /*
+   * prompt if the user input negative unit
+   */
+  @FXML
+  boolean errorMessageShowing(){
+    boolean result=true;
+    if(getUnitNum()<0) {
+      errormessage.appendText(getUnitNum() + " is less than 0");
+      result=false;
+    }
+    return result;
+  }
 
   @FXML
   void onAddOrderButton(MouseEvent event) {
-    if (getAction().equals("Move") || getAction().equals("Upgrade")) {
-      Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
-      myTurn.addTurn(newOrder);
-    } else if (getAction().equals("Attack")) {
-      Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
-      myTurn.addTurn(newOrder);
+    boolean result=errorMessageShowing();
+    turnstatus.deleteText(0,turnstatus.getLength());
+    if(result) {
+      if (getAction().equals("Move") || getAction().equals("Upgrade")) {
+        Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+      } else if (getAction().equals("Attack")) {
+        Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+      }
+      // theClient.theTextPlayer.takeAndSendTurn();
+      System.out.println("Added a New Order");
     }
-    // theClient.theTextPlayer.takeAndSendTurn();
-    System.out.println("Added a New Order");
   }
 
   @FXML
   void onCommitButton(MouseEvent event) {
+    errormessage.clear();
     // send TurnList to Server
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
-    GameStatus.setText("Turn sent to server...");
+    GameStatus.appendText("Turn sent to server...");
     System.out.println("Sent the TurnList");
-    // Disable the button
-    // TO-DO
 
+    // Disable the button
+    order.setDisable(true);
+    commit.setDisable(true);
+    
     // receive turn status
     // Step-4 in Master playGame() in server
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
+
     // display the turn status in UI
-    // TO-DO
+    for(String s:turnResult) {
+      turnstatus.appendText(s+"\n");
+    }
+    //remove the current turnlist
+    myTurn.order_list.clear();
 
     // receive updated map
     // Step-1 in Master playGame() in server
@@ -450,6 +479,8 @@ public class GameController {
     String gameStatus = receiveAndUpdateGameStatus();
 
     if (gameStatus.startsWith("Ready")) {
+      order.setDisable(false);
+      commit.setDisable(false);
       // ready for next turn
       // re-enable commit button
     } else {

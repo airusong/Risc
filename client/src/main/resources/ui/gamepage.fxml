@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
       <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
         <columnConstraints>
@@ -114,16 +115,18 @@
       <Line fx:id="Line2to5" endX="-75.39997863769531" endY="-68.00000762939453" layoutX="287.0" layoutY="178.0" startX="133.0" startY="75.20001220703125" visible="false" />
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
       <ChoiceBox fx:id="playeraction" layoutX="485.0" layoutY="55.0" prefWidth="150.0" />
-      <Button fx:id="commit" layoutX="486.0" layoutY="265.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
+      <Button fx:id="commit" layoutX="518.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
       <!--<AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />-->
       <TextField fx:id="player_info" layoutX="486.0" layoutY="15.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " />
       <TextField fx:id="unit" layoutX="486.0" layoutY="170.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
          <font>
             <Font size="8.0" />
          </font></TextField>
-      <Button fx:id="order" layoutX="524.0" layoutY="210.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
+      <Button fx:id="order" layoutX="598.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
       <ChoiceBox fx:id="from" layoutX="485.0" layoutY="92.0" prefWidth="150.0" />
       <ChoiceBox fx:id="to" layoutX="485.0" layoutY="131.0" prefWidth="150.0" />
       <TextField fx:id="GameStatus" layoutX="9.0" layoutY="414.0" prefHeight="30.0" prefWidth="447.0" />
+      <TextArea fx:id="turnstatus" layoutX="22.0" layoutY="314.0" prefHeight="45.0" prefWidth="412.0" promptText="Turn Status" />
+      <TextArea fx:id="errormessage" layoutX="457.0" layoutY="204.0" prefHeight="31.0" prefWidth="223.0" />
    </children>
 </AnchorPane>
