@@ -313,7 +313,7 @@ public class GameController {
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
 
-  TurnList myTurn = new TurnList(theTextPlayer.identity);
+  TurnList myTurn = new TurnList();
 
   @FXML
   private Label player_info;
@@ -344,9 +344,11 @@ public class GameController {
     theTextPlayer.receiveAndPrintGameStatus();
 
     setName();
+    myTurn = new TurnList(theTextPlayer.identity);
     setActionBox();
     setSourceBox();
     setDestinationBox();
+
   }
 
   public void setName() {

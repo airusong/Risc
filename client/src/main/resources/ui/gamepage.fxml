@@ -17,7 +17,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
-
       <Button fx:id="commit" layoutX="394.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
       <TextField fx:id="unit" layoutX="394.0" layoutY="207.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
          <font>
