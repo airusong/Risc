@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextField;
@@ -142,14 +142,14 @@ public class GameController {
    * @param TextPlayer
    */
   public void setUpMap(TextPlayer player) {
-    V1Map<Character> initialMap = player.theMap;
+    V2Map<Character> initialMap = player.theMap;
     setUpTerritories(initialMap);
   }
 
   /**
    * Method to setup territories
    */
-  private void setUpTerritories(V1Map<Character> initialMap) {
+  private void setUpTerritories(V2Map<Character> initialMap) {
     // setup name, units and color of each territory first
     initTerritories(initialMap);
 
@@ -161,7 +161,7 @@ public class GameController {
   /**
    * Method to initialize the hashmaps
    */
-  private void initTerritories(V1Map<Character> initialMap) {
+  private void initTerritories(V2Map<Character> initialMap) {
     // init lists with Java FX components
     initLists();
 
@@ -230,7 +230,7 @@ public class GameController {
   /**
    * Method to draw lines between territories in the UI based on their adjacency
    */
-  private void setAdjacency(V1Map<Character> initialMap) {
+  private void setAdjacency(V2Map<Character> initialMap) {
     initAdjacencyList();
 
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();

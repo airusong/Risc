@@ -12,18 +12,18 @@ public class MapTextView {
   /**
    * The Map to display
    */
-  private V1Map<Character> toDisplay;
+  private V2Map<Character> toDisplay;
 
   /**
    * Constructs a MapView, given the map it will display.
    * 
    * @param toMap is the Map to display
    */
-  public MapTextView(V1Map<Character> toDisplay) {
+  public MapTextView(V2Map<Character> toDisplay) {
     this.toDisplay = toDisplay;
   }
 
-  public void updateTextView(V1Map<Character> newMap) {
+  public void updateTextView(V2Map<Character> newMap) {
     this.toDisplay = newMap;
   }
 

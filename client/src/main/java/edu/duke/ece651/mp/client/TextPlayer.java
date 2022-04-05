@@ -14,11 +14,11 @@ import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 
 public class TextPlayer {
   final PlayerServer connectionToMaster;
-  V1Map<Character> theMap;
+  V2Map<Character> theMap;
   MapTextView view;
   final BufferedReader inputReader;
   final PrintStream out;
@@ -44,7 +44,7 @@ public class TextPlayer {
   /**
    * method to update the copy of the map
    */
-  public void updateMap(V1Map<Character> newMap) {
+  public void updateMap(V2Map<Character> newMap) {
     theMap = newMap;
     view.updateTextView(newMap);
   }
@@ -61,7 +61,7 @@ public class TextPlayer {
    */
   @SuppressWarnings("unchecked")
   public void receiveMap() {
-    V1Map<Character> receivedMap = (V1Map<Character>) connectionToMaster.receiveFromServer();
+    V2Map<Character> receivedMap = (V2Map<Character>) connectionToMaster.receiveFromServer();
     updateMap(receivedMap);
   }
 

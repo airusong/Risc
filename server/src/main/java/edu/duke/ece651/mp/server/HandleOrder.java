@@ -7,7 +7,7 @@ import java.util.Set;
 
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.MoveChecking;
@@ -23,7 +23,7 @@ public class HandleOrder<T> {
 
     HandleOrder() {
         this.all_order_list = new ArrayList<TurnList>();
-        this.theMap = new V1Map<>();
+        this.theMap = new V2Map<>();
         this.moveChecker = null;
         this.turnStatus = new ArrayList<>();
     }
@@ -33,7 +33,7 @@ public class HandleOrder<T> {
         this.theMap = theMap;
         // Test
         System.out.println("The True MAP: ");
-        MapTextView test = new MapTextView((V1Map)theMap);
+        MapTextView test = new MapTextView((V2Map)theMap);
         test.displayMap();
 
         this.moveChecker = moveChecker;

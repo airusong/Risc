@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import edu.duke.ece651.mp.common.Territory;   
 public class MasterServerTest {
   @Test
@@ -92,7 +92,7 @@ public class MasterServerTest {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
     OwnerChecking<Character> ocheck=new OwnerChecking<>(null);
     PathChecking<Character> pcheck=new PathChecking<>(ocheck);
-    V1Map<Character> Mymap = new V1Map<Character>(players_colors);
+    V2Map<Character> Mymap = new V2Map<Character>(players_colors);
     ms.sendToAll(Mymap);
     
     // client receive msg from server
@@ -109,7 +109,7 @@ public class MasterServerTest {
       + "10 units in Scadnal (next to: Roshar, Elantris, Oz, Midemio)\n";;
     
     //assertEquals(expected, obj);
-    V1Map<Character> actual = (V1Map<Character>)rec_obj;
+    V2Map<Character> actual = (V2Map<Character>)rec_obj;
     assertNotNull(actual);
     // To Do: transfer obj to string display.
     MapTextView map_view = new MapTextView(actual);
@@ -128,7 +128,7 @@ public class MasterServerTest {
     sendToServer_helper(soc, msg);
     m.acceptPlayers();
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));           
-    V1Map<Character> Mymap = new V1Map<Character>(players_colors);                                      
+    V2Map<Character> Mymap = new V2Map<Character>(players_colors);                                      
     HashMap<String, Territory<Character>> myTerritories=Mymap.getAllTerritories();    
     m.sendToAll(Mymap);    
 

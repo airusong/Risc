@@ -17,7 +17,7 @@ import java.util.Arrays;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -76,7 +76,7 @@ public class Client{
         //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
         //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
 
-        V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
+        V2Map<Character> mapFromServer = new V2Map<Character>(players_colors);
         theClient.theTextPlayer.updateMap(mapFromServer);
         theClient.theTextPlayer.printMap();
         theClient.theTextPlayer.takeTurn();

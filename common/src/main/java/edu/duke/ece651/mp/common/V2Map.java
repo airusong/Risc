@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import edu.duke.ece651.mp.common.MoveChecking;
 
-public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
+public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
 
@@ -19,14 +19,14 @@ public class V1Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    * @param hashmap myTerritories, the key is the territory itself and the value
    *                is the list of adjancent territories
    */
-  public V1Map(ArrayList<String> players_colors) {
+  public V2Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
   }
 
-  public V1Map() {
+  public V2Map() {
     this.myTerritories = new HashMap<>();
     ArrayList<String> players_colors = new ArrayList<String>();
     players_colors.add("Green");

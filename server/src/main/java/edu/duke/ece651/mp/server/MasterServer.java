@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.net.Socket;
 import java.util.ArrayList;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;

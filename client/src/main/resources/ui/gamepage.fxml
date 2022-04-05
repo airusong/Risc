@@ -125,6 +125,5 @@
       <ChoiceBox fx:id="from" layoutX="393.0" layoutY="129.0" prefWidth="150.0" />
       <ChoiceBox fx:id="to" layoutX="393.0" layoutY="168.0" prefWidth="150.0" />
       <ChoiceBox fx:id="type" layoutX="394.0" layoutY="210.0" prefWidth="150.0" />
->>>>>>> bbb8f48e8c17581241ac0769c4d69d3dfe0d2489
    </children>
 </AnchorPane>

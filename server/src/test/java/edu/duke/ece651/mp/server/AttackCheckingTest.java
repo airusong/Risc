@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.Territory;
 public class AttackCheckingTest {
@@ -13,7 +13,7 @@ public class AttackCheckingTest {
   @Test
   public void test_attackingcheck() {
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
-    V1Map<Character> map = new V1Map<>(players_colors);
+    V2Map<Character> map = new V2Map<>(players_colors);
     AttackChecking<Character> check=new AttackChecking<>();
     AttackTurn attackOrder1 = new AttackTurn("Narnia","Midemio",2, "Green");
     assertEquals(check.checkMyRule(map,attackOrder1), false);

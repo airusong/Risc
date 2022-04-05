@@ -12,7 +12,7 @@ import edu.duke.ece651.mp.common.PathChecking;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 
 public class Master {
   final MasterServer theMasterServer;
@@ -33,7 +33,7 @@ public class Master {
       this.theMasterServer = new MockMasterServer(port, num_players);
     }
     this.players_identity = new ArrayList<String>(Arrays.asList("Green", "Blue"));
-    this.theMap = new V1Map<Character>(this.players_identity);
+    this.theMap = new V2Map<Character>(this.players_identity);
     this.all_order_list = new ArrayList<TurnList>();
     PathChecking<Character> pcheck = new PathChecking<>(null);
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
