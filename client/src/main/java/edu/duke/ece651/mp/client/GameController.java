@@ -127,6 +127,10 @@ public class GameController {
   // territory
   private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
 
+  // Text field to show game status
+  @FXML
+  private TextField GameStatus;
+
   /**
    * Method to setup the map in the UI
    * 
@@ -339,8 +343,8 @@ public class GameController {
 
     // Step-2 of playGame()
     // Receive Game Status from server
-    theTextPlayer.receiveAndPrintGameStatus();
-
+    receiveAndUpdateGameStatus();
+    
     setName();
     setActionBox();
     setSourceBox();
@@ -425,8 +429,8 @@ public class GameController {
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
+    GameStatus.setText("Turn sent to server...");
     System.out.println("Sent the TurnList");
-
     // Disable the button
     // TO-DO
 
@@ -443,11 +447,9 @@ public class GameController {
 
     // receive game status
     // Step-2 in Master playGame() in server
-    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-    // display the game result
-    // TO-DO
+    String gameStatus = receiveAndUpdateGameStatus();
 
-    if (gamestatus.startsWith("Ready")) {
+    if (gameStatus.startsWith("Ready")) {
       // ready for next turn
       // re-enable commit button
     } else {
@@ -460,8 +462,28 @@ public class GameController {
   private void updateUIMap() {
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryUnits.keySet()) {
+      // Update number of units
       TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+
+      // Update color of territory
+      String player_color = allTerritories.get(terrName).getColor();
+      Color terrColor = Color.WHITE; // default
+      if (player_color.equals("Green")) {
+        terrColor = Color.GREEN;
+      } else if (player_color.equals("Blue")) {
+        terrColor = Color.BLUE;
+      }
+      TerritoryBoxes.get(terrName).setFill(terrColor);
     }
+  }
+
+  /**
+   * method to receive the game status and update the GUI
+   */
+  private String receiveAndUpdateGameStatus() {
+     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+     GameStatus.setText(gamestatus);
+     return gamestatus;
   }
 
 }
