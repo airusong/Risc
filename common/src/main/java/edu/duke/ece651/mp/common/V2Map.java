@@ -34,6 +34,8 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     this.players_colors = players_colors;
     setMap();
     addAdjacency();
+    addResources();
+    addUnits();
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -100,6 +102,20 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.get("Roshar").addResource(new Resource("food",15));
     myTerritories.get("Roshar").addResource(new Resource("tech",20));
   }
+
+  /**
+   * function used to initialize the unit information in the map
+   **/
+  protected void addUnits() {
+    myTerritories.get("Narnia").addUnit(new Unit("Alevel",20));
+    myTerritories.get("Midemio").addUnit(new Unit("Alevel",20));
+    myTerritories.get("Oz").addUnit(new Unit("Alevel",20));
+
+    myTerritories.get("Elantris").addUnit(new Unit("Alevel",20));
+    myTerritories.get("Scadnal").addUnit(new Unit("Alevel",20));
+    myTerritories.get("Roshar").addUnit(new Unit("Alevel",20));
+  }
+
   /**
    * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.

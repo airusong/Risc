@@ -58,6 +58,13 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     resources_list.add(resource);
   } 
 
+  /**
+   * function to add Units to the territory
+   */
+  public void addUnit(Unit unit) {
+    unit_list.add(unit);
+  }
+
   /*
    * function to get the adjacency list
    */
