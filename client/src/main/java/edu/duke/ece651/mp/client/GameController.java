@@ -3,35 +3,26 @@ package edu.duke.ece651.mp.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.V1Map;
-import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.V1Map;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 
 public class GameController {
   // Stack panes holding all territory elements
@@ -139,10 +130,9 @@ public class GameController {
   /**
    * Method to setup the map in the UI
    * 
-   * @param TextPlayer
    */
-  public void setUpMap(TextPlayer player) {
-    V1Map<Character> initialMap = player.theMap;
+  public void setUpMap() {
+    V1Map<Character> initialMap = theTextPlayer.theMap;
     setUpTerritories(initialMap);
   }
 
@@ -157,6 +147,8 @@ public class GameController {
     setAdjacency(initialMap);
 
   }
+
+  ArrayList<StringProperty> terrUnitsList = new ArrayList<>();
 
   /**
    * Method to initialize the hashmaps
@@ -195,7 +187,7 @@ public class GameController {
     }
   }
 
-    /**
+  /**
    * Method to initialize the lists of Java FX components
    */
   private void initLists() {
@@ -240,7 +232,6 @@ public class GameController {
       // for each adjacent territory
       for (String adjTerr : adjacentTerr) {
         TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
-        ;
       }
     }
   }
@@ -315,7 +306,6 @@ public class GameController {
 
   }
 
-
   private TextPlayer theTextPlayer;
   ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
   ObservableList<String> source_list = FXCollections.observableArrayList();
@@ -343,7 +333,13 @@ public class GameController {
   }
 
   public void initGame() {
+    // Step-1 of playGame()
     theTextPlayer.receiveMap();
+    setUpMap();
+
+    // Step-2 of playGame()
+    // Receive Game Status from server
+    theTextPlayer.receiveAndPrintGameStatus();
 
     setName();
     setActionBox();
@@ -420,14 +416,52 @@ public class GameController {
       myTurn.addTurn(newOrder);
     }
     // theClient.theTextPlayer.takeAndSendTurn();
-    System.out.println("Add a New Order");
+    System.out.println("Added a New Order");
   }
 
   @FXML
   void onCommitButton(MouseEvent event) {
     // send TurnList to Server
+    // Step-3 in Master playGame() in server
+    // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
-    System.out.println("Send the TurnList");
+    System.out.println("Sent the TurnList");
+
+    // Disable the button
+    // TO-DO
+
+    // receive turn status
+    // Step-4 in Master playGame() in server
+    ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
+    // display the turn status in UI
+    // TO-DO
+
+    // receive updated map
+    // Step-1 in Master playGame() in server
+    theTextPlayer.receiveMap();
+    updateUIMap();
+
+    // receive game status
+    // Step-2 in Master playGame() in server
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    // display the game result
+    // TO-DO
+
+    if (gamestatus.startsWith("Ready")) {
+      // ready for next turn
+      // re-enable commit button
+    } else {
+    }
+  }
+
+  /**
+   * method to update the map after each turn
+   */
+  private void updateUIMap() {
+    HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
+    for (String terrName : TerritoryUnits.keySet()) {
+      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+    }
   }
 
 }
