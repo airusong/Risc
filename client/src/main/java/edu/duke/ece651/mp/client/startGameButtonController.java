@@ -47,7 +47,6 @@ public class startGameButtonController {
                 //stage.setScene(scene);
 
                 GameController gameController = loader.getController();
-
                 //String player_info = theClient.theTextPlayer.identity;
                 //gameController.setName(player_info);
 
@@ -59,7 +58,6 @@ public class startGameButtonController {
                 gameController.setSourceBox();
                 gameController.setDestinationBox();
                 */
-
                 startGame.getScene().setRoot(root);
 
                 //Scene scene = new Scene(gp, 640, 480);
