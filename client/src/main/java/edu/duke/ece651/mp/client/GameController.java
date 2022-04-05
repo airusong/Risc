@@ -441,6 +441,7 @@ public class GameController {
       }
       // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
+      GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
     }
   }
 
@@ -451,7 +452,7 @@ public class GameController {
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
-    GameStatus.appendText("Turn sent to server...");
+    GameStatus.setText("Turn sent to server. Waiting for turn result...");
     System.out.println("Sent the TurnList");
 
     // Disable the button
