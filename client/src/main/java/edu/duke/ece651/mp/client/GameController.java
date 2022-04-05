@@ -448,6 +448,8 @@ public class GameController {
   void onCommitButton(MouseEvent event) {
     // send TurnList to Server
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
+    // empty TurnList
+    myTurn = new TurnList();
     System.out.println("Send the TurnList");
 
     // Disable the Button
@@ -461,14 +463,18 @@ public class GameController {
     // receive updated map
     theTextPlayer.receiveMap();
 
-    // recieve game status
-    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-    if(gamestatus.startsWith("Ready")){
-      order.setDisable(false);
-      commit.setDisable(false);
-    }
-
   }
+
+  /*
+  // TO Do: bind it with the game status Box
+  // recieve game status
+  String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    if(gamestatus.startsWith("Ready")){
+    order.setDisable(false);
+    commit.setDisable(false);
+  }
+  */
+
 
 }
 
