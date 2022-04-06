@@ -3,8 +3,7 @@ package edu.duke.ece651.mp.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -13,11 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.MoveTurn;
 import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -327,7 +322,7 @@ public class GameController {
   ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
-  ObservableList<String> unitType_list = FXCollections.observableArrayList();
+  ObservableList<UnitType> unitType_list = FXCollections.observableArrayList();
 
   TurnList myTurn = new TurnList();
 
@@ -340,7 +335,7 @@ public class GameController {
   @FXML
   private ComboBox<String> to;
   @FXML
-  private ComboBox<String> type;
+  private ComboBox<UnitType> type;
   @FXML
   private TextField unit;
   @FXML
@@ -430,14 +425,14 @@ public class GameController {
   }
 
   public void setUnitTypeBox(){
-    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
+    ArrayList<UnitType> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
     type.setItems(unitType_list);
   }
 
-  public String getUnitType(){
-      return (String) type.getValue();
+  public UnitType getUnitType(){
+      return  type.getValue();
   }
   public int getUnitNum() {
     return Integer.parseInt(unit.getText());

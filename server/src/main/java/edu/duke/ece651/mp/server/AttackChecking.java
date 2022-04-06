@@ -23,7 +23,7 @@ public class AttackChecking<T> {
     int attackingunits = attackOrder.getNumber();
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();
-    String unit_type = attackOrder.getUnitType();
+    UnitType unit_type = attackOrder.getUnitType();
     String player_color = attackOrder.getPlayerColor();
 
     Territory<T> attacker = map.getAllTerritories().get(source);
