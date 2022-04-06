@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.stage.Popup;
 
 public class GameController {
   @FXML
@@ -323,13 +326,13 @@ public class GameController {
   TurnList myTurn;
 
   @FXML
-  private TextField player_info;
+  private Label player_info;
   @FXML
-  private ChoiceBox<String> playeraction;
+  private ComboBox<String> playeraction;
   @FXML
-  private ChoiceBox<String> from;
+  private ComboBox<String> from;
   @FXML
-  private ChoiceBox<String> to;
+  private ComboBox<String> to;
   @FXML
   private TextField unit;
   @FXML
@@ -349,7 +352,7 @@ public class GameController {
     // Step-2 of playGame()
     // Receive Game Status from server
     receiveAndUpdateGameStatus();
-    
+
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
     setActionBox();
@@ -409,31 +412,50 @@ public class GameController {
     return (String) to.getValue();
   }
 
-  public int getUnitNum() {
+  public int getUnitNum() throws NumberFormatException {
     return Integer.parseInt(unit.getText());
   }
 
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
+
   /*
-   * prompt if the user input negative unit
+   * Method to check if the user inputs for adding order is valid
    */
   @FXML
-  boolean errorMessageShowing(){
-    boolean result=true;
-    if(getUnitNum()<0) {
-      errormessage.appendText(getUnitNum() + " is less than 0");
-      result=false;
+  boolean errorMessageShowing() {
+    // Clear any previous error message
+    errormessage.clear();
+
+    boolean result = true;
+
+    // For move/attack order, make sure the "from" and "to" are entered
+    if ((getAction().equals("Move") || getAction().equals("Attack"))
+        && (getSource() == null || getDestination() == null)) {
+      errormessage.appendText("Both source and destination is needed.");
+      result &= false;
+    }
+
+    // Now check if the unit number is positive and greater than zero
+    try {
+      if (getUnitNum() <= 0) {
+        errormessage.appendText("Unit number must be positive & greater than zero");
+        result &= false;
+      }
+    } catch (NumberFormatException e) {
+        errormessage.appendText("Unit number must be provided.");
+        result &= false;
     }
     return result;
   }
 
   @FXML
   void onAddOrderButton(MouseEvent event) {
-    boolean result=errorMessageShowing();
-    turnstatus.deleteText(0,turnstatus.getLength());
-    if(result) {
+    boolean result = errorMessageShowing();
+
+    if (result) { // if the inputs are valid
+      // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
@@ -449,7 +471,9 @@ public class GameController {
 
   @FXML
   void onCommitButton(MouseEvent event) {
-    errormessage.clear();
+    // Clear the turn status box before committing new turn
+    turnstatus.deleteText(0, turnstatus.getLength());
+
     // send TurnList to Server
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
@@ -460,16 +484,16 @@ public class GameController {
     // Disable the button
     order.setDisable(true);
     commit.setDisable(true);
-    
+
     // receive turn status
     // Step-4 in Master playGame() in server
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
 
     // display the turn status in UI
-    for(String s:turnResult) {
-      turnstatus.appendText(s+"\n");
+    for (String s : turnResult) {
+      turnstatus.appendText(s + "\n");
     }
-    //remove the current turnlist
+    // remove the current turnlist
     myTurn.order_list.clear();
 
     // receive updated map
@@ -482,11 +506,13 @@ public class GameController {
     String gameStatus = receiveAndUpdateGameStatus();
 
     if (gameStatus.startsWith("Ready")) {
-      order.setDisable(false);
-      commit.setDisable(false);
       // ready for next turn
       // re-enable commit button
+      order.setDisable(false);
+      commit.setDisable(false);
     } else {
+      // end of game
+      GameStatus.appendText(" GAME OVER!!!");
     }
   }
 
@@ -515,9 +541,9 @@ public class GameController {
    * method to receive the game status and update the GUI
    */
   private String receiveAndUpdateGameStatus() {
-     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-     GameStatus.setText(gamestatus);
-     return gamestatus;
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    GameStatus.setText(gamestatus);
+    return gamestatus;
   }
 
 }
