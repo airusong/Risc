@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -323,13 +325,13 @@ public class GameController {
   TurnList myTurn;
 
   @FXML
-  private TextField player_info;
+  private Label player_info;
   @FXML
-  private ChoiceBox<String> playeraction;
+  private ComboBox<String> playeraction;
   @FXML
-  private ChoiceBox<String> from;
+  private ComboBox<String> from;
   @FXML
-  private ChoiceBox<String> to;
+  private ComboBox<String> to;
   @FXML
   private TextField unit;
   @FXML
@@ -416,24 +418,38 @@ public class GameController {
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
+  
   /*
-   * prompt if the user input negative unit
+   * Method to check if the user inputs for adding order is valid
    */
   @FXML
   boolean errorMessageShowing(){
-    boolean result=true;
-    if(getUnitNum()<0) {
-      errormessage.appendText(getUnitNum() + " is less than 0");
-      result=false;
+    boolean result = true;
+
+    // For move/attack order, make sure the "from" and "to" are entered
+    if((getAction().equals("Move") || getAction().equals("Attack"))
+       && (getSource() == null || getDestination() == null)) {
+      errormessage.appendText("Both source and destination is needed.");
+      result |= false;
+    }
+
+    // Now check if the unit number is positive and greater than zero
+    if(getUnitNum() <= 0) {
+      errormessage.appendText("Unit number must be positive & greater than zero");
+      result |= false;
     }
     return result;
   }
 
   @FXML
   void onAddOrderButton(MouseEvent event) {
-    boolean result=errorMessageShowing();
+    boolean result = errorMessageShowing();
+
+    // Clear the turn status box before adding new order
     turnstatus.deleteText(0,turnstatus.getLength());
-    if(result) {
+
+    if(result) { // if the inputs are valid
+      // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
