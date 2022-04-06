@@ -20,9 +20,15 @@ allprojects{
         clover 'org.openclover:clover:4.4.1'
     }
 }
+
+sourceCompatibility = '10'
+targetCompatibility = '10'
+
 clover{
     compiler {
         additionalArgs = "-g:lines,source,vars"
+        sourceCompatibility = '1.9'
+        targetCompatibility = '1.9'
     }
     report {
         xml=true
