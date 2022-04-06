@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -16,46 +16,55 @@ import java.net.URL;
 
 public class startGameButtonController {
 
-    @FXML
-    private Button startGame;
+  @FXML
+  private Button startGame;
 
+  @FXML
+  private TextArea connection_status;
 
-    @FXML
-    void onStartGameButton(MouseEvent event) {
+  @FXML
+  void onStartGameButton(MouseEvent event) {
 
-        try {
-            // build Connection with Server
-            System.out.println("Welcome to our game!");
-            int port = 8080;
-            String servername = "127.0.0.1";
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-            Client theClient = new Client(servername, port, input, System.out);
-            theClient.theTextPlayer.initiateGame();
-            System.out.println("Successfully connect to Server!");
+    try {
+      connection_status.clear();
+      // build Connection with Server
+      System.out.println("Welcome to our game!");
+      int port = 8080;
+      String servername = "127.0.0.1";
+      BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+      Client theClient = new Client(servername, port, input, System.out);
+      connection_status.appendText("Connected to server! Waiting for my identity...");
 
-            // switch to gamepage.fxml;
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
-                String player_color = theClient.theTextPlayer.identity;
-                System.out.println("The player's color is: " + player_color);
-                //primaryStage.setTitle("RISC GAME")
-                AnchorPane root = (AnchorPane) loader.load();
+      theClient.theTextPlayer.initiateGame();
+      System.out.println("Successfully connect to Server!");
 
-                GameController gameController = loader.getController();
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
+        String player_color = theClient.theTextPlayer.identity;
+        System.out.println("The player's color is: " + player_color);
+        // primaryStage.setTitle("RISC GAME")
+        AnchorPane root = (AnchorPane) loader.load();
+        // Scene scene = new Scene(root);
+        // stage.setScene(scene);
 
-                gameController.setPlayer(theClient.theTextPlayer);
-                gameController.initGame();
+        GameController gameController = loader.getController();
+        // String player_info = theClient.theTextPlayer.identity;
+        // gameController.setName(player_info);
 
-                startGame.getScene().setRoot(root);
+        gameController.setPlayer(theClient.theTextPlayer);
+        gameController.initGame();
 
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+        startGame.getScene().setRoot(root);
 
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+    } catch (Exception e) {
+      connection_status.setText("Server is not running. Please try later...");
     }
+  }
+
 }
 
 

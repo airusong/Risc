@@ -127,8 +127,8 @@
       <ComboBox fx:id="from" layoutX="494.0" layoutY="117.0" prefWidth="150.0" promptText="from territory" />
       <ComboBox fx:id="to" layoutX="494.0" layoutY="156.0" prefWidth="150.0" promptText="to territory" />
       <ComboBox fx:id="type" layoutX="494.0" layoutY="196.0" prefWidth="150.0" promptText="unit type" />
-      <TextField fx:id="GameStatus" editable="false" layoutX="9.0" layoutY="414.0" prefHeight="30.0" prefWidth="447.0" />
-      <TextArea fx:id="turnstatus" layoutX="22.0" layoutY="314.0" prefHeight="45.0" prefWidth="412.0" promptText="Turn Status" />
-      <TextArea fx:id="errormessage" layoutX="24.0" layoutY="371.0" prefHeight="41.0" prefWidth="409.0" />
+      <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="422.0" />
+      <TextArea fx:id="turnstatus" layoutX="23.0" layoutY="316.0" prefHeight="40.0" prefWidth="422.0" promptText="Turn Status" />
+      <TextArea fx:id="errormessage" layoutX="23.0" layoutY="361.0" prefHeight="41.0" prefWidth="422.0" />
    </children>
 </AnchorPane>

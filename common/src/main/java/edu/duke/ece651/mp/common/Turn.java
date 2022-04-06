@@ -43,4 +43,5 @@ public abstract class Turn implements Serializable {
     System.out.println(this.player_color);
   }
 
+
 }

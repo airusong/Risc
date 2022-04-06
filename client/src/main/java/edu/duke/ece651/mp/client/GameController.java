@@ -13,6 +13,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.V2Map;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,6 +26,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -35,6 +40,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.stage.Popup;
 
 public class GameController {
   // Stack panes holding all territory elements
@@ -138,14 +144,14 @@ public class GameController {
   // The first key in the string is from territory, and the second key is to
   // territory
   private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
- 
+
   // Text field to show game status
   @FXML
   private TextField GameStatus;
-  
+
   /**
    * Method to setup the map in the UI
-   *
+   * 
    */
   public void setUpMap() {
     V2Map<Character> initialMap = theTextPlayer.theMap;
@@ -364,7 +370,7 @@ public class GameController {
 
     // Step-2 of playGame()
     // Receive Game Status from server
-    theTextPlayer.receiveAndPrintGameStatus();
+    receiveAndUpdateGameStatus();
 
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
@@ -441,44 +447,50 @@ public class GameController {
   public String getUnitType(){
       return  type.getValue();
   }
-  public int getUnitNum() {
+
+  public int getUnitNum() throws NumberFormatException {
     return Integer.parseInt(unit.getText());
   }
 
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
+
   /*
-   * prompt if the user input negative unit
+   * Method to check if the user inputs for adding order is valid
    */
   @FXML
-  boolean errorMessageShowing(){
+  boolean errorMessageShowing() {
+    // Clear any previous error message
+    errormessage.clear();
+
     boolean result = true;
 
     // For move/attack order, make sure the "from" and "to" are entered
-    if((getAction().equals("Move") || getAction().equals("Attack"))
-            && (getSource() == null || getDestination() == null)) {
+    if ((getAction().equals("Move") || getAction().equals("Attack"))
+        && (getSource() == null || getDestination() == null)) {
       errormessage.appendText("Both source and destination is needed.");
-      result = false;
+      result &= false;
     }
 
     // Now check if the unit number is positive and greater than zero
-    if(getUnitNum() <= 0) {
-      errormessage.appendText("Unit number must be positive & greater than zero");
-      result = false;
+    try {
+      if (getUnitNum() <= 0) {
+        errormessage.appendText("Unit number must be positive & greater than zero");
+        result &= false;
+      }
+    } catch (NumberFormatException e) {
+        errormessage.appendText("Unit number must be provided.");
+        result &= false;
     }
     return result;
   }
-
 
   @FXML
   void onAddOrderButton(MouseEvent event) {
     boolean result = errorMessageShowing();
 
-    // Clear the turn status box before adding new order
-    turnstatus.deleteText(0,turnstatus.getLength());
-
-    if(result) { // if the inputs are valid
+    if (result) { // if the inputs are valid
       // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
@@ -495,20 +507,19 @@ public class GameController {
     }
   }
 
-
   @FXML
   void onCommitButton(MouseEvent event) {
-    if(errormessage != null){
-      errormessage.clear();
-    }
+    // Clear the turn status box before committing new turn
+    turnstatus.deleteText(0, turnstatus.getLength());
+
     // send TurnList to Server
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
     theTextPlayer.connectionToMaster.sendToServer(myTurn);
+    GameStatus.setText("Turn sent to server. Waiting for turn result...");
     System.out.println("Sent the TurnList");
 
     // Disable the button
-    // TO-DO
     order.setDisable(true);
     commit.setDisable(true);
 
@@ -517,26 +528,35 @@ public class GameController {
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
 
     // display the turn status in UI
-    for(String s:turnResult) {
-      turnstatus.appendText(s+"\n");
+    for (String s : turnResult) {
+      turnstatus.appendText(s + "\n");
     }
-    //remove the current turnlist
+    // remove the current turnlist
     myTurn.order_list.clear();
+
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
     updateUIMap();
+    // updateBox
+    setActionBox();
+    setSourceBox();
+    setDestinationBox();
+    setUnitTypeBox();
+
 
     // receive game status
     // Step-2 in Master playGame() in server
-    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    String gameStatus = receiveAndUpdateGameStatus();
 
-    if (gamestatus.startsWith("Ready")) {
-      order.setDisable(false);
-      commit.setDisable(false);
+    if (gameStatus.startsWith("Ready")) {
       // ready for next turn
       // re-enable commit button
+      order.setDisable(false);
+      commit.setDisable(false);
     } else {
+      // end of game
+      GameStatus.appendText(" GAME OVER!!!");
     }
   }
 
@@ -547,7 +567,6 @@ public class GameController {
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryUnits.keySet()) {
       // Update number of units
-      // To Do: just updat ALEVEL unit now 
       TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit("ALEVEL")));
 
       // Update color of territory
@@ -566,10 +585,9 @@ public class GameController {
    * method to receive the game status and update the GUI
    */
   private String receiveAndUpdateGameStatus() {
-     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-     GameStatus.setText(gamestatus);
-     return gamestatus;
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    GameStatus.setText(gamestatus);
+    return gamestatus;
   }
 
 }
-

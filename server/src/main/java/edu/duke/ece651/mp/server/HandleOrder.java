@@ -82,15 +82,12 @@ public class HandleOrder<T> {
         attack_order_list = valid_attack_order_list;
 
         // Q - Seems the valid_attack_order_list already sorted
-        // ArrayList<HashMap<String, ArrayList<Turn>>> res = new
-        // ArrayList<HashMap<String, ArrayList<Turn>>>();
-
+        ArrayList<HashMap<String, ArrayList<Turn>>> res = new ArrayList<HashMap<String, ArrayList<Turn>>>();
         // sort attack turns for the same player. & Update the tempMap.
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
             // System.out.println("sort attack orders: ");
             TurnList curr = valid_attack_order_list.get(i);
-            // HashMap<String, ArrayList<Turn>> temp = new HashMap<String,
-            // ArrayList<Turn>>();
+            HashMap<String, ArrayList<Turn>> temp = new HashMap<String,ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
                 AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
                 // Generate/Update the temp map
@@ -99,32 +96,30 @@ public class HandleOrder<T> {
                 int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type)
                         - move_units;
                 tempMap.updateTempMap(curr_turn.getSource(), move_unit_type, new_units);
-                /*
-                 * String des = curr_turn.getDestination();
-                 * if (temp.get(des) != null) {
-                 * temp.get(des).add(curr_turn);
-                 * }
-                 * else{
-                 * ArrayList<Turn> newTurnList = new ArrayList<Turn>();
-                 * newTurnList.add(curr_turn);
-                 * temp.put(des, newTurnList);
-                 * }
-                 */
+                String des = curr_turn.getDestination();
+                if (temp.get(des) != null) {
+                    temp.get(des).add(curr_turn);
+                }
+                else{
+                 ArrayList<Turn> newTurnList = new ArrayList<Turn>();
+                 newTurnList.add(curr_turn);
+                 temp.put(des, newTurnList);
+                }
             }
-            // res.add(temp);
+            res.add(temp);
         }
+
+         for(HashMap<String, ArrayList<Turn>> hm: res){
+             for (ArrayList<Turn> t : hm.values()) {
+                handleSingleAttackOrder(t, tempMap);
+                System.out.print("To Do: Handle Single Attack Order");
+             }
+         }
         /*
-         * for(HashMap<String, ArrayList<Turn>> hm: res){
-         * for (ArrayList<Turn> t : hm.values()) {
-         * handleSingleAttackOrder(t, tempMap);
-         * System.out.print("To Do: Handle Single Attack Order");
-         * }
-         * }
-         */
         for (TurnList hm : valid_attack_order_list) {
             handleSingleAttackOrder(hm.order_list, tempMap);
             System.out.print("To Do: Handle Single Attack Order");
-        }
+        }*/
 
     }
 
@@ -164,7 +159,7 @@ public class HandleOrder<T> {
 
     public void handleSingleAttackOrder(ArrayList<Turn> attackOrder, Map<T> tempMap) {
         String attackResult = "";
-        //attackResult += resolveCombat(attackOrder, tempMap);
+        attackResult += resolveCombat(attackOrder, tempMap);
         turnStatus.add(attackResult);
     }
 
@@ -173,90 +168,86 @@ public class HandleOrder<T> {
      */
 
     // To Do: The Algorithm of combat has to change.
+    private String resolveCombat(ArrayList<Turn> attackOrder, Map<T> tempMap) {
 
-    /*
-     * private String resolveCombat(ArrayList<Turn> attackOrder, Map<T> tempMap) {
-     * 
-     * String combatResult;
-     * int attacking_units = 0;
-     * String attackerTerritory = "";
-     * String defenderTerritory = "";
-     * String player_color = "";
-     * 
-     * for(Turn t: attackOrder){
-     * attacking_units += t.getNumber(); // add up units
-     * attackerTerritory = t.getSource(); // any Source
-     * defenderTerritory = t.getDestination(); // same Destination
-     * player_color = t.getPlayerColor();
-     * //theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1)); //
-     * reduce #units in all attackerTerritory
-     * }
-     * 
-     * Territory<T> attacker = tempMap.getAllTerritories().get(attackerTerritory);
-     * Territory<T> defender = tempMap.getAllTerritories().get(defenderTerritory);
-     * int defending_units = defender.getUnit();
-     * 
-     * Random attackerDice = new Random();
-     * Random defenderDice = new Random();
-     * int diceSides = 20;
-     * System.out.println("Starting combat...");
-     * while (true) { // start combat
-     * 
-     * // step-1: role a 20 sided twice for both players
-     * int attackerDiceVal = attackerDice.nextInt(diceSides);
-     * int defenderDiceVal = defenderDice.nextInt(diceSides);
-     * 
-     * // step-2: compare dice values. Lower loses 1 unit
-     * String loserTerr;
-     * int loserTerrRemainingUnits;
-     * if (attackerDiceVal <= defenderDiceVal) { // attacker lost (in a tie,
-     * defender wins)
-     * loserTerr = attackerTerritory;
-     * attacking_units--;
-     * loserTerrRemainingUnits = attacking_units;
-     * }
-     * 
-     * else { // (attackerDiceVal > defenderDiceVal) - defender lost
-     * loserTerr = defenderTerritory;
-     * defending_units--;
-     * loserTerrRemainingUnits = defending_units;
-     * }
-     * 
-     * // step-3: check if the loser territory ran out of units
-     * // if no, continue. If yes, update map with result
-     * if (loserTerrRemainingUnits > 0) {
-     * continue;
-     * } else {
-     * // attacker territory lost the units no matter what
-     * // theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) *
-     * (-1)); // -1 for making it
-     * // negative
-     * 
-     * int unitChange;
-     * if (loserTerr == attackerTerritory) {
-     * //System.out.println("defending_units is: " + defending_units);
-     * //System.out.println("defenders units is: " + defender.getUnit());
-     * unitChange = defending_units - defender.getUnit();
-     * tempMap.updateTerritoryInMap(defenderTerritory, unitChange);
-     * combatResult = "Defender won!";
-     * }
-     * 
-     * else { // loserTerr == defenderTerritory
-     * //System.out.println("defending_units is: " + defending_units);
-     * //System.out.println("defenders units is: " + defender.getUnit());
-     * unitChange = attacking_units - defender.getUnit();
-     * tempMap.updateTerritoryInMap(defenderTerritory, unitChange, player_color);
-     * combatResult = "Attacker won!";
-     * }
-     * break;
-     * }
-     * }
-     * // Update True Map
-     * this.theMap = tempMap;
-     * return combatResult;
-     * 
-     * }
-     */
+        String combatResult;
+        int attacking_units = 0;
+        String attackerTerritory = "";
+        String defenderTerritory = "";
+        String player_color = "";
+
+        for(Turn temp: attackOrder){
+            AttackTurn t = (AttackTurn)temp;
+            attacking_units += t.getNumber(); // add up units
+            attackerTerritory = t.getSource(); // any Source
+            defenderTerritory = t.getDestination(); // same Destination
+            player_color = t.getPlayerColor();
+            //theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1)); // reduce #units in all attackerTerritory
+        }
+
+        Territory<T> attacker = tempMap.getAllTerritories().get(attackerTerritory);
+        Territory<T> defender = tempMap.getAllTerritories().get(defenderTerritory);
+        int defending_units = defender.getUnit("ALEVEL");
+
+        Random attackerDice = new Random();
+        Random defenderDice = new Random();
+        int diceSides = 20;
+        System.out.println("Starting combat...");
+        while (true) { // start combat
+
+            // step-1: role a 20 sided twice for both players
+            int attackerDiceVal = attackerDice.nextInt(diceSides);
+            int defenderDiceVal = defenderDice.nextInt(diceSides);
+
+            // step-2: compare dice values. Lower loses 1 unit
+            String loserTerr;
+            int loserTerrRemainingUnits;
+            if (attackerDiceVal <= defenderDiceVal) { // attacker lost (in a tie, defender wins)
+                loserTerr = attackerTerritory;
+                attacking_units--;
+                loserTerrRemainingUnits = attacking_units;
+            }
+
+            else { // (attackerDiceVal > defenderDiceVal) - defender lost
+                loserTerr = defenderTerritory;
+                defending_units--;
+                loserTerrRemainingUnits = defending_units;
+            }
+
+            // step-3: check if the loser territory ran out of units
+            // if no, continue. If yes, update map with result
+            if (loserTerrRemainingUnits > 0) {
+                continue;
+            } else {
+                // attacker territory lost the units no matter what
+                // theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) * (-1)); // -1 for making it
+                // negative
+
+                int unitChange;
+                if (loserTerr == attackerTerritory) {
+                    //System.out.println("defending_units is: " + defending_units);
+                    //System.out.println("defenders units is: " + defender.getUnit());
+                    unitChange = defending_units - defender.getUnit("ALEVEL");
+                    tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL",unitChange);
+                    combatResult = "Defender won!";
+                }
+
+                else { // loserTerr == defenderTerritory
+                    //System.out.println("defending_units is: " + defending_units);
+                    //System.out.println("defenders units is: " + defender.getUnit());
+                    unitChange = attacking_units - defender.getUnit("ALEVEL");
+                    tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL", unitChange, player_color);
+                    combatResult = "Attacker won!";
+                }
+                break;
+            }
+        }
+        // Update True Map
+        this.theMap = tempMap;
+        return combatResult;
+
+    }
+
 
     /**
      * Method to decrease one unit from each territory Used after each turn
