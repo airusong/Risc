@@ -7,7 +7,7 @@ public class AttackTurn extends Turn {
   public UnitType unit_type;
 
   public AttackTurn(String fromTerritory, String toTerritory, UnitType unit_type, int num_unit, String player_color) {
-    super("Move", num_unit, player_color);
+    super("Attack", num_unit, player_color);
     this.fromTerritory = fromTerritory;
     this.toTerritory = toTerritory;
     this.unit_type = unit_type;

@@ -367,6 +367,7 @@ public class GameController {
     theTextPlayer.receiveAndPrintGameStatus();
 
     setName();
+    myTurn = new TurnList(theTextPlayer.identity);
     setActionBox();
     setSourceBox();
     setDestinationBox();
@@ -452,29 +453,48 @@ public class GameController {
    */
   @FXML
   boolean errorMessageShowing(){
-    boolean result=true;
-    if(getUnitNum()<0) {
-      errormessage.appendText(getUnitNum() + " is less than 0");
-      result=false;
+    boolean result = true;
+
+    // For move/attack order, make sure the "from" and "to" are entered
+    if((getAction().equals("Move") || getAction().equals("Attack"))
+            && (getSource() == null || getDestination() == null)) {
+      errormessage.appendText("Both source and destination is needed.");
+      result = false;
+    }
+
+    // Now check if the unit number is positive and greater than zero
+    if(getUnitNum() <= 0) {
+      errormessage.appendText("Unit number must be positive & greater than zero");
+      result = false;
     }
     return result;
   }
 
+
   @FXML
   void onAddOrderButton(MouseEvent event) {
-    boolean result=errorMessageShowing();
+    boolean result = errorMessageShowing();
+
+    // Clear the turn status box before adding new order
     turnstatus.deleteText(0,turnstatus.getLength());
-    if(result) {
+
+    if(result) { // if the inputs are valid
+      // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
+        //newOrder.printTurn();
         myTurn.addTurn(newOrder);
       } else if (getAction().equals("Attack")) {
         Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
+        //newOrder.printTurn();
         myTurn.addTurn(newOrder);
       }
+      // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
+      GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
     }
   }
+
 
   @FXML
   void onCommitButton(MouseEvent event) {

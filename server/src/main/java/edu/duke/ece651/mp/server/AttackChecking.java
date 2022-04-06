@@ -29,8 +29,8 @@ public class AttackChecking<T> {
     Territory<T> defender = map.getAllTerritories().get(destination);
 
     attackStatus = player_color + ": Attack order from "
-        + source + " into " + destination + " with " + unit_type + " " +
-        + attackingunits + " units was ";
+        + source + " into " + destination + " with " +
+        + attackingunits + " " + unit_type + " units was ";
 
     // check if the source belongs to the attacker
     if (!attacker.getColor().equals(player_color)) {

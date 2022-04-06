@@ -21,8 +21,6 @@ allprojects{
     }
 }
 
-sourceCompatibility = '10'
-targetCompatibility = '10'
 
 clover{
     compiler {

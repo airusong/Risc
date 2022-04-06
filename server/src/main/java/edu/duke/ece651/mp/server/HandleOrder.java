@@ -37,6 +37,7 @@ public class HandleOrder<T> {
     public void handleAllMoveOrder() {
         for (int i = 0; i < all_order_list.size(); i++) {
             TurnList curr = all_order_list.get(i);
+            System.out.println("The length of the TurnList is:" + curr.getListLength());
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = curr.order_list.get(j);
                 if (curr_turn.getTurnType().equals("Move")) {
