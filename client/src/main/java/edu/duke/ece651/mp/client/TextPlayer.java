@@ -4,16 +4,9 @@ import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.ObjectInputFilter.Status;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.V2Map;
 
 public class TextPlayer {
@@ -129,6 +122,7 @@ public class TextPlayer {
     return myTurn;
   }
   */
+  
   /**
    * method to read only the order type from the player
    */

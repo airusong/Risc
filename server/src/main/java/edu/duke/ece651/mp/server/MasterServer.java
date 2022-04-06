@@ -3,22 +3,15 @@ package edu.duke.ece651.mp.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.net.Socket;
-import java.util.ArrayList;
-import edu.duke.ece651.mp.common.V2Map;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
 import edu.duke.ece651.mp.common.Unit;
 
@@ -66,8 +59,6 @@ public class MasterServer {
 
       t.start();
       t.join();
-      // String rev = (String)pth.obj;
-      // System.out.print(rev);
     }
     System.out.println("Server is connected to ALL the players.");
   }

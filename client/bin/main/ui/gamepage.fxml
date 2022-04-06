@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,23 +14,23 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
       <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.20001220703125" minWidth="10.0" prefWidth="104.20001220703125" />
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.20001220703125" minWidth="10.0" prefWidth="104.20001220703125" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.20001220703125" minWidth="10.0" prefWidth="41.79998779296875" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="61.000006103515624" minHeight="10.0" prefHeight="37.799993896484374" vgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.000006103515624" minHeight="10.0" prefHeight="37.799993896484374" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="14.399986267089844" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="33.600013732910156" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="41.00000610351562" minHeight="10.0" prefHeight="33.600013732910156" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="46.79999389648438" minHeight="10.0" prefHeight="46.00000610351563" vgrow="SOMETIMES" />
-        </rowConstraints>
+         </rowConstraints>
          <children>
             <StackPane id="Territory5" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="4">
                <children>
@@ -97,7 +99,7 @@
                </children>
             </StackPane>
          </children>
-       </GridPane>
+      </GridPane>
       <Line fx:id="Line1to4" endX="14.800006866455078" endY="-87.4000015258789" layoutX="14.0" layoutY="139.0" startX="14.800006866455078" startY="114.20001220703125" visible="false" />
       <Line fx:id="Line4to6" endX="261.60003662109375" endY="86.60000610351562" layoutX="24.0" layoutY="149.0" startX="93.19999694824219" startY="134.80001831054688" visible="false" />
       <Line fx:id="Line2to4" endX="92.40000915527344" endY="-39.400001525878906" layoutX="24.0" layoutY="149.0" startX="14.400012969970703" startY="104.20001220703125" visible="false" />
@@ -113,17 +115,19 @@
       <Line fx:id="Line1to6" endX="-24.599990844726562" endY="44.399993896484375" layoutX="277.0" layoutY="168.0" startX="-216.8000030517578" startY="-116.9000015258789" visible="false" />
       <Line fx:id="Line2to5" endX="-75.39997863769531" endY="-68.00000762939453" layoutX="287.0" layoutY="178.0" startX="133.0" startY="75.20001220703125" visible="false" />
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
-      <ChoiceBox fx:id="playeraction" layoutX="393.0" layoutY="92.0" prefWidth="150.0" />
-      <Button fx:id="commit" layoutX="394.0" layoutY="336.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
-      <!--<AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />-->
-      <TextField fx:id="player_info" layoutX="394.0" layoutY="52.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " />
-      <TextField fx:id="unit" layoutX="394.0" layoutY="252.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
+      <Button fx:id="commit" layoutX="496.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
+      <AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />
+      <Label fx:id="player_info" layoutX="494.0" layoutY="44.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " />
+      <TextField fx:id="unit" layoutX="496.0" layoutY="240.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
          <font>
             <Font size="8.0" />
          </font></TextField>
-      <Button fx:id="order" layoutX="433.0" layoutY="293.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
-      <ChoiceBox fx:id="from" layoutX="393.0" layoutY="129.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="to" layoutX="393.0" layoutY="168.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="type" layoutX="394.0" layoutY="210.0" prefWidth="150.0" />
+      <Button fx:id="order" layoutX="533.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
+      <ComboBox fx:id="playeraction" layoutX="494.0" layoutY="77.0" prefWidth="150.0" promptText="select a action" />
+      <ComboBox fx:id="from" layoutX="494.0" layoutY="117.0" prefWidth="150.0" promptText="from territory" />
+      <ComboBox fx:id="to" layoutX="494.0" layoutY="156.0" prefWidth="150.0" promptText="to territory" />
+      <ComboBox fx:id="type" layoutX="494.0" layoutY="196.0" prefWidth="150.0" promptText="unit type" />
+      <TextArea fx:id="turnstatus" layoutX="22.0" layoutY="314.0" prefHeight="45.0" prefWidth="412.0" promptText="Turn Status" />
+      <TextArea fx:id="errormessage" layoutX="24.0" layoutY="371.0" prefHeight="41.0" prefWidth="409.0" />
    </children>
 </AnchorPane>

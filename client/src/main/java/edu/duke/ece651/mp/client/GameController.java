@@ -138,7 +138,11 @@ public class GameController {
   // The first key in the string is from territory, and the second key is to
   // territory
   private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
-
+ 
+  // Text field to show game status
+  @FXML
+  private TextField GameStatus;
+  
   /**
    * Method to setup the map in the UI
    *
@@ -190,7 +194,9 @@ public class GameController {
       for (String terrName : terrList) {
         terrBoxes.get(i).setFill(terrColor);
         terrNames.get(i).setText(terrName);
-        //terrUnits.get(i).setText(Integer.toString(allTerritories.get(terrName).getUnit(terrName)) + ":" + allTerritories.get(terrName).getUnit(terrName)));
+        // To Do: Display different number of various UnitType
+        // Now just display Alevel
+        terrUnits.get(i).setText("ALEVEL:" + allTerritories.get(terrName).getUnit(UnitType.ALEVEL));
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
         TerritoryUnits.put(terrName, terrUnits.get(i));
@@ -324,7 +330,7 @@ public class GameController {
   ObservableList<String> destination_list = FXCollections.observableArrayList();
   ObservableList<UnitType> unitType_list = FXCollections.observableArrayList();
 
-  TurnList myTurn = new TurnList();
+  TurnList myTurn;
 
   @FXML
   private Label player_info;
@@ -466,7 +472,6 @@ public class GameController {
         Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
         myTurn.addTurn(newOrder);
       }
-      // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
     }
   }
@@ -476,7 +481,6 @@ public class GameController {
     if(errormessage != null){
       errormessage.clear();
     }
-
     // send TurnList to Server
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
@@ -487,12 +491,12 @@ public class GameController {
     // TO-DO
     order.setDisable(true);
     commit.setDisable(true);
+
     // receive turn status
     // Step-4 in Master playGame() in server
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
+
     // display the turn status in UI
-    // TO-DO
-    //turnstatus.deleteText(0,turnstatus.getLength());
     for(String s:turnResult) {
       turnstatus.appendText(s+"\n");
     }
@@ -506,8 +510,6 @@ public class GameController {
     // receive game status
     // Step-2 in Master playGame() in server
     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-    // display the game result
-    // TO-DO
 
     if (gamestatus.startsWith("Ready")) {
       order.setDisable(false);
@@ -524,8 +526,30 @@ public class GameController {
   private void updateUIMap() {
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryUnits.keySet()) {
-      //TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+      // Update number of units
+      // To Do: just updat ALEVEL unit now 
+      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit(UnitType.ALEVEL)));
+
+      // Update color of territory
+      String player_color = allTerritories.get(terrName).getColor();
+      Color terrColor = Color.WHITE; // default
+      if (player_color.equals("Green")) {
+        terrColor = Color.GREEN;
+      } else if (player_color.equals("Blue")) {
+        terrColor = Color.BLUE;
+      }
+      TerritoryBoxes.get(terrName).setFill(terrColor);
     }
   }
 
+  /**
+   * method to receive the game status and update the GUI
+   */
+  private String receiveAndUpdateGameStatus() {
+     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+     GameStatus.setText(gamestatus);
+     return gamestatus;
+  }
+
 }
+

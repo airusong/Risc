@@ -7,7 +7,6 @@ import edu.duke.ece651.mp.common.*;
 public class AttackChecking<T> {
   String attackStatus;
 
-
   public ArrayList<AttackTurn> checkMyRule(Map<T> map, ArrayList<AttackTurn> attackOrder) {
     ArrayList<AttackTurn> ans = new ArrayList<AttackTurn>();
     for (AttackTurn t : attackOrder) {
@@ -20,17 +19,17 @@ public class AttackChecking<T> {
   }
 
   public boolean checkMyRule(Map<T> map, AttackTurn attackOrder) {
-    int attackingunits = attackOrder.getNumber();
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();
     UnitType unit_type = attackOrder.getUnitType();
+    int attackingunits = attackOrder.getNumber();
     String player_color = attackOrder.getPlayerColor();
 
     Territory<T> attacker = map.getAllTerritories().get(source);
     Territory<T> defender = map.getAllTerritories().get(destination);
 
     attackStatus = player_color + ": Attack order from "
-        + source + " into " + destination + " with "
+        + source + " into " + destination + " with " + unit_type + " " +
         + attackingunits + " units was ";
 
     // check if the source belongs to the attacker

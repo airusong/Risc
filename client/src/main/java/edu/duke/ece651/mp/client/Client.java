@@ -5,26 +5,10 @@ package edu.duke.ece651.mp.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.OwnerChecking;
-import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.V2Map;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+
 
 public class Client{
   final TextPlayer theTextPlayer;
@@ -36,7 +20,6 @@ public class Client{
       throws IOException, UnknownHostException {
     this.theTextPlayer = new TextPlayer(servername, port, inputReader, out);
   }
-
 
 
   public TextPlayer getTheTextPlayer() {

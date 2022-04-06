@@ -11,8 +11,10 @@ public interface Map<T> {
   public void updateMap(String dep, String des, UnitType unit_type, int n1, int n2);
   public void updateTempMap(String dep, UnitType unit_type, int n);
 
-  //public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor);
+  public void updateTerritoryInMap(String territoryName, UnitType unit_type, int unitChage, String newOwnerColor);
   public void updateTerritoryInMap(String territoryName, UnitType unit_type, int unitChage);
 
   public void updateMapbyOneUnit();
+
+  // public void updateTerritoryInMap(String territoryName, HashMap<UnitType, Integer> unit_change, String newOwnerColor);
 }

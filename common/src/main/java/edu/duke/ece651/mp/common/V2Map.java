@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import edu.duke.ece651.mp.common.MoveChecking;
 
 import static edu.duke.ece651.mp.common.UnitType.*;
 
@@ -16,7 +15,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public ArrayList<String> players_colors;
 
   /**
-   * Constructor construct a V1Map specified with Territoris in it
+   * Constructor construct a V2Map specified with Territoris in it
    * 
    * @param hashmap myTerritories, the key is the territory itself and the value
    *                is the list of adjancent territories
@@ -49,7 +48,6 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public ArrayList<String> getPlayerColors() {
     return players_colors;
   }
-
 
   /**
    * function used in constructor to initialize the hashmap
@@ -92,32 +90,32 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    * function used to initialize the Resource information in the map
    **/
   protected void addResources() {
-    myTerritories.get("Narnia").addResource(new Resource("food",10));
-    myTerritories.get("Narnia").addResource(new Resource("tech",20));
-    myTerritories.get("Midemio").addResource(new Resource("food",20));
-    myTerritories.get("Midemio").addResource(new Resource("tech",10));
-    myTerritories.get("Oz").addResource(new Resource("food",20));
-    myTerritories.get("Oz").addResource(new Resource("tech",20));
+    myTerritories.get("Narnia").addResource(new Resource("food", 10));
+    myTerritories.get("Narnia").addResource(new Resource("tech", 20));
+    myTerritories.get("Midemio").addResource(new Resource("food", 20));
+    myTerritories.get("Midemio").addResource(new Resource("tech", 10));
+    myTerritories.get("Oz").addResource(new Resource("food", 20));
+    myTerritories.get("Oz").addResource(new Resource("tech", 20));
 
-    myTerritories.get("Elantris").addResource(new Resource("food",20));
-    myTerritories.get("Elantris").addResource(new Resource("tech",15));
-    myTerritories.get("Scadnal").addResource(new Resource("food",15));
-    myTerritories.get("Scadnal").addResource(new Resource("tech",15));
-    myTerritories.get("Roshar").addResource(new Resource("food",15));
-    myTerritories.get("Roshar").addResource(new Resource("tech",20));
+    myTerritories.get("Elantris").addResource(new Resource("food", 20));
+    myTerritories.get("Elantris").addResource(new Resource("tech", 15));
+    myTerritories.get("Scadnal").addResource(new Resource("food", 15));
+    myTerritories.get("Scadnal").addResource(new Resource("tech", 15));
+    myTerritories.get("Roshar").addResource(new Resource("food", 15));
+    myTerritories.get("Roshar").addResource(new Resource("tech", 20));
   }
 
   /**
    * function used to initialize the unit information in the map
    **/
   protected void addUnits() {
-    myTerritories.get("Narnia").addUnit(new Unit(ALEVEL,20));
-    myTerritories.get("Midemio").addUnit(new Unit(ALEVEL,20));
-    myTerritories.get("Oz").addUnit(new Unit(ALEVEL,20));
+    myTerritories.get("Narnia").addUnit(new Unit(ALEVEL, 20));
+    myTerritories.get("Midemio").addUnit(new Unit(ALEVEL, 20));
+    myTerritories.get("Oz").addUnit(new Unit(ALEVEL, 20));
 
-    myTerritories.get("Elantris").addUnit(new Unit(ALEVEL,20));
-    myTerritories.get("Scadnal").addUnit(new Unit(ALEVEL,20));
-    myTerritories.get("Roshar").addUnit(new Unit(ALEVEL,20));
+    myTerritories.get("Elantris").addUnit(new Unit(ALEVEL, 20));
+    myTerritories.get("Scadnal").addUnit(new Unit(ALEVEL, 20));
+    myTerritories.get("Roshar").addUnit(new Unit(ALEVEL, 20));
   }
 
   /**
@@ -133,7 +131,6 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     // otehr fields go here
     s.writeObject(players_colors);
-    // s.writeObject(moveChecker);
   }
 
   /**
@@ -176,82 +173,110 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /*
-  method to get units' types of specific territory
-  @input String: the name of territory
-  @return ArrayList<String> consist of units' types
-  */
-  public ArrayList<UnitType> getTerritoryUnitType(String currTerritory){
+   * method to get units' types of specific territory
+   * 
+   * @input String: the name of territory
+   * 
+   * @return ArrayList<String> consist of units' types
+   */
+  public ArrayList<UnitType> getTerritoryUnitType(String currTerritory) {
     ArrayList<UnitType> unit_type_list = new ArrayList<UnitType>();
     for (Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
       Territory<T> terr = entry.getValue();
-      if(terr.getName().equals(currTerritory)){
+      if (terr.getName().equals(currTerritory)) {
         ArrayList<Unit> unit_list = terr.getUnitList();
-          for(Unit unit: unit_list){
-            unit_type_list.add(unit.getUnitType());
-            //System.out.println("The unit type is :" + unit.getUnitType());
-          }
+        for (Unit unit : unit_list) {
+          unit_type_list.add(unit.getUnitType());
+          // System.out.println("The unit type is :" + unit.getUnitType());
+        }
       }
     }
     return unit_type_list;
   }
 
-  /* Update Map according to move order */
+  /*
+   * Update Map according to move order
+   * 
+   * @input dep: start of Moving Action
+   * des: destination of Moving Action
+   * unit_type: moving units' type
+   * n1: #unit in dep
+   * n2: #unit in des
+   */
   public void updateMap(String dep, String des, UnitType unit_type, int n1, int n2) {
     Territory<T> t1 = myTerritories.get(dep);
     t1.updateUnit(unit_type, n1);
     myTerritories.put(dep, t1);
 
     Territory<T> t2 = myTerritories.get(des);
-    t2.updateUnit(unit_type,n2);
+    t2.updateUnit(unit_type, n2);
     myTerritories.put(des, t2);
   }
 
-  
-  public void updateTempMap(String dep, UnitType unit_type, int n){
+  /* Update TempMap for moving all units before attacking */
+  public void updateTempMap(String dep, UnitType unit_type, int n) {
     Territory<T> t = myTerritories.get(dep);
     t.updateUnit(unit_type, n);
   }
+
+  /* Update Territory in the Map, including changing the owner of the Territory */
   
-  
-  public void updateTerritoryInMap(String territoryName, UnitType unitType, int unitChage, String newOwnerColor) {
+  public void updateTerritoryInMap(String territoryName, UnitType unitType, int unitChange, String newOwnerColor) {
     Territory<T> terr = myTerritories.get(territoryName);
     int currUnits = terr.getUnit(unitType);
-    int newUnits = currUnits + unitChage;
+    int newUnits = currUnits + unitChange;
     terr.updateUnit(unitType, newUnits);
     if (newOwnerColor != "Unchanged") {
       terr.updateColor(newOwnerColor);
     }
     myTerritories.put(territoryName, terr);
   }
-  
-  public void updateTerritoryInMap(String territoryName, UnitType unitType, int unitChage) {
-    updateTerritoryInMap(territoryName, unitType, unitChage, "Unchanged");
+
+
+  /* Update Territory in the Map, including changing the owner of the Territory */
+  // For the Use of updating combate result.
+  public void updateTerritoryInMap(String territoryName, HashMap<UnitType, Integer> unit_change, String newOwnerColor) {
+    Territory<T> terr = myTerritories.get(territoryName);
+    for(Map.Entry<UnitType, Integer> set: unit_change.entrySet()){
+      int unitChange = set.getValue();
+      int currUnits = terr.getUnit(set.getKey());
+      int newUnits = currUnits + unitChange;
+      terr.updateUnit(set.getKey(), newUnits);
+    }
+    if (newOwnerColor != "Unchanged") {
+      terr.updateColor(newOwnerColor);
+    }
+    myTerritories.put(territoryName, terr);
   }
 
+  
+  public void updateTerritoryInMap(String territoryName, UnitType unitType, int unitChange) {
+    updateTerritoryInMap(territoryName, unitType, unitChange, "Unchanged");
+  }
+  
 
-  // Increase #Units after fighting 
+  // Increase #Units after fighting - add one basic unit - ALEVEL
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
     int basic_unit_num = 0;
     for (Map.Entry<String, Territory<T>> set : myT.entrySet()) {
       Territory<T> temp = set.getValue();
       // just add One basic Unit to Territory
-      for(Unit unit: temp.getUnitList()){
-        if(unit.getUnitType().equals("Alevel")){
+      for (Unit unit : temp.getUnitList()) {
+        if (unit.getUnitType().equals(ALEVEL)) {
           basic_unit_num = unit.getUnitNum();
         }
       }
       temp.updateUnit(ALEVEL, basic_unit_num + 1);
       myTerritories.put(temp.getName(), temp);
     }
-    System.out.println("End of turn: Added one unit to each territory.");
+    System.out.println("End of turn: Added one basic unit to each territory.");
   }
-  
+
   public ArrayList<String> getPlayerTerritories(String player_color) {
     HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);
     return terrList;
-
   }
 
 }
