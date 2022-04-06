@@ -15,14 +15,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -30,8 +35,16 @@ import javax.print.attribute.HashPrintServiceAttributeSet;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 
 public class GameController {
+  @FXML
+  public TextArea turnstatus;
+  @FXML
+  public TextArea errormessage;
   // Stack panes holding all territory elements
   @FXML
   private StackPane Territory1;
@@ -136,11 +149,10 @@ public class GameController {
 
   /**
    * Method to setup the map in the UI
-   * 
-   * @param player
+   *
    */
-  public void setUpMap(TextPlayer player) {
-    V2Map<Character> initialMap = player.theMap;
+  public void setUpMap() {
+    V2Map<Character> initialMap = theTextPlayer.theMap;
     setUpTerritories(initialMap);
   }
 
@@ -155,6 +167,8 @@ public class GameController {
     setAdjacency(initialMap);
 
   }
+
+  ArrayList<StringProperty> terrUnitsList = new ArrayList<>();
 
   /**
    * Method to initialize the hashmaps
@@ -184,7 +198,7 @@ public class GameController {
       for (String terrName : terrList) {
         terrBoxes.get(i).setFill(terrColor);
         terrNames.get(i).setText(terrName);
-        //terrUnits.get(i).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+        //terrUnits.get(i).setText(Integer.toString(allTerritories.get(terrName).getUnit(terrName)) + ":" + allTerritories.get(terrName).getUnit(terrName)));
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
         TerritoryUnits.put(terrName, terrUnits.get(i));
@@ -193,7 +207,7 @@ public class GameController {
     }
   }
 
-    /**
+  /**
    * Method to initialize the lists of Java FX components
    */
   private void initLists() {
@@ -238,7 +252,6 @@ public class GameController {
       // for each adjacent territory
       for (String adjTerr : adjacentTerr) {
         TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
-        ;
       }
     }
   }
@@ -313,7 +326,6 @@ public class GameController {
 
   }
 
-
   private TextPlayer theTextPlayer;
   ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
   ObservableList<String> source_list = FXCollections.observableArrayList();
@@ -339,13 +351,19 @@ public class GameController {
   @FXML
   private Button commit;
 
-  
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
   }
 
   public void initGame() {
+    // Step-1 of playGame()
     theTextPlayer.receiveMap();
+    setUpMap();
+
+    // Step-2 of playGame()
+    // Receive Game Status from server
+    theTextPlayer.receiveAndPrintGameStatus();
+
     setName();
     setActionBox();
     setSourceBox();
@@ -427,51 +445,91 @@ public class GameController {
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
+  /*
+   * prompt if the user input negative unit
+   */
+  @FXML
+  boolean errorMessageShowing(){
+    boolean result=true;
+    if(getUnitNum()<0) {
+      errormessage.appendText(getUnitNum() + " is less than 0");
+      result=false;
+    }
+    return result;
+  }
 
   @FXML
   void onAddOrderButton(MouseEvent event) {
-    if (getAction().equals("Move") || getAction().equals("Upgrade")) {
-      Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
-      myTurn.addTurn(newOrder);
-    } else if (getAction().equals("Attack")) {
-      Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
-      myTurn.addTurn(newOrder);
+    boolean result=errorMessageShowing();
+    turnstatus.deleteText(0,turnstatus.getLength());
+    if(result) {
+      if (getAction().equals("Move") || getAction().equals("Upgrade")) {
+        Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+      } else if (getAction().equals("Attack")) {
+        Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+      }
+      // theClient.theTextPlayer.takeAndSendTurn();
+      System.out.println("Added a New Order");
     }
-    // theClient.theTextPlayer.takeAndSendTurn();
-    System.out.println("Add a New Order");
   }
 
   @FXML
   void onCommitButton(MouseEvent event) {
-    // send TurnList to Server
-    theTextPlayer.connectionToMaster.sendToServer(myTurn);
-    // empty TurnList
-    myTurn = new TurnList();
-    System.out.println("Send the TurnList");
+    if(errormessage != null){
+      errormessage.clear();
+    }
 
-    // Disable the Button
+    // send TurnList to Server
+    // Step-3 in Master playGame() in server
+    // Similar to "takeAndSendTurn"
+    theTextPlayer.connectionToMaster.sendToServer(myTurn);
+    System.out.println("Sent the TurnList");
+
+    // Disable the button
+    // TO-DO
     order.setDisable(true);
     commit.setDisable(true);
-
     // receive turn status
+    // Step-4 in Master playGame() in server
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
     // display the turn status in UI
-
+    // TO-DO
+    //turnstatus.deleteText(0,turnstatus.getLength());
+    for(String s:turnResult) {
+      turnstatus.appendText(s+"\n");
+    }
+    //remove the current turnlist
+    myTurn.order_list.clear();
     // receive updated map
+    // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
+    updateUIMap();
 
+    // receive game status
+    // Step-2 in Master playGame() in server
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    // display the game result
+    // TO-DO
+
+    if (gamestatus.startsWith("Ready")) {
+      order.setDisable(false);
+      commit.setDisable(false);
+      // ready for next turn
+      // re-enable commit button
+    } else {
+    }
   }
 
-  /*
-  // TO Do: bind it with the game status Box
-  // recieve game status
-  String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-    if(gamestatus.startsWith("Ready")){
-    order.setDisable(false);
-    commit.setDisable(false);
+  /**
+   * method to update the map after each turn
+   */
+  private void updateUIMap() {
+    HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
+    for (String terrName : TerritoryUnits.keySet()) {
+      //TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit()));
+    }
   }
-  */
-
 
 }
-
