@@ -8,11 +8,13 @@ public interface Map<T> {
 
   public ArrayList<String> getPlayerColors();
 
-  public void updateMap(String dep, String des, int n1, int n2);
-  public void updateTempMap(String dep, int n);
+  public void updateMap(String dep, String des, String unit_type, int n1, int n2);
+  public void updateTempMap(String dep, String unit_type, int n);
 
-  public void updateTerritoryInMap(String territoryName, int unitChage, String newOwnerColor);
-  public void updateTerritoryInMap(String territoryName, int unitChage);
+  public void updateTerritoryInMap(String territoryName, String unit_type, int unitChage, String newOwnerColor);
+  public void updateTerritoryInMap(String territoryName, String unit_type, int unitChage);
 
   public void updateMapbyOneUnit();
+
+  // public void updateTerritoryInMap(String territoryName, HashMap<UnitType, Integer> unit_change, String newOwnerColor);
 }

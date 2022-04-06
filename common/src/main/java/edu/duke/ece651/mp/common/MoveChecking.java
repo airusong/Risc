@@ -8,18 +8,18 @@ public abstract class MoveChecking<T> {
     this.next = next;
   }
 
-  protected abstract String checkMyRule(Map<T> map, String source, String destination, int movingunits);
+  protected abstract String checkMyRule(Map<T> map, String source, String destination, String unit_type, int movingunits);
 
-  public String checkMoving(Map<T> map, String source, String destination, int movingunits, String player_color) {
+  public String checkMoving(Map<T> map, String source, String destination, String unit_type, int movingunits, String player_color) {
     // update moveStatus
-    moveStatus = player_color + ": Move order from " + source + " into " + destination + " with " + movingunits
+    moveStatus = player_color + ": Move order from " + source + " into " + destination + " with " + movingunits + " " + unit_type
         + " units was ";
 
-    if (checkMyRule(map, source, destination, movingunits) != null) {
-      return checkMyRule(map, source, destination, movingunits);
+    if (checkMyRule(map, source, destination, unit_type, movingunits) != null) {
+      return checkMyRule(map, source, destination, unit_type, movingunits);
     }
     if (next != null) {
-      return next.checkMoving(map, source, destination, movingunits, player_color);
+      return next.checkMoving(map, source, destination, unit_type, movingunits, player_color);
     }
     return null;
   }

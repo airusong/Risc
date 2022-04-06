@@ -1,14 +1,18 @@
 package edu.duke.ece651.mp.client;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class startGameButtonController {
 
@@ -62,3 +66,5 @@ public class startGameButtonController {
   }
 
 }
+
+

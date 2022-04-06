@@ -25,6 +25,7 @@
       <ComboBox fx:id="playeraction" layoutX="519.0" layoutY="36.0" prefWidth="150.0" promptText="select a action" />
       <ComboBox fx:id="from" layoutX="519.0" layoutY="78.0" prefWidth="150.0" promptText="from territory" />
       <ComboBox fx:id="to" layoutX="519.0" layoutY="117.0" prefWidth="150.0" promptText="to territory" />
+      <ComboBox fx:id="type" layoutX="494.0" layoutY="196.0" prefWidth="150.0" promptText="unit type" />
       <Label fx:id="player_info" layoutX="520.0" layoutY="10.0" prefHeight="17.0" prefWidth="149.0" text="Player Info" />
       <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
         <columnConstraints>
