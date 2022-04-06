@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.stage.Popup;
 
 public class GameController {
   @FXML
@@ -351,7 +352,7 @@ public class GameController {
     // Step-2 of playGame()
     // Receive Game Status from server
     receiveAndUpdateGameStatus();
-    
+
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
     setActionBox();
@@ -411,32 +412,40 @@ public class GameController {
     return (String) to.getValue();
   }
 
-  public int getUnitNum() {
+  public int getUnitNum() throws NumberFormatException {
     return Integer.parseInt(unit.getText());
   }
 
   public String getPlayerColor() {
     return theTextPlayer.identity;
   }
-  
+
   /*
    * Method to check if the user inputs for adding order is valid
    */
   @FXML
-  boolean errorMessageShowing(){
+  boolean errorMessageShowing() {
+    // Clear any previous error message
+    errormessage.clear();
+
     boolean result = true;
 
     // For move/attack order, make sure the "from" and "to" are entered
-    if((getAction().equals("Move") || getAction().equals("Attack"))
-       && (getSource() == null || getDestination() == null)) {
+    if ((getAction().equals("Move") || getAction().equals("Attack"))
+        && (getSource() == null || getDestination() == null)) {
       errormessage.appendText("Both source and destination is needed.");
-      result |= false;
+      result &= false;
     }
 
     // Now check if the unit number is positive and greater than zero
-    if(getUnitNum() <= 0) {
-      errormessage.appendText("Unit number must be positive & greater than zero");
-      result |= false;
+    try {
+      if (getUnitNum() <= 0) {
+        errormessage.appendText("Unit number must be positive & greater than zero");
+        result &= false;
+      }
+    } catch (NumberFormatException e) {
+        errormessage.appendText("Unit number must be provided.");
+        result &= false;
     }
     return result;
   }
@@ -445,10 +454,7 @@ public class GameController {
   void onAddOrderButton(MouseEvent event) {
     boolean result = errorMessageShowing();
 
-    // Clear the turn status box before adding new order
-    turnstatus.deleteText(0,turnstatus.getLength());
-
-    if(result) { // if the inputs are valid
+    if (result) { // if the inputs are valid
       // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitNum(), getPlayerColor());
@@ -465,7 +471,9 @@ public class GameController {
 
   @FXML
   void onCommitButton(MouseEvent event) {
-    errormessage.clear();
+    // Clear the turn status box before committing new turn
+    turnstatus.deleteText(0, turnstatus.getLength());
+
     // send TurnList to Server
     // Step-3 in Master playGame() in server
     // Similar to "takeAndSendTurn"
@@ -476,16 +484,16 @@ public class GameController {
     // Disable the button
     order.setDisable(true);
     commit.setDisable(true);
-    
+
     // receive turn status
     // Step-4 in Master playGame() in server
     ArrayList<String> turnResult = theTextPlayer.receiveTurnStatus();
 
     // display the turn status in UI
-    for(String s:turnResult) {
-      turnstatus.appendText(s+"\n");
+    for (String s : turnResult) {
+      turnstatus.appendText(s + "\n");
     }
-    //remove the current turnlist
+    // remove the current turnlist
     myTurn.order_list.clear();
 
     // receive updated map
@@ -498,11 +506,13 @@ public class GameController {
     String gameStatus = receiveAndUpdateGameStatus();
 
     if (gameStatus.startsWith("Ready")) {
-      order.setDisable(false);
-      commit.setDisable(false);
       // ready for next turn
       // re-enable commit button
+      order.setDisable(false);
+      commit.setDisable(false);
     } else {
+      // end of game
+      GameStatus.appendText(" GAME OVER!!!");
     }
   }
 
@@ -531,9 +541,9 @@ public class GameController {
    * method to receive the game status and update the GUI
    */
   private String receiveAndUpdateGameStatus() {
-     String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
-     GameStatus.setText(gamestatus);
-     return gamestatus;
+    String gamestatus = theTextPlayer.receiveAndPrintGameStatus();
+    GameStatus.setText(gamestatus);
+    return gamestatus;
   }
 
 }

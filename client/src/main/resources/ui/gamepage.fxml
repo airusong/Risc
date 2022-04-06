@@ -15,9 +15,12 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
-   <children>
-      <Button fx:id="commit" layoutX="520.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" />
-      <TextField fx:id="unit" layoutX="519.0" layoutY="152.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
+  <children>
+    <Button fx:id="commit" layoutX="518.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="47.0" prefWidth="150.0" text="Done with turn. Commit!" textAlignment="CENTER" textFill="#f40808" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+    <TextField fx:id="unit" layoutX="519.0" layoutY="152.0" prefHeight="27.0" prefWidth="149.0" promptText="How many units do you want to move">
          <font>
             <Font size="8.0" />
          </font></TextField>
@@ -126,7 +129,7 @@
       <Line fx:id="Line2to5" endX="-75.39997863769531" endY="-68.00000762939453" layoutX="287.0" layoutY="178.0" startX="133.0" startY="75.20001220703125" visible="false" />
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
       <TextField fx:id="GameStatus" editable="false" layoutX="9.0" layoutY="414.0" prefHeight="30.0" prefWidth="447.0" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="7.0" layoutY="314.0" prefHeight="94.0" prefWidth="447.0" promptText="Turn Status" />
-      <TextArea fx:id="errormessage" editable="false" layoutX="508.0" layoutY="228.0" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: transparent;" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="7.0" layoutY="314.0" prefHeight="94.0" prefWidth="447.0" promptText="Turn Status" wrapText="true"/>
+      <TextArea fx:id="errormessage" editable="false" layoutX="508.0" layoutY="228.0" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: transparent;" wrapText="true"/>
    </children>
 </AnchorPane>
