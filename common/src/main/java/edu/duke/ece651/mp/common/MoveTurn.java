@@ -4,9 +4,9 @@ public class MoveTurn extends Turn {
 
   public String fromTerritory;
   public String toTerritory;
-  public UnitType unit_type;
+  public String unit_type;
 
-  public MoveTurn(String fromTerritory, String toTerritory, UnitType unit_type, int num_unit, String player_color) {
+  public MoveTurn(String fromTerritory, String toTerritory, String unit_type, int num_unit, String player_color) {
     super("Move", num_unit, player_color);
     this.fromTerritory = fromTerritory;
     this.toTerritory = toTerritory;
@@ -21,7 +21,7 @@ public class MoveTurn extends Turn {
     return this.toTerritory;
   }
 
-  public UnitType getUnitType(){
+  public String getUnitType(){
     return this.unit_type;
   }
 

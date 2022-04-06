@@ -6,27 +6,27 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Unit implements Serializable{
-    private UnitType type;
+    private String type;
     private int bonus;
     private int number;
 
-    public Unit(UnitType type, int number){
+    public Unit(String type, int number){
         this.type = type;
         switch (this.type) {
-            case ALEVEL:
+            case "ALEVEL":
                 this.bonus = 0;
                 break;
-            case BLEVEL:
+            case "BLEVEL":
                 this.bonus = 1;
-            case CLEVEL:
+            case "CLEVEL":
                 this.bonus = 3;
-            case DLEVEL:
+            case "DLEVEL":
                 this.bonus = 5;
-            case ELEVEL:
+            case "ELEVEL":
                 this.bonus = 8;
-            case FLEVEL:
+            case "FLEVEL":
                 this.bonus = 11;
-            case GLEVEL:
+            case "GLEVEL":
                 this.bonus = 15;
         }
         this.number = number;
@@ -42,7 +42,7 @@ public class Unit implements Serializable{
         //unit = (String) s.readObject();
     }
 
-    public UnitType getUnitType(){
+    public String getUnitType(){
         return this.type;
     }
 

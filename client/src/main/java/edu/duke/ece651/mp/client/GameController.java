@@ -196,7 +196,7 @@ public class GameController {
         terrNames.get(i).setText(terrName);
         // To Do: Display different number of various UnitType
         // Now just display Alevel
-        terrUnits.get(i).setText("ALEVEL:" + allTerritories.get(terrName).getUnit(UnitType.ALEVEL));
+        terrUnits.get(i).setText("ALEVEL:" + allTerritories.get(terrName).getUnit("ALEVEL"));
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
         TerritoryUnits.put(terrName, terrUnits.get(i));
@@ -328,7 +328,7 @@ public class GameController {
   ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
-  ObservableList<UnitType> unitType_list = FXCollections.observableArrayList();
+  ObservableList<String> unitType_list = FXCollections.observableArrayList();
 
   TurnList myTurn;
 
@@ -341,7 +341,7 @@ public class GameController {
   @FXML
   private ComboBox<String> to;
   @FXML
-  private ComboBox<UnitType> type;
+  private ComboBox<String> type;
   @FXML
   private TextField unit;
   @FXML
@@ -432,13 +432,13 @@ public class GameController {
   }
 
   public void setUnitTypeBox(){
-    ArrayList<UnitType> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
+    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
     type.setItems(unitType_list);
   }
 
-  public UnitType getUnitType(){
+  public String getUnitType(){
       return  type.getValue();
   }
   public int getUnitNum() {
@@ -548,7 +548,7 @@ public class GameController {
     for (String terrName : TerritoryUnits.keySet()) {
       // Update number of units
       // To Do: just updat ALEVEL unit now 
-      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit(UnitType.ALEVEL)));
+      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit("ALEVEL")));
 
       // Update color of territory
       String player_color = allTerritories.get(terrName).getColor();

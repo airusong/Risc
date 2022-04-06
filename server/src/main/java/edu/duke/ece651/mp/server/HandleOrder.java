@@ -94,7 +94,7 @@ public class HandleOrder<T> {
             for (int j = 0; j < curr.getListLength(); j++) {
                 AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
                 // Generate/Update the temp map
-                UnitType move_unit_type = curr_turn.getUnitType();
+                String move_unit_type = curr_turn.getUnitType();
                 int move_units = curr_turn.getNumber();
                 int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type)
                         - move_units;
@@ -136,7 +136,7 @@ public class HandleOrder<T> {
         int unitsToMove = moveOrder.getNumber();
         String dep = moveOrder.getSource();
         String des = moveOrder.getDestination();
-        UnitType unit_type = moveOrder.getUnitType();
+        String unit_type = moveOrder.getUnitType();
         String player_color = moveOrder.getPlayerColor();
 
         // Check Rules

@@ -110,7 +110,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /* Update Unit of Territory according to move order */
-  public void updateUnit(UnitType unit_type, int new_unit) {
+  public void updateUnit(String unit_type, int new_unit) {
     int index = hasUnitType(unit_type);
     if (index >= 0) {
       unit_list.set(index, new Unit(unit_type, new_unit));
@@ -125,7 +125,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   // check if the UnitType exists in the Territory
-  public int hasUnitType(UnitType unit_type) {
+  public int hasUnitType(String unit_type) {
     for (int index = 0; index < unit_list.size(); index++) {
       if (unit_list.get(index).getUnitType().equals(unit_type)) {
         return index;
@@ -137,7 +137,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   /*
    * @return the unit_num of specific UnitType
    */
-  public int getUnit(UnitType unit_type) {
+  public int getUnit(String unit_type) {
     for (Unit unit : unit_list) {
       if (unit.getUnitType().equals(unit_type)) {
         return unit.getUnitNum();
