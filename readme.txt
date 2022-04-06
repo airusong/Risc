@@ -33,6 +33,8 @@ note:
     Change 'handleSingleMoveOrder' - Add chose minimum cost path chosing & resourceChecker/Modify current Pathchecker
     Change 'handleSingleAttackOrder' - Add resourceChecker
     Add 'produceResource' to increase the resources to theTextPlayer at the end of each turn.
+    
+    Modify Test Files
 
 [4] Question:
     1. Shall we have a maxmim tech level, and improve the tech level at the start?
