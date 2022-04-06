@@ -25,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
@@ -41,10 +42,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class GameController {
-  @FXML
-  public TextArea turnstatus;
-  @FXML
-  public TextArea errormessage;
   // Stack panes holding all territory elements
   @FXML
   private StackPane Territory1;
@@ -350,6 +347,10 @@ public class GameController {
   private Button order;
   @FXML
   private Button commit;
+  @FXML
+  public TextArea turnstatus;
+  @FXML
+  public TextArea errormessage;
 
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -126,5 +127,7 @@
       <ComboBox fx:id="from" layoutX="494.0" layoutY="117.0" prefWidth="150.0" promptText="from territory" />
       <ComboBox fx:id="to" layoutX="494.0" layoutY="156.0" prefWidth="150.0" promptText="to territory" />
       <ComboBox fx:id="type" layoutX="494.0" layoutY="196.0" prefWidth="150.0" promptText="unit type" />
+      <TextArea fx:id="turnstatus" layoutX="22.0" layoutY="314.0" prefHeight="45.0" prefWidth="412.0" promptText="Turn Status" />
+      <TextArea fx:id="errormessage" layoutX="24.0" layoutY="371.0" prefHeight="41.0" prefWidth="409.0" />
    </children>
 </AnchorPane>
