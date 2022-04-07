@@ -394,7 +394,6 @@ public class GameController {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
     setUpMap();
-    theTextPlayer.receiveResource();
 
     // Step-2 of playGame()
     // Receive Game Status from server
@@ -621,10 +620,6 @@ public class GameController {
 
   @FXML
   private void clearSelectedAction() {
-    // Hide the order details pane
-    // MoveAttackPane.setVisible(false);
-    // UpgradePane.setVisible(false);
-
     playeraction.setValue("Select an action");
   }
 
@@ -660,7 +655,6 @@ public class GameController {
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
-    theTextPlayer.receiveResource();
     updateUIMap();
     // updateBox
     setActionBox();
