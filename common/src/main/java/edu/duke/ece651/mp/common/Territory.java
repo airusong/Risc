@@ -19,7 +19,8 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   private String color;
   private ArrayList<String> adjacentTerritories;
   private ArrayList<Unit> unit_list;
-  private ArrayList<Resource> resources_list;
+  private FoodResource food;
+  private TechResource tech;
   private int size;
 
   public Territory(String name, String color, ArrayList<String> adjacentTerritories, int size) {
@@ -27,7 +28,8 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.color = color;
     this.adjacentTerritories = new ArrayList<>();
     this.unit_list = new ArrayList<Unit>();
-    this.resources_list = new ArrayList<Resource>();
+    this.food = new FoodResource(0);
+    this.tech = new TechResource(0);
     this.size = size;
   }
 
@@ -43,6 +45,10 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     return color;
   }
 
+  public int getFoodNum() { return food.getResourceAmount();}
+
+  public int getTechNum() { return tech.getResourceAmount();}
+
   /**
    * function to add adjacency to the territory
    */
@@ -53,8 +59,22 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   /**
    * function to add resources to the territory
    */
-  public void addResource(Resource resource) {
-    resources_list.add(resource);
+  public void updateResource(Resource resource) {
+    if(resource instanceof FoodResource){
+      int new_num = food.getResourceAmount() + resource.getResourceAmount();
+      setFoodResource(new_num);
+    }
+    else if(resource instanceof TechResource){
+      int new_num = tech.getResourceAmount() + resource.getResourceAmount();
+      setTechResource(new_num);
+    }
+  }
+
+  public void setFoodResource(int num){
+    food.setResourceAmount(num);
+  }
+  public void setTechResource(int num){
+    tech.setResourceAmount(num);
   }
 
   /**

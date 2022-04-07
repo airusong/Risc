@@ -396,6 +396,7 @@ public class GameController {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
     setUpMap();
+    theTextPlayer.receiveResource();
 
     // Step-2 of playGame()
     // Receive Game Status from server
@@ -666,6 +667,7 @@ public class GameController {
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
+    theTextPlayer.receiveResource();
     updateUIMap();
     // updateBox
     setOrderPane();
