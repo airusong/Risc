@@ -35,15 +35,15 @@ public class Master {
     PathChecking<Character> pcheck = new PathChecking<>(null);
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
 
-    // initialize the Resources at the begining of the game
     food_list = new FoodResourceList();
     tech_list = new TechResourceList();
 
-    food_list.addResource("Green", new FoodResource(50));
-    food_list.addResource("Blue", new FoodResource(50));
-    tech_list.addResource("Green", new TechResource(50));
-    tech_list.addResource("Blue", new TechResource(50));
+    // initialize the Resources at the begining of the game
+    for (String playerColor : players_identity) {
+      food_list.addResource(playerColor, new FoodResource(50));
+      tech_list.addResource(playerColor, new TechResource(50));
 
+    }
     this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, food_list, tech_list);
   }
 
@@ -98,8 +98,7 @@ public class Master {
   }
 
   /**
-   * int
-   * Method to receive and update orders from ALL players
+   * int Method to receive and update orders from ALL players
    * 
    * @throws IOException
    * @throws ClassNotFoundException
@@ -159,8 +158,8 @@ public class Master {
   }
 
   /**
-   * cl
-   * Method to start a game by accepting players sending the players their colors
+   * cl Method to start a game by accepting players sending the players their
+   * colors
    * 
    * @throws IOException, InterruptedException
    */
