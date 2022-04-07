@@ -129,6 +129,9 @@ public class Master {
   private ArrayList<String> handleOrders() {
     V2Map<Character> updatedMap = (V2Map<Character>) theHandleOrder.handleOrders(all_order_list, theMap);
     theMap = updatedMap;
+    // update the resources
+    food_list = theHandleOrder.getFoodList();
+    tech_list = theHandleOrder.getTechList();
 
     theMasterServer.all_order_list.clear(); // reset the turn list
 

@@ -305,4 +305,11 @@ public class HandleOrder<T> {
         return theMap;
     }
 
+    public FoodResourceList getFoodList() {
+        return this.food_list;
+    }
+
+    public TechResourceList getTechList() {
+        return this.tech_list;
+    }
 }
