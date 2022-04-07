@@ -14,6 +14,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="connection_status" layoutX="263.0" layoutY="336.0" prefHeight="45.0" prefWidth="171.0" />
+      <Label fx:id="connection_status" accessibleRole="TEXT_AREA" layoutX="174.0" layoutY="333.0" prefHeight="44.0" prefWidth="342.0" textFill="#d70a0a" wrapText="true" />
    </children>
 </AnchorPane>
