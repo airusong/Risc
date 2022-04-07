@@ -374,13 +374,15 @@ public class GameController {
   @FXML
   private TextField Units_G;
 
-  private ArrayList<TextField> UnitTypeEntries;
+  private HashMap<String, TextField> UnitTypeEntries;
 
   // Upgrade Order inputs
   @FXML
   private Pane UpgradePane;
   @FXML
   private TextField UpgradeUnits;
+  @FXML
+  private ComboBox<String> UpgradeTerritory;
   @FXML
   private ComboBox<String> UpgradeFrom;
   @FXML
@@ -402,6 +404,8 @@ public class GameController {
 
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
+    
+    initiateUnitList();
     setOrderPane();
   }
 
@@ -410,25 +414,31 @@ public class GameController {
    */
   private void setOrderPane() {
     setActionBox();
-    initiateUnitList();
-    setSourceBox();
-    setDestinationBox();
+    setTerritoryDropDowns();
     setUnitTypeBox();
+  }
 
+  /**
+   * Method to set up drop downs for territories
+   */
+  private void setTerritoryDropDowns() {
+    setSourceBox(from);
+    setSourceBox(UpgradeTerritory);
+    setDestinationBox();
   }
 
   /**
    * Method to create a list pf all unit type textfield entries
    */
   private void initiateUnitList() {
-    UnitTypeEntries = new ArrayList<>();
-    UnitTypeEntries.add(Units_A);
-    UnitTypeEntries.add(Units_B);
-    UnitTypeEntries.add(Units_C);
-    UnitTypeEntries.add(Units_D);
-    UnitTypeEntries.add(Units_E);
-    UnitTypeEntries.add(Units_F);
-    UnitTypeEntries.add(Units_G);
+    UnitTypeEntries = new HashMap<>();
+    UnitTypeEntries.put("ALEVEL", Units_A);
+    UnitTypeEntries.put("BLEVEL", Units_B);
+    UnitTypeEntries.put("CLEVEL", Units_C);
+    UnitTypeEntries.put("DLEVEL", Units_D);
+    UnitTypeEntries.put("ELEVEL", Units_E);
+    UnitTypeEntries.put("FLEVEL", Units_F);
+    UnitTypeEntries.put("GLEVEL", Units_G);
   }
 
   public void setName() {
@@ -442,8 +452,7 @@ public class GameController {
     playeraction.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        setSourceBox();
-        setDestinationBox();
+        setTerritoryDropDowns();
       }
     });
   }
@@ -453,12 +462,12 @@ public class GameController {
   }
 
   @FXML
-  public void setSourceBox() {
+  public void setSourceBox(ComboBox<String> whichBox) {
     ArrayList<String> own_territory_list = theTextPlayer.getMyOwnTerritories();
     source_list.clear();
     source_list.addAll(own_territory_list);
-    from.setItems(source_list);
-    from.valueProperty().addListener(new ChangeListener<String>() {
+    whichBox.setItems(source_list);
+    whichBox.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         setUnitTypeBox();
@@ -468,6 +477,10 @@ public class GameController {
 
   public String getSource() {
     return (String) from.getValue();
+  }
+
+  public String getUpgradeSource() {
+    return (String) UpgradeTerritory.getValue();
   }
 
   @FXML
@@ -489,8 +502,11 @@ public class GameController {
     return (String) to.getValue();
   }
 
+  /**
+   * Method to set the unit type boxes for Upgrade Turn
+   */
   public void setUnitTypeBox() {
-    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
+    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getUpgradeSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
     UpgradeFrom.setItems(unitType_list);
@@ -514,56 +530,14 @@ public class GameController {
   /**
    * Method to get user entered unit number
    */
-  public int getUnitNum_A() {
+  public int getUnitNum(TextField UnitType) {
     int enteredVal;
     try {
-      enteredVal = Integer.parseInt(Units_A.getText());
+      enteredVal = Integer.parseInt(UnitType.getText());
     } catch (NumberFormatException e) {
       enteredVal = 0;
     }
     return enteredVal;
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_B() throws NumberFormatException {
-    return Integer.parseInt(Units_B.getText());
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_C() throws NumberFormatException {
-    return Integer.parseInt(Units_C.getText());
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_D() throws NumberFormatException {
-    return Integer.parseInt(Units_D.getText());
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_E() throws NumberFormatException {
-    return Integer.parseInt(Units_E.getText());
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_F() throws NumberFormatException {
-    return Integer.parseInt(Units_F.getText());
-  }
-
-  /**
-   * Method to get user entered unit number
-   */
-  public int getUnitNum_G() throws NumberFormatException {
-    return Integer.parseInt(Units_G.getText());
   }
 
   public String getPlayerColor() {
@@ -572,6 +546,8 @@ public class GameController {
 
   /*
    * Method to check if the user inputs for adding order is valid
+   * 
+   * @returns true if valid inputs and false otherwise
    */
   @FXML
   boolean errorMessageShowing() {
@@ -588,9 +564,21 @@ public class GameController {
     }
 
     // Now check if the unit number is positive and greater than zero
-    if ((getUnitNum_A() <= 0) || (getUnitNum_B() <= 0) || (getUnitNum_C() <= 0) || (getUnitNum_D() <= 0)
-        || (getUnitNum_E() <= 0) || (getUnitNum_F() <= 0) || (getUnitNum_G() <= 0)) {
-      errormessage.appendText("Unit number must be positive & greater than zero");
+    boolean allZero = false;
+    for (String unitType : UnitTypeEntries.keySet()) {
+      int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
+      if (unitNum == 0) {
+        allZero &= true;
+      } else {
+        allZero &= false;
+        if (unitNum < 0) {
+          errormessage.appendText(unitType + " Unit number must be positive & greater than zero.");
+          result &= false;
+        }
+      }
+    }
+    if (allZero) {
+      errormessage.appendText("Unit number must be provided for atleast one unit type.");
       result &= false;
     }
     return result;
@@ -602,29 +590,48 @@ public class GameController {
 
     if (result) { // if the inputs are valid
       // Check the type order
-      if (getAction().equals("Move") || getAction().equals("Upgrade")) {
-        Turn newOrder = new MoveTurn(getSource(), getDestination(), "ALEVEL", getUnitNum_A(), getPlayerColor());
+      if (getAction().equals("Move")) {
+        HashMap<String, Integer> units = getUnitsEntry();
+        Turn newOrder = new MoveTurn(getSource(), getDestination(), units, getPlayerColor());
         // newOrder.printTurn();
         myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
       } else if (getAction().equals("Attack")) {
-        Turn newOrder = new AttackTurn(getSource(), getDestination(), "ALEVEL", getUnitNum_A(), getPlayerColor());
+        HashMap<String, Integer> units = getUnitsEntry();
+        Turn newOrder = new AttackTurn(getSource(), getDestination(), units, getPlayerColor());
         // newOrder.printTurn();
         myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
+      } else if (getAction().equals("Upgrade")) {
+        // create upgrade
+        GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType() + " to " + getUpgradeToUnitType() + " added");
       }
       // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
-      GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
     }
     clearSelectedAction();
 
   }
 
+  /**
+   * Method to create a hashmap with keys as unit type and value as number of
+   * units entered by the player
+   * Note the return hashmap includes the unit entry which were valid i.e. non-zero and positive. The returned hashmap cannot be empty as we check for all zero inputs in errorMessageShowing() method
+   */
+  private HashMap<String, Integer> getUnitsEntry() {
+    HashMap<String, Integer> units = new HashMap<>();
+    for (String unitType : UnitTypeEntries.keySet()) {
+      int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
+      // Don't add if there are 0 units
+      if (unitNum >= 0) {
+        units.put(unitType, unitNum);
+      }
+    }
+    return units;
+  }
+
   @FXML
   private void clearSelectedAction() {
-    // Hide the order details pane
-    // MoveAttackPane.setVisible(false);
-    // UpgradePane.setVisible(false);
-
     playeraction.setValue("Select an action");
   }
 
@@ -663,11 +670,8 @@ public class GameController {
     theTextPlayer.receiveResource();
     updateUIMap();
     // updateBox
-    setActionBox();
-    setSourceBox();
-    setDestinationBox();
-    setUnitTypeBox();
-
+    setOrderPane();
+    
     // receive game status
     // Step-2 in Master playGame() in server
     String gameStatus = receiveAndUpdateGameStatus();

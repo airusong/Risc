@@ -30,6 +30,7 @@ public class HandleOrder<T> {
         this.theMap = theMap;
         MapTextView test = new MapTextView((V2Map) theMap);
         test.displayMap();
+
         this.moveChecker = moveChecker;
         this.turnStatus = new ArrayList<>();
         this.food_list = food_list;
@@ -97,7 +98,7 @@ public class HandleOrder<T> {
             for (int j = 0; j < curr.getListLength(); j++) {
                 AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
                 // Generate/Update the temp map
-                String move_unit_type = curr_turn.getUnitType();
+                String move_unit_type = "ALEVEL"; // HARDCODE FOR BASE VERSION
                 int move_units = curr_turn.getNumber();
                 int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type)
                         - move_units;
@@ -117,14 +118,12 @@ public class HandleOrder<T> {
         for (HashMap<String, ArrayList<Turn>> hm : res) {
             for (ArrayList<Turn> t : hm.values()) {
                 handleSingleAttackOrder(t, tempMap);
-                System.out.print("To Do: Handle Single Attack Order");
             }
         }
         /*
          * for (TurnList hm : valid_attack_order_list) {
          * handleSingleAttackOrder(hm.order_list, tempMap);
-         * System.out.print("To Do: Handle Single Attack Order");
-         * }
+         * System.out.print("To Do: Handle Single Attack Order"); }
          */
 
     }
@@ -134,28 +133,34 @@ public class HandleOrder<T> {
      * 
      */
     public void handleSingleMoveOrder(MoveTurn moveOrder) {
-        int unitsToMove = moveOrder.getNumber();
         String dep = moveOrder.getSource();
         String des = moveOrder.getDestination();
-        String unit_type = moveOrder.getUnitType();
         String player_color = moveOrder.getPlayerColor();
 
-        // Check Rules
-        String moveProblem = moveChecker.checkMoving(theMap, dep, des, unit_type, unitsToMove, player_color);
-        String moveResult;
+        // int unitsToMove = moveOrder.getNumber();
 
-        if (moveProblem == null) {
-            // update Territory & Map
-            // update source territory
-            theMap.updateTerritoryInMap(dep, unit_type, unitsToMove * (-1)); // -1 for taking units out
-            // update destination territory
-            theMap.updateTerritoryInMap(des, unit_type, unitsToMove); // for adding
+        // A move order can have different unit types to move
+        // So we'll go over the entire hashmap
+        for (String unit_type : moveOrder.getUnitList().keySet()) {
+            int unitsToMove = moveOrder.getNumber(unit_type);
+            // Check Rules
+            String moveProblem = moveChecker.checkMoving(theMap, dep, des, unit_type, unitsToMove, player_color);
+            String moveResult;
 
-            moveResult = "successful";
-        } else {
-            moveResult = "invalid (Reason: " + moveProblem + ")";
-        }
-        turnStatus.add(moveChecker.moveStatus + moveResult);
+            if (moveProblem == null) {
+                // update Territory & Map
+
+                // update source territory
+                theMap.updateTerritoryInMap(dep, unit_type, unitsToMove * (-1)); // -1 for taking units out
+                // update destination territory
+                theMap.updateTerritoryInMap(des, unit_type, unitsToMove); // for adding
+
+                moveResult = "successful";
+            } else {
+                moveResult = "invalid (Reason: " + moveProblem + ")";
+            }
+            turnStatus.add(moveChecker.moveStatus + moveResult);
+        } // end of for-loop
     }
 
     /**
