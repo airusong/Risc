@@ -21,7 +21,7 @@ public class AttackChecking<T> {
   public boolean checkMyRule(Map<T> map, AttackTurn attackOrder) {
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();
-    String unit_type = attackOrder.getUnitType();
+    String unit_type = "ALEVEL"; // HARDCODED FOR BASE VERSION
     int attackingunits = attackOrder.getNumber();
     String player_color = attackOrder.getPlayerColor();
 
