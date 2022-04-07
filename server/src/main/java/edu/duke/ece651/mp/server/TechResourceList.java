@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.String;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TechResourceList implements Serializable {
     private HashMap<String, TechResource> resource_list;
@@ -28,6 +29,28 @@ public class TechResourceList implements Serializable {
         s.defaultReadObject();
         // restore
         resource_list = (HashMap<String, TechResource>) s.readObject();
+    }
+
+    public void addResource(String color, TechResource techResource) {
+        for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
+            if (set.getKey().equals(color)) {
+                int old_num = set.getValue().getResourceAmount();
+                int new_num = old_num + techResource.getResourceAmount();
+                resource_list.put(color, new TechResource(new_num));
+                break;
+            }
+        }
+    }
+
+    public void addResource(String color, int techResource) {
+        for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
+            if (set.getKey().equals(color)) {
+                int old_num = set.getValue().getResourceAmount();
+                int new_num = old_num + techResource;
+                resource_list.put(color, new TechResource(new_num));
+                break;
+            }
+        }
     }
 
 }

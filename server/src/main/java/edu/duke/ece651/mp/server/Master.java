@@ -15,12 +15,8 @@ public class Master {
   public ArrayList<TurnList> all_order_list;
   HandleOrder<Character> theHandleOrder;
   // What is the best idea to implement this???
-  private HashMap<String, FoodResource> food_list;
-  private HashMap<String, TechResource> tech_list;
-  /*
-   * private FoodResourceList food_list;
-   * private TechResourceList tech_list;
-   */
+  private FoodResourceList food_list;
+  private TechResourceList tech_list;
 
   /**
    * Constructor
@@ -42,10 +38,11 @@ public class Master {
     // initialize the Resources at the begining of the game
     food_list = new FoodResourceList();
     tech_list = new TechResourceList();
-    food_list.put("Green", new FoodResource(50));
-    food_list.put("Blue", new FoodResource(50));
-    tech_list.put("Green", new TechResource(50));
-    tech_list.put("Blue", new TechResource(50));
+
+    food_list.addResource("Green", new FoodResource(50));
+    food_list.addResource("Blue", new FoodResource(50));
+    tech_list.addResource("Green", new TechResource(50));
+    tech_list.addResource("Blue", new TechResource(50));
   }
 
   /**
@@ -147,26 +144,12 @@ public class Master {
     HashMap<String, Integer> food_l = theMap.getOwnersTerritoryFoodGroups();
     HashMap<String, Integer> tech_l = theMap.getOwnersTerritoryTechGroups();
 
-    for (Map.Entry<String, FoodResource> set : this.food_list.entrySet()) {
-      for (Map.Entry<String, Integer> s : food_l.entrySet()) {
-        if (set.getKey().equals(s.getKey())) {
-          int old_food = set.getValue().getResourceAmount();
-          int new_food = s.getValue() + old_food;
-          this.food_list.put(set.getKey(), new FoodResource(new_food));
-          break;
-        }
-      }
+    for (Map.Entry<String, Integer> s : food_l.entrySet()) {
+      this.food_list.addResource(s.getKey(), s.getValue());
     }
 
-    for (Map.Entry<String, TechResource> set : tech_list.entrySet()) {
-      for (Map.Entry<String, Integer> s : tech_l.entrySet()) {
-        if (set.getKey().equals(s.getKey())) {
-          int old_tech = set.getValue().getResourceAmount();
-          int new_tech = s.getValue() + old_tech;
-          tech_list.put(set.getKey(), new TechResource(new_tech));
-          break;
-        }
-      }
+    for (Map.Entry<String, Integer> s : tech_l.entrySet()) {
+      this.tech_list.addResource(s.getKey(), s.getValue());
     }
   }
 

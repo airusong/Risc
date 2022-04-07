@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.String;
 import java.util.HashMap;
+import java.util.Map;
 
 import edu.duke.ece651.mp.common.Resource;
 import java.util.HashMap;
@@ -33,4 +34,25 @@ public class FoodResourceList implements Serializable {
         resource_list = (HashMap<String, FoodResource>) s.readObject();
     }
 
+    public void addResource(String color, FoodResource foodResource) {
+        for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
+            if (set.getKey().equals(color)) {
+                int old_num = set.getValue().getResourceAmount();
+                int new_num = old_num + foodResource.getResourceAmount();
+                resource_list.put(color, new FoodResource(new_num));
+                break;
+            }
+        }
+    }
+
+    public void addResource(String color, int foodResource) {
+        for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
+            if (set.getKey().equals(color)) {
+                int old_num = set.getValue().getResourceAmount();
+                int new_num = old_num + foodResource;
+                resource_list.put(color, new FoodResource(new_num));
+                break;
+            }
+        }
+    }
 }
