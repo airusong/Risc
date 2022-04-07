@@ -1,6 +1,5 @@
-package edu.duke.ece651.mp.server;
+package edu.duke.ece651.mp.common;
 
-import edu.duke.ece651.mp.common.TechResource;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TechResourceList implements Serializable {
-    private HashMap<String, TechResource> resource_list;
+    public HashMap<String, TechResource> resource_list;
 
     public TechResourceList() {
         resource_list = new HashMap<String, TechResource>();

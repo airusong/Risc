@@ -367,6 +367,7 @@ public class GameController {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
     setUpMap();
+    theTextPlayer.receiveResource();
 
     // Step-2 of playGame()
     // Receive Game Status from server
@@ -408,7 +409,7 @@ public class GameController {
     source_list.clear();
     source_list.addAll(own_territory_list);
     from.setItems(source_list);
-    from.valueProperty().addListener(new ChangeListener<String>(){
+    from.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         setUnitTypeBox();
@@ -437,15 +438,15 @@ public class GameController {
     return (String) to.getValue();
   }
 
-  public void setUnitTypeBox(){
+  public void setUnitTypeBox() {
     ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
     type.setItems(unitType_list);
   }
 
-  public String getUnitType(){
-      return  type.getValue();
+  public String getUnitType() {
+    return type.getValue();
   }
 
   public int getUnitNum() throws NumberFormatException {
@@ -480,8 +481,8 @@ public class GameController {
         result &= false;
       }
     } catch (NumberFormatException e) {
-        errormessage.appendText("Unit number must be provided.");
-        result &= false;
+      errormessage.appendText("Unit number must be provided.");
+      result &= false;
     }
     return result;
   }
@@ -494,11 +495,11 @@ public class GameController {
       // Check the type order
       if (getAction().equals("Move") || getAction().equals("Upgrade")) {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
-        //newOrder.printTurn();
+        // newOrder.printTurn();
         myTurn.addTurn(newOrder);
       } else if (getAction().equals("Attack")) {
         Turn newOrder = new AttackTurn(getSource(), getDestination(), getUnitType(), getUnitNum(), getPlayerColor());
-        //newOrder.printTurn();
+        // newOrder.printTurn();
         myTurn.addTurn(newOrder);
       }
       // theClient.theTextPlayer.takeAndSendTurn();
@@ -537,13 +538,13 @@ public class GameController {
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
+    theTextPlayer.receiveResource();
     updateUIMap();
     // updateBox
     setActionBox();
     setSourceBox();
     setDestinationBox();
     setUnitTypeBox();
-
 
     // receive game status
     // Step-2 in Master playGame() in server

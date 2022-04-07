@@ -293,6 +293,7 @@ public class TextPlayer {
       receiveMap();
       System.out.print("Map received");
       printMap();
+      // Receive resources info from server
       receiveResource();
       System.out.print("Resource received");
 

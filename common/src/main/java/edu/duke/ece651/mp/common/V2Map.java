@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
@@ -17,8 +15,9 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * Constructor construct a V2Map specified with Territoris in it
    * 
-   * @param  players_colors myTerritories, the key is the territory itself and the value
-   *                is the list of adjancent territories
+   * @param players_colors myTerritories, the key is the territory itself and the
+   *                       value
+   *                       is the list of adjancent territories
    */
   public V2Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
@@ -71,45 +70,47 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * function used to initialize the adjacency information in the map
    **/
-    protected void addAdjacency() {
-      myTerritories.get("Narnia").addAdjacency("Midemio");
-      myTerritories.get("Narnia").addAdjacency("Midemio");
-      myTerritories.get("Narnia").addAdjacency("Elantris");
-      myTerritories.get("Narnia").addAdjacency("Elantris");
-      myTerritories.get("Midemio").addAdjacency("Narnia");
-      myTerritories.get("Midemio").addAdjacency("Narnia");
-      myTerritories.get("Midemio").addAdjacency("Oz");
-      myTerritories.get("Midemio").addAdjacency("Oz");
-      myTerritories.get("Midemio").addAdjacency("Elantris");
-      myTerritories.get("Midemio").addAdjacency("Scadnal");
-      myTerritories.get("Oz").addAdjacency("Midemio");
-      myTerritories.get("Oz").addAdjacency("Midemio");
-      myTerritories.get("Oz").addAdjacency("Scadnal");
-      myTerritories.get("Oz").addAdjacency("Roshar");
-      myTerritories.get("Elantris").addAdjacency("Scadnal");
-      myTerritories.get("Elantris").addAdjacency("Scadnal");
-      myTerritories.get("Elantris").addAdjacency("Narnia");;
-      myTerritories.get("Elantris").addAdjacency("Narnia");
-      myTerritories.get("Elantris").addAdjacency("Roshar");;
-      myTerritories.get("Elantris").addAdjacency("Midemio");
-      myTerritories.get("Scadnal").addAdjacency("Roshar");
-      myTerritories.get("Scadnal").addAdjacency("Roshar");
-      myTerritories.get("Scadnal").addAdjacency("Elantris");;
-      myTerritories.get("Scadnal").addAdjacency("Elantris");
-      myTerritories.get("Scadnal").addAdjacency("Oz");;
-      myTerritories.get("Roshar").addAdjacency("Oz");
-      myTerritories.get("Scadnal").addAdjacency("Midemio");
-      myTerritories.get("Roshar").addAdjacency("Elantris");
-      myTerritories.get("Roshar").addAdjacency("Scadnal");
-      myTerritories.get("Roshar").addAdjacency("Scadnal");
+  protected void addAdjacency() {
+    myTerritories.get("Narnia").addAdjacency("Midemio");
+    myTerritories.get("Narnia").addAdjacency("Midemio");
+    myTerritories.get("Narnia").addAdjacency("Elantris");
+    myTerritories.get("Narnia").addAdjacency("Elantris");
+    myTerritories.get("Midemio").addAdjacency("Narnia");
+    myTerritories.get("Midemio").addAdjacency("Narnia");
+    myTerritories.get("Midemio").addAdjacency("Oz");
+    myTerritories.get("Midemio").addAdjacency("Oz");
+    myTerritories.get("Midemio").addAdjacency("Elantris");
+    myTerritories.get("Midemio").addAdjacency("Scadnal");
+    myTerritories.get("Oz").addAdjacency("Midemio");
+    myTerritories.get("Oz").addAdjacency("Midemio");
+    myTerritories.get("Oz").addAdjacency("Scadnal");
+    myTerritories.get("Oz").addAdjacency("Roshar");
+    myTerritories.get("Elantris").addAdjacency("Scadnal");
+    myTerritories.get("Elantris").addAdjacency("Scadnal");
+    myTerritories.get("Elantris").addAdjacency("Narnia");
+    ;
+    myTerritories.get("Elantris").addAdjacency("Narnia");
+    myTerritories.get("Elantris").addAdjacency("Roshar");
+    ;
+    myTerritories.get("Elantris").addAdjacency("Midemio");
+    myTerritories.get("Scadnal").addAdjacency("Roshar");
+    myTerritories.get("Scadnal").addAdjacency("Roshar");
+    myTerritories.get("Scadnal").addAdjacency("Elantris");
+    ;
+    myTerritories.get("Scadnal").addAdjacency("Elantris");
+    myTerritories.get("Scadnal").addAdjacency("Oz");
+    ;
+    myTerritories.get("Roshar").addAdjacency("Oz");
+    myTerritories.get("Scadnal").addAdjacency("Midemio");
+    myTerritories.get("Roshar").addAdjacency("Elantris");
+    myTerritories.get("Roshar").addAdjacency("Scadnal");
+    myTerritories.get("Roshar").addAdjacency("Scadnal");
 
-    }
+  }
 
-
-
-    /**
-     * function used to initialize the Resource information in the map
-     **/
+  /**
+   * function used to initialize the Resource information in the map
+   **/
   protected void addResources() {
     myTerritories.get("Narnia").updateResource(new FoodResource(10));
     myTerritories.get("Narnia").updateResource(new TechResource(20));
@@ -119,10 +120,10 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.get("Oz").updateResource(new TechResource(20));
 
     myTerritories.get("Elantris").updateResource(new FoodResource(20));
-    myTerritories.get("Elantris").updateResource(new TechResource( 15));
-    myTerritories.get("Scadnal").updateResource(new FoodResource( 15));
-    myTerritories.get("Scadnal").updateResource(new TechResource( 15));
-    myTerritories.get("Roshar").updateResource(new FoodResource( 15));
+    myTerritories.get("Elantris").updateResource(new TechResource(15));
+    myTerritories.get("Scadnal").updateResource(new FoodResource(15));
+    myTerritories.get("Scadnal").updateResource(new TechResource(15));
+    myTerritories.get("Roshar").updateResource(new FoodResource(15));
     myTerritories.get("Roshar").updateResource(new TechResource(20));
   }
 
@@ -196,7 +197,8 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * method to get produced food resources grouped by owner
    *
-   * @return hashmap with key as the owner/player color and value as FoodResources' amount of player-owned territories
+   * @return hashmap with key as the owner/player color and value as
+   *         FoodResources' amount of player-owned territories
    */
   public HashMap<String, Integer> getOwnersTerritoryFoodGroups() {
     HashMap<String, Integer> territoryFoodGroups = new HashMap<>();
@@ -216,7 +218,8 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * method to get produced tech resources grouped by owner
    *
-   * @return hashmap with key as the owner/player color and value as TechResources' amount of player-owned territories
+   * @return hashmap with key as the owner/player color and value as
+   *         TechResources' amount of player-owned territories
    */
   public HashMap<String, Integer> getOwnersTerritoryTechGroups() {
     HashMap<String, Integer> territoryTechGroups = new HashMap<>();
@@ -281,7 +284,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /* Update Territory in the Map, including changing the owner of the Territory */
-  
+
   public void updateTerritoryInMap(String territoryName, String unitType, int unitChange, String newOwnerColor) {
     Territory<T> terr = myTerritories.get(territoryName);
     int currUnits = terr.getUnit(unitType);
@@ -293,12 +296,11 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(territoryName, terr);
   }
 
-
   /* Update Territory in the Map, including changing the owner of the Territory */
   // For the Use of updating combate result.
   public void updateTerritoryInMap(String territoryName, HashMap<String, Integer> unit_change, String newOwnerColor) {
     Territory<T> terr = myTerritories.get(territoryName);
-    for(Map.Entry<String, Integer> set: unit_change.entrySet()){
+    for (Map.Entry<String, Integer> set : unit_change.entrySet()) {
       int unitChange = set.getValue();
       int currUnits = terr.getUnit(set.getKey());
       int newUnits = currUnits + unitChange;
@@ -310,11 +312,9 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(territoryName, terr);
   }
 
-  
   public void updateTerritoryInMap(String territoryName, String unitType, int unitChange) {
     updateTerritoryInMap(territoryName, unitType, unitChange, "Unchanged");
   }
-  
 
   // Increase #Units after fighting - add one basic unit - ALEVEL
   public void updateMapbyOneUnit() {

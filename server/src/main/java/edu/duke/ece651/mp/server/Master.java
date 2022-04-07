@@ -14,7 +14,7 @@ public class Master {
   public ArrayList<String> players_identity;
   public ArrayList<TurnList> all_order_list;
   HandleOrder<Character> theHandleOrder;
-  // What is the best idea to implement this???
+
   private FoodResourceList food_list;
   private TechResourceList tech_list;
 
