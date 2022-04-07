@@ -256,8 +256,30 @@ public class HandleOrder<T> {
 
     }
 
-    public void handleSingleUpgradeOrder(ArrayList<Turn> UpgradeOrder, Map<T> tempMap) {
+    /**
+     * Method to handle All Upgrade Orders
+     * 
+     */
+    public void handleAllUpgradeOrder() {
+        for (int i = 0; i < all_order_list.size(); i++) {
+            TurnList curr = all_order_list.get(i);
+            for (int j = 0; j < curr.getListLength(); j++) {
+                Turn curr_turn = curr.order_list.get(j);
+                if (curr_turn.getTurnType().equals("Upgrade")) {
+                    handleSingleUpgradeOrder((UpgradeTurn) curr_turn);
+                }
+            }
+        }
+    }
 
+    public void handleSingleUpgradeOrder(UpgradeTurn upgradeTurn) {
+        UpgradeChecking upgradeChecker = new UpgradeChecking<>();
+        if (upgradeChecker.checkMyRule(theMap, upgradeTurn, tech_list)) {
+            // the Upgrade Order is valid.
+            // update the tech resources of players
+            int upgrade_cost = upgradeChecker.upgrade_cost;
+            tech_list.addResource(upgradeTurn.getPlayerColor(), new TechResource(-upgrade_cost));
+        }
     }
 
     /**
@@ -277,6 +299,7 @@ public class HandleOrder<T> {
         this.theMap = theMap;
         handleAllMoveOrder();
         handleAllAttackOrder();
+        handleAllUpgradeOrder();
 
         // NEED TO RETURN UPDATED MAP
         return theMap;

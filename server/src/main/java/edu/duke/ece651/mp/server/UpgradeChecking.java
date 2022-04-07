@@ -8,6 +8,7 @@ import edu.duke.ece651.mp.common.*;
 
 public class UpgradeChecking<T> {
     String upgradeStatus;
+    public int upgrade_cost;
 
     public ArrayList<UpgradeTurn> checkMyRule(Map<T> map, ArrayList<UpgradeTurn> upgradeOrder,
             TechResourceList tech_list) {
