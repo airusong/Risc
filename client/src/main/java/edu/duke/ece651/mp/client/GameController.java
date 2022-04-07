@@ -382,6 +382,8 @@ public class GameController {
   @FXML
   private TextField UpgradeUnits;
   @FXML
+  private ComboBox<String> UpgradeTerritory;
+  @FXML
   private ComboBox<String> UpgradeFrom;
   @FXML
   private ComboBox<String> UpgradeTo;
@@ -401,6 +403,8 @@ public class GameController {
 
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
+    
+    initiateUnitList();
     setOrderPane();
   }
 
@@ -409,11 +413,17 @@ public class GameController {
    */
   private void setOrderPane() {
     setActionBox();
-    initiateUnitList();
-    setSourceBox();
-    setDestinationBox();
+    setTerritoryDropDowns();
     setUnitTypeBox();
+  }
 
+  /**
+   * Method to set up drop downs for territories
+   */
+  private void setTerritoryDropDowns() {
+    setSourceBox(from);
+    setSourceBox(UpgradeTerritory);
+    setDestinationBox();
   }
 
   /**
@@ -441,8 +451,7 @@ public class GameController {
     playeraction.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        setSourceBox();
-        setDestinationBox();
+        setTerritoryDropDowns();
       }
     });
   }
@@ -452,12 +461,12 @@ public class GameController {
   }
 
   @FXML
-  public void setSourceBox() {
+  public void setSourceBox(ComboBox<String> whichBox) {
     ArrayList<String> own_territory_list = theTextPlayer.getMyOwnTerritories();
     source_list.clear();
     source_list.addAll(own_territory_list);
-    from.setItems(source_list);
-    from.valueProperty().addListener(new ChangeListener<String>() {
+    whichBox.setItems(source_list);
+    whichBox.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         setUnitTypeBox();
@@ -467,6 +476,10 @@ public class GameController {
 
   public String getSource() {
     return (String) from.getValue();
+  }
+
+  public String getUpgradeSource() {
+    return (String) UpgradeTerritory.getValue();
   }
 
   @FXML
@@ -488,8 +501,11 @@ public class GameController {
     return (String) to.getValue();
   }
 
+  /**
+   * Method to set the unit type boxes for Upgrade Turn
+   */
   public void setUnitTypeBox() {
-    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getSource());
+    ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getUpgradeSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
     UpgradeFrom.setItems(unitType_list);
@@ -605,14 +621,18 @@ public class GameController {
         Turn newOrder = new MoveTurn(getSource(), getDestination(), "ALEVEL", getUnitNum_A(), getPlayerColor());
         // newOrder.printTurn();
         myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
       } else if (getAction().equals("Attack")) {
         Turn newOrder = new AttackTurn(getSource(), getDestination(), "ALEVEL", getUnitNum_A(), getPlayerColor());
         // newOrder.printTurn();
         myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
+      } else if (getAction().equals("Upgrade")) {
+        // create upgrade
+        GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType() + " to " + getUpgradeToUnitType() + " added");
       }
       // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
-      GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
     }
     clearSelectedAction();
 
@@ -661,11 +681,8 @@ public class GameController {
     theTextPlayer.receiveMap();
     updateUIMap();
     // updateBox
-    setActionBox();
-    setSourceBox();
-    setDestinationBox();
-    setUnitTypeBox();
-
+    setOrderPane();
+    
     // receive game status
     // Step-2 in Master playGame() in server
     String gameStatus = receiveAndUpdateGameStatus();
