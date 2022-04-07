@@ -34,7 +34,7 @@ public class Master {
     this.all_order_list = new ArrayList<TurnList>();
     PathChecking<Character> pcheck = new PathChecking<>(null);
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
-    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck);
+
     // initialize the Resources at the begining of the game
     food_list = new FoodResourceList();
     tech_list = new TechResourceList();
@@ -43,6 +43,8 @@ public class Master {
     food_list.addResource("Blue", new FoodResource(50));
     tech_list.addResource("Green", new TechResource(50));
     tech_list.addResource("Blue", new TechResource(50));
+
+    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, food_list, tech_list);
   }
 
   /**

@@ -12,22 +12,28 @@ public class HandleOrder<T> {
     Map<T> theMap;
     private final MoveChecking<T> moveChecker;
     ArrayList<String> turnStatus;
+    private FoodResourceList food_list;
+    private TechResourceList tech_list;
 
     HandleOrder() {
         this.all_order_list = new ArrayList<TurnList>();
         this.theMap = new V2Map<>();
         this.moveChecker = null;
         this.turnStatus = new ArrayList<>();
+        this.food_list = new FoodResourceList();
+        this.tech_list = new TechResourceList();
     }
 
-    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker) {
+    HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker,
+            FoodResourceList food_list, TechResourceList tech_list) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
         MapTextView test = new MapTextView((V2Map) theMap);
         test.displayMap();
-
         this.moveChecker = moveChecker;
         this.turnStatus = new ArrayList<>();
+        this.food_list = food_list;
+        this.tech_list = tech_list;
     }
 
     /**
@@ -87,7 +93,7 @@ public class HandleOrder<T> {
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
             // System.out.println("sort attack orders: ");
             TurnList curr = valid_attack_order_list.get(i);
-            HashMap<String, ArrayList<Turn>> temp = new HashMap<String,ArrayList<Turn>>();
+            HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
                 AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
                 // Generate/Update the temp map
@@ -99,27 +105,27 @@ public class HandleOrder<T> {
                 String des = curr_turn.getDestination();
                 if (temp.get(des) != null) {
                     temp.get(des).add(curr_turn);
-                }
-                else{
-                 ArrayList<Turn> newTurnList = new ArrayList<Turn>();
-                 newTurnList.add(curr_turn);
-                 temp.put(des, newTurnList);
+                } else {
+                    ArrayList<Turn> newTurnList = new ArrayList<Turn>();
+                    newTurnList.add(curr_turn);
+                    temp.put(des, newTurnList);
                 }
             }
             res.add(temp);
         }
 
-         for(HashMap<String, ArrayList<Turn>> hm: res){
-             for (ArrayList<Turn> t : hm.values()) {
+        for (HashMap<String, ArrayList<Turn>> hm : res) {
+            for (ArrayList<Turn> t : hm.values()) {
                 handleSingleAttackOrder(t, tempMap);
                 System.out.print("To Do: Handle Single Attack Order");
-             }
-         }
+            }
+        }
         /*
-        for (TurnList hm : valid_attack_order_list) {
-            handleSingleAttackOrder(hm.order_list, tempMap);
-            System.out.print("To Do: Handle Single Attack Order");
-        }*/
+         * for (TurnList hm : valid_attack_order_list) {
+         * handleSingleAttackOrder(hm.order_list, tempMap);
+         * System.out.print("To Do: Handle Single Attack Order");
+         * }
+         */
 
     }
 
@@ -176,13 +182,14 @@ public class HandleOrder<T> {
         String defenderTerritory = "";
         String player_color = "";
 
-        for(Turn temp: attackOrder){
-            AttackTurn t = (AttackTurn)temp;
+        for (Turn temp : attackOrder) {
+            AttackTurn t = (AttackTurn) temp;
             attacking_units += t.getNumber(); // add up units
             attackerTerritory = t.getSource(); // any Source
             defenderTerritory = t.getDestination(); // same Destination
             player_color = t.getPlayerColor();
-            //theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1)); // reduce #units in all attackerTerritory
+            // theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1)); //
+            // reduce #units in all attackerTerritory
         }
 
         Territory<T> attacker = tempMap.getAllTerritories().get(attackerTerritory);
@@ -220,21 +227,22 @@ public class HandleOrder<T> {
                 continue;
             } else {
                 // attacker territory lost the units no matter what
-                // theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) * (-1)); // -1 for making it
+                // theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) *
+                // (-1)); // -1 for making it
                 // negative
 
                 int unitChange;
                 if (loserTerr == attackerTerritory) {
-                    //System.out.println("defending_units is: " + defending_units);
-                    //System.out.println("defenders units is: " + defender.getUnit());
+                    // System.out.println("defending_units is: " + defending_units);
+                    // System.out.println("defenders units is: " + defender.getUnit());
                     unitChange = defending_units - defender.getUnit("ALEVEL");
-                    tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL",unitChange);
+                    tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL", unitChange);
                     combatResult = "Defender won!";
                 }
 
                 else { // loserTerr == defenderTerritory
-                    //System.out.println("defending_units is: " + defending_units);
-                    //System.out.println("defenders units is: " + defender.getUnit());
+                       // System.out.println("defending_units is: " + defending_units);
+                       // System.out.println("defenders units is: " + defender.getUnit());
                     unitChange = attacking_units - defender.getUnit("ALEVEL");
                     tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL", unitChange, player_color);
                     combatResult = "Attacker won!";
@@ -248,6 +256,9 @@ public class HandleOrder<T> {
 
     }
 
+    public void handleSingleUpgradeOrder(ArrayList<Turn> UpgradeOrder, Map<T> tempMap) {
+
+    }
 
     /**
      * Method to decrease one unit from each territory Used after each turn
