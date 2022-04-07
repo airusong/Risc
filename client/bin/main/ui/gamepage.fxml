@@ -171,7 +171,7 @@
          </children>
       </Pane>
       <Button fx:id="order" layoutX="529.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
-      <ComboBox fx:id="playeraction" layoutX="491.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefWidth="150.0" promptText="select a action" />
+      <ComboBox fx:id="playeraction" layoutX="491.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="170.0" promptText="Select an action" />
       <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="422.0" promptText="Game Status:" />
       <TextArea fx:id="turnstatus" editable="false" layoutX="23.0" layoutY="316.0" prefHeight="84.0" prefWidth="422.0" promptText="Turn Status: No turns yet" wrapText="true" />
       <TextArea fx:id="errormessage" editable="false" layoutX="458.0" layoutY="365.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />

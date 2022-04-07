@@ -192,7 +192,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
         ArrayList<Unit> unit_list = terr.getUnitList();
         for (Unit unit : unit_list) {
           unit_type_list.add(unit.getUnitType());
-          // System.out.println("The unit type is :" + unit.getUnitType());
+          System.out.println("The unit type is :" + unit.getUnitType());
         }
       }
     }
