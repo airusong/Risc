@@ -9,31 +9,28 @@ public abstract class Resource implements Serializable {
     private String type; // resources' type: food * tech
     private int amount; // production amount/per round game the territory produces.
 
-    public Resource(String type, int amount){
+    public Resource(String type, int amount) {
         this.type = type;
         this.amount = amount;
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
+
+        s.writeObject(amount);
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         s.defaultReadObject();
+
+        amount = (int) s.readObject();
     }
 
-    /*
-    public String getResourceType(){
-        return this.type;
-    }
-    */
-
-    public int getResourceAmount(){
+    public int getResourceAmount() {
         return this.amount;
     }
 
-    public void setResourceAmount(int amount){
+    public void setResourceAmount(int amount) {
         this.amount = amount;
     }
 }
-

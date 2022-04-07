@@ -14,9 +14,13 @@ public class Master {
   public ArrayList<String> players_identity;
   public ArrayList<TurnList> all_order_list;
   HandleOrder<Character> theHandleOrder;
+  // What is the best idea to implement this???
   private HashMap<String, FoodResource> food_list;
   private HashMap<String, TechResource> tech_list;
-
+  /*
+   * private FoodResourceList food_list;
+   * private TechResourceList tech_list;
+   */
 
   /**
    * Constructor
@@ -36,8 +40,8 @@ public class Master {
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
     this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck);
     // initialize the Resources at the begining of the game
-    food_list = new HashMap<String, FoodResource>();
-    tech_list = new HashMap<String, TechResource>();
+    food_list = new FoodResourceList();
+    tech_list = new TechResourceList();
     food_list.put("Green", new FoodResource(50));
     food_list.put("Blue", new FoodResource(50));
     tech_list.put("Green", new TechResource(50));
@@ -68,8 +72,8 @@ public class Master {
    * @throws IOException
    */
   public void sendResourceToAll() throws IOException {
-    theMasterServer.sendToAll((Object) food_list);
-    theMasterServer.sendToAll((Object) tech_list);
+    theMasterServer.sendToAll(food_list);
+    theMasterServer.sendToAll(tech_list);
   }
 
   public void close() throws IOException {
@@ -94,7 +98,8 @@ public class Master {
     theMasterServer.sendToAll(turnStatus);
   }
 
-  /**int
+  /**
+   * int
    * Method to receive and update orders from ALL players
    * 
    * @throws IOException
@@ -123,7 +128,7 @@ public class Master {
    * @return list of turn result
    */
   private ArrayList<String> handleOrders() {
-    V2Map<Character> updatedMap = (V2Map<Character>)theHandleOrder.handleOrders(all_order_list, theMap);
+    V2Map<Character> updatedMap = (V2Map<Character>) theHandleOrder.handleOrders(all_order_list, theMap);
     theMap = updatedMap;
 
     theMasterServer.all_order_list.clear(); // reset the turn list
@@ -138,40 +143,32 @@ public class Master {
    *
    * @return list of turn result
    */
-  private void updatePlayerResource(){
-    if(this.food_list == null){
-      System.out.println("Resource List is null");
-    }
+  private void updatePlayerResource() {
     HashMap<String, Integer> food_l = theMap.getOwnersTerritoryFoodGroups();
-    if(food_l == null){
-      System.out.println("The food L is null");
-    }
     HashMap<String, Integer> tech_l = theMap.getOwnersTerritoryTechGroups();
 
-    for(Map.Entry<String, FoodResource> set: this.food_list.entrySet()){
-      for(Map.Entry<String, Integer> s: food_l.entrySet()){
-        if(set.getKey().equals(s.getKey())){
+    for (Map.Entry<String, FoodResource> set : this.food_list.entrySet()) {
+      for (Map.Entry<String, Integer> s : food_l.entrySet()) {
+        if (set.getKey().equals(s.getKey())) {
           int old_food = set.getValue().getResourceAmount();
           int new_food = s.getValue() + old_food;
-          this.food_list.put(set.getKey(),new FoodResource(new_food));
+          this.food_list.put(set.getKey(), new FoodResource(new_food));
           break;
         }
       }
     }
 
-    for(Map.Entry<String, TechResource> set: tech_list.entrySet()){
-      for(Map.Entry<String, Integer> s: tech_l.entrySet()){
-        if(set.getKey().equals(s.getKey())){
+    for (Map.Entry<String, TechResource> set : tech_list.entrySet()) {
+      for (Map.Entry<String, Integer> s : tech_l.entrySet()) {
+        if (set.getKey().equals(s.getKey())) {
           int old_tech = set.getValue().getResourceAmount();
           int new_tech = s.getValue() + old_tech;
-          tech_list.put(set.getKey(),new TechResource(new_tech));
+          tech_list.put(set.getKey(), new TechResource(new_tech));
           break;
         }
       }
     }
   }
-
-
 
   /**
    * Method to start a game by accepting players sending the players their colors
@@ -182,10 +179,8 @@ public class Master {
     // Step-1:
     acceptPlayers();
 
-
     // Step-2:
     sendPlayerIdentityToAll();
-    System.out.println("Try to send resouces");
   }
 
   /**
@@ -197,9 +192,8 @@ public class Master {
     String gameStatus = "Ready for accepting turn!";
     while (true) { // main playing loop
       // Step-1: send map and resources to player
-      sendResourceToAll();
       sendMapToAll();
-
+      sendResourceToAll();
 
       // Step-2:
       // Send game status to all players
@@ -222,10 +216,9 @@ public class Master {
         // update gameStatus if needed
 
         String winning_color = this.theMasterServer.detectresult(theMap);
-        if(winning_color != null) {
+        if (winning_color != null) {
           gameStatus = winning_color + " player has won!";
-        }
-        else {
+        } else {
           // add one unit to each territory
           theMap.updateMapbyOneUnit();
           // updated the territories' produced resources to theTextPlayr
