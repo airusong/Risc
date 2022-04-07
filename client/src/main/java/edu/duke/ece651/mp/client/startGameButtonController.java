@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,20 +21,20 @@ public class startGameButtonController {
   private Button startGame;
 
   @FXML
-  private TextArea connection_status;
+  private Label connection_status;
 
   @FXML
   void onStartGameButton(MouseEvent event) {
 
     try {
-      connection_status.clear();
+      connection_status.setText("");;
       // build Connection with Server
       System.out.println("Welcome to our game!");
       int port = 8080;
       String servername = "127.0.0.1";
       BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
       Client theClient = new Client(servername, port, input, System.out);
-      connection_status.appendText("Connected to server! Waiting for my identity...");
+      connection_status.setText("Connected to server! Waiting for my identity...");
 
       theClient.theTextPlayer.initiateGame();
       System.out.println("Successfully connect to Server!");
