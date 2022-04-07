@@ -1,13 +1,17 @@
 package edu.duke.ece651.mp.client;
 
+import edu.duke.ece651.mp.common.FoodResource;
+import edu.duke.ece651.mp.common.MapTextView;
+import edu.duke.ece651.mp.common.TechResource;
+import edu.duke.ece651.mp.common.V2Map;
+
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.V2Map;
+import java.util.HashMap;
 
 public class TextPlayer {
   final PlayerServer connectionToMaster;
@@ -16,6 +20,8 @@ public class TextPlayer {
   final BufferedReader inputReader;
   final PrintStream out;
   protected String identity; // color
+  private FoodResource food;
+  private TechResource tech;
 
   /**
    * Constructor
@@ -32,6 +38,8 @@ public class TextPlayer {
     this.inputReader = inputReader;
     this.out = out;
     this.identity = "";
+    this.food = new FoodResource(0);
+    this.tech = new TechResource(0);
   }
 
   /**
@@ -54,7 +62,7 @@ public class TextPlayer {
    */
   @SuppressWarnings("unchecked")
   public void receiveMap() {
-    V2Map<Character> receivedMap = (V2Map<Character>) connectionToMaster.receiveFromServer();
+    V2Map<Character> receivedMap = (V2Map)connectionToMaster.receiveFromServer();
     updateMap(receivedMap);
   }
 
@@ -71,8 +79,20 @@ public class TextPlayer {
 
   public void setIdentity(String ident) {
     this.identity = ident;
-
   }
+
+  /**
+   * method to receive Player Resource List from the server
+   */
+  public void receiveResource() {
+    System.out.println("Receive Resource from Server");
+    HashMap<String, FoodResource> food_list = (HashMap<String, FoodResource>) connectionToMaster.receiveFromServer();
+    HashMap<String, TechResource> tech_list = (HashMap<String, TechResource>) connectionToMaster.receiveFromServer();
+    this.food = food_list.get(identity);
+    this.tech = tech_list.get(identity);
+    System.out.println("Set Player resource List");
+  }
+
 
   /*
   public void takeAndSendTurn() throws IOException {
@@ -262,10 +282,11 @@ public class TextPlayer {
    */
   public void playGame() throws IOException {
     while (true) { // main loop to play
-      // Step-1:
+      // Step-1: Receive map and resources from server
+      receiveResource();
       receiveMap();
       printMap();
-
+      System.out.println("Try to receive status of game");
       // Step-2:
       // Receive game status from server
       String status = receiveAndPrintGameStatus();
@@ -310,13 +331,26 @@ public class TextPlayer {
    * method to receive turn status from the server
    * 
    */
-
   private void printTurnStatus(ArrayList<String> status_list) {
     out.println("--------------\nTurn Status:\n--------------\n");
     for (String turn_status : status_list) {
       out.println(turn_status);
     }
     out.print("\n");
+  }
+
+  /**
+   * method to return resource num
+   *
+   */
+  private int getResourceNum(String resource_type){
+    if(resource_type.equals("food")){
+      return this.food.getResourceAmount();
+    }
+    else if(resource_type.equals("tech")){
+      return this.tech.getResourceAmount();
+    }
+    return 0;
   }
 
 }

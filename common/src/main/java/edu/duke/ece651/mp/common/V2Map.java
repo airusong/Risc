@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
@@ -16,7 +17,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * Constructor construct a V2Map specified with Territoris in it
    * 
-   * @param hashmap myTerritories, the key is the territory itself and the value
+   * @param  players_colors myTerritories, the key is the territory itself and the value
    *                is the list of adjancent territories
    */
   public V2Map(ArrayList<String> players_colors) {
@@ -70,38 +71,59 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * function used to initialize the adjacency information in the map
    **/
-  protected void addAdjacency() {
-    myTerritories.get("Narnia").addAdjacency("Midemio");
-    myTerritories.get("Narnia").addAdjacency("Elantris");
-    myTerritories.get("Midemio").addAdjacency("Narnia");
-    myTerritories.get("Midemio").addAdjacency("Oz");
-    myTerritories.get("Oz").addAdjacency("Midemio");
-    myTerritories.get("Oz").addAdjacency("Roshar");
-    myTerritories.get("Elantris").addAdjacency("Scadnal");
-    myTerritories.get("Elantris").addAdjacency("Narnia");
-    myTerritories.get("Scadnal").addAdjacency("Roshar");
-    myTerritories.get("Scadnal").addAdjacency("Elantris");
-    myTerritories.get("Roshar").addAdjacency("Oz");
-    myTerritories.get("Roshar").addAdjacency("Scadnal");
-  }
+    protected void addAdjacency() {
+      myTerritories.get("Narnia").addAdjacency("Midemio");
+      myTerritories.get("Narnia").addAdjacency("Midemio");
+      myTerritories.get("Narnia").addAdjacency("Elantris");
+      myTerritories.get("Narnia").addAdjacency("Elantris");
+      myTerritories.get("Midemio").addAdjacency("Narnia");
+      myTerritories.get("Midemio").addAdjacency("Narnia");
+      myTerritories.get("Midemio").addAdjacency("Oz");
+      myTerritories.get("Midemio").addAdjacency("Oz");
+      myTerritories.get("Midemio").addAdjacency("Elantris");
+      myTerritories.get("Midemio").addAdjacency("Scadnal");
+      myTerritories.get("Oz").addAdjacency("Midemio");
+      myTerritories.get("Oz").addAdjacency("Midemio");
+      myTerritories.get("Oz").addAdjacency("Scadnal");
+      myTerritories.get("Oz").addAdjacency("Roshar");
+      myTerritories.get("Elantris").addAdjacency("Scadnal");
+      myTerritories.get("Elantris").addAdjacency("Scadnal");
+      myTerritories.get("Elantris").addAdjacency("Narnia");;
+      myTerritories.get("Elantris").addAdjacency("Narnia");
+      myTerritories.get("Elantris").addAdjacency("Roshar");;
+      myTerritories.get("Elantris").addAdjacency("Midemio");
+      myTerritories.get("Scadnal").addAdjacency("Roshar");
+      myTerritories.get("Scadnal").addAdjacency("Roshar");
+      myTerritories.get("Scadnal").addAdjacency("Elantris");;
+      myTerritories.get("Scadnal").addAdjacency("Elantris");
+      myTerritories.get("Scadnal").addAdjacency("Oz");;
+      myTerritories.get("Roshar").addAdjacency("Oz");
+      myTerritories.get("Scadnal").addAdjacency("Midemio");
+      myTerritories.get("Roshar").addAdjacency("Elantris");
+      myTerritories.get("Roshar").addAdjacency("Scadnal");
+      myTerritories.get("Roshar").addAdjacency("Scadnal");
 
-  /**
-   * function used to initialize the Resource information in the map
-   **/
+    }
+
+
+
+    /**
+     * function used to initialize the Resource information in the map
+     **/
   protected void addResources() {
-    myTerritories.get("Narnia").addResource(new Resource("food", 10));
-    myTerritories.get("Narnia").addResource(new Resource("tech", 20));
-    myTerritories.get("Midemio").addResource(new Resource("food", 20));
-    myTerritories.get("Midemio").addResource(new Resource("tech", 10));
-    myTerritories.get("Oz").addResource(new Resource("food", 20));
-    myTerritories.get("Oz").addResource(new Resource("tech", 20));
+    myTerritories.get("Narnia").updateResource(new FoodResource(10));
+    myTerritories.get("Narnia").updateResource(new TechResource(20));
+    myTerritories.get("Midemio").updateResource(new FoodResource(20));
+    myTerritories.get("Midemio").updateResource(new TechResource(10));
+    myTerritories.get("Oz").updateResource(new FoodResource(20));
+    myTerritories.get("Oz").updateResource(new TechResource(20));
 
-    myTerritories.get("Elantris").addResource(new Resource("food", 20));
-    myTerritories.get("Elantris").addResource(new Resource("tech", 15));
-    myTerritories.get("Scadnal").addResource(new Resource("food", 15));
-    myTerritories.get("Scadnal").addResource(new Resource("tech", 15));
-    myTerritories.get("Roshar").addResource(new Resource("food", 15));
-    myTerritories.get("Roshar").addResource(new Resource("tech", 20));
+    myTerritories.get("Elantris").updateResource(new FoodResource(20));
+    myTerritories.get("Elantris").updateResource(new TechResource( 15));
+    myTerritories.get("Scadnal").updateResource(new FoodResource( 15));
+    myTerritories.get("Scadnal").updateResource(new TechResource( 15));
+    myTerritories.get("Roshar").updateResource(new FoodResource( 15));
+    myTerritories.get("Roshar").updateResource(new TechResource(20));
   }
 
   /**
@@ -169,6 +191,46 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       territoryGroups.get(terrOwner).add(terr.getName());
     }
     return territoryGroups;
+  }
+
+  /**
+   * method to get produced food resources grouped by owner
+   *
+   * @return hashmap with key as the owner/player color and value as FoodResources' amount of player-owned territories
+   */
+  public HashMap<String, Integer> getOwnersTerritoryFoodGroups() {
+    HashMap<String, Integer> territoryFoodGroups = new HashMap<>();
+    territoryFoodGroups.put("Green", 0);
+    territoryFoodGroups.put("Blue", 0);
+
+    for (Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
+      Territory<T> terr = entry.getValue();
+      int terr_food = terr.getFoodNum();
+      String terrOwner = terr.getColor();
+      int old_food = territoryFoodGroups.get(terrOwner);
+      territoryFoodGroups.put(terrOwner, (old_food + terr_food));
+    }
+    return territoryFoodGroups;
+  }
+
+  /**
+   * method to get produced tech resources grouped by owner
+   *
+   * @return hashmap with key as the owner/player color and value as TechResources' amount of player-owned territories
+   */
+  public HashMap<String, Integer> getOwnersTerritoryTechGroups() {
+    HashMap<String, Integer> territoryTechGroups = new HashMap<>();
+    territoryTechGroups.put("Green", 0);
+    territoryTechGroups.put("Blue", 0);
+
+    for (Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
+      Territory<T> terr = entry.getValue();
+      int terr_tech = terr.getTechNum();
+      String terrOwner = terr.getColor();
+      int old_tech = territoryTechGroups.get(terrOwner);
+      territoryTechGroups.put(terrOwner, (old_tech + terr_tech));
+    }
+    return territoryTechGroups;
   }
 
   /*

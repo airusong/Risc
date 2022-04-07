@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Resource implements Serializable {
+public abstract class Resource implements Serializable {
     private String type; // resources' type: food * tech
     private int amount; // production amount/per round game the territory produces.
 
@@ -22,12 +22,18 @@ public class Resource implements Serializable {
         s.defaultReadObject();
     }
 
+    /*
     public String getResourceType(){
         return this.type;
     }
+    */
 
     public int getResourceAmount(){
         return this.amount;
+    }
+
+    public void setResourceAmount(int amount){
+        this.amount = amount;
     }
 }
 
