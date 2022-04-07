@@ -154,6 +154,7 @@ public class Master {
   }
 
   /**
+   * cl
    * Method to start a game by accepting players sending the players their colors
    * 
    * @throws IOException, InterruptedException

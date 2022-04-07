@@ -1,8 +1,10 @@
 package edu.duke.ece651.mp.client;
 
 import edu.duke.ece651.mp.common.FoodResource;
+import edu.duke.ece651.mp.common.FoodResourceList;
 import edu.duke.ece651.mp.common.MapTextView;
 import edu.duke.ece651.mp.common.TechResource;
+import edu.duke.ece651.mp.common.TechResourceList;
 import edu.duke.ece651.mp.common.V2Map;
 
 import java.io.BufferedReader;
@@ -86,10 +88,10 @@ public class TextPlayer {
    */
   public void receiveResource() {
     System.out.println("Receive Resource from Server");
-    HashMap<String, FoodResource> food_list = (HashMap<String, FoodResource>) connectionToMaster.receiveFromServer();
-    HashMap<String, TechResource> tech_list = (HashMap<String, TechResource>) connectionToMaster.receiveFromServer();
-    this.food = food_list.get(identity);
-    this.tech = tech_list.get(identity);
+    FoodResourceList food_list = (FoodResourceList) connectionToMaster.receiveFromServer();
+    TechResourceList tech_list = (TechResourceList) connectionToMaster.receiveFromServer();
+    this.food = food_list.resource_list.get(identity);
+    this.tech = tech_list.resource_list.get(identity);
     System.out.println("Set Player resource List");
   }
 

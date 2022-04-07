@@ -16,13 +16,13 @@ public abstract class Resource implements Serializable {
 
     private void writeObject(ObjectOutputStream s) throws IOException {
         s.defaultWriteObject();
-
+        s.writeObject(type);
         s.writeObject(amount);
     }
 
     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
         s.defaultReadObject();
-
+        type = (String) s.readObject();
         amount = (int) s.readObject();
     }
 
