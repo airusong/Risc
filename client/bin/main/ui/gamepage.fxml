@@ -37,7 +37,7 @@
             <StackPane id="Territory4" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr4Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -47,7 +47,7 @@
             <StackPane id="Territory1" fx:id="Territory1" layoutX="10.0" layoutY="132.0">
                <children>
                   <Rectangle fx:id="Terr1Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" prefHeight="49.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" prefHeight="49.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -57,7 +57,7 @@
             <StackPane id="Territory2" fx:id="Territory2" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Rectangle fx:id="Terr2Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -67,7 +67,7 @@
             <StackPane id="Territory3" fx:id="Territory3" layoutX="118.0" layoutY="10.0" GridPane.columnIndex="4">
                <children>
                   <Rectangle fx:id="Terr3Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -77,7 +77,7 @@
             <StackPane id="Territory6" fx:id="Territory5" layoutX="226.0" layoutY="10.0" prefHeight="42.0" prefWidth="103.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr5Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -87,7 +87,7 @@
             <StackPane id="Territory4" fx:id="Territory6" layoutX="118.0" layoutY="132.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
                   <Rectangle fx:id="Terr6Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
+                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
                      <font>
                         <Font size="14.0" />
                      </font>

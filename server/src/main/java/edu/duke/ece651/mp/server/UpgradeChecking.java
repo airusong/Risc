@@ -55,36 +55,45 @@ public class UpgradeChecking<T> {
                 base = 0;
                 break;
             case "BLEVEL":
-                base = 50;
+                base = 3;
                 break;
             case "CLEVEL":
-                base = 125;
+                base = 11;
                 break;
             case "DLEVEL":
-                base = 250;
+                base = 30;
                 break;
             case "ELEVEL":
-                base = 450;
+                base = 55;
                 break;
             case "FLEVEL":
-                base = 750;
+                base = 90;
+                break;
+            case "GLEVEL":
+                base = 140;
                 break;
         }
         switch (new_unit_type) {
+            case "ALEVEL":
+                top = 0;
+                break;
             case "BLEVEL":
-                top = 50;
+                top = 3;
                 break;
             case "CLEVEL":
-                top = 125;
+                top = 11;
                 break;
             case "DLEVEL":
-                top = 250;
+                top = 30;
                 break;
             case "ELEVEL":
-                top = 450;
+                top = 55;
                 break;
             case "FLEVEL":
-                top = 750;
+                top = 90;
+                break;
+            case "GLEVEL":
+                top = 140;
                 break;
         }
         int upgrade_price = top - base;
@@ -103,6 +112,7 @@ public class UpgradeChecking<T> {
 
         // passed all rules!
         upgradeStatus += "valid ";
+        this.upgrade_cost = upgrade_price;
         return true;
     }
 

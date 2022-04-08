@@ -58,4 +58,10 @@ public class FoodResourceList implements Serializable {
             }
         }
     }
+
+    public void printList() {
+        for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
+            System.out.println(set.getKey() + ":" + set.getValue().getResourceAmount());
+        }
+    }
 }
