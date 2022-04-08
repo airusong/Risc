@@ -2,9 +2,10 @@ package edu.duke.ece651.mp.server;
 
 import java.util.ArrayList;
 
-import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
-
-import edu.duke.ece651.mp.common.*;
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.UpgradeTurn;
+import edu.duke.ece651.mp.common.TechResourceList;
 
 public class UpgradeChecking<T> {
     String upgradeStatus;
@@ -101,7 +102,7 @@ public class UpgradeChecking<T> {
         }
 
         // passed all rules!
-        upgradeStatus += "valid - ";
+        upgradeStatus += "valid ";
         return true;
     }
 

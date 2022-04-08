@@ -12,6 +12,22 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
 
+  public ArrayList<String> AllUnitTypes;
+
+  /**
+   * method to initialize all unit types and their bonus
+   */
+  private void initializeUnitTypes() {
+    AllUnitTypes = new ArrayList<>();
+    AllUnitTypes.add("ALEVEL");
+    AllUnitTypes.add("BLEVEL");
+    AllUnitTypes.add("CLEVEL");
+    AllUnitTypes.add("DLEVEL");
+    AllUnitTypes.add("ELEVEL");
+    AllUnitTypes.add("FLEVEL");
+    AllUnitTypes.add("GLEVEL");
+  }
+
   /**
    * Constructor construct a V2Map specified with Territoris in it
    * 
@@ -22,6 +38,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public V2Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
     this.players_colors = players_colors;
+    initializeUnitTypes();
     setMap();
     addAdjacency();
     addResources();
@@ -31,6 +48,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   public V2Map() {
     this.myTerritories = new HashMap<>();
     ArrayList<String> players_colors = new ArrayList<String>();
+    initializeUnitTypes();
     players_colors.add("Green");
     players_colors.add("Blue");
     this.players_colors = players_colors;
@@ -114,13 +132,11 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    * function used to initialize the unit information in the map
    **/
   protected void addUnits() {
-    myTerritories.get("Narnia").addUnit(new Unit("ALEVEL", 20));
-    myTerritories.get("Midemio").addUnit(new Unit("ALEVEL", 20));
-    myTerritories.get("Oz").addUnit(new Unit("ALEVEL", 20));
+    String basicUnitType = AllUnitTypes.get(0);
 
-    myTerritories.get("Elantris").addUnit(new Unit("ALEVEL", 20));
-    myTerritories.get("Scadnal").addUnit(new Unit("ALEVEL", 20));
-    myTerritories.get("Roshar").addUnit(new Unit("ALEVEL", 20));
+    for (String terrName : myTerritories.keySet()) {
+      myTerritories.get(terrName).addUnit(new Unit(basicUnitType, 20));
+    }
   }
 
   /**
@@ -233,8 +249,10 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       if (terr.getName().equals(currTerritory)) {
         ArrayList<Unit> unit_list = terr.getUnitList();
         for (Unit unit : unit_list) {
-          unit_type_list.add(unit.getUnitType());
-          System.out.println("The unit type is :" + unit.getUnitType());
+          if (unit.getUnitNum() > 0) {
+            unit_type_list.add(unit.getUnitType());
+            // System.out.println("The unit type is :" + unit.getUnitType());
+          }
         }
       }
     }
@@ -258,6 +276,19 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     Territory<T> t2 = myTerritories.get(des);
     t2.updateUnit(unit_type, n2);
     myTerritories.put(des, t2);
+  }
+
+  // Upgrade Map according to upgrade order
+  public void updateMapForUpgrade(String dep, String old_type, String new_type, int unit_change) {
+    // update the #unit of old type
+    Territory<T> terr = myTerritories.get(dep);
+    int o_currUnits = terr.getUnit(old_type);
+    int o_newUnits = o_currUnits - unit_change;
+    terr.updateUnit(old_type, o_newUnits);
+    // update the #unit of the new type
+    int n_currUnits = terr.getUnit(new_type);
+    int n_newUnits = n_currUnits + unit_change;
+    terr.updateUnit(new_type, n_newUnits);
   }
 
   /* Update TempMap for moving all units before attacking */

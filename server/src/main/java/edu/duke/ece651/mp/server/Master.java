@@ -36,15 +36,15 @@ public class Master {
     OwnerChecking<Character> ocheck = new OwnerChecking<>(pcheck);
 
     // initialize the Resources at the begining of the game
-    food_list = new FoodResourceList();
-    tech_list = new TechResourceList();
+    this.food_list = new FoodResourceList(players_identity);
+    this.tech_list = new TechResourceList(players_identity);
+    for (String playerColor : players_identity) {
+      food_list.addResource(playerColor, new FoodResource(50));
+      tech_list.addResource(playerColor, new TechResource(50));
 
-    food_list.addResource("Green", new FoodResource(50));
-    food_list.addResource("Blue", new FoodResource(50));
-    tech_list.addResource("Green", new TechResource(50));
-    tech_list.addResource("Blue", new TechResource(50));
-
-    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, food_list, tech_list);
+    }
+    this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, players_identity, food_list,
+        tech_list);
   }
 
   /**

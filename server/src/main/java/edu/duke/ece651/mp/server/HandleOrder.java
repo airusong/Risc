@@ -3,7 +3,6 @@ package edu.duke.ece651.mp.server;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Set;
 
 import edu.duke.ece651.mp.common.*;
 
@@ -14,25 +13,27 @@ public class HandleOrder<T> {
     ArrayList<String> turnStatus;
     private FoodResourceList food_list;
     private TechResourceList tech_list;
+    public ArrayList<String> players_identity;
 
     HandleOrder() {
         this.all_order_list = new ArrayList<TurnList>();
         this.theMap = new V2Map<>();
         this.moveChecker = null;
         this.turnStatus = new ArrayList<>();
-        this.food_list = new FoodResourceList();
-        this.tech_list = new TechResourceList();
+        this.players_identity = new ArrayList<String>();
+        this.food_list = new FoodResourceList(players_identity);
+        this.tech_list = new TechResourceList(players_identity);
     }
 
     HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker,
-            FoodResourceList food_list, TechResourceList tech_list) {
+            ArrayList<String> players_identity, FoodResourceList food_list, TechResourceList tech_list) {
         this.all_order_list = all_order_list;
         this.theMap = theMap;
         MapTextView test = new MapTextView((V2Map) theMap);
         test.displayMap();
-
         this.moveChecker = moveChecker;
         this.turnStatus = new ArrayList<>();
+        this.players_identity = players_identity;
         this.food_list = food_list;
         this.tech_list = tech_list;
     }
@@ -271,6 +272,7 @@ public class HandleOrder<T> {
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = curr.order_list.get(j);
                 if (curr_turn.getTurnType().equals("Upgrade")) {
+                    // System.out.println("Try to handle upgrade order");
                     handleSingleUpgradeOrder((UpgradeTurn) curr_turn);
                 }
             }
@@ -279,12 +281,18 @@ public class HandleOrder<T> {
 
     public void handleSingleUpgradeOrder(UpgradeTurn upgradeTurn) {
         UpgradeChecking upgradeChecker = new UpgradeChecking<>();
+
         if (upgradeChecker.checkMyRule(theMap, upgradeTurn, tech_list)) {
             // the Upgrade Order is valid.
             // update the tech resources of players
             int upgrade_cost = upgradeChecker.upgrade_cost;
             tech_list.addResource(upgradeTurn.getPlayerColor(), new TechResource(-upgrade_cost));
+            String old_type = upgradeTurn.getOldUnitType();
+            String new_type = upgradeTurn.getNewUniType();
+            int unitChange = upgradeTurn.getNumber();
+            theMap.updateMapForUpgrade(upgradeTurn.getFromTerritory(), old_type, new_type, unitChange);
         }
+        turnStatus.add(upgradeChecker.upgradeStatus);
     }
 
     /**

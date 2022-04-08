@@ -13,10 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.V2Map;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -509,7 +505,12 @@ public class GameController {
     ArrayList<String> own_unitType_list = theTextPlayer.theMap.getTerritoryUnitType(getUpgradeSource());
     unitType_list.clear();
     unitType_list.addAll(own_unitType_list);
+    // upgrade from should be showing units owned by the territory
     UpgradeFrom.setItems(unitType_list);
+
+    // upgrade to should be should be showing all the available levels
+    unitType_list.clear();
+    unitType_list.addAll(theTextPlayer.theMap.AllUnitTypes);
     UpgradeTo.setItems(unitType_list);
   }
 
@@ -527,8 +528,10 @@ public class GameController {
     return UpgradeTo.getValue();
   }
 
+
   /**
    * Method to get user entered unit number
+   * @param which textfield
    */
   public int getUnitNum(TextField UnitType) {
     int enteredVal;
@@ -604,6 +607,8 @@ public class GameController {
         GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
       } else if (getAction().equals("Upgrade")) {
         // create upgrade
+        Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(), getUnitNum(UpgradeUnits), getPlayerColor());
+        myTurn.addTurn(newOrder);
         GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType() + " to " + getUpgradeToUnitType() + " added");
       }
       // theClient.theTextPlayer.takeAndSendTurn();

@@ -4,15 +4,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.String;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TechResourceList implements Serializable {
+    public ArrayList<String> players_identity;
     public HashMap<String, TechResource> resource_list;
 
-    public TechResourceList() {
+    public TechResourceList(ArrayList<String> players_identity) {
+        this.players_identity = players_identity;
         resource_list = new HashMap<String, TechResource>();
+        for (String playerColor : players_identity) {
+            resource_list.put(playerColor, new TechResource(0));
+        }
     }
 
     private void writeObject(ObjectOutputStream s) throws IOException {
@@ -50,6 +55,12 @@ public class TechResourceList implements Serializable {
                 resource_list.put(color, new TechResource(new_num));
                 break;
             }
+        }
+    }
+
+    public void printList() {
+        for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
+            System.out.print(set.getKey() + ":" + set.getValue().getResourceAmount());
         }
     }
 
