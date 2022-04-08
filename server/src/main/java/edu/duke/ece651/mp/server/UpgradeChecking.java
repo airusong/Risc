@@ -102,7 +102,7 @@ public class UpgradeChecking<T> {
         }
 
         // passed all rules!
-        upgradeStatus += "valid - ";
+        upgradeStatus += "valid ";
         return true;
     }
 

@@ -11,7 +11,7 @@ import java.util.Map;
 public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable {
   public HashMap<String, Territory<T>> myTerritories; // key=name, value=object itself
   public ArrayList<String> players_colors;
-  
+
   public ArrayList<String> AllUnitTypes;
 
   /**
@@ -249,8 +249,10 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       if (terr.getName().equals(currTerritory)) {
         ArrayList<Unit> unit_list = terr.getUnitList();
         for (Unit unit : unit_list) {
-          unit_type_list.add(unit.getUnitType());
-          System.out.println("The unit type is :" + unit.getUnitType());
+          if (unit.getUnitNum() > 0) {
+            unit_type_list.add(unit.getUnitType());
+            System.out.println("The unit type is :" + unit.getUnitType());
+          }
         }
       }
     }
