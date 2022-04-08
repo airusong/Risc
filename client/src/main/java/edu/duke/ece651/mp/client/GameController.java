@@ -2,42 +2,33 @@ package edu.duke.ece651.mp.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-import edu.duke.ece651.mp.common.*;
-import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import edu.duke.ece651.mp.common.AttackTurn;
+import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.UpgradeTurn;
+import edu.duke.ece651.mp.common.V2Map;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-
-import javax.print.attribute.HashPrintServiceAttributeSet;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.stage.Popup;
 
 public class GameController {
   // Stack panes holding all territory elements
@@ -86,25 +77,8 @@ public class GameController {
 
   private ArrayList<TextField> terrNames;
 
-  // Text fields to show territory units
-  @FXML
-  private TextField Terr1Units;
-  @FXML
-  private TextField Terr2Units;
-  @FXML
-  private TextField Terr3Units;
-  @FXML
-  private TextField Terr4Units;
-  @FXML
-  private TextField Terr5Units;
-  @FXML
-  private TextField Terr6Units;
-
-  private ArrayList<TextField> terrUnits;
-
   private HashMap<String, Shape> TerritoryBoxes;
   private HashMap<String, TextField> TerritoryNames;
-  private HashMap<String, TextField> TerritoryUnits;
 
   // Lines between rectangles to show adjacency
   @FXML
@@ -165,6 +139,34 @@ public class GameController {
     // draw lines between territories for showing adjacency
     setAdjacency(initialMap);
 
+    // setup tooltips to show territory details
+    setTerritoryDetailsView();
+  }
+
+  HashMap<String, Tooltip> TerritoryTooltips;
+  /**
+   * Method to set tooltips so that territory details are shown when the user
+   * hovers the mouse over it
+   */
+  private void setTerritoryDetailsView() {
+    TerritoryTooltips = new HashMap<>();
+    for (String terrName : TerritoryNames.keySet()) {
+      final Tooltip tooltip = new Tooltip();
+      String terrDetails = theTextPlayer.theMap.getAllTerritories().get(terrName).getTerritoryDetails();
+      tooltip.setText(terrDetails);
+      TerritoryNames.get(terrName).setTooltip(tooltip);
+      TerritoryTooltips.put(terrName, tooltip);
+    }
+  }
+
+  /**
+   * Method to update the tooltip details
+   */
+  private void updateTerritoryDetailsView() {
+    for (HashMap.Entry<String, Tooltip> entry: TerritoryTooltips.entrySet()) {
+      String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
+      entry.getValue().setText(terrDetails);
+    }
   }
 
   ArrayList<StringProperty> terrUnitsList = new ArrayList<>();
@@ -183,7 +185,6 @@ public class GameController {
 
     TerritoryBoxes = new HashMap<>();
     TerritoryNames = new HashMap<>();
-    TerritoryUnits = new HashMap<>();
     int i = 0;
     for (String player_color : initialMap.getPlayerColors()) {
       Color terrColor = Color.WHITE; // default
@@ -198,11 +199,8 @@ public class GameController {
         terrBoxes.get(i).setFill(terrColor);
         terrNames.get(i).setText(terrName);
         // To Do: Display different number of various UnitType
-        // Now just display Alevel
-        terrUnits.get(i).setText("ALEVEL:" + allTerritories.get(terrName).getUnit("ALEVEL"));
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
-        TerritoryUnits.put(terrName, terrUnits.get(i));
         i++;
       }
     }
@@ -230,14 +228,6 @@ public class GameController {
     terrNames.add(Terr5Name);
     terrNames.add(Terr6Name);
 
-    // Add units
-    terrUnits = new ArrayList<TextField>();
-    terrUnits.add(Terr1Units);
-    terrUnits.add(Terr2Units);
-    terrUnits.add(Terr3Units);
-    terrUnits.add(Terr4Units);
-    terrUnits.add(Terr5Units);
-    terrUnits.add(Terr6Units);
   }
 
   /**
@@ -400,7 +390,7 @@ public class GameController {
 
     setName();
     myTurn = new TurnList(theTextPlayer.identity);
-    
+
     initiateUnitList();
     setOrderPane();
   }
@@ -528,9 +518,9 @@ public class GameController {
     return UpgradeTo.getValue();
   }
 
-
   /**
    * Method to get user entered unit number
+   * 
    * @param which textfield
    */
   public int getUnitNum(TextField UnitType) {
@@ -607,9 +597,11 @@ public class GameController {
         GameStatus.setText(getAction() + " order from " + getSource() + " to " + getDestination() + " added");
       } else if (getAction().equals("Upgrade")) {
         // create upgrade
-        Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(), getUnitNum(UpgradeUnits), getPlayerColor());
+        Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(),
+            getUnitNum(UpgradeUnits), getPlayerColor());
         myTurn.addTurn(newOrder);
-        GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType() + " to " + getUpgradeToUnitType() + " added");
+        GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType()
+            + " to " + getUpgradeToUnitType() + " added");
       }
       // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
@@ -620,8 +612,9 @@ public class GameController {
 
   /**
    * Method to create a hashmap with keys as unit type and value as number of
-   * units entered by the player
-   * Note the return hashmap includes the unit entry which were valid i.e. non-zero and positive. The returned hashmap cannot be empty as we check for all zero inputs in errorMessageShowing() method
+   * units entered by the player Note the return hashmap includes the unit entry
+   * which were valid i.e. non-zero and positive. The returned hashmap cannot be
+   * empty as we check for all zero inputs in errorMessageShowing() method
    */
   private HashMap<String, Integer> getUnitsEntry() {
     HashMap<String, Integer> units = new HashMap<>();
@@ -676,7 +669,7 @@ public class GameController {
     updateUIMap();
     // updateBox
     setOrderPane();
-    
+
     // receive game status
     // Step-2 in Master playGame() in server
     String gameStatus = receiveAndUpdateGameStatus();
@@ -696,11 +689,11 @@ public class GameController {
    * method to update the map after each turn
    */
   private void updateUIMap() {
+    // update the tooltips
+    updateTerritoryDetailsView();
+    
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
-    for (String terrName : TerritoryUnits.keySet()) {
-      // Update number of units
-      TerritoryUnits.get(terrName).setText(Integer.toString(allTerritories.get(terrName).getUnit("ALEVEL")));
-
+    for (String terrName : TerritoryNames.keySet()) {
       // Update color of territory
       String player_color = allTerritories.get(terrName).getColor();
       Color terrColor = Color.WHITE; // default
