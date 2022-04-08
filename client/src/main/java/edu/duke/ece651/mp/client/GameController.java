@@ -383,8 +383,8 @@ public class GameController {
   public void initGame() {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
-    setUpMap();
     theTextPlayer.receiveResource();
+    setUpMap();
 
     // Step-2 of playGame()
     // Receive Game Status from server
