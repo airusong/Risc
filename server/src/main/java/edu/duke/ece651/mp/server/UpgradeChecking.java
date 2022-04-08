@@ -112,7 +112,7 @@ public class UpgradeChecking<T> {
 
         // passed all rules!
         upgradeStatus += "valid ";
-        this.upgrade_cost = upgrade_price;
+        this.upgrade_cost = need_amount;
         return true;
     }
 
