@@ -126,6 +126,7 @@ public class GameController {
    */
   public void setUpMap() {
     V2Map<Character> initialMap = theTextPlayer.theMap;
+    setPlayerResourceView();
     setUpTerritories(initialMap);
   }
 
@@ -144,6 +145,7 @@ public class GameController {
   }
 
   HashMap<String, Tooltip> TerritoryTooltips;
+
   /**
    * Method to set tooltips so that territory details are shown when the user
    * hovers the mouse over it
@@ -163,7 +165,7 @@ public class GameController {
    * Method to update the tooltip details
    */
   private void updateTerritoryDetailsView() {
-    for (HashMap.Entry<String, Tooltip> entry: TerritoryTooltips.entrySet()) {
+    for (HashMap.Entry<String, Tooltip> entry : TerritoryTooltips.entrySet()) {
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
       entry.getValue().setText(terrDetails);
     }
@@ -381,8 +383,8 @@ public class GameController {
   public void initGame() {
     // Step-1 of playGame()
     theTextPlayer.receiveMap();
-    setUpMap();
     theTextPlayer.receiveResource();
+    setUpMap();
 
     // Step-2 of playGame()
     // Receive Game Status from server
@@ -430,6 +432,28 @@ public class GameController {
   public void setName() {
     String name = theTextPlayer.identity;
     player_info.setText(name);
+  }
+
+  Tooltip playerResourceTooltip;
+  
+  /**
+   * Method to set the tooltip to view player's resources
+   */
+  private void setPlayerResourceView() {
+    final Tooltip tooltip = new Tooltip();
+    String resourceDetails = theTextPlayer.getResourcesDtails();
+    tooltip.setText(resourceDetails);
+    player_info.setTooltip(tooltip);
+
+    playerResourceTooltip = tooltip;
+  }
+
+  /**
+   * Method to update player resources view
+   */
+  private void updatePlayerResourceView() {
+    String resourceDetails = theTextPlayer.getResourcesDtails();
+    playerResourceTooltip.setText(resourceDetails);
   }
 
   @FXML
@@ -689,9 +713,12 @@ public class GameController {
    * method to update the map after each turn
    */
   private void updateUIMap() {
+    // update player's resources tooltip
+    updatePlayerResourceView();;
+    
     // update the tooltips
     updateTerritoryDetailsView();
-    
+
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryNames.keySet()) {
       // Update color of territory

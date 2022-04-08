@@ -22,8 +22,8 @@ public class TextPlayer {
   final BufferedReader inputReader;
   final PrintStream out;
   protected String identity; // color
-  private FoodResource food;
-  private TechResource tech;
+  private FoodResource totalFood;
+  private TechResource totalTech;
 
   /**
    * Constructor
@@ -40,8 +40,8 @@ public class TextPlayer {
     this.inputReader = inputReader;
     this.out = out;
     this.identity = "";
-    this.food = new FoodResource(0);
-    this.tech = new TechResource(0);
+    this.totalFood = new FoodResource(0);
+    this.totalTech = new TechResource(0);
   }
 
   /**
@@ -90,8 +90,8 @@ public class TextPlayer {
     System.out.println("Receive Resource from Server");
     FoodResourceList food_list = (FoodResourceList) connectionToMaster.receiveFromServer();
     TechResourceList tech_list = (TechResourceList) connectionToMaster.receiveFromServer();
-    this.food = food_list.resource_list.get(identity);
-    this.tech = tech_list.resource_list.get(identity);
+    this.totalFood = food_list.resource_list.get(identity);
+    this.totalTech = tech_list.resource_list.get(identity);
     System.out.println("Set Player resource List");
   }
 
@@ -355,11 +355,40 @@ public class TextPlayer {
    */
   private int getResourceNum(String resource_type) {
     if (resource_type.equals("food")) {
-      return this.food.getResourceAmount();
+      return this.totalFood.getResourceAmount();
     } else if (resource_type.equals("tech")) {
-      return this.tech.getResourceAmount();
+      return this.totalTech.getResourceAmount();
     }
     return 0;
+  }
+
+  /**
+   * Method to get total food resource
+   **/
+  private int getTotalFoodResourceAmount() {
+    return this.totalFood.getResourceAmount();
+  }
+
+  
+  /**
+   * Method to get total tech resource
+   **/
+  private int getTotalTechResourceAmount() {
+    return this.totalTech.getResourceAmount();
+  }
+
+  /**
+   * Method to get the resource details of the player
+   * @return string
+   */
+  public String getResourcesDtails() {
+    StringBuilder resourceDetails = new StringBuilder("");
+    resourceDetails.append("Player: " + this.identity + "\n" );
+    resourceDetails.append("***********RESOURCES**********\n");
+    resourceDetails.append("Total Food: " + this.getTotalFoodResourceAmount() + "\n");
+    resourceDetails.append("Total Tech: " + this.getTotalTechResourceAmount()); 
+
+    return resourceDetails.toString();
   }
 
 }
