@@ -25,6 +25,12 @@ public abstract class Turn implements Serializable {
     this.num_units = num_units;
   }
 
+  public Turn(String type, String player_color) {
+    this.type = type;
+    this.player_color = player_color;
+    this.num_units = new HashMap<String, Integer>();
+  }
+
   private void writeObject(ObjectOutputStream s) throws IOException {
     s.defaultWriteObject();
   }
@@ -37,6 +43,7 @@ public abstract class Turn implements Serializable {
     return num_units;
   }
 
+  // used Only by Upgrade Turn
   public int getNumber() {
     return this.num_unit;
   }

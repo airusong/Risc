@@ -63,47 +63,45 @@ public class HandleOrder<T> {
         // create a temporary map with correct attacker and defender unit number
         // (requirement 5d)
 
-        Map<T> tempMap = theMap;
+        Map<T> tempMap = theMap; // validationMap is used for validate AttackTurn
 
-        ArrayList<TurnList> attack_order_list;
-        TurnList attack_list;
         ArrayList<TurnList> valid_attack_order_list = new ArrayList<TurnList>();
 
         AttackChecking<T> ruleChecker = new AttackChecking<>();
 
-        // filter out valid attack orders from all player
+        // filter out valid attack orders from all player and updated the tempMap used
+        // by HandleSingleAttackOrder
         for (int i = 0; i < all_order_list.size(); i++) {
             TurnList curr = all_order_list.get(i);
             TurnList curr_valid = new TurnList(curr.player_info);
             for (int j = 0; j < curr.getListLength(); j++) {
                 Turn curr_turn = curr.order_list.get(j);
                 if (curr_turn.getTurnType().equals("Attack")) {
-                    if (ruleChecker.checkMyRule(theMap, (AttackTurn) curr_turn)) {
+                    if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn)) {
                         curr_valid.order_list.add(curr_turn);
+                        // update the ValidationMap
+                        int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
+                        int new_unit = tempMap.getAllTerritories().get(((AttackTurn) curr_turn).getSource())
+                                .getUnit(curr_turn.getTurnType())
+                                - move_unit;
+                        tempMap.updateTempMap(((AttackTurn) curr_turn).getSource(), (AttackTurn) curr_turn);
                     }
                     turnStatus.add(ruleChecker.attackStatus);
                 }
             }
             valid_attack_order_list.add(curr_valid);
         }
-        // update valid attack order lists
-        attack_order_list = valid_attack_order_list;
 
-        // Q - Seems the valid_attack_order_list already sorted
         ArrayList<HashMap<String, ArrayList<Turn>>> res = new ArrayList<HashMap<String, ArrayList<Turn>>>();
-        // sort attack turns for the same player. & Update the tempMap.
+        // sort attack turns for the same player.
         for (int i = 0; i < valid_attack_order_list.size(); i++) {
             // System.out.println("sort attack orders: ");
             TurnList curr = valid_attack_order_list.get(i);
             HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
             for (int j = 0; j < curr.getListLength(); j++) {
                 AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
-                // Generate/Update the temp map
-                String move_unit_type = "ALEVEL"; // HARDCODE FOR BASE VERSION
-                int move_units = curr_turn.getNumber();
-                int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type)
-                        - move_units;
-                tempMap.updateTempMap(curr_turn.getSource(), move_unit_type, new_units);
+
+                // Group the AttackTurns which attack the same Territory together
                 String des = curr_turn.getDestination();
                 if (temp.get(des) != null) {
                     temp.get(des).add(curr_turn);
@@ -117,15 +115,19 @@ public class HandleOrder<T> {
         }
 
         for (HashMap<String, ArrayList<Turn>> hm : res) {
+            for (String terr_name : hm.keySet()) {
+                AttackTurn attackTurn = new AttackTurn(terr_name, );
+                for (ArrayList<Turn> t : hm.values()) {
+                    attackTurn.addTurn(t);
+                }
+            }
+
             for (ArrayList<Turn> t : hm.values()) {
+
+                // group units in ArrayList<Turn> together as a single AttackTurn
                 handleSingleAttackOrder(t, tempMap);
             }
         }
-        /*
-         * for (TurnList hm : valid_attack_order_list) {
-         * handleSingleAttackOrder(hm.order_list, tempMap);
-         * System.out.print("To Do: Handle Single Attack Order"); }
-         */
 
     }
 
@@ -287,7 +289,7 @@ public class HandleOrder<T> {
             int upgrade_cost = upgradeChecker.upgrade_cost;
             tech_list.addResource(upgradeTurn.getPlayerColor(), new TechResource(-upgrade_cost));
             String old_type = upgradeTurn.getOldUnitType();
-            String new_type = upgradeTurn.getNewUniType();
+            String new_type = upgradeTurn.getNewUnitType();
             int unitChange = upgradeTurn.getNumber();
             theMap.updateMapForUpgrade(upgradeTurn.getFromTerritory(), old_type, new_type, unitChange);
         }

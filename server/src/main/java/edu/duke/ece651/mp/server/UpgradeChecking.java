@@ -11,22 +11,10 @@ public class UpgradeChecking<T> {
     String upgradeStatus;
     public int upgrade_cost;
 
-    public ArrayList<UpgradeTurn> checkMyRule(Map<T> map, ArrayList<UpgradeTurn> upgradeOrder,
-            TechResourceList tech_list) {
-        ArrayList<UpgradeTurn> ans = new ArrayList<UpgradeTurn>();
-        for (UpgradeTurn t : upgradeOrder) {
-            boolean b = checkMyRule(map, t, tech_list);
-            if (b) {
-                ans.add(t);
-            }
-        }
-        return ans;
-    }
-
     public boolean checkMyRule(Map<T> map, UpgradeTurn upgradeOrder, TechResourceList tech_list) {
         String source = upgradeOrder.getFromTerritory();
         String old_unit_type = upgradeOrder.getOldUnitType();
-        String new_unit_type = upgradeOrder.getNewUniType();
+        String new_unit_type = upgradeOrder.getNewUnitType();
         int upgradeunits = upgradeOrder.getNumber();
         String player_color = upgradeOrder.getPlayerColor();
         int available_num = tech_list.resource_list.get(player_color).getResourceAmount();

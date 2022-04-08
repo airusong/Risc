@@ -48,16 +48,18 @@ public class FoodResourceList implements Serializable {
         }
     }
 
-    public void addResource(String color, int foodResource) {
-        for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
-            if (set.getKey().equals(color)) {
-                int old_num = set.getValue().getResourceAmount();
-                int new_num = old_num + foodResource;
-                resource_list.put(color, new FoodResource(new_num));
-                break;
-            }
-        }
-    }
+    /*
+     * public void addResource(String color, int foodResource) {
+     * for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
+     * if (set.getKey().equals(color)) {
+     * int old_num = set.getValue().getResourceAmount();
+     * int new_num = old_num + foodResource;
+     * resource_list.put(color, new FoodResource(new_num));
+     * break;
+     * }
+     * }
+     * }
+     */
 
     public void printList() {
         for (Map.Entry<String, FoodResource> set : resource_list.entrySet()) {
