@@ -33,6 +33,36 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.size = size;
   }
 
+  
+  /**
+   * Method to get details about the territory in string format
+   * @return String - territory details
+   */
+  public String getTerritoryDetails() {
+    StringBuilder terrDetails = new StringBuilder("");
+    terrDetails.append("Territory: " + name + "\n");
+    terrDetails.append("--------------------------------\n");
+    terrDetails.append("Size: " + size + "\n");
+    terrDetails.append("Food Resource: " + food.getResourceAmount() +  "\n");
+    terrDetails.append("Tech Resource: " + tech.getResourceAmount() + "\n");
+    terrDetails.append("********Units********" + getUnitsList());
+
+    return terrDetails.toString();
+  }
+
+  /**
+   *
+   */
+  private String getUnitsList() {
+    StringBuilder unitsDetails = new StringBuilder("");
+    for (Unit unit : unit_list) {
+      unitsDetails.append("\n" + "Level: " + unit.getUnitType() + "\n" );
+      unitsDetails.append("Bonus: " + unit.getBonus() + "\n");
+      unitsDetails.append("Number: " + unit.getUnitNum());
+    }
+    return unitsDetails.toString();
+  }
+
   public ArrayList<Unit> getUnitList() {
     return unit_list;
   }
@@ -71,7 +101,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
       int new_num = tech.getResourceAmount() + resource.getResourceAmount();
       setTechResource(new_num);
     }
-  }
+  }  
 
   public void setFoodResource(int num) {
     food.setResourceAmount(num);
