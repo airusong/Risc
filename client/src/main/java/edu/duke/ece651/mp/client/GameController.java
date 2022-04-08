@@ -645,7 +645,7 @@ public class GameController {
     for (String unitType : UnitTypeEntries.keySet()) {
       int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
       // Don't add if there are 0 units
-      if (unitNum >= 0) {
+      if (unitNum > 0) {
         units.put(unitType, unitNum);
       }
     }
