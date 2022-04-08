@@ -281,7 +281,6 @@ public class HandleOrder<T> {
 
     public void handleSingleUpgradeOrder(UpgradeTurn upgradeTurn) {
         UpgradeChecking upgradeChecker = new UpgradeChecking<>();
-
         if (upgradeChecker.checkMyRule(theMap, upgradeTurn, tech_list)) {
             // the Upgrade Order is valid.
             // update the tech resources of players

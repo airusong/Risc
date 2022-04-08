@@ -60,7 +60,7 @@ public class TechResourceList implements Serializable {
 
     public void printList() {
         for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
-            System.out.print(set.getKey() + ":" + set.getValue().getResourceAmount());
+            System.out.println(set.getKey() + ":" + set.getValue().getResourceAmount());
         }
     }
 
