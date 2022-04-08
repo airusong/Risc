@@ -251,7 +251,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
         for (Unit unit : unit_list) {
           if (unit.getUnitNum() > 0) {
             unit_type_list.add(unit.getUnitType());
-            System.out.println("The unit type is :" + unit.getUnitType());
+            // System.out.println("The unit type is :" + unit.getUnitType());
           }
         }
       }
@@ -276,6 +276,19 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     Territory<T> t2 = myTerritories.get(des);
     t2.updateUnit(unit_type, n2);
     myTerritories.put(des, t2);
+  }
+
+  // Upgrade Map according to upgrade order
+  public void updateMapForUpgrade(String dep, String old_type, String new_type, int unit_change) {
+    // update the #unit of old type
+    Territory<T> terr = myTerritories.get(dep);
+    int o_currUnits = terr.getUnit(old_type);
+    int o_newUnits = o_currUnits - unit_change;
+    terr.updateUnit(old_type, o_newUnits);
+    // update the #unit of the new type
+    int n_currUnits = terr.getUnit(new_type);
+    int n_newUnits = n_currUnits + unit_change;
+    terr.updateUnit(new_type, n_newUnits);
   }
 
   /* Update TempMap for moving all units before attacking */

@@ -45,9 +45,13 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     return color;
   }
 
-  public int getFoodNum() { return food.getResourceAmount();}
+  public int getFoodNum() {
+    return food.getResourceAmount();
+  }
 
-  public int getTechNum() { return tech.getResourceAmount();}
+  public int getTechNum() {
+    return tech.getResourceAmount();
+  }
 
   /**
    * function to add adjacency to the territory
@@ -60,20 +64,20 @@ public class Territory<T> implements IITerritory<T>, Serializable {
    * function to add resources to the territory
    */
   public void updateResource(Resource resource) {
-    if(resource instanceof FoodResource){
+    if (resource instanceof FoodResource) {
       int new_num = food.getResourceAmount() + resource.getResourceAmount();
       setFoodResource(new_num);
-    }
-    else if(resource instanceof TechResource){
+    } else if (resource instanceof TechResource) {
       int new_num = tech.getResourceAmount() + resource.getResourceAmount();
       setTechResource(new_num);
     }
   }
 
-  public void setFoodResource(int num){
+  public void setFoodResource(int num) {
     food.setResourceAmount(num);
   }
-  public void setTechResource(int num){
+
+  public void setTechResource(int num) {
     tech.setResourceAmount(num);
   }
 
@@ -130,6 +134,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /* Update Unit of Territory according to move order */
+  /* Also used by upgrade order */
   public void updateUnit(String unit_type, int new_unit) {
     int index = hasUnitType(unit_type);
     if (index >= 0) {

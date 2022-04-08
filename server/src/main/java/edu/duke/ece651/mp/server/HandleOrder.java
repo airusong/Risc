@@ -287,6 +287,10 @@ public class HandleOrder<T> {
             // update the tech resources of players
             int upgrade_cost = upgradeChecker.upgrade_cost;
             tech_list.addResource(upgradeTurn.getPlayerColor(), new TechResource(-upgrade_cost));
+            String old_type = upgradeTurn.getOldUnitType();
+            String new_type = upgradeTurn.getNewUniType();
+            int unitChange = upgradeTurn.getNumber();
+            theMap.updateMapForUpgrade(upgradeTurn.getFromTerritory(), old_type, new_type, unitChange);
         }
         turnStatus.add(upgradeChecker.upgradeStatus);
     }

@@ -43,7 +43,6 @@ public class Master {
       tech_list.addResource(playerColor, new TechResource(50));
 
     }
-    tech_list.printList();
     this.theHandleOrder = new HandleOrder<Character>(this.all_order_list, theMap, ocheck, players_identity, food_list,
         tech_list);
   }
