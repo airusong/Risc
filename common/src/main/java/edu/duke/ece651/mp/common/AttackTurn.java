@@ -19,14 +19,6 @@ public class AttackTurn extends Turn {
     this.toTerritory = toTerritory;
   }
 
-  // used by grouping attackTurn to the same Territory
-  public AttackTurn(String toTerritory, String player_color) {
-    super("Attack", player_color);
-    this.fromTerritory = null;
-    this.toTerritory = toTerritory;
-
-  }
-
   public String getSource() {
     return this.fromTerritory;
   }
@@ -43,21 +35,6 @@ public class AttackTurn extends Turn {
     System.out.println(this.toTerritory);
     System.out.println(this.player_color);
     printUnits();
-  }
-
-  public AttackTurn addTurn(AttackTurn attackTurn) {
-    AttackTurn newAttackTurn = new AttackTurn(attackTurn.getSource(), attackTurn.getDestination(), null,
-        attackTurn.getPlayerColor());
-    for (HashMap.Entry<String, Integer> set : num_units.entrySet()) {
-      for (HashMap.Entry<String, Integer> set2 : attackTurn.getUnitList().entrySet()) {
-        if (set.getKey().equals(set2.getKey())) {
-          int unit_num = set.getValue() + set2.getValue();
-          num_units.put(set.getKey(), unit_num);
-          break;
-        }
-      }
-    }
-    return newAttackTurn;
   }
 
 }

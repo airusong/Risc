@@ -115,20 +115,11 @@ public class HandleOrder<T> {
         }
 
         for (HashMap<String, ArrayList<Turn>> hm : res) {
-            for (String terr_name : hm.keySet()) {
-                AttackTurn attackTurn = new AttackTurn(terr_name, );
-                for (ArrayList<Turn> t : hm.values()) {
-                    attackTurn.addTurn(t);
-                }
-            }
-
+            // Same Player & Same Territory
             for (ArrayList<Turn> t : hm.values()) {
-
-                // group units in ArrayList<Turn> together as a single AttackTurn
                 handleSingleAttackOrder(t, tempMap);
             }
         }
-
     }
 
     /**
