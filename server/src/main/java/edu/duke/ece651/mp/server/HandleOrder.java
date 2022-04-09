@@ -186,21 +186,21 @@ public class HandleOrder<T> {
         for (Turn temp : attackOrder) {
             AttackTurn t = (AttackTurn) temp;
             //attacking_units += t.getNumber(); // add up units
-            int total_attackingunits=0;
+            //int total_attackingunits=0;
             for (String s : t.getUnitList().keySet()) {
                 if (!attacking_map.containsKey(s)) {
                     attacking_map.put(s, t.getUnitList().get(s));
                 } else {
                     attacking_map.replace(s, attacking_map.get(s), attacking_map.get(s) + t.getUnitList().get(s));
                 }
-                total_attackingunits+=t.getUnitList().get(s).intValue();
+                //total_attackingunits+=t.getUnitList().get(s).intValue();
             }
             attackerTerritory = t.getSource(); // any Source
             defenderTerritory = t.getDestination(); // same Destination
             player_color = t.getPlayerColor();
             // reduce food resources in all attackerTerritory
-            Territory<T> attacker=theMap.getAllTerritories().get(attackerTerritory);
-            attacker.updateResource(new FoodResource(total_attackingunits));
+            //Territory<T> attacker=theMap.getAllTerritories().get(attackerTerritory);
+            //attacker.updateResource(new FoodResource(-total_attackingunits));
         }
         // update the attacking_list for attacking from the attacking map
         ArrayList<Unit> attacking_list=new ArrayList<>();
