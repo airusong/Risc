@@ -162,7 +162,7 @@ public class HandleOrder<T> {
     int minimumCost = calculateMinimumCostToMove(dep, des, moveUnits);
 
     // Check if the player has enough food resources to make the move
-    int playerFoodResource = tech_list.resource_list.get(player_color).getResourceAmount();
+    int playerFoodResource = food_list.resource_list.get(player_color).getResourceAmount();
     if (minimumCost > playerFoodResource) {
       moveProblem = "Not enough food resource - atleast " + minimumCost + " required";
     } else { // deduct the player's resource
