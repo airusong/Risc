@@ -374,17 +374,18 @@ public class HandleOrder<T> {
     stack.push(start);
     String colorID = start.getColor();
 
+    // Deque<Territory<T>> res = new ArrayDeque<>();
     // while all the territories are not visited
     while (!stack.isEmpty()) {
       Territory<T> currTerritory = stack.pop();
+      // res.add(currTerritory);
       String currname = currTerritory.getName();
 
       if (currname.equals(destination)) { // found a path
         // add the path to the list
-        allPaths.add(visited);
-
-        // remove the last territory
-        visited.removeLast();
+        Deque<Territory<T>> res = new ArrayDeque<Territory<T>>(visited);
+        allPaths.add(res);
+        continue;
       }
 
       // if the territory is not visited already
@@ -401,6 +402,7 @@ public class HandleOrder<T> {
         }
       }
     }
+
     return allPaths;
   }
 
@@ -445,6 +447,7 @@ public class HandleOrder<T> {
     for (HashMap.Entry<String, Integer> unit : moveUnits.entrySet()) {
       totalUnitsToMove += unit.getValue();
     }
+    System.out.println("units to move: " + totalUnitsToMove);
 
     // create an empty path of all pa
     ArrayList<Deque<Territory<T>>> allpaths = computeAllPossiblePaths(source, destination, moveUnits);
@@ -458,10 +461,20 @@ public class HandleOrder<T> {
       }
       number = Math.min(number, total_unit);
     }
-    // the total size will be the source size adding path size(destination size not
-    // included)
-    number += theMap.getAllTerritories().get(source).getSize();
+
     return totalUnitsToMove * number;
+  }
+
+  /**
+   * Method to printout the path
+   */
+  private void printPath(Deque<Territory<T>> path) {
+    String sep = "";
+    for (Territory<T> territory : path) {
+      System.out.print(sep + territory.getName());
+      sep = "-->";
+    }
+    System.out.print("\n");
   }
 
 }
