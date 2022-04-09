@@ -186,18 +186,21 @@ public class HandleOrder<T> {
         for (Turn temp : attackOrder) {
             AttackTurn t = (AttackTurn) temp;
             //attacking_units += t.getNumber(); // add up units
+            int total_attackingunits=0;
             for (String s : t.getUnitList().keySet()) {
                 if (!attacking_map.containsKey(s)) {
                     attacking_map.put(s, t.getUnitList().get(s));
                 } else {
                     attacking_map.replace(s, attacking_map.get(s), attacking_map.get(s) + t.getUnitList().get(s));
                 }
+                total_attackingunits+=t.getUnitList().get(s).intValue();
             }
             attackerTerritory = t.getSource(); // any Source
             defenderTerritory = t.getDestination(); // same Destination
             player_color = t.getPlayerColor();
-            // reduce #units in all attackerTerritory
-            //theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1));
+            // reduce food resources in all attackerTerritory
+            Territory<T> attacker=theMap.getAllTerritories().get(attackerTerritory);
+            attacker.updateResource(new FoodResource(total_attackingunits));
         }
         // update the attacking_list for attacking from the attacking map
         ArrayList<Unit> attacking_list=new ArrayList<>();
@@ -233,6 +236,37 @@ public class HandleOrder<T> {
             // step-1: role a 20 sided twice for both players
             int attackerDiceVal = attackerDice.nextInt(diceSides);
             int defenderDiceVal = defenderDice.nextInt(diceSides);
+
+            //step-3: detect the result, if one side lose, update the map
+            //if no side has lost, continue the loop
+            String loserTerr;
+            if (defender_result(defending_list)) {
+                //clear all the units in temp map and add the attacker's attacking units take hold
+                ArrayList<String> origin_list = tempMap.getTerritoryUnitType(defenderTerritory);
+                for (String s : origin_list) {
+                    tempMap.updateTerritoryInMap(defenderTerritory, s, -defender.getUnit(s), defender.getColor());
+                }
+                for (Unit u : attacking_list) {
+                    String unit_type = u.getUnitType();
+                    defender.updateUnit(unit_type, 0);
+                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), attacker.getColor());
+                }
+                loserTerr = defenderTerritory;
+                combatResult = "Attacker won!";
+                break;
+            } else if (attacker_result(attacking_list)) {
+                for (Unit u : defending_list) {
+                    String unit_type = u.getUnitType();
+                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum() - defender.getUnit(unit_type), defender.getColor());
+                }
+                loserTerr = attackerTerritory;
+                combatResult = "Defender won!";
+                break;
+            }
+            //else {
+            //    continue;
+            //}
+
 
             //step-2: compare dice values. Lower loses 1 unit
             //if: attacker wins
@@ -271,37 +305,38 @@ public class HandleOrder<T> {
                 }
             }
             count++;
+        }
             //step-3: detect the result, if one side lose, update the map
             //if no side has lost, continue the loop
-            String loserTerr;
-            if (defender_result(defending_list)) {
-                //clear all the units in temp map and add the attacker's attacking units take hold
-                ArrayList<String> origin_list=tempMap.getTerritoryUnitType(defenderTerritory);
-                for(String s:origin_list){
-                        tempMap.updateTerritoryInMap(defenderTerritory, s, -defender.getUnit(s), defender.getColor());
-                }
-                for (Unit u : attacking_list) {
-                    String unit_type=u.getUnitType();
-                    defender.updateUnit(unit_type,0);
-                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), attacker.getColor());
-                }
-                loserTerr = defenderTerritory;
-                combatResult = "Attacker won!";
-                break;
-            } else if (attacker_result(attacking_list)) {
-                for (Unit u : defending_list) {
-                    String unit_type=u.getUnitType();
-                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum()-defender.getUnit(unit_type), defender.getColor());
-                }
-                loserTerr = attackerTerritory;
-                combatResult = "Defender won!";
-                break;
-            } else {
-                continue;
-            }
-
-
-        }
+//            String loserTerr;
+//            if (defender_result(defending_list)) {
+//                //clear all the units in temp map and add the attacker's attacking units take hold
+//                ArrayList<String> origin_list=tempMap.getTerritoryUnitType(defenderTerritory);
+//                for(String s:origin_list){
+//                        tempMap.updateTerritoryInMap(defenderTerritory, s, -defender.getUnit(s), defender.getColor());
+//                }
+//                for (Unit u : attacking_list) {
+//                    String unit_type=u.getUnitType();
+//                    defender.updateUnit(unit_type,0);
+//                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), attacker.getColor());
+//                }
+//                loserTerr = defenderTerritory;
+//                combatResult = "Attacker won!";
+//                break;
+//            } else if (attacker_result(attacking_list)) {
+//                for (Unit u : defending_list) {
+//                    String unit_type=u.getUnitType();
+//                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum()-defender.getUnit(unit_type), defender.getColor());
+//                }
+//                loserTerr = attackerTerritory;
+//                combatResult = "Defender won!";
+//                break;
+//            } else {
+//                continue;
+//            }
+//
+//
+//        }
         //update true map
         this.theMap = tempMap;
         return combatResult;
