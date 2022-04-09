@@ -21,6 +21,7 @@ public interface Map<T> {
 
   public void updateMapForUpgrade(String fromTerritory, String old_type, String new_type, int unitChange);
 
+  public ArrayList<String> getTerritoryUnitType(String currTerritory);
   // public void updateTerritoryInMap(String territoryName, HashMap<UnitType,
   // Integer> unit_change, String newOwnerColor);
 }

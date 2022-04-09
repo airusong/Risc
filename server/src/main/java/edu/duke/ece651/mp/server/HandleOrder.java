@@ -81,10 +81,10 @@ public class HandleOrder<T> {
                     if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn)) {
                         curr_valid.order_list.add(curr_turn);
                         // update the ValidationMap
-                        int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
-                        int new_unit = tempMap.getAllTerritories().get(((AttackTurn) curr_turn).getSource())
-                                .getUnit(curr_turn.getTurnType())
-                                - move_unit;
+                        //int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
+                        //int new_unit = tempMap.getAllTerritories().get(((AttackTurn) curr_turn).getSource())
+                        //.getUnit(curr_turn.getTurnType())
+                        //       - move_unit;
                         tempMap.updateTempMap(((AttackTurn) curr_turn).getSource(), (AttackTurn) curr_turn);
                     }
                     turnStatus.add(ruleChecker.attackStatus);
@@ -202,7 +202,9 @@ public class HandleOrder<T> {
         // update the attacking_list for attacking from the attacking map
         ArrayList<Unit> attacking_list=new ArrayList<>();
         for(String s:attacking_map.keySet()){
-            attacking_list.add(new Unit(s,attacking_map.get(s).intValue()));
+            if(attacking_map.get(s).intValue()!=0) {
+                attacking_list.add(new Unit(s, attacking_map.get(s).intValue()));
+            }
         }
         Collections.sort(attacking_list,(o1, o2) -> o1.getBonus() - o2.getBonus());
 
@@ -211,7 +213,13 @@ public class HandleOrder<T> {
         Territory<T> defender = tempMap.getAllTerritories().get(defenderTerritory);
         //int defending_units = defender.getUnit("ALEVEL");
         //list of different type of unit for the defender
-        ArrayList<Unit> defending_list = defender.getUnitList();
+        ArrayList<Unit> defending_copy_list = defender.getUnitList();
+        ArrayList<Unit> defending_list=new ArrayList<>();
+        for(Unit u:defending_copy_list){
+            if(u.getUnitNum()!=0) {
+                defending_list.add(new Unit(u.getUnitType(), u.getUnitNum()));
+            }
+        }
         Collections.sort(defending_list,(o1, o2) -> o1.getBonus() - o2.getBonus());
         Random attackerDice = new Random();
         Random defenderDice = new Random();
@@ -267,15 +275,23 @@ public class HandleOrder<T> {
             //if no side has lost, continue the loop
             String loserTerr;
             if (defender_result(defending_list)) {
+                //clear all the units in temp map and add the attacker's attacking units take hold
+                ArrayList<String> origin_list=tempMap.getTerritoryUnitType(defenderTerritory);
+                for(String s:origin_list){
+                        tempMap.updateTerritoryInMap(defenderTerritory, s, -defender.getUnit(s), defender.getColor());
+                }
                 for (Unit u : attacking_list) {
-                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), player_color);
+                    String unit_type=u.getUnitType();
+                    defender.updateUnit(unit_type,0);
+                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), attacker.getColor());
                 }
                 loserTerr = defenderTerritory;
                 combatResult = "Attacker won!";
                 break;
             } else if (attacker_result(attacking_list)) {
                 for (Unit u : defending_list) {
-                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), player_color);
+                    String unit_type=u.getUnitType();
+                    tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum()-defender.getUnit(unit_type), defender.getColor());
                 }
                 loserTerr = attackerTerritory;
                 combatResult = "Defender won!";
