@@ -21,33 +21,37 @@ import org.junit.jupiter.api.parallel.Resources;
 
 import edu.duke.ece651.mp.common.OwnerChecking;
 import edu.duke.ece651.mp.common.PathChecking;
-import edu.duke.ece651.mp.common.V1Map;
+import edu.duke.ece651.mp.common.V2Map;
 
 public class ClientTest {
+  @Disabled
   @Test
   void test_map() throws InterruptedException, IOException, UnknownHostException {
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     Client theClient = new Client("null", 0, input, System.out); // we don't care about server yet!
-    // The map should be received from master
-    // using minimal V1Map for now
+    // The map should be received from master using minimal V2Map for now
     ArrayList<String> players_colors = new ArrayList<String>(Arrays.asList("Green", "Blue"));
 
-    //OwnerChecking<Character> ownerchecker = new OwnerChecking<Character>(null);
-    //PathChecking<Character> pathchecker = new PathChecking<Character>(ownerchecker);
-    V1Map<Character> mapFromServer = new V1Map<Character>(players_colors);
+
+    V2Map<Character> mapFromServer = new V2Map<Character>(players_colors);
     theClient.theTextPlayer.updateMap(mapFromServer);
 
-    String expected = "Green player:\n" + "-----------\n" + "8 units in Narnia (next to: Midemio, Elantris)\n"
-        + "3 units in Midemio (next to: Narnia, Oz)\n" + "12 units in Oz (next to: Midemio, Roshar)\n" + "\n"
-        + "Blue player:\n" + "-----------\n" + "7 units in Elantris (next to: Scadnal, Narnia)\n"
-        + "6 units in Roshar (next to: Oz, Scadnal)\n" + "10 units in Scadnal (next to: Roshar, Elantris)\n";
+    String expected = "Green player:\n" + "-----------\n"
+      + "8 units in Narnia (next to: Midemio, Elantris)\n"
+      + "3 units in Midemio (next to: Narnia, Oz, Elantris, Scadnal)\n"
+      + "12 units in Oz (next to: Midemio, Scadnal)\n"
+      + "\n"
+      + "Blue player:\n" + "-----------\n"
+      + "7 units in Elantris (next to: Scadnal, Narnia, Roshar, Midemio)\n"
+      + "6 units in Roshar (next to: Elantris, Scadnal)\n"
+      + "10 units in Scadnal (next to: Roshar, Elantris, Oz, Midemio)\n";
     assertEquals(expected, theClient.theTextPlayer.view.displayMap());
   }
 
   @Disabled
   @Test
   @ResourceLock(value = Resources.SYSTEM_OUT, mode = ResourceAccessMode.READ_WRITE)
-  void test_main_V1() throws IOException, InterruptedException {
+  void test_main_V2() throws IOException, InterruptedException {
     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     PrintStream out = new PrintStream(bytes, true);
     InputStream input = getClass().getClassLoader().getResourceAsStream("input1.txt");

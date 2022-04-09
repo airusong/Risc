@@ -22,8 +22,6 @@ public class Server {
     Master theMaster = new Master(port, num_players);
 
     theMaster.initiateGame();
-    
     theMaster.playGame();
   }
-
 }
