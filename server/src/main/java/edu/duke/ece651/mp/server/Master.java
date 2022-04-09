@@ -150,11 +150,11 @@ public class Master {
     HashMap<String, Integer> tech_l = theMap.getOwnersTerritoryTechGroups();
 
     for (Map.Entry<String, Integer> s : food_l.entrySet()) {
-      this.food_list.addResource(s.getKey(), s.getValue());
+      this.food_list.addResource(s.getKey(), new FoodResource(s.getValue()));
     }
 
     for (Map.Entry<String, Integer> s : tech_l.entrySet()) {
-      this.tech_list.addResource(s.getKey(), s.getValue());
+      this.tech_list.addResource(s.getKey(), new TechResource(s.getValue()));
     }
   }
 

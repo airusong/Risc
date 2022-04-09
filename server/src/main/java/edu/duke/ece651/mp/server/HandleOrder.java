@@ -2,12 +2,13 @@ package edu.duke.ece651.mp.server;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 
 import edu.duke.ece651.mp.common.AttackTurn;
+import edu.duke.ece651.mp.common.FoodResource;
 import edu.duke.ece651.mp.common.FoodResourceList;
 import edu.duke.ece651.mp.common.Map;
 import edu.duke.ece651.mp.common.MapTextView;
@@ -18,6 +19,7 @@ import edu.duke.ece651.mp.common.TechResourceList;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.Turn;
 import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.Unit;
 import edu.duke.ece651.mp.common.UpgradeTurn;
 import edu.duke.ece651.mp.common.V2Map;
 
@@ -74,50 +76,51 @@ public class HandleOrder<T> {
    * Method to handle All Attack Orders
    * 
    */
+
   public void handleAllAttackOrder() {
     // create a temporary map with correct attacker and defender unit number
     // (requirement 5d)
 
-    Map<T> tempMap = theMap;
+    Map<T> tempMap = theMap; // validationMap is used for validate AttackTurn
 
-    ArrayList<TurnList> attack_order_list;
-    TurnList attack_list;
     ArrayList<TurnList> valid_attack_order_list = new ArrayList<TurnList>();
 
     AttackChecking<T> ruleChecker = new AttackChecking<>();
 
-    // filter out valid attack orders from all player
+    // filter out valid attack orders from all player and updated the tempMap used
+    // by HandleSingleAttackOrder
     for (int i = 0; i < all_order_list.size(); i++) {
       TurnList curr = all_order_list.get(i);
       TurnList curr_valid = new TurnList(curr.player_info);
       for (int j = 0; j < curr.getListLength(); j++) {
         Turn curr_turn = curr.order_list.get(j);
         if (curr_turn.getTurnType().equals("Attack")) {
-          if (ruleChecker.checkMyRule(theMap, (AttackTurn) curr_turn)) {
+          if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn)) {
             curr_valid.order_list.add(curr_turn);
+            // update the ValidationMap
+            // int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
+            // int new_unit = tempMap.getAllTerritories().get(((AttackTurn)
+            // curr_turn).getSource())
+            // .getUnit(curr_turn.getTurnType())
+            // - move_unit;
+            tempMap.updateTempMap(((AttackTurn) curr_turn).getSource(), (AttackTurn) curr_turn);
           }
           turnStatus.add(ruleChecker.attackStatus);
         }
       }
       valid_attack_order_list.add(curr_valid);
     }
-    // update valid attack order lists
-    attack_order_list = valid_attack_order_list;
 
-    // Q - Seems the valid_attack_order_list already sorted
     ArrayList<HashMap<String, ArrayList<Turn>>> res = new ArrayList<HashMap<String, ArrayList<Turn>>>();
-    // sort attack turns for the same player. & Update the tempMap.
+    // sort attack turns for the same player.
     for (int i = 0; i < valid_attack_order_list.size(); i++) {
       // System.out.println("sort attack orders: ");
       TurnList curr = valid_attack_order_list.get(i);
       HashMap<String, ArrayList<Turn>> temp = new HashMap<String, ArrayList<Turn>>();
       for (int j = 0; j < curr.getListLength(); j++) {
         AttackTurn curr_turn = (AttackTurn) curr.order_list.get(j);
-        // Generate/Update the temp map
-        String move_unit_type = "ALEVEL"; // HARDCODE FOR BASE VERSION
-        int move_units = curr_turn.getNumber();
-        int new_units = tempMap.getAllTerritories().get(curr_turn.getSource()).getUnit(move_unit_type) - move_units;
-        tempMap.updateTempMap(curr_turn.getSource(), move_unit_type, new_units);
+
+        // Group the AttackTurns which attack the same Territory together
         String des = curr_turn.getDestination();
         if (temp.get(des) != null) {
           temp.get(des).add(curr_turn);
@@ -131,15 +134,11 @@ public class HandleOrder<T> {
     }
 
     for (HashMap<String, ArrayList<Turn>> hm : res) {
+      // Same Player & Same Territory
       for (ArrayList<Turn> t : hm.values()) {
         handleSingleAttackOrder(t, tempMap);
       }
     }
-    /*
-     * for (TurnList hm : valid_attack_order_list) {
-     * handleSingleAttackOrder(hm.order_list, tempMap);
-     * System.out.print("To Do: Handle Single Attack Order"); }
-     */
 
   }
 
@@ -189,22 +188,43 @@ public class HandleOrder<T> {
     turnStatus.add(moveChecker.moveStatus + moveResult);
   }
 
-  /**
-   * Method to handle Attack Order
-   * 
-   */
-
   public void handleSingleAttackOrder(ArrayList<Turn> attackOrder, Map<T> tempMap) {
     String attackResult = "";
-    attackResult += resolveCombat(attackOrder, tempMap);
+    ArrayList<Turn> validturn = new ArrayList<>();
+    for (Turn temp : attackOrder) {
+      AttackTurn t = (AttackTurn) temp;
+      int total_attackingunits = 0;
+      for (String s : t.getUnitList().keySet()) {
+        total_attackingunits += t.getUnitList().get(s).intValue();
+      }
+      String attackerTerritory = t.getSource();
+      Territory<T> attacker = theMap.getAllTerritories().get(attackerTerritory);
+
+      // player color
+      String color = attacker.getColor();
+      if (total_attackingunits > food_list.resource_list.get(color).getResourceAmount()) {
+        attackResult += attackerTerritory + " failed because of no enough food resource from " + attackerTerritory
+            + "\n";
+        // restore the units in the attacker
+        for (String s : t.getUnitList().keySet()) {
+          attacker.updateUnit(s, t.getUnitList().get(s));
+        }
+      } else {
+        validturn.add(temp);
+      }
+    }
+    if (validturn.size() != 0 || !validturn.isEmpty()) {
+      attackResult += resolveCombat(validturn, tempMap);
+    }
     turnStatus.add(attackResult);
   }
 
   /**
-   * Method to resolve combat in any one territory
+   *
+   * @param attackOrder
+   * @param tempMap
+   * @return
    */
-
-  // To Do: The Algorithm of combat has to change.
   private String resolveCombat(ArrayList<Turn> attackOrder, Map<T> tempMap) {
 
     String combatResult;
@@ -212,79 +232,172 @@ public class HandleOrder<T> {
     String attackerTerritory = "";
     String defenderTerritory = "";
     String player_color = "";
+    HashMap<String, Integer> attacking_map = new HashMap<>();// key:type value: unit number
 
+    // loop through all the attackorder in the arraylist
     for (Turn temp : attackOrder) {
       AttackTurn t = (AttackTurn) temp;
-      attacking_units += t.getNumber(); // add up units
+      // attacking_units += t.getNumber(); // add up units
+      int total_attackingunits = 0;
+      for (String s : t.getUnitList().keySet()) {
+        if (!attacking_map.containsKey(s)) {
+          attacking_map.put(s, t.getUnitList().get(s));
+        } else {
+          attacking_map.replace(s, attacking_map.get(s), attacking_map.get(s) + t.getUnitList().get(s));
+        }
+        total_attackingunits += t.getUnitList().get(s).intValue();
+      }
       attackerTerritory = t.getSource(); // any Source
       defenderTerritory = t.getDestination(); // same Destination
-      player_color = t.getPlayerColor();
-      // theMap.updateTerritoryInMap(attackerTerritory, (t.getNumber()) * (-1)); //
-      // reduce #units in all attackerTerritory
+      // player_color = t.getPlayerColor();
+      // reduce food resources in all attackerTerritory
+      Territory<T> attacker = theMap.getAllTerritories().get(attackerTerritory);
+      String color = attacker.getColor();
+      food_list.addResource(color, new FoodResource(-total_attackingunits));
+      // attacker.updateResource(new FoodResource(-total_attackingunits));
+
     }
+
+    // update the attacking_list for attacking from the attacking map
+    ArrayList<Unit> attacking_list = new ArrayList<>();
+    for (String s : attacking_map.keySet()) {
+      if (attacking_map.get(s).intValue() != 0) {
+        attacking_list.add(new Unit(s, attacking_map.get(s).intValue()));
+      }
+    }
+    Collections.sort(attacking_list, (o1, o2) -> o1.getBonus() - o2.getBonus());
 
     Territory<T> attacker = tempMap.getAllTerritories().get(attackerTerritory);
     Territory<T> defender = tempMap.getAllTerritories().get(defenderTerritory);
-    int defending_units = defender.getUnit("ALEVEL");
-
+    // int defending_units = defender.getUnit("ALEVEL");
+    // list of different type of unit for the defender
+    ArrayList<Unit> defending_copy_list = defender.getUnitList();
+    ArrayList<Unit> defending_list = new ArrayList<>();
+    for (Unit u : defending_copy_list) {
+      if (u.getUnitNum() != 0) {
+        defending_list.add(new Unit(u.getUnitType(), u.getUnitNum()));
+      }
+    }
+    Collections.sort(defending_list, (o1, o2) -> o1.getBonus() - o2.getBonus());
     Random attackerDice = new Random();
     Random defenderDice = new Random();
     int diceSides = 20;
     System.out.println("Starting combat...");
-    while (true) { // start combat
+    // start combat
+    // define a count the total loop times
+    int count = 0;
+    while (true) {
 
       // step-1: role a 20 sided twice for both players
       int attackerDiceVal = attackerDice.nextInt(diceSides);
       int defenderDiceVal = defenderDice.nextInt(diceSides);
 
-      // step-2: compare dice values. Lower loses 1 unit
+      // step-3: detect the result, if one side lose, update the map
+      // if no side has lost, continue the loop
       String loserTerr;
-      int loserTerrRemainingUnits;
-      if (attackerDiceVal <= defenderDiceVal) { // attacker lost (in a tie, defender wins)
-        loserTerr = attackerTerritory;
-        attacking_units--;
-        loserTerrRemainingUnits = attacking_units;
-      }
-
-      else { // (attackerDiceVal > defenderDiceVal) - defender lost
+      if (defender_result(defending_list)) {
+        // clear all the units in temp map and add the attacker's attacking units take
+        // hold
+        ArrayList<String> origin_list = tempMap.getTerritoryUnitType(defenderTerritory);
+        for (String s : origin_list) {
+          tempMap.updateTerritoryInMap(defenderTerritory, s, -defender.getUnit(s), defender.getColor());
+        }
+        for (Unit u : attacking_list) {
+          String unit_type = u.getUnitType();
+          defender.updateUnit(unit_type, 0);
+          tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum(), attacker.getColor());
+        }
         loserTerr = defenderTerritory;
-        defending_units--;
-        loserTerrRemainingUnits = defending_units;
-      }
-
-      // step-3: check if the loser territory ran out of units
-      // if no, continue. If yes, update map with result
-      if (loserTerrRemainingUnits > 0) {
-        continue;
-      } else {
-        // attacker territory lost the units no matter what
-        // theMap.updateTerritoryInMap(attackerTerritory, (attackOrder.getNumber()) *
-        // (-1)); // -1 for making it
-        // negative
-
-        int unitChange;
-        if (loserTerr == attackerTerritory) {
-          // System.out.println("defending_units is: " + defending_units);
-          // System.out.println("defenders units is: " + defender.getUnit());
-          unitChange = defending_units - defender.getUnit("ALEVEL");
-          tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL", unitChange);
-          combatResult = "Defender won!";
+        combatResult = "Attacker won!\n";
+        break;
+      } else if (attacker_result(attacking_list)) {
+        for (Unit u : defending_list) {
+          String unit_type = u.getUnitType();
+          tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum() - defender.getUnit(unit_type),
+              defender.getColor());
         }
-
-        else { // loserTerr == defenderTerritory
-               // System.out.println("defending_units is: " + defending_units);
-               // System.out.println("defenders units is: " + defender.getUnit());
-          unitChange = attacking_units - defender.getUnit("ALEVEL");
-          tempMap.updateTerritoryInMap(defenderTerritory, "ALEVEL", unitChange, player_color);
-          combatResult = "Attacker won!";
-        }
+        loserTerr = attackerTerritory;
+        combatResult = "Defender won!\n";
         break;
       }
+
+      // step-2: compare dice values. Lower loses 1 unit
+      // if: attacker wins
+      // else: defender wins
+      if (count % 2 == 0) {
+        if (attackerDiceVal + attacking_list.get(attacking_list.size() - 1).getBonus() > defenderDiceVal
+            + defending_list.get(0).getBonus()) {
+          int origin_unit = defending_list.get(0).getUnitNum();
+          int curr_unit = origin_unit - 1;
+          defending_list.get(0).updateUnit(curr_unit);
+          if (curr_unit == 0) {
+            defending_list.remove(0);
+          }
+        } else {
+          int origin_unit = attacking_list.get(attacking_list.size() - 1).getUnitNum();
+          int curr_unit = origin_unit - 1;
+          attacking_list.get(attacking_list.size() - 1).updateUnit(curr_unit);
+          if (curr_unit == 0) {
+            attacking_list.remove(attacking_list.size() - 1);
+          }
+        }
+      } else {// attacker wins
+        if (attackerDiceVal + attacking_list.get(0).getBonus() > defenderDiceVal
+            + defending_list.get(defending_list.size() - 1).getBonus()) {
+          int origin_unit = defending_list.get(defending_list.size() - 1).getUnitNum();
+          int curr_unit = origin_unit - 1;
+          defending_list.get(defending_list.size() - 1).updateUnit(curr_unit);
+          if (curr_unit == 0) {
+            defending_list.remove(defending_list.size() - 1);
+          }
+        } else {// defender wins
+          int origin_unit = attacking_list.get(0).getUnitNum();
+          int curr_unit = origin_unit - 1;
+          attacking_list.get(0).updateUnit(curr_unit);
+          if (curr_unit == 0) {
+            attacking_list.remove(attacking_list.size() - 1);
+          }
+        }
+      }
+      count++;
     }
-    // Update True Map
+    // step-3: detect the result, if one side lose, update the map
+    // if no side has lost, continue the loop
+    // update true map
     this.theMap = tempMap;
     return combatResult;
+  }
 
+  /**
+   * function to see the remain of the defender
+   *
+   *
+   * @param defender_list
+   * @return true when defender lose all its units
+   */
+  private boolean defender_result(ArrayList<Unit> defender_list) {
+    for (Unit u : defender_list) {
+      if (u.getUnitNum() != 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * function to see the remain of the attacker
+   *
+   *
+   * @param attacking
+   * @return true when attacker lose all its units
+   */
+  private boolean attacker_result(ArrayList<Unit> attacking) {
+    for (Unit u : attacking) {
+      if (u.getUnitNum() > 0) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -301,6 +414,7 @@ public class HandleOrder<T> {
           handleSingleUpgradeOrder((UpgradeTurn) curr_turn);
         }
       }
+
     }
   }
 
@@ -312,7 +426,7 @@ public class HandleOrder<T> {
       int upgrade_cost = upgradeChecker.upgrade_cost;
       tech_list.addResource(upgradeTurn.getPlayerColor(), new TechResource(-upgrade_cost));
       String old_type = upgradeTurn.getOldUnitType();
-      String new_type = upgradeTurn.getNewUniType();
+      String new_type = upgradeTurn.getNewUnitType();
       int unitChange = upgradeTurn.getNumber();
       theMap.updateMapForUpgrade(upgradeTurn.getFromTerritory(), old_type, new_type, unitChange);
     }
@@ -406,35 +520,6 @@ public class HandleOrder<T> {
     return allPaths;
   }
 
-  /*
-   * (String source, String destination, ArrayList<ArrayList<String>> allpaths,
-   * ArrayList<String> currpath) {
-   * 
-   * // create the array if they are null in first iteration if (allpaths == null)
-   * { allpaths = new ArrayList<>(); }
-   * 
-   * if(currpath == null) { currpath = new ArrayList<>(); }
-   * 
-   * if (source.equals(destination)) { // Base case of the recursive algorithm
-   * allpaths.add(currpath); return allpaths; }
-   * 
-   * Territory<T> currTerritory = theMap.getAllTerritories().get(source);
-   * 
-   * String color = currTerritory.getColor(); for (String currTerrName :
-   * currTerritory.getAdjacency()) { Territory<T> next =
-   * theMap.getAllTerritories().get(currTerrName);
-   * 
-   * // if the adjacent territory is owned by the player if
-   * (next.getColor().equals(color)) { // add it to the current path
-   * currpath.add(currTerrName);
-   * 
-   * // now use this territory as the source and recurse allpaths =
-   * computeAllPossiblePaths(currTerrName, destination, allpaths, currpath);
-   * 
-   * // remove the last item from the list i.e. reset // for next iteration
-   * currpath.remove(currpath.size() - 1); } } // end of For loop return allpaths;
-   * }
-   */
 
   /**
    * Method to caculate the minimum cost to move from source to destination

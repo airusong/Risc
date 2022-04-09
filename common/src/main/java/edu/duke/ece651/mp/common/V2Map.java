@@ -292,9 +292,15 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   }
 
   /* Update TempMap for moving all units before attacking */
-  public void updateTempMap(String dep, String unit_type, int n) {
+  // public void updateTempMap(String dep, String unit_type, int n) {
+  // Territory<T> t = myTerritories.get(dep);
+  // t.updateUnit(unit_type, n);
+  // }
+
+  /* Update TempMap for moving all units before attacking. */
+  public void updateTempMap(String dep, AttackTurn attackTurn) {
     Territory<T> t = myTerritories.get(dep);
-    t.updateUnit(unit_type, n);
+    t.updateUnit(attackTurn.getUnitList());
   }
 
   /* Update Territory in the Map, including changing the owner of the Territory */

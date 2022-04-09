@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class AttackTurn extends Turn {
 
-  public String fromTerritory;
-  public String toTerritory;
+  private String fromTerritory;
+  private String toTerritory;
 
   public AttackTurn(String fromTerritory, String toTerritory, int num_unit, String player_color) {
     super("Attack", num_unit, player_color);
@@ -13,7 +13,7 @@ public class AttackTurn extends Turn {
     this.toTerritory = toTerritory;
   }
 
-    public AttackTurn(String fromTerritory, String toTerritory, HashMap<String, Integer> units, String player_color) {
+  public AttackTurn(String fromTerritory, String toTerritory, HashMap<String, Integer> units, String player_color) {
     super("Attack", units, player_color);
     this.fromTerritory = fromTerritory;
     this.toTerritory = toTerritory;
@@ -28,7 +28,7 @@ public class AttackTurn extends Turn {
   }
 
   @Override
-  public void printTurn(){
+  public void printTurn() {
     System.out.println("Turn: ");
     System.out.println(this.type);
     System.out.println(this.fromTerritory);
@@ -36,6 +36,5 @@ public class AttackTurn extends Turn {
     System.out.println(this.player_color);
     printUnits();
   }
-
 
 }

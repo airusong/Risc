@@ -151,32 +151,35 @@ public class TextPlayer {
   /**
    * method to read only the order type from the player
    */
-  private char readOrder() throws IOException, EOFException {
-    String s = inputReader.readLine();
-    if (s == null) {
-      throw new EOFException("Error in input readline.");
-    }
-
-    String invalidFormatException = "That order is invalid: it does not have the correct format.";
-    if (s.length() != 1) {
-      throw new IllegalArgumentException(invalidFormatException);
-    }
-
-    char enteredLetter = s.toUpperCase().charAt(0);
-    if (enteredLetter != 'M' && enteredLetter != 'A' && enteredLetter != 'D') {
-      throw new IllegalArgumentException(invalidFormatException);
-    } else if (enteredLetter == 'M') {
-      out.println("Requested order: Move");
-    }
-
-    else if (enteredLetter == 'A') {
-      out.println("Requested order: Attack");
-    } else { // 'D'
-      out.println("Done with the turn!");
-    }
-
-    return enteredLetter;
-  }
+  /*
+   * private char readOrder() throws IOException, EOFException {
+   * String s = inputReader.readLine();
+   * if (s == null) {
+   * throw new EOFException("Error in input readline.");
+   * }
+   * 
+   * String invalidFormatException =
+   * "That order is invalid: it does not have the correct format.";
+   * if (s.length() != 1) {
+   * throw new IllegalArgumentException(invalidFormatException);
+   * }
+   * 
+   * char enteredLetter = s.toUpperCase().charAt(0);
+   * if (enteredLetter != 'M' && enteredLetter != 'A' && enteredLetter != 'D') {
+   * throw new IllegalArgumentException(invalidFormatException);
+   * } else if (enteredLetter == 'M') {
+   * out.println("Requested order: Move");
+   * }
+   * 
+   * else if (enteredLetter == 'A') {
+   * out.println("Requested order: Attack");
+   * } else { // 'D'
+   * out.println("Done with the turn!");
+   * }
+   * 
+   * return enteredLetter;
+   * }
+   */
 
   /**
    * method to read details about move and attack orders and add the order to the
@@ -235,25 +238,27 @@ public class TextPlayer {
    * 
    * @param totalOptions (if 0, this is ignored)
    */
-  private int readOption(int totalOptions) throws IOException, EOFException {
-    int enteredOption;
-    while (true) {
-      String s = inputReader.readLine();
-      if (s == null) {
-        throw new EOFException("Error in input readline.");
-      }
-
-      enteredOption = Integer.valueOf(s);
-      if (enteredOption < 1 || (totalOptions != 0 && enteredOption > totalOptions)) {
-        out.println("Invalid option: please enter again!");
-        continue;
-      }
-      break;
-    }
-
-    return enteredOption;
-  }
-
+  /*
+   * private int readOption(int totalOptions) throws IOException, EOFException {
+   * int enteredOption;
+   * while (true) {
+   * String s = inputReader.readLine();
+   * if (s == null) {
+   * throw new EOFException("Error in input readline.");
+   * }
+   * 
+   * enteredOption = Integer.valueOf(s);
+   * if (enteredOption < 1 || (totalOptions != 0 && enteredOption > totalOptions))
+   * {
+   * out.println("Invalid option: please enter again!");
+   * continue;
+   * }
+   * break;
+   * }
+   * 
+   * return enteredOption;
+   * }
+   */
   protected ArrayList<String> getMyOwnTerritories() {
     return theMap.getPlayerTerritories(identity);
   }
@@ -369,7 +374,6 @@ public class TextPlayer {
     return this.totalFood.getResourceAmount();
   }
 
-  
   /**
    * Method to get total tech resource
    **/
@@ -379,14 +383,15 @@ public class TextPlayer {
 
   /**
    * Method to get the resource details of the player
+   * 
    * @return string
    */
   public String getResourcesDtails() {
     StringBuilder resourceDetails = new StringBuilder("");
-    resourceDetails.append("Player: " + this.identity + "\n" );
+    resourceDetails.append("Player: " + this.identity + "\n");
     resourceDetails.append("***********RESOURCES**********\n");
     resourceDetails.append("Total Food: " + this.getTotalFoodResourceAmount() + "\n");
-    resourceDetails.append("Total Tech: " + this.getTotalTechResourceAmount()); 
+    resourceDetails.append("Total Tech: " + this.getTotalTechResourceAmount());
 
     return resourceDetails.toString();
   }
