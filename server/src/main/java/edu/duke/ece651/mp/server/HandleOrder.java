@@ -1,10 +1,25 @@
 package edu.duke.ece651.mp.server;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
-import edu.duke.ece651.mp.common.*;
+import edu.duke.ece651.mp.common.AttackTurn;
+import edu.duke.ece651.mp.common.FoodResourceList;
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.MapTextView;
+import edu.duke.ece651.mp.common.MoveChecking;
+import edu.duke.ece651.mp.common.MoveTurn;
+import edu.duke.ece651.mp.common.TechResource;
+import edu.duke.ece651.mp.common.TechResourceList;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.Turn;
+import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.UpgradeTurn;
+import edu.duke.ece651.mp.common.V2Map;
 
 public class HandleOrder<T> {
   public ArrayList<TurnList> all_order_list;
@@ -137,8 +152,23 @@ public class HandleOrder<T> {
     String des = moveOrder.getDestination();
     String player_color = moveOrder.getPlayerColor();
     HashMap<String, Integer> moveUnits = moveOrder.getUnitList();
-    // Check Rules
+    // Check Rules - Owner and Path
     String moveProblem = moveChecker.checkMoving(theMap, dep, des, moveUnits, player_color);
+
+    // Check Rule - Food Resource
+    // Find the minimum cost path from source to destination
+    // the cost of each move is (total size of territories moved through) * (number
+    // of units moved).
+    int minimumCost = calculateMinimumCostToMove(dep, des, moveUnits);
+
+    // Check if the player has enough food resources to make the move
+    int playerFoodResource = tech_list.resource_list.get(player_color).getResourceAmount();
+    if (minimumCost > playerFoodResource) {
+      moveProblem = "Not enough food resource - atleast " + minimumCost + " required";
+    } else { // deduct the player's resource
+      food_list.addResource(player_color, -minimumCost);
+    }
+
     String moveResult;
 
     if (moveProblem == null) {
@@ -275,7 +305,7 @@ public class HandleOrder<T> {
   }
 
   public void handleSingleUpgradeOrder(UpgradeTurn upgradeTurn) {
-    UpgradeChecking upgradeChecker = new UpgradeChecking<>();
+    UpgradeChecking<T> upgradeChecker = new UpgradeChecking<>();
     if (upgradeChecker.checkMyRule(theMap, upgradeTurn, tech_list)) {
       // the Upgrade Order is valid.
       // update the tech resources of players
@@ -319,4 +349,119 @@ public class HandleOrder<T> {
   public TechResourceList getTechList() {
     return this.tech_list;
   }
+
+  /**
+   * Method to compute all possible paths from the source territory to destination
+   * territory using recursion
+   * 
+   * @param source territory, destination territory, list of all paths (used in
+   *               recursion) currPath that's being computed
+   * @return ArrayList of all possible path where path is an ArrayList of
+   *         territories
+   *
+   */
+  private ArrayList<Deque<Territory<T>>> computeAllPossiblePaths(String source, String destination,
+      HashMap<String, Integer> allunits) {
+    ArrayList<Deque<Territory<T>>> allPaths = new ArrayList<>();
+    // Algorithm used: Depth First Search
+    Deque<Territory<T>> stack = new ArrayDeque<>();
+
+    // Keep track of territories visited to avoid loop
+    Deque<Territory<T>> visited = new ArrayDeque<>();
+
+    // get the source territory
+    Territory<T> start = theMap.getAllTerritories().get(source);
+    stack.push(start);
+    String colorID = start.getColor();
+
+    // while all the territories are not visited
+    while (!stack.isEmpty()) {
+      Territory<T> currTerritory = stack.pop();
+      String currname = currTerritory.getName();
+
+      if (currname.equals(destination)) { // found a path
+        // add the path to the list
+        allPaths.add(visited);
+
+        // remove the last territory
+        visited.removeLast();
+      }
+
+      // if the territory is not visited already
+      if (!visited.contains(currTerritory)) {
+        visited.push(currTerritory);
+
+        // for each neighbour of this territory
+        for (String s : currTerritory.getAdjacency()) {
+          Territory<T> thisTerritory = theMap.getAllTerritories().get(s);
+          // if the territory is owned by the player
+          if (thisTerritory.getColor().equals(colorID)) {
+            stack.push(thisTerritory);
+          }
+        }
+      }
+    }
+    return allPaths;
+  }
+
+  /*
+   * (String source, String destination, ArrayList<ArrayList<String>> allpaths,
+   * ArrayList<String> currpath) {
+   * 
+   * // create the array if they are null in first iteration if (allpaths == null)
+   * { allpaths = new ArrayList<>(); }
+   * 
+   * if(currpath == null) { currpath = new ArrayList<>(); }
+   * 
+   * if (source.equals(destination)) { // Base case of the recursive algorithm
+   * allpaths.add(currpath); return allpaths; }
+   * 
+   * Territory<T> currTerritory = theMap.getAllTerritories().get(source);
+   * 
+   * String color = currTerritory.getColor(); for (String currTerrName :
+   * currTerritory.getAdjacency()) { Territory<T> next =
+   * theMap.getAllTerritories().get(currTerrName);
+   * 
+   * // if the adjacent territory is owned by the player if
+   * (next.getColor().equals(color)) { // add it to the current path
+   * currpath.add(currTerrName);
+   * 
+   * // now use this territory as the source and recurse allpaths =
+   * computeAllPossiblePaths(currTerrName, destination, allpaths, currpath);
+   * 
+   * // remove the last item from the list i.e. reset // for next iteration
+   * currpath.remove(currpath.size() - 1); } } // end of For loop return allpaths;
+   * }
+   */
+
+  /**
+   * Method to caculate the minimum cost to move from source to destination
+   * 
+   * @param source territory, destination territory, number of units to move
+   * @return Integer cost
+   */
+  private int calculateMinimumCostToMove(String source, String destination, HashMap<String, Integer> moveUnits) {
+    int totalUnitsToMove = 0;
+    for (HashMap.Entry<String, Integer> unit : moveUnits.entrySet()) {
+      totalUnitsToMove += unit.getValue();
+    }
+
+    // create an empty path of all pa
+    ArrayList<Deque<Territory<T>>> allpaths = computeAllPossiblePaths(source, destination, moveUnits);
+    int number = Integer.MAX_VALUE;
+    int total_unit = 0;
+    // compute the minimal cost for the move
+    for (Deque<Territory<T>> currPath : allpaths) {
+      total_unit = 0;
+      for (Territory<T> terr : currPath) {
+        total_unit += terr.getSize();
+      }
+      number = Math.min(number, total_unit);
+    }
+    // the total size will be the source size adding path size(destination size not
+    // included)
+    number += theMap.getAllTerritories().get(source).getSize();
+    return totalUnitsToMove * number;
+  }
+
 }
