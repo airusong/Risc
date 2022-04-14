@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * construct a Territory class
@@ -33,9 +34,9 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.size = size;
   }
 
-  
   /**
    * Method to get details about the territory in string format
+   * 
    * @return String - territory details
    */
   public String getTerritoryDetails() {
@@ -43,7 +44,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     terrDetails.append("Territory: " + name + "\n");
     terrDetails.append("--------------------------------\n");
     terrDetails.append("Size: " + size + "\n");
-    terrDetails.append("Food Resource: " + food.getResourceAmount() +  "\n");
+    terrDetails.append("Food Resource: " + food.getResourceAmount() + "\n");
     terrDetails.append("Tech Resource: " + tech.getResourceAmount() + "\n");
     terrDetails.append("********Units********" + getUnitsList());
 
@@ -56,7 +57,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   private String getUnitsList() {
     StringBuilder unitsDetails = new StringBuilder("");
     for (Unit unit : unit_list) {
-      unitsDetails.append("\n" + "Level: " + unit.getUnitType() + "\n" );
+      unitsDetails.append("\n" + "Level: " + unit.getUnitType() + "\n");
       unitsDetails.append("Bonus: " + unit.getBonus() + "\n");
       unitsDetails.append("Number: " + unit.getUnitNum());
     }
@@ -101,7 +102,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
       int new_num = tech.getResourceAmount() + resource.getResourceAmount();
       setTechResource(new_num);
     }
-  }  
+  }
 
   public void setFoodResource(int num) {
     food.setResourceAmount(num);
@@ -171,6 +172,15 @@ public class Territory<T> implements IITerritory<T>, Serializable {
       unit_list.set(index, new Unit(unit_type, new_unit));
     } else {
       unit_list.add(new Unit(unit_type, new_unit));
+    }
+  }
+
+  // update #units of Territory, using by tempMap
+  public void updateUnit(HashMap<String, Integer> unit_list) {
+    for (HashMap.Entry<String, Integer> set : unit_list.entrySet()) {
+      int old_num = getUnit(set.getKey());
+      int new_num = old_num - set.getValue();
+      updateUnit(set.getKey(), new_num);
     }
   }
 

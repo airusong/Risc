@@ -1,0 +1,4 @@
+.bodybg{
+    -fx-background-image: url("/ui/risc_1.jpg");
+    -fx-background-size: 100%, 100%;
+}

@@ -1,9 +1,9 @@
 package edu.duke.ece651.mp.common;
 
 public class UpgradeTurn extends Turn {
-    public String fromTerritory;
-    public String old_unit_type;
-    public String new_unit_type;
+    private String fromTerritory;
+    private String old_unit_type;
+    private String new_unit_type;
 
     public UpgradeTurn(String fromTerritory, String old_unit_type, String new_unit_type, int num_unit,
             String player_color) {
@@ -21,7 +21,7 @@ public class UpgradeTurn extends Turn {
         return this.old_unit_type;
     }
 
-    public String getNewUniType() {
+    public String getNewUnitType() {
         return this.new_unit_type;
     }
 

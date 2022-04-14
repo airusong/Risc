@@ -37,6 +37,7 @@ public abstract class Turn implements Serializable {
     return num_units;
   }
 
+  // used Only by Upgrade Turn
   public int getNumber() {
     return this.num_unit;
   }

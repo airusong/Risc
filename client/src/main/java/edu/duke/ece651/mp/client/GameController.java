@@ -1,34 +1,22 @@
 package edu.duke.ece651.mp.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.UpgradeTurn;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameController {
   // Stack panes holding all territory elements
@@ -435,7 +423,7 @@ public class GameController {
   }
 
   Tooltip playerResourceTooltip;
-  
+
   /**
    * Method to set the tooltip to view player's resources
    */
@@ -645,7 +633,7 @@ public class GameController {
     for (String unitType : UnitTypeEntries.keySet()) {
       int unitNum = getUnitNum(UnitTypeEntries.get(unitType));
       // Don't add if there are 0 units
-      if (unitNum >= 0) {
+      if (unitNum > 0) {
         units.put(unitType, unitNum);
       }
     }
@@ -714,8 +702,9 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources tooltip
-    updatePlayerResourceView();;
-    
+    updatePlayerResourceView();
+    ;
+
     // update the tooltips
     updateTerritoryDetailsView();
 

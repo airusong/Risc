@@ -47,16 +47,18 @@ public class TechResourceList implements Serializable {
         }
     }
 
-    public void addResource(String color, int techResource) {
-        for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
-            if (set.getKey().equals(color)) {
-                int old_num = set.getValue().getResourceAmount();
-                int new_num = old_num + techResource;
-                resource_list.put(color, new TechResource(new_num));
-                break;
-            }
-        }
-    }
+    /*
+     * public void addResource(String color, int techResource) {
+     * for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {
+     * if (set.getKey().equals(color)) {
+     * int old_num = set.getValue().getResourceAmount();
+     * int new_num = old_num + techResource;
+     * resource_list.put(color, new TechResource(new_num));
+     * break;
+     * }
+     * }
+     * }
+     */
 
     public void printList() {
         for (Map.Entry<String, TechResource> set : resource_list.entrySet()) {

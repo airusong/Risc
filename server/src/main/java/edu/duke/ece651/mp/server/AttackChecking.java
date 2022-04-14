@@ -1,6 +1,7 @@
 package edu.duke.ece651.mp.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.duke.ece651.mp.common.*;
 
@@ -21,16 +22,19 @@ public class AttackChecking<T> {
   public boolean checkMyRule(Map<T> map, AttackTurn attackOrder) {
     String source = attackOrder.getSource();
     String destination = attackOrder.getDestination();
-    String unit_type = "ALEVEL"; // HARDCODED FOR BASE VERSION
-    int attackingunits = attackOrder.getNumber();
     String player_color = attackOrder.getPlayerColor();
+    HashMap<String, Integer> num_units = attackOrder.getUnitList();
 
     Territory<T> attacker = map.getAllTerritories().get(source);
     Territory<T> defender = map.getAllTerritories().get(destination);
 
+    String attack_units_info = "";
+    for (HashMap.Entry<String, Integer> set : num_units.entrySet()) {
+      attack_units_info += set.getValue() + set.getKey() + " ";
+    }
+
     attackStatus = player_color + ": Attack order from "
-        + source + " into " + destination + " with " +
-        + attackingunits + " " + unit_type + " units was ";
+        + source + " into " + destination + " with ( " + attack_units_info + ") units was ";
 
     // check if the source belongs to the attacker
     if (!attacker.getColor().equals(player_color)) {
@@ -51,11 +55,12 @@ public class AttackChecking<T> {
     }
 
     // check if the attcker has enough units
-    if (attacker.getUnit(unit_type) < attackingunits) {
-      attackStatus += "invalid as attacker doesn't have enough units";
-      return false;
+    for (HashMap.Entry<String, Integer> set : num_units.entrySet()) {
+      if (attacker.getUnit(set.getKey()) < set.getValue()) {
+        attackStatus += "invalid as attacker doesn't have enough " + set.getKey() + " units";
+        return false;
+      }
     }
-
     // passed all rules!
     attackStatus += "valid - ";
     return true;
