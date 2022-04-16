@@ -33,21 +33,6 @@ public class GameController {
   @FXML
   private StackPane Territory6;
 
-  // Shaped for rectangular boxes in the map representing territories
-  @FXML
-  private Shape Terr1Box;
-  @FXML
-  private Shape Terr2Box;
-  @FXML
-  private Shape Terr3Box;
-  @FXML
-  private Shape Terr4Box;
-  @FXML
-  private Shape Terr5Box;
-  @FXML
-  private Shape Terr6Box;
-
-  private ArrayList<Shape> terrBoxes;
 
   // Text fields to show territory names in map
   @FXML
@@ -93,9 +78,6 @@ public class GameController {
     // setup name, units and color of each territory first
     initTerritories(initialMap);
 
-    // draw lines between territories for showing adjacency
-    setAdjacency(initialMap);
-
     // setup tooltips to show territory details
     setTerritoryDetailsView();
   }
@@ -134,7 +116,7 @@ public class GameController {
    */
   private void initTerritories(V2Map<Character> initialMap) {
     // init lists with Java FX components
-    initLists();
+    //initLists();
 
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
 
@@ -154,39 +136,16 @@ public class GameController {
       // get territories of this player color
       ArrayList<String> terrList = terrGroups.get(player_color);
       for (String terrName : terrList) {
-        terrBoxes.get(i).setFill(terrColor);
-        terrNames.get(i).setText(terrName);
+        //terrBoxes.get(i).setFill(terrColor);
+        //terrNames.get(i).setText(terrName);
         // To Do: Display different number of various UnitType
-        TerritoryBoxes.put(terrName, terrBoxes.get(i));
-        TerritoryNames.put(terrName, terrNames.get(i));
+        //TerritoryBoxes.put(terrName, terrBoxes.get(i));
+        //TerritoryNames.put(terrName, terrNames.get(i));
         i++;
       }
     }
   }
 
-  /**
-   * Method to initialize the lists of Java FX components
-   */
-  private void initLists() {
-    // Add rectangles
-    terrBoxes = new ArrayList<Shape>();
-    terrBoxes.add(Terr1Box);
-    terrBoxes.add(Terr2Box);
-    terrBoxes.add(Terr3Box);
-    terrBoxes.add(Terr4Box);
-    terrBoxes.add(Terr5Box);
-    terrBoxes.add(Terr6Box);
-
-    // Add names
-    terrNames = new ArrayList<TextField>();
-    terrNames.add(Terr1Name);
-    terrNames.add(Terr2Name);
-    terrNames.add(Terr3Name);
-    terrNames.add(Terr4Name);
-    terrNames.add(Terr5Name);
-    terrNames.add(Terr6Name);
-
-  }
 
 
   private TextPlayer theTextPlayer;
