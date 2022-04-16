@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,9 +17,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="605.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
-      <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
+      <ImageView fx:id="mapImage" fitHeight="453.0" fitWidth="614.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@risc.jpg" />
+         </image>
+      </ImageView>
+      <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="216.0" prefWidth="253.0" vgap="20.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.20001220703125" minWidth="10.0" prefWidth="104.20001220703125" />
@@ -37,7 +44,7 @@
             <StackPane id="Territory4" fx:id="Territory4" prefHeight="45.0" prefWidth="103.0" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr4Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
+                  <TextField id="TerrName" fx:id="Terr4Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="55.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -47,7 +54,7 @@
             <StackPane id="Territory1" fx:id="Territory1" layoutX="10.0" layoutY="132.0">
                <children>
                   <Rectangle fx:id="Terr1Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" prefHeight="49.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
+                  <TextField id="TerrName" fx:id="Terr1Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="49.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -57,7 +64,7 @@
             <StackPane id="Territory2" fx:id="Territory2" layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Rectangle fx:id="Terr2Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
+                  <TextField id="TerrName" fx:id="Terr2Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -67,17 +74,12 @@
             <StackPane id="Territory3" fx:id="Territory3" layoutX="118.0" layoutY="10.0" GridPane.columnIndex="4">
                <children>
                   <Rectangle fx:id="Terr3Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
                </children>
             </StackPane>
             <StackPane id="Territory6" fx:id="Territory5" layoutX="226.0" layoutY="10.0" prefHeight="42.0" prefWidth="103.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <Rectangle fx:id="Terr5Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
+                  <TextField id="TerrName" fx:id="Terr5Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -87,13 +89,18 @@
             <StackPane id="Territory4" fx:id="Territory6" layoutX="118.0" layoutY="132.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <children>
                   <Rectangle fx:id="Terr6Box" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="45.0" stroke="BLACK" width="94.0" />
-                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER" editable="false">
+                  <TextField id="TerrName" fx:id="Terr6Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="52.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" StackPane.alignment="TOP_CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
                </children>
             </StackPane>
+            <TextField id="TerrName" fx:id="Terr3Name" accessibleRole="TEXT_FIELD" editable="false" prefHeight="54.0" prefWidth="95.0" style="-fx-background-color: transparent;" text="TerrName" GridPane.columnIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
          </children>
       </GridPane>
       <Line fx:id="Line1to4" endX="14.800006866455078" endY="-87.4000015258789" layoutX="14.0" layoutY="139.0" startX="14.800006866455078" startY="114.20001220703125" visible="false" />
@@ -111,7 +118,7 @@
       <Line fx:id="Line1to6" endX="-24.599990844726562" endY="44.399993896484375" layoutX="277.0" layoutY="168.0" startX="-216.8000030517578" startY="-116.9000015258789" visible="false" />
       <Line fx:id="Line2to5" endX="-75.39997863769531" endY="-68.00000762939453" layoutX="287.0" layoutY="178.0" startX="133.0" startY="75.20001220703125" visible="false" />
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
-      <Button fx:id="commit" layoutX="493.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" textFill="#e10909" />
+      <Button fx:id="commit" layoutX="401.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" textFill="#e10909" />
       <AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />
       <Label fx:id="player_info" layoutX="492.0" layoutY="5.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " textAlignment="CENTER">
          <font>
@@ -165,11 +172,11 @@
             <Label layoutX="5.0" layoutY="237.0" prefHeight="26.0" prefWidth="62.0" text="G Units:" />
          </children>
       </Pane>
-      <Button fx:id="order" layoutX="529.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
-      <ComboBox fx:id="playeraction" layoutX="491.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="170.0" promptText="Select an action" />
-      <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="422.0" promptText="Game Status:" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="23.0" layoutY="316.0" prefHeight="84.0" prefWidth="422.0" promptText="Turn Status: No turns yet" wrapText="true" />
-      <TextArea fx:id="errormessage" editable="false" layoutX="458.0" layoutY="365.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />
+      <Button fx:id="order" layoutX="433.0" layoutY="331.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
+      <ComboBox fx:id="playeraction" layoutX="373.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="170.0" promptText="Select an action" />
+      <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="154.0" promptText="Game Status:" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="23.0" layoutY="316.0" prefHeight="84.0" prefWidth="154.0" promptText="Turn Status: No turns yet" wrapText="true" />
+      <TextArea fx:id="errormessage" editable="false" layoutX="366.0" layoutY="365.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />
       <Pane fx:id="UpgradePane" layoutX="491.0" layoutY="77.0" visible="false">
          <children>
             <ComboBox fx:id="UpgradeTerritory" layoutX="1.0" prefWidth="150.0" promptText="in which territory" />
