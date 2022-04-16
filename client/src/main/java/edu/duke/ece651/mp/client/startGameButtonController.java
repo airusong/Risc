@@ -2,18 +2,13 @@ package edu.duke.ece651.mp.client;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 public class startGameButtonController {
 
@@ -27,7 +22,7 @@ public class startGameButtonController {
   void onStartGameButton(MouseEvent event) {
 
     try {
-      connection_status.setText("");;
+      connection_status.setText("");
       // build Connection with Server
       System.out.println("Welcome to our game!");
       int port = 8080;
@@ -43,15 +38,16 @@ public class startGameButtonController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/gamepage.fxml"));
         String player_color = theClient.theTextPlayer.identity;
         System.out.println("The player's color is: " + player_color);
-        // primaryStage.setTitle("RISC GAME")
+
         AnchorPane root = (AnchorPane) loader.load();
-        // Scene scene = new Scene(root);
-        // stage.setScene(scene);
+        /*GridPane root = (GridPane)loader.load();
 
+          Image image = new Image("/ui/risc.jpg");
+          ImageView iv = new ImageView();
+          iv.setImage(image);
+          root.getChildren().add(iv);
+        */
         GameController gameController = loader.getController();
-        // String player_info = theClient.theTextPlayer.identity;
-        // gameController.setName(player_info);
-
         gameController.setPlayer(theClient.theTextPlayer);
         gameController.initGame();
 

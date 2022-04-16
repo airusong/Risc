@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="764.0" minWidth="10.0" prefWidth="548.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="764.0" minWidth="0.0" prefWidth="86.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="0.0" prefWidth="174.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="565.0" minHeight="10.0" prefHeight="486.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="193.0" minHeight="0.0" prefHeight="154.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox prefHeight="486.0" prefWidth="181.0" GridPane.columnIndex="2">
+         <children>
+            <ComboBox fx:id="playeraction" onAction="#OnSelectedOrderType" prefHeight="28.0" prefWidth="305.0" promptText="Select an action" />
+            <ComboBox fx:id="from" prefHeight="28.0" prefWidth="184.0" promptText="from territory">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="to" prefHeight="28.0" prefWidth="184.0" promptText="to territory">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </ComboBox>
+            <TextField fx:id="Units_A" promptText="Leave blank for none">
+               <opaqueInsets>
+                  <Insets top="5.0" />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_B" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_C" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_D" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_E" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_F" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="Units_G" promptText="Leave blank for none">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="order" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="31.0" prefWidth="208.0" text="Add Order">
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="commit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="31.0" prefWidth="210.0" text="Done with Turn. Commit!" textFill="#f50303">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="486.0" prefWidth="85.0" GridPane.columnIndex="1">
+         <children>
+            <Label fx:id="player_info" prefHeight="89.0" prefWidth="103.0" text="Player Info:">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+   </children>
+</GridPane>
