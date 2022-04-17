@@ -18,15 +18,15 @@
    <children>
       <ImageView fitHeight="640.0" fitWidth="800.0" pickOnBounds="true">
          <image>
-            <Image url="@risc.jpg" />
+            <Image url="@risc_2.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="playeraction" layoutX="609.0" layoutY="108.0" onAction="#OnSelectedOrderType" prefHeight="28.0" prefWidth="129.0" promptText="Select an action">
+      <ComboBox fx:id="playeraction" layoutX="609.0" layoutY="108.0" onAction="#OnSelectedOrderType" prefHeight="28.0" prefWidth="129.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
          <padding>
             <Insets left="3.0" />
          </padding>
       </ComboBox>
-      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="635.0" layoutY="405.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="33.0" prefWidth="80.0" stylesheets="@style.css" text="Add order">
+      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="634.0" layoutY="396.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="33.0" prefWidth="80.0" stylesheets="@style.css" text="Add order">
          <font>
             <Font size="8.0" />
          </font>
@@ -40,12 +40,12 @@
          <children>
             <VBox layoutY="-14.0" prefHeight="217.0" prefWidth="129.0">
                <children>
-                  <ComboBox fx:id="from" prefHeight="28.0" prefWidth="144.0" promptText="from territory">
+                  <ComboBox fx:id="from" prefHeight="28.0" prefWidth="144.0" promptText="from territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="to" prefHeight="28.0" prefWidth="145.0" promptText="to territory">
+                  <ComboBox fx:id="to" prefHeight="28.0" prefWidth="145.0" promptText="to territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
@@ -60,7 +60,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_A" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_A" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -77,7 +77,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_B" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_B" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -94,7 +94,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_C" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_C" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -111,7 +111,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_D" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_D" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -128,7 +128,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_E" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_E" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -145,7 +145,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_F" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_F" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -162,7 +162,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_G" prefHeight="26.0" prefWidth="70.0" promptText="Leave blank for none">
+                        <TextField fx:id="Units_G" prefHeight="26.0" prefWidth="70.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -176,22 +176,22 @@
             <Insets />
          </opaqueInsets>
       </Pane>
-      <Pane fx:id="UpgradePane" layoutX="600.0" layoutY="146.0" prefHeight="184.0" prefWidth="147.0">
+      <Pane fx:id="UpgradePane" layoutX="600.0" layoutY="146.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css">
          <children>
             <VBox layoutX="9.0" prefHeight="170.0" prefWidth="129.0" visible="false">
                <children>
-                  <ComboBox fx:id="UpgradeFrom" prefHeight="28.0" prefWidth="130.0" promptText="From unit type" />
-                  <ComboBox fx:id="UpgradeTerritory" prefHeight="28.0" prefWidth="132.0" promptText="in which territory">
+                  <ComboBox fx:id="UpgradeFrom" prefHeight="28.0" prefWidth="130.0" promptText="From unit type" styleClass="combo-box" stylesheets="@style.css" />
+                  <ComboBox fx:id="UpgradeTerritory" prefHeight="28.0" prefWidth="132.0" promptText="in which territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="UpgradeTo" prefHeight="28.0" prefWidth="129.0" promptText="To unit type">
+                  <ComboBox fx:id="UpgradeTo" prefHeight="28.0" prefWidth="129.0" promptText="To unit type" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <TextField fx:id="UpgradeUnits" prefHeight="26.0" prefWidth="109.0" promptText="How many units to upgrade?">
+                  <TextField fx:id="UpgradeUnits" prefHeight="26.0" prefWidth="109.0" promptText="How many units to upgrade?" stylesheets="@style.css">
                      <font>
                         <Font size="8.0" />
                      </font>
@@ -203,8 +203,8 @@
             </VBox>
          </children>
       </Pane>
-      <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="217.0" layoutY="491.0" prefHeight="84.0" prefWidth="129.0" promptText="Turn Status: No turns yet" wrapText="true" />
-      <TextArea fx:id="errormessage" editable="false" layoutX="346.0" layoutY="491.0" prefHeight="84.0" prefWidth="121.0" wrapText="true" />
+      <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="217.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Turn Status: No turns yet" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
+      <TextArea fx:id="errormessage" editable="false" layoutX="346.0" layoutY="504.0" prefHeight="58.0" prefWidth="121.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
    </children>
 </AnchorPane>

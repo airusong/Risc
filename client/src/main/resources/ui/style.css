@@ -1,5 +1,5 @@
 .bodybg{
-    -fx-background-image: url("/ui/risc.jpg");
+    -fx-background-image: url("/ui/risc_2.jpg");
     -fx-background-size: 100%, 100%;
 }
 
@@ -7,13 +7,42 @@
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
-    -fx-background-color: transparent;
+    -fx-background-color: ac855c;
     -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 1em; /* 12 */
-    -fx-text-fill: #000000;
+    -fx-text-fill: #331908;
 }
 
 .button:pressed {
     -fx-background-color: black;
     -fx-text-fill: white;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-box-border: none;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-font-family: "Smythe";
+    -fx-font-size:12px;
+}
+
+.text-field {
+    -fx-background-color: transparent;
 }

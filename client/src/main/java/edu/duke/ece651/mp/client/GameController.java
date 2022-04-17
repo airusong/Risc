@@ -33,6 +33,22 @@ public class GameController {
   @FXML
   private StackPane Territory6;
 
+  // Shaped for rectangular boxes in the map representing territories
+  @FXML
+  private Shape Terr1Box;
+  @FXML
+  private Shape Terr2Box;
+  @FXML
+  private Shape Terr3Box;
+  @FXML
+  private Shape Terr4Box;
+  @FXML
+  private Shape Terr5Box;
+  @FXML
+  private Shape Terr6Box;
+
+  private ArrayList<Shape> terrBoxes;
+
 
   // Text fields to show territory names in map
   @FXML
@@ -544,7 +560,6 @@ public class GameController {
   private void updateUIMap() {
     // update player's resources tooltip
     updatePlayerResourceView();
-    ;
 
     // update the tooltips
     updateTerritoryDetailsView();
