@@ -90,15 +90,15 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    **/
   protected void addAdjacency() {
     myTerritories.get("Narnia").addAdjacency("Midemio");
-    myTerritories.get("Narnia").addAdjacency("Elantris");
+    myTerritories.get("Narnia").addAdjacency("Oz");
     myTerritories.get("Midemio").addAdjacency("Narnia");
     myTerritories.get("Midemio").addAdjacency("Oz");
     myTerritories.get("Midemio").addAdjacency("Elantris");
     myTerritories.get("Midemio").addAdjacency("Scadnal");
     myTerritories.get("Oz").addAdjacency("Midemio");
+    myTerritories.get("Oz").addAdjacency("Narnia");
     myTerritories.get("Oz").addAdjacency("Scadnal");
     myTerritories.get("Elantris").addAdjacency("Scadnal");
-    myTerritories.get("Elantris").addAdjacency("Narnia");
     myTerritories.get("Elantris").addAdjacency("Roshar");
     myTerritories.get("Elantris").addAdjacency("Midemio");
     myTerritories.get("Scadnal").addAdjacency("Roshar");
