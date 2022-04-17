@@ -40,13 +40,8 @@ public class startGameButtonController {
         System.out.println("The player's color is: " + player_color);
 
         AnchorPane root = (AnchorPane) loader.load();
-        /*GridPane root = (GridPane)loader.load();
+        //StackPane root = (StackPane)loader.load();
 
-          Image image = new Image("/ui/risc.jpg");
-          ImageView iv = new ImageView();
-          iv.setImage(image);
-          root.getChildren().add(iv);
-        */
         GameController gameController = loader.getController();
         gameController.setPlayer(theClient.theTextPlayer);
         gameController.initGame();

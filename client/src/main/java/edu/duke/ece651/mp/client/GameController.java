@@ -223,7 +223,7 @@ public class GameController {
     myTurn = new TurnList(theTextPlayer.identity);
 
     initiateUnitList();
-    setOrderPane();
+    //setOrderPane();
   }
 
   /**
