@@ -126,7 +126,7 @@
             </TextField>
             <ComboBox fx:id="from" prefWidth="150.0" promptText="from territory" />
             <ComboBox fx:id="to" layoutY="30.0" prefWidth="150.0" promptText="to territory" />
-            <TextField fx:id="Units_B" layoutX="70.0" layoutY="91.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_B" layoutX="70.0" layoutY="91.0" prefHeight="10.0" prefWidth="86.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
@@ -152,6 +152,11 @@
                </font>
             </TextField>
             <TextField fx:id="Units_G" layoutX="74.0" layoutY="236.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="SPY" layoutX="74.0" layoutY="256.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
@@ -182,6 +187,5 @@
             <ComboBox fx:id="UpgradeTo" layoutX="1.0" layoutY="91.0" prefWidth="150.0" promptText="To unit type" />
          </children>
       </Pane>
-      <TextField fx:id="SPY" layoutX="453.0" layoutY="222.0" prefHeight="26.0" prefWidth="77.0" promptText="Leave blank for noneLeave blank for none" />
    </children>
 </AnchorPane>

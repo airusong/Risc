@@ -151,9 +151,15 @@ public class HandleOrder<T> {
     String des = moveOrder.getDestination();
     String player_color = moveOrder.getPlayerColor();
     HashMap<String, Integer> moveUnits = moveOrder.getUnitList();
+
     // Check Rules - Owner and Path
     String moveProblem = moveChecker.checkMoving(theMap, dep, des, moveUnits, player_color);
-
+    int spy_unit=0;
+    //remove the spy unit from the unit_list
+    if(moveUnits.containsKey("SPY")){
+      spy_unit=moveUnits.get("SPY");
+      moveUnits.remove("SPY");
+    }
     // Check Rule - Food Resource
     // Find the minimum cost path from source to destination
     // the cost of each move is (total size of territories moved through) * (number
@@ -163,11 +169,12 @@ public class HandleOrder<T> {
     // Check if the player has enough food resources to make the move
     int playerFoodResource = food_list.resource_list.get(player_color).getResourceAmount();
     if (minimumCost > playerFoodResource) {
-      moveProblem = "Not enough food resource - atleast " + minimumCost + " required";
+      moveProblem = "Not enough food resource - at least " + minimumCost + " required";
     } else { // deduct the player's resource
       food_list.addResource(player_color, -minimumCost);
     }
-
+    //moveUnits.put("SPY",spy_unit);
+    //create the secret map that can only be seen by the player.
     String moveResult;
 
     if (moveProblem == null) {

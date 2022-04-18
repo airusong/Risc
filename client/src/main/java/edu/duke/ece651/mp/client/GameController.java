@@ -365,6 +365,7 @@ public class GameController {
   @FXML
   private TextField SPY;
 
+
   private HashMap<String, TextField> UnitTypeEntries;
 
   // Upgrade Order inputs
@@ -425,6 +426,7 @@ public class GameController {
     UnitTypeEntries = new HashMap<>();
     UnitTypeEntries.put("ALEVEL", Units_A);
     UnitTypeEntries.put("BLEVEL", Units_B);
+    UnitTypeEntries.put("SPY", SPY);
     UnitTypeEntries.put("CLEVEL", Units_C);
     UnitTypeEntries.put("DLEVEL", Units_D);
     UnitTypeEntries.put("ELEVEL", Units_E);
@@ -479,6 +481,7 @@ public class GameController {
     ArrayList<String> own_territory_list = theTextPlayer.getMyOwnTerritories();
     source_list.clear();
     source_list.addAll(own_territory_list);
+    source_list.addAll(theTextPlayer.getOthersTerritories());
     whichBox.setItems(source_list);
     whichBox.valueProperty().addListener(new ChangeListener<String>() {
       @Override
@@ -507,7 +510,9 @@ public class GameController {
       }
     }
     destination_list.clear();
-    destination_list.addAll(des_territory_list);
+    //destination_list.addAll(des_territory_list);
+    destination_list.addAll(theTextPlayer.getMyOwnTerritories());
+    destination_list.addAll(theTextPlayer.getOthersTerritories());
     to.setItems(destination_list);
   }
 

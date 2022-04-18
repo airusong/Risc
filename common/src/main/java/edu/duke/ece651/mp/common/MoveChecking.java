@@ -28,7 +28,7 @@ public abstract class MoveChecking<T> {
     }
     // First rule checking: owner checking
     if (checkMyRule(map, source, destination, newallunits,player_color) != null||checkMyRule(map, source, destination, spyunit,player_color) != null) {
-      return checkMyRule(map, source, destination, newallunits,player_color)+checkMyRule(map, source, destination, spyunit,player_color);
+      return checkMyRule(map, source, destination, newallunits,player_color)==null ? checkMyRule(map, source, destination, spyunit,player_color):checkMyRule(map, source, destination, newallunits,player_color);
     }
 
     // Second rule checking: path checking

@@ -75,7 +75,7 @@ public class UpgradeChecking<T> {
                 top = 11;
                 break;
             case "SPY":
-                base = 20;
+                top = 20;
                 break;
             case "DLEVEL":
                 top = 30;
