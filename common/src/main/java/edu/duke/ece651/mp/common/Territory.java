@@ -13,7 +13,10 @@ import java.util.HashMap;
 
  * @param: color: one color represents one player
  * @param: adjacentTerritories
- * @param: unit: number
+ * @param: unit_list: different type of unit
+ * @param: food
+ * @param: tech
+ * @param: size
  */
 public class Territory<T> implements IITerritory<T>, Serializable {
   private String name;

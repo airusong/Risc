@@ -31,6 +31,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class GameController {
+
   // Stack panes holding all territory elements
   @FXML
   private StackPane Territory1;
@@ -361,6 +362,8 @@ public class GameController {
   private TextField Units_F;
   @FXML
   private TextField Units_G;
+  @FXML
+  private TextField SPY;
 
   private HashMap<String, TextField> UnitTypeEntries;
 

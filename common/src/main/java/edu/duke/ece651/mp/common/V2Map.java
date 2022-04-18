@@ -21,6 +21,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     AllUnitTypes = new ArrayList<>();
     AllUnitTypes.add("ALEVEL");
     AllUnitTypes.add("BLEVEL");
+    AllUnitTypes.add("SPY");
     AllUnitTypes.add("CLEVEL");
     AllUnitTypes.add("DLEVEL");
     AllUnitTypes.add("ELEVEL");
