@@ -24,4 +24,7 @@ public interface Map<T> {
   public ArrayList<String> getTerritoryUnitType(String currTerritory);
   // public void updateTerritoryInMap(String territoryName, HashMap<UnitType,
   // Integer> unit_change, String newOwnerColor);
+  public void editSPY_map(String player_color,String territory_name,int spy_unit);
+
+  public int getSPY_map(String player_color,String territory_name);
 }
