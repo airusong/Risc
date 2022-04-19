@@ -14,6 +14,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   public ArrayList<String> AllUnitTypes;
 
+  private HashMap<String,HashMap<String,Integer>> spy_map;//key:name  value: HashMap<Key:Territory,value:spy_unit>
   /**
    * method to initialize all unit types and their bonus
    */
@@ -21,6 +22,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     AllUnitTypes = new ArrayList<>();
     AllUnitTypes.add("ALEVEL");
     AllUnitTypes.add("BLEVEL");
+    AllUnitTypes.add("SPY");
     AllUnitTypes.add("CLEVEL");
     AllUnitTypes.add("DLEVEL");
     AllUnitTypes.add("ELEVEL");
@@ -43,6 +45,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addAdjacency();
     addResources();
     addUnits();
+    setSpy_map();
   }
 
   public V2Map() {
@@ -56,6 +59,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addAdjacency();
     addResources();
     addUnits();
+    setSpy_map();
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -139,6 +143,46 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     }
   }
 
+  /**
+   * function to initialize the spy map in the map
+   */
+  public void setSpy_map(){
+    spy_map=new HashMap<>();
+    String player_color1 = players_colors.get(0);
+    spy_map.put(player_color1,new HashMap<>());
+    String player_color2 = players_colors.get(1);
+    spy_map.put(player_color2,new HashMap<>());
+  }
+
+  /**
+   * function to get a player's spy_unit in the enemy territory
+   * @param player_color
+   * @param territory_name
+   * return 0 if there is no spy in this territory
+   */
+  public int getSPY_map(String player_color,String territory_name){
+    HashMap<String,Integer> this_spy_map=spy_map.get(player_color);
+    if(this_spy_map.containsKey(territory_name)){
+      return this_spy_map.get(territory_name);
+    }
+    return 0;
+  }
+
+  /**
+   * funtion to edit the spy_unit int the spy_map, delete or add
+   * @param player_color
+   * @param territory_name
+   * @param spy_unit
+   */
+  public void editSPY_map(String player_color,String territory_name,int spy_unit){
+    HashMap<String,Integer> this_spy_map=spy_map.get(player_color);
+    if(this_spy_map.containsKey(territory_name)){
+      int newunit=this_spy_map.get(territory_name)+spy_unit;
+      this_spy_map.put(territory_name,newunit);
+    }else{
+      this_spy_map.put(territory_name,spy_unit);
+    }
+  }
   /**
    * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
@@ -359,5 +403,6 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     ArrayList<String> terrList = terrGroups.get(player_color);
     return terrList;
   }
+
 
 }

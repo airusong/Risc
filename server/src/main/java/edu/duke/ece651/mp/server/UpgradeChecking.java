@@ -48,6 +48,9 @@ public class UpgradeChecking<T> {
             case "CLEVEL":
                 base = 11;
                 break;
+            case "SPY":
+                base = 20;
+                break;
             case "DLEVEL":
                 base = 30;
                 break;
@@ -70,6 +73,9 @@ public class UpgradeChecking<T> {
                 break;
             case "CLEVEL":
                 top = 11;
+                break;
+            case "SPY":
+                top = 20;
                 break;
             case "DLEVEL":
                 top = 30;

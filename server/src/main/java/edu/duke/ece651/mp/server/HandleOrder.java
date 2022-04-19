@@ -148,32 +148,61 @@ public class HandleOrder<T> {
    */
   public void handleSingleMoveOrder(MoveTurn moveOrder) {
     String dep = moveOrder.getSource();
+    Territory<T> depT=theMap.getAllTerritories().get(dep);
     String des = moveOrder.getDestination();
+    Territory<T> desT=theMap.getAllTerritories().get(des);
     String player_color = moveOrder.getPlayerColor();
     HashMap<String, Integer> moveUnits = moveOrder.getUnitList();
+
     // Check Rules - Owner and Path
     String moveProblem = moveChecker.checkMoving(theMap, dep, des, moveUnits, player_color);
-
+    int spy_unit=0;
+    HashMap<String,Integer> spy_level_unit=new HashMap<>();
+    //remove the spy unit from the unit_list
+    if(moveUnits.containsKey("SPY")){
+      spy_unit=moveUnits.get("SPY");
+      moveUnits.remove("SPY");
+      spy_level_unit.put("SPY",spy_unit);
+    }
     // Check Rule - Food Resource
     // Find the minimum cost path from source to destination
     // the cost of each move is (total size of territories moved through) * (number
     // of units moved).
-    int minimumCost = calculateMinimumCostToMove(dep, des, moveUnits);
+    int minimumCost = calculateMinimumCostToMove(dep, des, moveUnits)+calculateMinimumCostToMove(dep,des,spy_level_unit);
 
     // Check if the player has enough food resources to make the move
     int playerFoodResource = food_list.resource_list.get(player_color).getResourceAmount();
     if (minimumCost > playerFoodResource) {
-      moveProblem = "Not enough food resource - atleast " + minimumCost + " required";
+      moveProblem = "Not enough food resource - at least " + minimumCost + " required";
     } else { // deduct the player's resource
       food_list.addResource(player_color, -minimumCost);
     }
-
+    //reput the spy level and its unit in the hashmap allunits
+    moveUnits.put("SPY",spy_unit);
+    //create the secret map that can only be seen by the player.
     String moveResult;
 
     if (moveProblem == null) {
       // update Territory & Map
 
       for (String unit_type : moveUnits.keySet()) {
+
+        if(unit_type.equals("SPY")){
+          //edit the spy_unit in the source
+          if(depT.getColor().equals(player_color)){
+            theMap.updateTerritoryInMap(dep, unit_type, spy_unit * (-1));
+          }else {
+            theMap.editSPY_map(player_color,dep,spy_unit * (-1));
+          }
+
+          //edit the spy_unit in the destination
+          if(desT.getColor().equals(player_color)){
+            theMap.updateTerritoryInMap(dep, unit_type, spy_unit * (1));
+          }else {
+            theMap.editSPY_map(player_color,dep,spy_unit * (1));
+          }
+          continue;
+        }
         int unitsToMove = moveUnits.get(unit_type);
         // update source territory
         theMap.updateTerritoryInMap(dep, unit_type, unitsToMove * (-1)); // -1 for taking units out
@@ -520,6 +549,54 @@ public class HandleOrder<T> {
     return allPaths;
   }
 
+  /**
+   * function to compute all possible paths to the result
+   * @param source
+   * @param destination
+   * @param allunits
+   * @return
+   */
+  private ArrayList<Deque<Territory<T>>> computeAllPossiblePathsForSpy(String source, String destination,
+                                                                 HashMap<String, Integer> allunits) {
+    ArrayList<Deque<Territory<T>>> allPaths = new ArrayList<>();
+    // Algorithm used: Depth First Search
+    Deque<Territory<T>> stack = new ArrayDeque<>();
+
+    // Keep track of territories visited to avoid loop
+    Deque<Territory<T>> visited = new ArrayDeque<>();
+
+    // get the source territory
+    Territory<T> start = theMap.getAllTerritories().get(source);
+    stack.push(start);
+
+    // Deque<Territory<T>> res = new ArrayDeque<>();
+    // while all the territories are not visited
+    while (!stack.isEmpty()) {
+      Territory<T> currTerritory = stack.pop();
+      // res.add(currTerritory);
+      String currname = currTerritory.getName();
+
+      if (currname.equals(destination)) { // found a path
+        // add the path to the list
+        Deque<Territory<T>> res = new ArrayDeque<Territory<T>>(visited);
+        allPaths.add(res);
+        continue;
+      }
+
+      // if the territory is not visited already
+      if (!visited.contains(currTerritory)) {
+        visited.push(currTerritory);
+
+        // for each neighbour of this territory
+        for (String s : currTerritory.getAdjacency()) {
+          Territory<T> thisTerritory = theMap.getAllTerritories().get(s);
+          stack.push(thisTerritory);
+        }
+      }
+    }
+
+    return allPaths;
+  }
 
   /**
    * Method to caculate the minimum cost to move from source to destination
@@ -535,7 +612,12 @@ public class HandleOrder<T> {
     System.out.println("units to move: " + totalUnitsToMove);
 
     // create an empty path of all pa
-    ArrayList<Deque<Territory<T>>> allpaths = computeAllPossiblePaths(source, destination, moveUnits);
+    ArrayList<Deque<Territory<T>>> allpaths=new ArrayList<>();
+    if(!moveUnits.containsKey("SPY")) {//path for all type except unit
+      allpaths = computeAllPossiblePaths(source, destination, moveUnits);
+    }else{//path for spy unit
+      allpaths =computeAllPossiblePathsForSpy(source,destination,moveUnits);
+    }
     int number = Integer.MAX_VALUE;
     int total_unit = 0;
     // compute the minimal cost for the move

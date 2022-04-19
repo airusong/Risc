@@ -25,6 +25,8 @@ public class Unit implements Serializable {
     AllUnitTypesBonus.put("ELEVEL", 8);
     AllUnitTypesBonus.put("FLEVEL", 11);
     AllUnitTypesBonus.put("GLEVEL", 15);
+    AllUnitTypesBonus.put("SPY",17);
+
   }
 
 
