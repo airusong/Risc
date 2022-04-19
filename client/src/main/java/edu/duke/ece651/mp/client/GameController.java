@@ -2,7 +2,6 @@ package edu.duke.ece651.mp.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import edu.duke.ece651.mp.common.AttackTurn;
 import edu.duke.ece651.mp.common.MoveTurn;
@@ -189,7 +188,8 @@ public class GameController {
     TerritoryBoxes = new HashMap<>();
     TerritoryNames = new HashMap<>();
     int i = 0;
-    for (String player_color : initialMap.getPlayerColors()) {
+    //System.out.println(terrGroups.keySet());
+    for (String player_color : terrGroups.keySet()) {
       Color terrColor = Color.WHITE; // default
       if (player_color.equals("Green")) {
         terrColor = Color.GREEN;
@@ -198,10 +198,11 @@ public class GameController {
       }
       // get territories of this player color
       ArrayList<String> terrList = terrGroups.get(player_color);
+      //System.out.println(player_color + ": " + terrList);
       for (String terrName : terrList) {
         terrBoxes.get(i).setFill(terrColor);
         terrNames.get(i).setText(terrName);
-        // To Do: Display different number of various UnitType
+
         TerritoryBoxes.put(terrName, terrBoxes.get(i));
         TerritoryNames.put(terrName, terrNames.get(i));
         i++;
@@ -243,8 +244,10 @@ public class GameController {
     // get adjacency for each
     for (String terrName : allTerritories.keySet()) {
       ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
+      System.out.println(adjacentTerr);
       // for each adjacent territory
       for (String adjTerr : adjacentTerr) {
+        //System.out.println("from: " + terrName + " to: " + adjTerr);
         TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
       }
     }
@@ -365,7 +368,6 @@ public class GameController {
   @FXML
   private TextField SPY;
 
-
   private HashMap<String, TextField> UnitTypeEntries;
 
   // Upgrade Order inputs
@@ -440,7 +442,7 @@ public class GameController {
   }
 
   Tooltip playerResourceTooltip;
-  
+
   /**
    * Method to set the tooltip to view player's resources
    */
@@ -510,7 +512,7 @@ public class GameController {
       }
     }
     destination_list.clear();
-    //destination_list.addAll(des_territory_list);
+    // destination_list.addAll(des_territory_list);
     destination_list.addAll(theTextPlayer.getMyOwnTerritories());
     destination_list.addAll(theTextPlayer.getOthersTerritories());
     to.setItems(destination_list);
@@ -722,8 +724,9 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources tooltip
-    updatePlayerResourceView();;
-    
+    updatePlayerResourceView();
+    ;
+
     // update the tooltips
     updateTerritoryDetailsView();
 

@@ -3,6 +3,7 @@ package edu.duke.ece651.mp.server;
 import edu.duke.ece651.mp.common.*;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -62,7 +63,17 @@ public class Master {
    * @throws IOException
    */
   public void sendMapToAll() throws IOException {
-    theMasterServer.sendToAll((Object) theMap);
+    // Eval-3: Fog of War Feature
+    // We cannot send the actual map to all the players
+    // We need hide the non-adjacent enemy territory details first before sending
+    for (String playerColor : players_identity) {
+      Socket playerSocket = theMasterServer.player_socket_Map.get(playerColor);
+
+      // Get the version of the map with hidden non-adjacent enemy territory details
+      // and hidden spy_map for enemy
+      System.out.println("Sending map to player " + playerColor);
+      theMasterServer.sendToPlayer((Object) getFogOfWarMap(playerColor), playerSocket);
+    }
   }
 
   /**
@@ -98,8 +109,7 @@ public class Master {
   }
 
   /**
-   * int
-   * Method to receive and update orders from ALL players
+   * int Method to receive and update orders from ALL players
    * 
    * @throws IOException
    * @throws ClassNotFoundException
@@ -159,8 +169,8 @@ public class Master {
   }
 
   /**
-   * cl
-   * Method to start a game by accepting players sending the players their colors
+   * cl Method to start a game by accepting players sending the players their
+   * colors
    * 
    * @throws IOException, InterruptedException
    */
@@ -218,6 +228,41 @@ public class Master {
         break;
       }
     }
+  }
+
+  /**
+   * Method to create the version of the map with non-adjacent enemy territory
+   * details and enemy's spy map hidden
+   * 
+   * @param String player color
+   * @return Map
+   */
+  public V2Map<Character> getFogOfWarMap(String playerColor) {
+    // first copy the current map
+    V2Map<Character> fogOfWarMap = new V2Map<>(this.theMap);
+
+    // Now get the territories grouped by the player
+    HashMap<String, ArrayList<String>> terrGroupByOwner = fogOfWarMap.getOwnersTerritoryGroups();
+    for (String color : terrGroupByOwner.keySet()) {
+      if (color != playerColor) { // if this is not the player
+        // go through the list of territories and hide them in the map
+        for (String terrName : terrGroupByOwner.get(color)) {
+          // first check if the territory is adjacent to enemy territory
+          // if it is adjacent, then no need to hide
+          if (!fogOfWarMap.isAdjacentToEnemy(terrName)) {
+
+            // remove the territory (it includes all the details)
+            Territory<Character> currTerritory = fogOfWarMap.myTerritories.get(terrName);
+            fogOfWarMap.myTerritories.remove(terrName);
+
+            // now update and add the empty territory
+            currTerritory.hideDetails();
+            fogOfWarMap.myTerritories.put(terrName, currTerritory);
+          }
+        }
+      }
+    }
+    return fogOfWarMap;
   }
 
 }
