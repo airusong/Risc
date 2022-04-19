@@ -14,7 +14,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   public ArrayList<String> AllUnitTypes;
 
-  private HashMap<String, HashMap<String, Integer>> spy_map;// key:name value: HashMap<Key:Territory,value:spy_unit>
+  public HashMap<String, HashMap<String, Integer>> spy_map;// key:name value: HashMap<Key:Territory,value:spy_unit>
 
   /**
    * method to initialize all unit types and their bonus
