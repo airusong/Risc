@@ -96,10 +96,8 @@ public class TextPlayer {
   }
 
   /*
-   * public void takeAndSendTurn() throws IOException {
-   * TurnList newTurn = takeTurn();
-   * connectionToMaster.sendToServer(newTurn);
-   * }
+   * public void takeAndSendTurn() throws IOException { TurnList newTurn =
+   * takeTurn(); connectionToMaster.sendToServer(newTurn); }
    */
 
   /**
@@ -107,78 +105,51 @@ public class TextPlayer {
    */
   // No need anymore in Eval 2 since we read the TurnList information from the GUI
   /*
-   * public TurnList takeTurn() throws IOException {
-   * TurnList myTurn = new TurnList(identity);
+   * public TurnList takeTurn() throws IOException { TurnList myTurn = new
+   * TurnList(identity);
    * 
    * out.println("You are the " + identity +
-   * " player and it's time to take your turn!.\n"
-   * + "There are two types of orders that you may issue: move and attack."
-   * + "You may issue any number of each type of these orders in a turn."
-   * +
+   * " player and it's time to take your turn!.\n" +
+   * "There are two types of orders that you may issue: move and attack." +
+   * "You may issue any number of each type of these orders in a turn." +
    * "Once you're done enetering your orders, hit D and your turn will be sent to the server.\n"
    * );
    * 
-   * char enteredOrder = 'D'; // by default
-   * do {
-   * try {
+   * char enteredOrder = 'D'; // by default do { try {
    * out.println("\nEnter new order (M or A or D)\n" + "(M)ove\n" + "(A)ttack\n" +
-   * "(D)one");
-   * enteredOrder = readOrder();
-   * switch (enteredOrder) {
-   * case 'M':
-   * Turn newMoveOrder = readOrderDetails(enteredOrder);
-   * myTurn.addTurn(newMoveOrder);
-   * break;
-   * case 'A':
-   * Turn newOrder = readOrderDetails(enteredOrder);
-   * myTurn.addTurn(newOrder);
-   * break;
+   * "(D)one"); enteredOrder = readOrder(); switch (enteredOrder) { case 'M': Turn
+   * newMoveOrder = readOrderDetails(enteredOrder); myTurn.addTurn(newMoveOrder);
+   * break; case 'A': Turn newOrder = readOrderDetails(enteredOrder);
+   * myTurn.addTurn(newOrder); break;
    * 
-   * case 'D':
-   * break;
-   * }
+   * case 'D': break; }
    * 
-   * } catch (IllegalArgumentException ex) {
-   * out.println(ex.getMessage());
-   * out.println("Please re-enter correctly!");
-   * continue;
-   * }
-   * } while (enteredOrder != 'D');
-   * return myTurn;
-   * }
+   * } catch (IllegalArgumentException ex) { out.println(ex.getMessage());
+   * out.println("Please re-enter correctly!"); continue; } } while (enteredOrder
+   * != 'D'); return myTurn; }
    */
 
   /**
    * method to read only the order type from the player
    */
   /*
-   * private char readOrder() throws IOException, EOFException {
-   * String s = inputReader.readLine();
-   * if (s == null) {
-   * throw new EOFException("Error in input readline.");
-   * }
+   * private char readOrder() throws IOException, EOFException { String s =
+   * inputReader.readLine(); if (s == null) { throw new
+   * EOFException("Error in input readline."); }
    * 
    * String invalidFormatException =
-   * "That order is invalid: it does not have the correct format.";
-   * if (s.length() != 1) {
-   * throw new IllegalArgumentException(invalidFormatException);
-   * }
+   * "That order is invalid: it does not have the correct format."; if (s.length()
+   * != 1) { throw new IllegalArgumentException(invalidFormatException); }
    * 
-   * char enteredLetter = s.toUpperCase().charAt(0);
-   * if (enteredLetter != 'M' && enteredLetter != 'A' && enteredLetter != 'D') {
-   * throw new IllegalArgumentException(invalidFormatException);
-   * } else if (enteredLetter == 'M') {
-   * out.println("Requested order: Move");
-   * }
+   * char enteredLetter = s.toUpperCase().charAt(0); if (enteredLetter != 'M' &&
+   * enteredLetter != 'A' && enteredLetter != 'D') { throw new
+   * IllegalArgumentException(invalidFormatException); } else if (enteredLetter ==
+   * 'M') { out.println("Requested order: Move"); }
    * 
-   * else if (enteredLetter == 'A') {
-   * out.println("Requested order: Attack");
-   * } else { // 'D'
-   * out.println("Done with the turn!");
-   * }
+   * else if (enteredLetter == 'A') { out.println("Requested order: Attack"); }
+   * else { // 'D' out.println("Done with the turn!"); }
    * 
-   * return enteredLetter;
-   * }
+   * return enteredLetter; }
    */
 
   /**
@@ -190,47 +161,36 @@ public class TextPlayer {
   // No need anymore in Eval 2 since we read the TurnList information from the GUI
   /*
    * private Turn readOrderDetails(char orderType) throws IOException,
-   * EOFException {
-   * Turn newOrder;
-   * ArrayList<String> terrOptions = new ArrayList<String>();
-   * int enteredOption;
+   * EOFException { Turn newOrder; ArrayList<String> terrOptions = new
+   * ArrayList<String>(); int enteredOption;
    * 
    * // from which territory (only player's own territories)
    * out.println("- From which territory? (Enter the option# from following list)"
-   * );
-   * terrOptions = getMyOwnTerritories();
-   * out.print(view.displayTerritoriesAsList(terrOptions));
-   * enteredOption = readOption(terrOptions.size());
-   * String fromTerritory = terrOptions.get(enteredOption - 1);
-   * out.println("You selected " + fromTerritory + " as the source.");
+   * ); terrOptions = getMyOwnTerritories();
+   * out.print(view.displayTerritoriesAsList(terrOptions)); enteredOption =
+   * readOption(terrOptions.size()); String fromTerritory =
+   * terrOptions.get(enteredOption - 1); out.println("You selected " +
+   * fromTerritory + " as the source.");
    * 
    * // to which territory
    * out.println("- To which territory? (Enter the option# from following list)");
    * if (orderType == 'A') { // For attack: only other players' territories
-   * terrOptions = getOthersTerritories();
-   * } else { // For move: only my own territories
-   * terrOptions = getMyOwnTerritories();
-   * ;
-   * }
+   * terrOptions = getOthersTerritories(); } else { // For move: only my own
+   * territories terrOptions = getMyOwnTerritories(); ; }
    * 
-   * out.print(view.displayTerritoriesAsList(terrOptions));
-   * enteredOption = readOption(terrOptions.size());
-   * String toTerritory = terrOptions.get(enteredOption - 1);
-   * out.println("You selected " + toTerritory + " as the destination.");
+   * out.print(view.displayTerritoriesAsList(terrOptions)); enteredOption =
+   * readOption(terrOptions.size()); String toTerritory =
+   * terrOptions.get(enteredOption - 1); out.println("You selected " + toTerritory
+   * + " as the destination.");
    * 
-   * // how many units?
-   * out.println("- How many units?");
-   * int units = readOption(0);
-   * out.println("Requested " + units + " units.");
+   * // how many units? out.println("- How many units?"); int units =
+   * readOption(0); out.println("Requested " + units + " units.");
    * 
-   * if (orderType == 'M') {
-   * newOrder = new MoveTurn(fromTerritory, toTerritory, units, identity);
-   * } else { // 'A'
-   * newOrder = new AttackTurn(fromTerritory, toTerritory, units, identity);
-   * }
+   * if (orderType == 'M') { newOrder = new MoveTurn(fromTerritory, toTerritory,
+   * units, identity); } else { // 'A' newOrder = new AttackTurn(fromTerritory,
+   * toTerritory, units, identity); }
    * 
-   * return newOrder;
-   * }
+   * return newOrder; }
    */
 
   /**
@@ -240,38 +200,29 @@ public class TextPlayer {
    */
   /*
    * private int readOption(int totalOptions) throws IOException, EOFException {
-   * int enteredOption;
-   * while (true) {
-   * String s = inputReader.readLine();
-   * if (s == null) {
-   * throw new EOFException("Error in input readline.");
-   * }
+   * int enteredOption; while (true) { String s = inputReader.readLine(); if (s ==
+   * null) { throw new EOFException("Error in input readline."); }
    * 
-   * enteredOption = Integer.valueOf(s);
-   * if (enteredOption < 1 || (totalOptions != 0 && enteredOption > totalOptions))
-   * {
-   * out.println("Invalid option: please enter again!");
-   * continue;
-   * }
-   * break;
-   * }
+   * enteredOption = Integer.valueOf(s); if (enteredOption < 1 || (totalOptions !=
+   * 0 && enteredOption > totalOptions)) {
+   * out.println("Invalid option: please enter again!"); continue; } break; }
    * 
-   * return enteredOption;
-   * }
+   * return enteredOption; }
    */
   protected ArrayList<String> getMyOwnTerritories() {
     return theMap.getPlayerTerritories(identity);
   }
 
   protected ArrayList<String> getOthersTerritories() {
-    for (int index = 0; index < 2; index++) {
-      String color = theMap.players_colors.get(index);
+    ArrayList<String> othersTerritories = new ArrayList<>();
+    int index = 0;
+    for (String color : theMap.getOwnersTerritoryGroups().keySet()) {
       if (!color.equals(identity)) {
-        return theMap.getPlayerTerritories(color);
+        othersTerritories.addAll(index, theMap.getPlayerTerritories(color));
+        index += othersTerritories.size();
       }
     }
-    return null;
-
+    return othersTerritories;
   }
 
   /**
