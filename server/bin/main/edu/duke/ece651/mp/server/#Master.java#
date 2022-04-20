@@ -243,6 +243,11 @@ public class Master {
 
     // Now get the territories grouped by the player
     HashMap<String, ArrayList<String>> terrGroupByOwner = fogOfWarMap.getOwnersTerritoryGroups();
+
+    // Also need to remove the spy details about the enemy
+    // so get the current spy map
+    HashMap<String, HashMap<String, Integer>> spyHashMap =  fogOfWarMap.spy_map;
+    
     for (String color : terrGroupByOwner.keySet()) {
       if (color != playerColor) { // if this is not the player
         // go through the list of territories and hide them in the map
@@ -260,8 +265,14 @@ public class Master {
             fogOfWarMap.myTerritories.put(terrName, currTerritory);
           }
         }
+
+        // now hide this enemy's spy info
+        if(spyHashMap.containsKey(color)) {
+          spyHashMap.remove(color);
+        }
       }
     }
+
     return fogOfWarMap;
   }
 

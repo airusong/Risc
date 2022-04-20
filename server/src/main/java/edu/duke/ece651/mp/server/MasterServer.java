@@ -23,6 +23,8 @@ public class MasterServer {
   public Socket player_socket;
   public ArrayList<TurnList> all_order_list;
 
+  public HashMap<String, Socket> player_socket_Map;
+
   public MasterServer(int port, int num_players) throws IOException {
     this.port = port;
 
@@ -41,6 +43,7 @@ public class MasterServer {
     this.num_players = num_players;
     this.player_socket_list = new ArrayList<Socket>();
     this.all_order_list = new ArrayList<TurnList>();
+    this.player_socket_Map = new HashMap<>();
   }
 
   public int getPort() {
@@ -120,7 +123,12 @@ public class MasterServer {
     for (int i = 0; i < player_socket_list.size(); ++i) {
       String player_color = players_identity.get(i);
       System.out.println("Sending color to player: " + player_color);
-      sendToPlayer(player_color, player_socket_list.get(i));
+
+      Socket thisPlayerSocket = player_socket_list.get(i);
+      sendToPlayer(player_color, thisPlayerSocket);
+
+      // Map the socket to the correct player color
+      player_socket_Map.put(player_color, thisPlayerSocket);
     }
   }
 

@@ -38,6 +38,23 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /**
+   * Copy constructor for deep copy
+   */
+
+    public Territory(Territory<T> rhsTerritory) {
+    this.name = rhsTerritory.name;
+    this.color = rhsTerritory.color;
+    this.adjacentTerritories = new ArrayList<>();
+    this.adjacentTerritories.addAll(rhsTerritory.adjacentTerritories);
+    this.unit_list = new ArrayList<Unit>();
+    this.unit_list.addAll(rhsTerritory.unit_list);
+    this.food = new FoodResource(rhsTerritory.getFoodNum());
+    this.tech = new TechResource(rhsTerritory.getTechNum());
+    this.size = rhsTerritory.size;
+  }
+
+
+  /**
    * Method to get details about the territory in string format
    * 
    * @return String - territory details
@@ -46,10 +63,22 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     StringBuilder terrDetails = new StringBuilder("");
     terrDetails.append("Territory: " + name + "\n");
     terrDetails.append("--------------------------------\n");
-    terrDetails.append("Size: " + size + "\n");
-    terrDetails.append("Food Resource: " + food.getResourceAmount() + "\n");
-    terrDetails.append("Tech Resource: " + tech.getResourceAmount() + "\n");
-    terrDetails.append("********Units********" + getUnitsList());
+
+    if (size != 0) {
+      terrDetails.append("Size: " + size + "\n");
+    }
+
+    if (food != null) {
+      terrDetails.append("Food Resource: " + food.getResourceAmount() + "\n");
+    }
+
+    if (tech != null) {
+      terrDetails.append("Tech Resource: " + tech.getResourceAmount() + "\n");
+    }
+
+    if (unit_list != null) {
+      terrDetails.append("********Units********" + getUnitsList());
+    }
 
     return terrDetails.toString();
   }
@@ -130,12 +159,11 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /**
-   * Write out the Territory object for serialization
-   * to the ObjectOutputStream s.
+   * Write out the Territory object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
    * 
-   * @serialData Write serializable fields, if any exist.
-   *             Write each field of the Territory Class
+   * @serialData Write serializable fields, if any exist. Write each field of the
+   *             Territory Class
    */
   private void writeObject(ObjectOutputStream s) throws IOException {
     // Call even if there is no default serializable fields.
@@ -148,16 +176,16 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   }
 
   /**
-   * Read in the territory object from the ObjectInputStream s.
-   * Was written to by writeObject.
+   * Read in the territory object from the ObjectInputStream s. Was written to by
+   * writeObject.
    * 
    * @serialData Read serializable fields, if any exist.
    */
   private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
     /*
-     * Call even if there is no default serializable fields.
-     * Enables default serializable fields to be added in future versions
-     * and skipped by this version which has no default serializable fields.
+     * Call even if there is no default serializable fields. Enables default
+     * serializable fields to be added in future versions and skipped by this
+     * version which has no default serializable fields.
      */
     s.defaultReadObject();
 
@@ -217,5 +245,17 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   /* get the cose of passing the Territory per unit. */
   public int getSize() {
     return this.size;
+  }
+
+  /**
+   * Hide the territory owner, resource, size and unit details So it should only
+   * have the adjacent territory info
+   */
+  public void hideDetails() {
+    this.color = "Hidden";
+    this.unit_list = null;
+    this.food = null;
+    this.tech = null;
+    this.size = 0;
   }
 }

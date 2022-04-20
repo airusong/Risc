@@ -14,7 +14,8 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   public ArrayList<String> AllUnitTypes;
 
-  private HashMap<String,HashMap<String,Integer>> spy_map;//key:name  value: HashMap<Key:Territory,value:spy_unit>
+  public HashMap<String, HashMap<String, Integer>> spy_map;// key:name value: HashMap<Key:Territory,value:spy_unit>
+
   /**
    * method to initialize all unit types and their bonus
    */
@@ -34,8 +35,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    * Constructor construct a V2Map specified with Territoris in it
    * 
    * @param players_colors myTerritories, the key is the territory itself and the
-   *                       value
-   *                       is the list of adjancent territories
+   *                       value is the list of adjancent territories
    */
   public V2Map(ArrayList<String> players_colors) {
     this.myTerritories = new HashMap<>();
@@ -60,6 +60,27 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addResources();
     addUnits();
     setSpy_map();
+  }
+
+  /**
+   * Copy constructor for Deep Copy
+   */
+  public V2Map(V2Map<T> rhsMap) {
+    this.myTerritories = new HashMap<>();
+
+    for (String terrName : rhsMap.myTerritories.keySet()) {
+      Territory<T> copiedTerr = new Territory<>(rhsMap.myTerritories.get(terrName));
+      myTerritories.put(terrName, copiedTerr);
+    }
+
+    this.players_colors = new ArrayList<>();
+    this.players_colors.addAll(rhsMap.players_colors);
+
+    this.AllUnitTypes = new ArrayList<>();
+    this.AllUnitTypes.addAll(rhsMap.AllUnitTypes);
+
+    this.spy_map = new HashMap<>();
+    this.spy_map.putAll(rhsMap.spy_map);
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -146,23 +167,23 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * function to initialize the spy map in the map
    */
-  public void setSpy_map(){
-    spy_map=new HashMap<>();
+  public void setSpy_map() {
+    spy_map = new HashMap<>();
     String player_color1 = players_colors.get(0);
-    spy_map.put(player_color1,new HashMap<>());
+    spy_map.put(player_color1, new HashMap<>());
     String player_color2 = players_colors.get(1);
-    spy_map.put(player_color2,new HashMap<>());
+    spy_map.put(player_color2, new HashMap<>());
   }
 
   /**
    * function to get a player's spy_unit in the enemy territory
+   * 
    * @param player_color
-   * @param territory_name
-   * return 0 if there is no spy in this territory
+   * @param territory_name return 0 if there is no spy in this territory
    */
-  public int getSPY_map(String player_color,String territory_name){
-    HashMap<String,Integer> this_spy_map=spy_map.get(player_color);
-    if(this_spy_map.containsKey(territory_name)){
+  public int getSPY_map(String player_color, String territory_name) {
+    HashMap<String, Integer> this_spy_map = spy_map.get(player_color);
+    if (this_spy_map.containsKey(territory_name)) {
       return this_spy_map.get(territory_name);
     }
     return 0;
@@ -170,19 +191,21 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   /**
    * funtion to edit the spy_unit int the spy_map, delete or add
+   * 
    * @param player_color
    * @param territory_name
    * @param spy_unit
    */
-  public void editSPY_map(String player_color,String territory_name,int spy_unit){
-    HashMap<String,Integer> this_spy_map=spy_map.get(player_color);
-    if(this_spy_map.containsKey(territory_name)){
-      int newunit=this_spy_map.get(territory_name)+spy_unit;
-      this_spy_map.put(territory_name,newunit);
-    }else{
-      this_spy_map.put(territory_name,spy_unit);
+  public void editSPY_map(String player_color, String territory_name, int spy_unit) {
+    HashMap<String, Integer> this_spy_map = spy_map.get(player_color);
+    if (this_spy_map.containsKey(territory_name)) {
+      int newunit = this_spy_map.get(territory_name) + spy_unit;
+      this_spy_map.put(territory_name, newunit);
+    } else {
+      this_spy_map.put(territory_name, spy_unit);
     }
   }
+
   /**
    * Write out the V1Map object for serialization to the ObjectOutputStream s.
    * readObject depends on this data format.
@@ -228,6 +251,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     HashMap<String, ArrayList<String>> territoryGroups = new HashMap<>();
     territoryGroups.put("Green", new ArrayList<>());
     territoryGroups.put("Blue", new ArrayList<>());
+    territoryGroups.put("Hidden", new ArrayList<>());
 
     for (Map.Entry<String, Territory<T>> entry : myTerritories.entrySet()) {
       Territory<T> terr = entry.getValue();
@@ -306,11 +330,8 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /*
    * Update Map according to move order
    * 
-   * @input dep: start of Moving Action
-   * des: destination of Moving Action
-   * unit_type: moving units' type
-   * n1: #unit in dep
-   * n2: #unit in des
+   * @input dep: start of Moving Action des: destination of Moving Action
+   * unit_type: moving units' type n1: #unit in dep n2: #unit in des
    */
   public void updateMap(String dep, String des, String unit_type, int n1, int n2) {
     Territory<T> t1 = myTerritories.get(dep);
@@ -404,5 +425,31 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     return terrList;
   }
 
+  public void printMap() {
+    HashMap<String, ArrayList<String>> terrGroupByOwner = this.getOwnersTerritoryGroups();
+    for (String color : terrGroupByOwner.keySet()) {
+      System.out.println(color + ": " + terrGroupByOwner.get(color));
+    }
+  }
+
+  /**
+   * Method to check if a territory is adjacent to enemy territory
+   * 
+   * @param STring territory name
+   * @return True/False
+   */
+  public boolean isAdjacentToEnemy(String terrName) {
+    Territory<T> terr = this.myTerritories.get(terrName);
+
+    // go through the adjacent territories
+    for (String adjTerr : terr.getAdjacency()) {
+      Territory<T> adjTerritory = this.myTerritories.get(adjTerr);
+      // check if the owners are different
+      if (!adjTerritory.getColor().equals(terr.getColor())) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 }
