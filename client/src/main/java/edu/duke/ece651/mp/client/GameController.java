@@ -385,7 +385,7 @@ public class GameController {
   @FXML
   public Pane CloakingPane;
   @FXML
-  public ComboBox CloakingTerritory;
+  public ComboBox<String> CloakingTerritory;
 
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
@@ -506,6 +506,10 @@ public class GameController {
 
   public String getUpgradeSource() {
     return (String) UpgradeTerritory.getValue();
+  }
+
+  public String getCloakingTerritory(){
+    return (String) CloakingTerritory.getValue();
   }
 
   @FXML
