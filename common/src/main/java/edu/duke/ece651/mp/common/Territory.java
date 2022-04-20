@@ -266,11 +266,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     for (Unit unitType : unit_list) {
       if (unitType.getUnitType().equals("SPY")) {
         unit_list.remove(index);
-        break;
-        // We could technically break
-        // but just in case we have more than one Unit
-        // item for SPY, let's just keep looking for safety
-      }
+        break; }
       index++;
     }
 
