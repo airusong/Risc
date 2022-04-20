@@ -70,7 +70,7 @@ public class Master {
       Socket playerSocket = theMasterServer.player_socket_Map.get(playerColor);
 
       // Get the version of the map with hidden non-adjacent enemy territory details
-      // and hidden spy_map for enemy
+      // and hidden spy_map for enemy and hidden spies for enemies
       System.out.println("Sending map to player " + playerColor);
       theMasterServer.sendToPlayer((Object) getFogOfWarMap(playerColor), playerSocket);
     }
@@ -232,7 +232,7 @@ public class Master {
 
   /**
    * Method to create the version of the map with non-adjacent enemy territory
-   * details and enemy's spy map hidden
+   * details and enemy's spy map hidden and hidden enemy spies
    * 
    * @param String player color
    * @return Map
@@ -247,21 +247,31 @@ public class Master {
       if (color != playerColor) { // if this is not the player
         // go through the list of territories and hide them in the map
         for (String terrName : terrGroupByOwner.get(color)) {
+          Territory<Character> currTerritory = fogOfWarMap.myTerritories.get(terrName);
+
+          // remove the territory (it includes all the details)
+          fogOfWarMap.myTerritories.remove(terrName);
+
           // first check if the territory is adjacent to enemy territory
           // if it is adjacent, then no need to hide
-          if (!fogOfWarMap.isAdjacentToEnemy(terrName)) {
+          if (!theMap.isAdjacentToEnemy(terrName)) {
 
-            // remove the territory (it includes all the details)
-            Territory<Character> currTerritory = fogOfWarMap.myTerritories.get(terrName);
-            fogOfWarMap.myTerritories.remove(terrName);
-
-            // now update and add the empty territory
+            // now hide the details
             currTerritory.hideDetails();
-            fogOfWarMap.myTerritories.put(terrName, currTerritory);
+          } // end of - if not adjacent
+
+          else {
+            // For all other territories, we just need to hide the spies
+            currTerritory.hideSpies();
           }
-        }
-      }
-    }
+
+          // add the updated territory with hidden info
+
+          fogOfWarMap.myTerritories.put(terrName, currTerritory);
+
+        } // end of - for each territory
+      } // end of - if not this player_color
+    } // end of - for each color
     return fogOfWarMap;
   }
 

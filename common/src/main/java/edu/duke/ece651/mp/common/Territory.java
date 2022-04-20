@@ -41,7 +41,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
    * Copy constructor for deep copy
    */
 
-    public Territory(Territory<T> rhsTerritory) {
+  public Territory(Territory<T> rhsTerritory) {
     this.name = rhsTerritory.name;
     this.color = rhsTerritory.color;
     this.adjacentTerritories = new ArrayList<>();
@@ -52,7 +52,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.tech = new TechResource(rhsTerritory.getTechNum());
     this.size = rhsTerritory.size;
   }
-
 
   /**
    * Method to get details about the territory in string format
@@ -257,5 +256,23 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.food = null;
     this.tech = null;
     this.size = 0;
+  }
+
+  /**
+   * Method to hide Spies
+   */
+  public void hideSpies() {
+    int index = 0;
+    for (Unit unitType : unit_list) {
+      if (unitType.getUnitType().equals("SPY")) {
+        unit_list.remove(index);
+        break;
+        // We could technically break
+        // but just in case we have more than one Unit
+        // item for SPY, let's just keep looking for safety
+      }
+      index++;
+    }
+
   }
 }
