@@ -381,6 +381,11 @@ public class GameController {
   private ComboBox<String> UpgradeFrom;
   @FXML
   private ComboBox<String> UpgradeTo;
+  //cloaking order inputs
+  @FXML
+  public Pane CloakingPane;
+  @FXML
+  public ComboBox CloakingTerritory;
 
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
