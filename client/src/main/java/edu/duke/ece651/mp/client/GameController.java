@@ -3,13 +3,7 @@ package edu.duke.ece651.mp.client;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.UpgradeTurn;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -324,7 +318,7 @@ public class GameController {
   }
 
   private TextPlayer theTextPlayer;
-  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
+  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade","Cloak");
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
   ObservableList<String> unitType_list = FXCollections.observableArrayList();
@@ -423,6 +417,7 @@ public class GameController {
   private void setTerritoryDropDowns() {
     setSourceBox(from);
     setSourceBox(UpgradeTerritory);
+    setSourceBox(CloakingTerritory);
     setDestinationBox();
   }
 
@@ -650,6 +645,10 @@ public class GameController {
       }
       // theClient.theTextPlayer.takeAndSendTurn();
       System.out.println("Added a New Order");
+    }else if(getAction().equals("Cloak")){
+      Turn newOrder = new CloakingTurn(getUpgradeSource(),getPlayerColor());
+      myTurn.addTurn(newOrder);
+      GameStatus.setText(getAction()+" "+getCloakingTerritory()+" for 3 Turns");
     }
     clearSelectedAction();
 
@@ -773,13 +772,22 @@ public class GameController {
     if (selectedAction.equals("Upgrade")) {
       UpgradePane.setVisible(true);
       MoveAttackPane.setVisible(false);
+      CloakingPane.setVisible(false);
 
-    } else if (selectedAction.equals("Move") || selectedAction.equals("Attack")) {
+    } else if(selectedAction.equals("Cloak")){
+      UpgradePane.setVisible(false);
+      MoveAttackPane.setVisible(false);
+      CloakingPane.setVisible(true);
+    }else if (selectedAction.equals("Move") || selectedAction.equals("Attack")) {
       MoveAttackPane.setVisible(true);
       UpgradePane.setVisible(false);
+      CloakingPane.setVisible(false);
+
     } else {
       MoveAttackPane.setVisible(false);
       UpgradePane.setVisible(false);
+      CloakingPane.setVisible(false);
+
     }
   }
 
