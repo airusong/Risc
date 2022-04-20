@@ -197,9 +197,9 @@ public class HandleOrder<T> {
 
           //edit the spy_unit in the destination
           if(desT.getColor().equals(player_color)){
-            theMap.updateTerritoryInMap(dep, unit_type, spy_unit * (1));
+            theMap.updateTerritoryInMap(des, unit_type, spy_unit * (1));
           }else {
-            theMap.editSPY_map(player_color,dep,spy_unit * (1));
+            theMap.editSPY_map(player_color,des,spy_unit * (1));
           }
           continue;
         }
