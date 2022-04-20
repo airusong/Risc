@@ -638,18 +638,18 @@ public class GameController {
       } else if (getAction().equals("Upgrade")) {
         // create upgrade
         Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(),
-            getUnitNum(UpgradeUnits), getPlayerColor());
+                getUnitNum(UpgradeUnits), getPlayerColor());
         myTurn.addTurn(newOrder);
         GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType()
-            + " to " + getUpgradeToUnitType() + " added");
+                + " to " + getUpgradeToUnitType() + " added");
+      } else if (getAction().equals("Cloak")) {
+        Turn newOrder = new CloakingTurn(getUpgradeSource(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " " + getCloakingTerritory() + " for 3 Turns");
       }
-      // theClient.theTextPlayer.takeAndSendTurn();
-      System.out.println("Added a New Order");
-    }else if(getAction().equals("Cloak")){
-      Turn newOrder = new CloakingTurn(getUpgradeSource(),getPlayerColor());
-      myTurn.addTurn(newOrder);
-      GameStatus.setText(getAction()+" "+getCloakingTerritory()+" for 3 Turns");
     }
+    // theClient.theTextPlayer.takeAndSendTurn();
+    System.out.println("Added a New Order");
     clearSelectedAction();
 
   }
