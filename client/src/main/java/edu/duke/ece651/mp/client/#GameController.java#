@@ -244,7 +244,7 @@ public class GameController {
     // get adjacency for each
     for (String terrName : allTerritories.keySet()) {
       ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
-      System.out.println(adjacentTerr);
+      //System.out.println(adjacentTerr);
       // for each adjacent territory
       for (String adjTerr : adjacentTerr) {
         //System.out.println("from: " + terrName + " to: " + adjTerr);

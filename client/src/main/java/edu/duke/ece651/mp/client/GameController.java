@@ -482,8 +482,10 @@ public class GameController {
   public void setSourceBox(ComboBox<String> whichBox) {
     ArrayList<String> own_territory_list = theTextPlayer.getMyOwnTerritories();
     source_list.clear();
+
     source_list.addAll(own_territory_list);
     source_list.addAll(theTextPlayer.getOthersTerritories());
+    
     whichBox.setItems(source_list);
     whichBox.valueProperty().addListener(new ChangeListener<String>() {
       @Override
