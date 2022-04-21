@@ -21,7 +21,7 @@
             <Image url="@risc.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="playeraction" layoutX="609.0" layoutY="108.0" onAction="#OnSelectedOrderType" prefHeight="28.0" prefWidth="129.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
+      <ComboBox fx:id="playeraction" layoutX="606.0" layoutY="112.0" onAction="#OnSelectedOrderType" prefHeight="22.0" prefWidth="130.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
          <padding>
             <Insets left="3.0" />
          </padding>
@@ -31,12 +31,12 @@
             <Font size="8.0" />
          </font>
       </Button>
-      <Button fx:id="commit" layoutX="620.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="33.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
+      <Button fx:id="commit" alignment="CENTER" layoutX="620.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="33.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
       <Label fx:id="player_info" layoutX="505.0" layoutY="94.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
          <font>
             <Font name="MuktaMahee Regular" size="10.0" />
          </font></Label>
-      <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0" visible="false">
+      <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0">
          <children>
             <VBox layoutY="-14.0" prefHeight="217.0" prefWidth="129.0">
                <children>
@@ -176,11 +176,11 @@
             <Insets />
          </opaqueInsets>
       </Pane>
-      <Pane fx:id="UpgradePane" layoutX="600.0" layoutY="146.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css">
+      <Pane fx:id="UpgradePane" layoutX="600.0" layoutY="146.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css" visible="false">
          <children>
             <VBox layoutX="9.0" prefHeight="170.0" prefWidth="129.0">
                <children>
-                  <ComboBox fx:id="UpgradeTerritory" prefHeight="28.0" prefWidth="132.0" promptText="in which territory" stylesheets="@style.css">
+                  <ComboBox fx:id="UpgradeTerritory" prefHeight="28.0" prefWidth="130.0" promptText="in which territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -189,7 +189,7 @@
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin></ComboBox>
-                  <ComboBox fx:id="UpgradeTo" prefHeight="28.0" prefWidth="129.0" promptText="To unit type" stylesheets="@style.css">
+                  <ComboBox fx:id="UpgradeTo" prefHeight="28.0" prefWidth="130.0" promptText="To unit type" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -207,7 +207,7 @@
          </children>
       </Pane>
       <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="135.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" promptText="Turn Status: No turns yet" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="135.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
       <TextArea fx:id="errormessage" editable="false" layoutX="360.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
       <Button fx:id="Terr1Button" alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Narnia" textAlignment="CENTER">
          <font>

@@ -7,7 +7,7 @@
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
-    -fx-background-color: ac855c;
+    -fx-background-color: #aa8f73;
     -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 1em; /* 12 */
     -fx-text-fill: #331908;
@@ -44,6 +44,26 @@
     -fx-font-size:12px;
 }
 
+.combo-box .list-cell{
+    -fx-background-color: #aa8f73;
+    -fx-font-family: "Smythe";
+    -fx-font-size:12px;
+}
+
+.combo-box .scroll-pane {
+    -fx-background-color: #aa8f73;
+}
+
+.combo-box .scroll-pane .viewport{
+    -fx-background-color: #aa8f73;
+}
+
+
+.combo-box .scroll-pane .content{
+    -fx-background-color: #aa8f73;
+}
+
 .text-field {
     -fx-background-color: transparent;
 }
+
