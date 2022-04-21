@@ -18,13 +18,13 @@ public class Unit implements Serializable {
    */
   private void initializeUnitTypes() {
     AllUnitTypesBonus = new HashMap<>();
-    AllUnitTypesBonus.put("ALEVEL", 0);
-    AllUnitTypesBonus.put("BLEVEL", 1);
-    AllUnitTypesBonus.put("CLEVEL", 3);
-    AllUnitTypesBonus.put("DLEVEL", 5);
-    AllUnitTypesBonus.put("ELEVEL", 8);
-    AllUnitTypesBonus.put("FLEVEL", 11);
-    AllUnitTypesBonus.put("GLEVEL", 15);
+    AllUnitTypesBonus.put("Guards", 0);
+    AllUnitTypesBonus.put("Infantry", 1);
+    AllUnitTypesBonus.put("Archer", 3);
+    AllUnitTypesBonus.put("Cavalry", 5);
+    AllUnitTypesBonus.put("Dwarves", 8);
+    AllUnitTypesBonus.put("Orcs", 11);
+    AllUnitTypesBonus.put("Elves", 15);
   }
 
 
@@ -65,4 +65,3 @@ public class Unit implements Serializable {
   }
 }
 
-// unit upgrade path: Alevel, Blevel, Clevel, Dlevel, Elevel, Flevel

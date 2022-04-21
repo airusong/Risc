@@ -32,9 +32,9 @@
          </font>
       </Button>
       <Button fx:id="commit" layoutX="620.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="33.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
-      <Label fx:id="player_info" layoutX="503.0" layoutY="95.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
+      <Label fx:id="player_info" layoutX="505.0" layoutY="94.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="MuktaMahee Regular" size="10.0" />
          </font></Label>
       <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0" visible="false">
          <children>
@@ -209,11 +209,99 @@
       <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
       <TextArea fx:id="turnstatus" editable="false" layoutX="135.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" promptText="Turn Status: No turns yet" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
       <TextArea fx:id="errormessage" editable="false" layoutX="360.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
-      <Button fx:id="Terr1Button" contentDisplay="CENTER" layoutX="217.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" textAlignment="CENTER" />
-      <Button fx:id="Terr2Button" layoutX="230.0" layoutY="227.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
-      <Button fx:id="Terr3Button" layoutX="389.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
-      <Button fx:id="Terr4Button" layoutX="171.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
-      <Button fx:id="Terr6Button" layoutX="322.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
-      <Button fx:id="Terr5Button" layoutX="367.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
+      <Button fx:id="Terr1Button" alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Narnia" textAlignment="CENTER">
+         <font>
+            <Font name="Mshtakan" size="8.0" />
+         </font></Button>
+      <Button fx:id="Terr2Button" alignment="CENTER" layoutX="230.0" layoutY="227.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Midemio" wrapText="true">
+         <font>
+            <Font name="Malayalam MN" size="8.0" />
+         </font></Button>
+      <Button fx:id="Terr3Button" alignment="CENTER" graphicTextGap="2.0" layoutX="389.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Oz">
+         <font>
+            <Font name="Malayalam MN" size="8.0" />
+         </font></Button>
+      <Button fx:id="Terr4Button" alignment="CENTER" layoutX="171.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Elantris">
+         <font>
+            <Font name="Malayalam MN" size="8.0" />
+         </font></Button>
+      <Button fx:id="Terr6Button" alignment="CENTER" layoutX="322.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Scadnal">
+         <font>
+            <Font name="Myanmar MN" size="8.0" />
+         </font></Button>
+      <Button fx:id="Terr5Button" alignment="CENTER" layoutX="367.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Roshar">
+         <font>
+            <Font name="Malayalam MN" size="8.0" />
+         </font></Button>
+      <Label fx:id="totalfood" layoutX="510.0" layoutY="113.0" text="Food">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="totaltech" layoutX="510.0" layoutY="127.0" text="Tech">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit1num" contentDisplay="CENTER" layoutX="39.0" layoutY="95.0" text="0" textAlignment="CENTER">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit5num" contentDisplay="CENTER" layoutX="43.0" layoutY="144.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit2num" contentDisplay="CENTER" layoutX="77.0" layoutY="95.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit6num" contentDisplay="CENTER" layoutX="80.0" layoutY="144.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit4num" contentDisplay="CENTER" layoutX="143.0" layoutY="95.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit3num" contentDisplay="CENTER" layoutX="111.0" layoutY="95.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit7num" contentDisplay="CENTER" layoutX="112.0" layoutY="144.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit8num" contentDisplay="CENTER" layoutX="143.0" layoutY="144.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="8.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="38.0" text="Food:">
+         <font>
+            <Font name="MuktaMahee Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="99.0" layoutY="38.0" text="Tech: ">
+         <font>
+            <Font name="MuktaMahee Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="terrfood" layoutX="57.0" layoutY="38.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="terrtech" layoutX="130.0" layoutY="38.0" text="0">
+         <font>
+            <Font name="MuktaMahee Regular" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

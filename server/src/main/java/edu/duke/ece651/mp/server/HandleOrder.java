@@ -1,27 +1,9 @@
 package edu.duke.ece651.mp.server;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Random;
-
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.FoodResource;
-import edu.duke.ece651.mp.common.FoodResourceList;
 import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.MoveChecking;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.TechResource;
-import edu.duke.ece651.mp.common.TechResourceList;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.Unit;
-import edu.duke.ece651.mp.common.UpgradeTurn;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
+
+import java.util.*;
 
 public class HandleOrder<T> {
   public ArrayList<TurnList> all_order_list;
@@ -269,7 +251,6 @@ public class HandleOrder<T> {
 
     Territory<T> attacker = tempMap.getAllTerritories().get(attackerTerritory);
     Territory<T> defender = tempMap.getAllTerritories().get(defenderTerritory);
-    // int defending_units = defender.getUnit("ALEVEL");
     // list of different type of unit for the defender
     ArrayList<Unit> defending_copy_list = defender.getUnitList();
     ArrayList<Unit> defending_list = new ArrayList<>();

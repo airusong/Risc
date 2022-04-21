@@ -1,19 +1,12 @@
 package edu.duke.ece651.mp.client;
 
-import edu.duke.ece651.mp.common.FoodResource;
-import edu.duke.ece651.mp.common.FoodResourceList;
-import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.TechResource;
-import edu.duke.ece651.mp.common.TechResourceList;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
 
 import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TextPlayer {
   final PlayerServer connectionToMaster;
@@ -207,14 +200,14 @@ public class TextPlayer {
   /**
    * Method to get total food resource
    **/
-  private int getTotalFoodResourceAmount() {
+  public int getTotalFoodResourceAmount() {
     return this.totalFood.getResourceAmount();
   }
 
   /**
    * Method to get total tech resource
    **/
-  private int getTotalTechResourceAmount() {
+  public int getTotalTechResourceAmount() {
     return this.totalTech.getResourceAmount();
   }
 

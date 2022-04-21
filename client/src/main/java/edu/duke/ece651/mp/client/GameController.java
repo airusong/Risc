@@ -46,7 +46,8 @@ public class GameController {
    */
   public void setUpMap() {
     V2Map<Character> initialMap = theTextPlayer.theMap;
-    setPlayerResourceView();
+    // setPlayerResourceView();
+    setPlayerResourceDisplay();
     setUpTerritories(initialMap);
   }
 
@@ -58,7 +59,7 @@ public class GameController {
     initTerritories(initialMap);
 
     // setup tooltips to show territory details
-    setTerritoryDetailsView();
+    // setTerritoryDetailsView();
   }
 
   HashMap<String, Tooltip> TerritoryTooltips;
@@ -78,6 +79,26 @@ public class GameController {
       TerritoryTooltips.put(terrName, tooltip);
     }
   }
+
+  private void setTerritoryDetailsDisplay(String terrName) {
+    Territory curTerr = theTextPlayer.theMap.getAllTerritories().get(terrName);
+    int foodnum = curTerr.getFoodNum();
+    int technum = curTerr.getTechNum();
+    ArrayList<Unit> unit_list = curTerr.getUnitList();
+
+    for(String unit: UnitNums.keySet()){
+      UnitNums.get(unit).setText(Integer.toString(0)); // default: 0
+      for(Unit u: unit_list){
+        if(unit.equals(u.getUnitType())){
+          UnitNums.get(unit).setText(Integer.toString(u.getUnitNum()));
+          break;
+        }
+      }
+    }
+    terrfood.setText(Integer.toString(foodnum));
+    terrtech.setText(Integer.toString(technum));
+  }
+
 
   /**
    * Method to update the tooltip details
@@ -145,6 +166,15 @@ public class GameController {
     terrButtons.add(Terr5Button);
     terrButtons.add(Terr6Button);
 
+    // add UnitsTypes hashMap
+    UnitNums = new HashMap<String, Label>();
+    UnitNums.put("Guards",unit1num);
+    UnitNums.put("Infantry",unit2num);
+    UnitNums.put("Archer",unit3num);
+    UnitNums.put("Cavalry",unit4num);
+    UnitNums.put("Dwarves",unit5num);
+    UnitNums.put("Orcs",unit6num);
+    UnitNums.put("Elves",unit7num);
   }
 
 
@@ -205,6 +235,36 @@ public class GameController {
   @FXML
   private ComboBox<String> UpgradeTo;
 
+
+  @FXML
+  private Label totalfood;
+  @FXML
+  private Label totaltech;
+
+  @FXML
+  private Label unit1num;
+  @FXML
+  private Label unit2num;
+  @FXML
+  private Label unit3num;
+  @FXML
+  private Label unit4num;
+  @FXML
+  private Label unit5num;
+  @FXML
+  private Label unit6num;
+  @FXML
+  private Label unit7num;
+  @FXML
+  private Label unit8num;
+
+  private HashMap<String, Label> UnitNums;
+
+  @FXML
+  private Label terrfood;
+  @FXML
+  private Label terrtech;
+
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
   }
@@ -249,13 +309,13 @@ public class GameController {
    */
   private void initiateUnitList() {
     UnitTypeEntries = new HashMap<>();
-    UnitTypeEntries.put("ALEVEL", Units_A);
-    UnitTypeEntries.put("BLEVEL", Units_B);
-    UnitTypeEntries.put("CLEVEL", Units_C);
-    UnitTypeEntries.put("DLEVEL", Units_D);
-    UnitTypeEntries.put("ELEVEL", Units_E);
-    UnitTypeEntries.put("FLEVEL", Units_F);
-    UnitTypeEntries.put("GLEVEL", Units_G);
+    UnitTypeEntries.put("Guards", Units_A);
+    UnitTypeEntries.put("Infantry", Units_B);
+    UnitTypeEntries.put("Archer", Units_C);
+    UnitTypeEntries.put("Cavalry", Units_D);
+    UnitTypeEntries.put("Dwarves", Units_E);
+    UnitTypeEntries.put("Orcs", Units_F);
+    UnitTypeEntries.put("Elves", Units_G);
   }
 
   public void setName() {
@@ -278,11 +338,28 @@ public class GameController {
   }
 
   /**
+   * Method to display player's resources
+   */
+  private void setPlayerResourceDisplay(){
+    int food = theTextPlayer.getTotalFoodResourceAmount();
+    int tech = theTextPlayer.getTotalTechResourceAmount();
+    totalfood.setText("total Food:" + Integer.toString(food));
+    totaltech.setText("total Tech:" + Integer.toString(tech));
+  }
+
+  /**
    * Method to update player resources view
    */
   private void updatePlayerResourceView() {
     String resourceDetails = theTextPlayer.getResourcesDtails();
     playerResourceTooltip.setText(resourceDetails);
+  }
+
+  /**
+   * Method to update player resources display
+   */
+  private void updatePlayerResourceDisplay(){
+    setPlayerResourceDisplay();
   }
 
   @FXML
@@ -543,10 +620,11 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources tooltip
-    updatePlayerResourceView();
+    // updatePlayerResourceView();
+    updatePlayerResourceDisplay();
 
     // update the tooltips
-    updateTerritoryDetailsView();
+    // updateTerritoryDetailsView();
 
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryNames) {
@@ -591,8 +669,11 @@ public class GameController {
   }
 
   @FXML
-  void onTerrButtonClick(){
+  void onTerrButtonClick(MouseEvent event){
+    Button sourceButton = (Button)event.getSource();
+    String terrName = sourceButton.getText();
 
+    setTerritoryDetailsDisplay(terrName);
   }
 
 }
