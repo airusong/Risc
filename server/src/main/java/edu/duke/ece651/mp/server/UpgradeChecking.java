@@ -46,14 +46,7 @@ public class UpgradeChecking<T> {
             case "Archer":
                 base = 11;
                 break;
-<<<<<<< HEAD
             case "Cavalry":
-=======
-            case "SPY":
-                base = 20;
-                break;
-            case "DLEVEL":
->>>>>>> origin/Eval-3-Development
                 base = 30;
                 break;
             case "Dwarves":
@@ -64,6 +57,9 @@ public class UpgradeChecking<T> {
                 break;
             case "Elves":
                 base = 140;
+                break;
+            case "SPY":
+                base = 20;
                 break;
         }
         switch (new_unit_type) {
@@ -76,14 +72,7 @@ public class UpgradeChecking<T> {
             case "Archer":
                 top = 11;
                 break;
-<<<<<<< HEAD
             case "Cavalry":
-=======
-            case "SPY":
-                top = 20;
-                break;
-            case "DLEVEL":
->>>>>>> origin/Eval-3-Development
                 top = 30;
                 break;
             case "Dwarves":
@@ -94,6 +83,9 @@ public class UpgradeChecking<T> {
                 break;
             case "Elves":
                 top = 140;
+                break;
+            case "SPY":
+                base = 20;
                 break;
         }
         int upgrade_price = top - base;

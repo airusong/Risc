@@ -1,19 +1,6 @@
 package edu.duke.ece651.mp.client;
 
-<<<<<<< HEAD
 import edu.duke.ece651.mp.common.*;
-=======
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.UpgradeTurn;
-import edu.duke.ece651.mp.common.V2Map;
->>>>>>> origin/Eval-3-Development
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,27 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-<<<<<<< HEAD
-=======
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
-
-public class GameController {
-
-  // Stack panes holding all territory elements
-  @FXML
-  private StackPane Territory1;
-  @FXML
-  private StackPane Territory2;
-  @FXML
-  private StackPane Territory3;
-  @FXML
-  private StackPane Territory4;
-  @FXML
-  private StackPane Territory5;
-  @FXML
-  private StackPane Territory6;
->>>>>>> origin/Eval-3-Development
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,7 +139,7 @@ public class GameController {
       ArrayList<String> terrList = terrGroups.get(player_color);
       //System.out.println(player_color + ": " + terrList);
       for (String terrName : terrList) {
-<<<<<<< HEAD
+
         String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
         if(terrColor == Color.GREEN){
           button_style = "-fx-background-color: rgba(60,179,113,.3)";
@@ -185,13 +151,6 @@ public class GameController {
 
         TerritoryButtons.put(terrName, terrButtons.get(i));
         TerritoryNames.add(terrName);
-=======
-        terrBoxes.get(i).setFill(terrColor);
-        terrNames.get(i).setText(terrName);
-
-        TerritoryBoxes.put(terrName, terrBoxes.get(i));
-        TerritoryNames.put(terrName, terrNames.get(i));
->>>>>>> origin/Eval-3-Development
         i++;
       }
     }
@@ -202,7 +161,6 @@ public class GameController {
    */
   private void initLists() {
     // Add rectangles
-<<<<<<< HEAD
     terrButtons = new ArrayList<Button>();
     terrButtons.add(Terr1Button);
     terrButtons.add(Terr2Button);
@@ -220,46 +178,7 @@ public class GameController {
     UnitNums.put("Dwarves",unit5num);
     UnitNums.put("Orcs",unit6num);
     UnitNums.put("Elves",unit7num);
-=======
-    terrBoxes = new ArrayList<Shape>();
-    terrBoxes.add(Terr1Box);
-    terrBoxes.add(Terr2Box);
-    terrBoxes.add(Terr3Box);
-    terrBoxes.add(Terr4Box);
-    terrBoxes.add(Terr5Box);
-    terrBoxes.add(Terr6Box);
-
-    // Add names
-    terrNames = new ArrayList<TextField>();
-    terrNames.add(Terr1Name);
-    terrNames.add(Terr2Name);
-    terrNames.add(Terr3Name);
-    terrNames.add(Terr4Name);
-    terrNames.add(Terr5Name);
-    terrNames.add(Terr6Name);
-
   }
-
-  /**
-   * Method to draw lines between territories in the UI based on their adjacency
-   */
-  private void setAdjacency(V2Map<Character> initialMap) {
-    initAdjacencyList();
-
-    HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
-    // get adjacency for each
-    for (String terrName : allTerritories.keySet()) {
-      ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
-      System.out.println(adjacentTerr);
-      // for each adjacent territory
-      for (String adjTerr : adjacentTerr) {
-        //System.out.println("from: " + terrName + " to: " + adjTerr);
-        TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
-      }
-    }
->>>>>>> origin/Eval-3-Development
-  }
-
 
   private TextPlayer theTextPlayer;
   ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
@@ -394,7 +313,6 @@ public class GameController {
    */
   private void initiateUnitList() {
     UnitTypeEntries = new HashMap<>();
-<<<<<<< HEAD
     UnitTypeEntries.put("Guards", Units_A);
     UnitTypeEntries.put("Infantry", Units_B);
     UnitTypeEntries.put("Archer", Units_C);
@@ -402,16 +320,6 @@ public class GameController {
     UnitTypeEntries.put("Dwarves", Units_E);
     UnitTypeEntries.put("Orcs", Units_F);
     UnitTypeEntries.put("Elves", Units_G);
-=======
-    UnitTypeEntries.put("ALEVEL", Units_A);
-    UnitTypeEntries.put("BLEVEL", Units_B);
-    UnitTypeEntries.put("SPY", SPY);
-    UnitTypeEntries.put("CLEVEL", Units_C);
-    UnitTypeEntries.put("DLEVEL", Units_D);
-    UnitTypeEntries.put("ELEVEL", Units_E);
-    UnitTypeEntries.put("FLEVEL", Units_F);
-    UnitTypeEntries.put("GLEVEL", Units_G);
->>>>>>> origin/Eval-3-Development
   }
 
   public void setName() {
@@ -721,13 +629,8 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources tooltip
-<<<<<<< HEAD
     // updatePlayerResourceView();
     updatePlayerResourceDisplay();
-=======
-    updatePlayerResourceView();
-    ;
->>>>>>> origin/Eval-3-Development
 
     // update the tooltips
     // updateTerritoryDetailsView();

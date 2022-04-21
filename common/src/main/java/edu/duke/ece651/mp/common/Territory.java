@@ -37,8 +37,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.size = size;
   }
 
-<<<<<<< HEAD
-=======
+
   /**
    * Copy constructor for deep copy
    */
@@ -55,7 +54,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.size = rhsTerritory.size;
   }
 
->>>>>>> origin/Eval-3-Development
   /**
    * Method to get details about the territory in string format
    * 
@@ -65,13 +63,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     StringBuilder terrDetails = new StringBuilder("");
     terrDetails.append("Territory: " + name + "\n");
     terrDetails.append("--------------------------------\n");
-<<<<<<< HEAD
-    terrDetails.append("Size: " + size + "\n");
-    terrDetails.append("Food Resource: " + food.getResourceAmount() + "\n");
-    terrDetails.append("Tech Resource: " + tech.getResourceAmount() + "\n");
-    terrDetails.append("********Units********" + getUnitsList());
-=======
-
     if (size != 0) {
       terrDetails.append("Size: " + size + "\n");
     }
@@ -87,7 +78,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     if (unit_list != null) {
       terrDetails.append("********Units********" + getUnitsList());
     }
->>>>>>> origin/Eval-3-Development
 
     return terrDetails.toString();
   }

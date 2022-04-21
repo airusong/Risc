@@ -11,22 +11,6 @@ public class OwnerChecking<T> extends MoveChecking<T> {
   /**
    * Method to check rule for all unit types
    */
-<<<<<<< HEAD
-  public String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allUnits) {
-    Territory<T> s = map.getAllTerritories().get(source);
-    Territory<T> d = map.getAllTerritories().get(destination);
-
-    // first check if both units are owned by the player
-    if (!s.getColor().equals(d.getColor())) {
-      return "not same owner";
-    }
-
-    // check if the territory has enough territory
-    else if (!hasEnoughUnits(s, allUnits)) {
-      return "Insuffcient units";
-    } else {
-      return null;
-=======
   public String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allUnits,String player_color) {
     Territory<T> s = map.getAllTerritories().get(source);
     Territory<T> d = map.getAllTerritories().get(destination);
@@ -57,7 +41,6 @@ public class OwnerChecking<T> extends MoveChecking<T> {
       }else{
         return null;
       }
->>>>>>> origin/Eval-3-Development
     }
   }
 
@@ -74,8 +57,6 @@ public class OwnerChecking<T> extends MoveChecking<T> {
     }
     return true;
   }
-<<<<<<< HEAD
-=======
 
   /**
    * function to check if the enemy territory has enough spy_unit to move
@@ -92,5 +73,4 @@ public class OwnerChecking<T> extends MoveChecking<T> {
     }
     return false;
   }
->>>>>>> origin/Eval-3-Development
 }

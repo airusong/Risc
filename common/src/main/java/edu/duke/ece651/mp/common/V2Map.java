@@ -21,7 +21,6 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    */
   private void initializeUnitTypes() {
     AllUnitTypes = new ArrayList<>();
-<<<<<<< HEAD
     AllUnitTypes.add("Guards");
     AllUnitTypes.add("Infantry");
     AllUnitTypes.add("Archer");
@@ -29,16 +28,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     AllUnitTypes.add("Dwarves");
     AllUnitTypes.add("Orcs");
     AllUnitTypes.add("Elves");
-=======
-    AllUnitTypes.add("ALEVEL");
-    AllUnitTypes.add("BLEVEL");
     AllUnitTypes.add("SPY");
-    AllUnitTypes.add("CLEVEL");
-    AllUnitTypes.add("DLEVEL");
-    AllUnitTypes.add("ELEVEL");
-    AllUnitTypes.add("FLEVEL");
-    AllUnitTypes.add("GLEVEL");
->>>>>>> origin/Eval-3-Development
   }
 
   /**
@@ -445,7 +435,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * Method to check if a territory is adjacent to enemy territory
    * 
-   * @param STring territory name
+   * @param String territory name
    * @return True/False
    */
   public boolean isAdjacentToEnemy(String terrName) {

@@ -14,21 +14,12 @@ public class PathChecking<T> extends MoveChecking<T> {
   /**
    * Method to check if there is a valid path from the source to destination (the path must be through the player's oen territories)
    */
-<<<<<<< HEAD
-  public String checkMyRule(Map<T> map,String source,String destination, HashMap<String, Integer> allunits){
-    // Algorithm used: Depth First Search
-    Deque<Territory<T>> stack=new ArrayDeque<>();
-    
-    HashSet<Territory<T>> visited=new HashSet<>();
-    Territory<T> start=map.getAllTerritories().get(source);
-=======
   public String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allunits, String player_color) {
     // Algorithm used: Depth First Search
     Deque<Territory<T>> stack = new ArrayDeque<>();
 
     HashSet<Territory<T>> visited = new HashSet<>();
     Territory<T> start = map.getAllTerritories().get(source);
->>>>>>> origin/Eval-3-Development
     stack.push(start);
     String colorID = start.getColor();
     if (allunits.isEmpty()) {
