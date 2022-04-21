@@ -10,68 +10,31 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameController {
-  // Stack panes holding all territory elements
-  @FXML
-  private StackPane Territory1;
-  @FXML
-  private StackPane Territory2;
-  @FXML
-  private StackPane Territory3;
-  @FXML
-  private StackPane Territory4;
-  @FXML
-  private StackPane Territory5;
-  @FXML
-  private StackPane Territory6;
-
-  // Shaped for rectangular boxes in the map representing territories
-  @FXML
-  private Shape Terr1Box;
-  @FXML
-  private Shape Terr2Box;
-  @FXML
-  private Shape Terr3Box;
-  @FXML
-  private Shape Terr4Box;
-  @FXML
-  private Shape Terr5Box;
-  @FXML
-  private Shape Terr6Box;
-
-  private ArrayList<Shape> terrBoxes;
-
 
   // Text fields to show territory names in map
   @FXML
-  private TextField Terr1Name;
+  private Button Terr1Button;
   @FXML
-  private TextField Terr2Name;
+  private Button Terr2Button;
   @FXML
-  private TextField Terr3Name;
+  private Button Terr3Button;
   @FXML
-  private TextField Terr4Name;
+  private Button Terr4Button;
   @FXML
-  private TextField Terr5Name;
+  private Button Terr5Button;
   @FXML
-  private TextField Terr6Name;
+  private Button Terr6Button;
 
-  private ArrayList<TextField> terrNames;
+  private ArrayList<Button> terrButtons;
 
-  private HashMap<String, Shape> TerritoryBoxes;
-  private HashMap<String, TextField> TerritoryNames;
-
-  // The first key in the string is from territory, and the second key is to
-  // territory
-  private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
+  private HashMap<String, Button> TerritoryButtons;
+  private ArrayList<String> TerritoryNames;
 
   // Text field to show game status
   @FXML
@@ -104,13 +67,14 @@ public class GameController {
    * Method to set tooltips so that territory details are shown when the user
    * hovers the mouse over it
    */
+
   private void setTerritoryDetailsView() {
     TerritoryTooltips = new HashMap<>();
-    for (String terrName : TerritoryNames.keySet()) {
+    for (String terrName : TerritoryButtons.keySet()) {
       final Tooltip tooltip = new Tooltip();
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(terrName).getTerritoryDetails();
       tooltip.setText(terrDetails);
-      TerritoryNames.get(terrName).setTooltip(tooltip);
+      TerritoryButtons.get(terrName).setTooltip(tooltip);
       TerritoryTooltips.put(terrName, tooltip);
     }
   }
@@ -132,15 +96,15 @@ public class GameController {
    */
   private void initTerritories(V2Map<Character> initialMap) {
     // init lists with Java FX components
-    //initLists();
+    initLists();
 
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
 
     // organize the territories according to player color
     HashMap<String, ArrayList<String>> terrGroups = initialMap.getOwnersTerritoryGroups();
 
-    TerritoryBoxes = new HashMap<>();
-    TerritoryNames = new HashMap<>();
+    TerritoryButtons = new HashMap<>();
+    TerritoryNames = new ArrayList();
     int i = 0;
     for (String player_color : initialMap.getPlayerColors()) {
       Color terrColor = Color.WHITE; // default
@@ -152,16 +116,36 @@ public class GameController {
       // get territories of this player color
       ArrayList<String> terrList = terrGroups.get(player_color);
       for (String terrName : terrList) {
-        //terrBoxes.get(i).setFill(terrColor);
-        //terrNames.get(i).setText(terrName);
-        // To Do: Display different number of various UnitType
-        //TerritoryBoxes.put(terrName, terrBoxes.get(i));
-        //TerritoryNames.put(terrName, terrNames.get(i));
+        String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
+        if(terrColor == Color.GREEN){
+          button_style = "-fx-background-color: rgba(60,179,113,.3)";
+        }
+        else if(terrColor == Color.BLUE){
+          button_style = "-fx-background-color: rgba(0,0,255,.3)";
+        }
+        terrButtons.get(i).setStyle(button_style);
+
+        TerritoryButtons.put(terrName, terrButtons.get(i));
+        TerritoryNames.add(terrName);
         i++;
       }
     }
   }
 
+  /**
+   * Method to initialize the lists of Java FX components
+   */
+  private void initLists() {
+    // Add rectangles
+    terrButtons = new ArrayList<Button>();
+    terrButtons.add(Terr1Button);
+    terrButtons.add(Terr2Button);
+    terrButtons.add(Terr3Button);
+    terrButtons.add(Terr4Button);
+    terrButtons.add(Terr5Button);
+    terrButtons.add(Terr6Button);
+
+  }
 
 
   private TextPlayer theTextPlayer;
@@ -239,7 +223,7 @@ public class GameController {
     myTurn = new TurnList(theTextPlayer.identity);
 
     initiateUnitList();
-    //setOrderPane();
+    setOrderPane();
   }
 
   /**
@@ -390,7 +374,7 @@ public class GameController {
   /**
    * Method to get user entered unit number
    * 
-   * @param which textfield
+   * @param indicate which textfield
    */
   public int getUnitNum(TextField UnitType) {
     int enteredVal;
@@ -565,16 +549,16 @@ public class GameController {
     updateTerritoryDetailsView();
 
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
-    for (String terrName : TerritoryNames.keySet()) {
+    for (String terrName : TerritoryNames) {
       // Update color of territory
       String player_color = allTerritories.get(terrName).getColor();
-      Color terrColor = Color.WHITE; // default
+      String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
       if (player_color.equals("Green")) {
-        terrColor = Color.GREEN;
+        button_style = "-fx-background-color: rgba(60,179,113,.3)";
       } else if (player_color.equals("Blue")) {
-        terrColor = Color.BLUE;
+        button_style = "-fx-background-color: rgba(0,0,255,.3)";
       }
-      TerritoryBoxes.get(terrName).setFill(terrColor);
+      TerritoryButtons.get(terrName).setStyle(button_style);
     }
   }
 
@@ -604,6 +588,11 @@ public class GameController {
       MoveAttackPane.setVisible(false);
       UpgradePane.setVisible(false);
     }
+  }
+
+  @FXML
+  void onTerrButtonClick(){
+
   }
 
 }

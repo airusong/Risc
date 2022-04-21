@@ -12,14 +12,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
    <children>
-      <ImageView fx:id="Terr1Box" fitHeight="640.0" fitWidth="800.0" pickOnBounds="true">
+      <ImageView fitHeight="640.0" fitWidth="800.0" pickOnBounds="true">
          <image>
-            <Image url="@risc_2.jpg" />
+            <Image url="@risc.jpg" />
          </image>
       </ImageView>
       <ComboBox fx:id="playeraction" layoutX="609.0" layoutY="108.0" onAction="#OnSelectedOrderType" prefHeight="28.0" prefWidth="129.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
@@ -33,11 +32,11 @@
          </font>
       </Button>
       <Button fx:id="commit" layoutX="620.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="33.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
-      <Label fx:id="player_info" layoutX="434.0" layoutY="82.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
+      <Label fx:id="player_info" layoutX="503.0" layoutY="95.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0">
+      <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0" visible="false">
          <children>
             <VBox layoutY="-14.0" prefHeight="217.0" prefWidth="129.0">
                <children>
@@ -53,7 +52,7 @@
                   </ComboBox>
                   <HBox prefHeight="28.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="A Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Guards">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -70,7 +69,7 @@
                   </HBox>
                   <HBox prefHeight="26.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="B Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Infantry">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -87,7 +86,7 @@
                   </HBox>
                   <HBox prefHeight="28.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="C Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Archer">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -104,7 +103,7 @@
                   </HBox>
                   <HBox prefHeight="28.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="D Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Cavalary">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -121,7 +120,7 @@
                   </HBox>
                   <HBox prefHeight="29.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="E Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Dwarves">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -138,7 +137,7 @@
                   </HBox>
                   <HBox prefHeight="24.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="F Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Orcs">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -155,7 +154,7 @@
                   </HBox>
                   <HBox prefHeight="21.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="G Units:">
+                        <Label prefHeight="26.0" prefWidth="62.0" text="Elves">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -179,14 +178,17 @@
       </Pane>
       <Pane fx:id="UpgradePane" layoutX="600.0" layoutY="146.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css">
          <children>
-            <VBox layoutX="9.0" prefHeight="170.0" prefWidth="129.0" visible="false">
+            <VBox layoutX="9.0" prefHeight="170.0" prefWidth="129.0">
                <children>
-                  <ComboBox fx:id="UpgradeFrom" prefHeight="28.0" prefWidth="130.0" promptText="From unit type" styleClass="combo-box" stylesheets="@style.css" />
                   <ComboBox fx:id="UpgradeTerritory" prefHeight="28.0" prefWidth="132.0" promptText="in which territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </ComboBox>
+                  <ComboBox fx:id="UpgradeFrom" prefHeight="28.0" prefWidth="130.0" promptText="From unit type" styleClass="combo-box" stylesheets="@style.css">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin></ComboBox>
                   <ComboBox fx:id="UpgradeTo" prefHeight="28.0" prefWidth="129.0" promptText="To unit type" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -205,8 +207,13 @@
          </children>
       </Pane>
       <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
-      <TextArea fx:id="turnstatus" editable="false" layoutX="217.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Turn Status: No turns yet" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
-      <TextArea fx:id="errormessage" editable="false" layoutX="346.0" layoutY="504.0" prefHeight="58.0" prefWidth="121.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
-      <Circle fill="DODGERBLUE" layoutX="227.0" layoutY="241.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="135.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" promptText="Turn Status: No turns yet" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
+      <TextArea fx:id="errormessage" editable="false" layoutX="360.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
+      <Button fx:id="Terr1Button" contentDisplay="CENTER" layoutX="217.0" layoutY="139.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" textAlignment="CENTER" />
+      <Button fx:id="Terr2Button" layoutX="230.0" layoutY="227.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
+      <Button fx:id="Terr3Button" layoutX="389.0" layoutY="218.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
+      <Button fx:id="Terr4Button" layoutX="171.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
+      <Button fx:id="Terr6Button" layoutX="322.0" layoutY="292.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
+      <Button fx:id="Terr5Button" layoutX="367.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="50.0" />
    </children>
 </AnchorPane>
