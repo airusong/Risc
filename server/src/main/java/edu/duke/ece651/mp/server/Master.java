@@ -241,6 +241,9 @@ public class Master {
     // first copy the current map
     V2Map<Character> fogOfWarMap = new V2Map<>(this.theMap);
 
+    // copy of spy_map key: player_color value:<Key:territory_name,spy_unit)
+    HashMap<String, HashMap<String, Integer>> spy_map=theMap.spy_map;
+
     // Now get the territories grouped by the player
     HashMap<String, ArrayList<String>> terrGroupByOwner = fogOfWarMap.getOwnersTerritoryGroups();
     for (String color : terrGroupByOwner.keySet()) {
@@ -254,7 +257,8 @@ public class Master {
 
           // first check if the territory is adjacent to enemy territory
           // if it is adjacent, then no need to hide
-          if (!theMap.isAdjacentToEnemy(terrName)) {
+          //if there is a spy, then no need to hide
+          if (!theMap.isAdjacentToEnemy(terrName)&&theMap.getSPY_map(playerColor,terrName)==0) {
 
             // now hide the details
             currTerritory.hideDetails();
