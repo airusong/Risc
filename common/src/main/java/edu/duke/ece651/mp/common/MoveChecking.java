@@ -10,16 +10,38 @@ public abstract class MoveChecking<T> {
     this.next = next;
   }
 
+<<<<<<< HEAD
   protected abstract String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allunits);
+=======
+  protected abstract String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allunits,String player_color);
+>>>>>>> origin/Eval-3-Development
 
   public String checkMoving(Map<T> map, String source, String destination, HashMap<String, Integer> allunits, String player_color) {
     // update moveStatus
     moveStatus = player_color + ": Move order from " + source + " into " + destination + " was ";
+<<<<<<< HEAD
 
     // First rule checking: owner checking
     if (checkMyRule(map, source, destination, allunits) != null) {
       return checkMyRule(map, source, destination, allunits);
     }
+=======
+    //Hashmap spyunit is to store the unit number for the spy
+    HashMap<String,Integer> spyunit=new HashMap<>();
+    HashMap<String,Integer> newallunits=new HashMap<>();
+    //deep copy the Hashmap:all units
+    newallunits.putAll(allunits);
+    //check if the moving contains spy level, if contains, remove it from the Hashmap
+    if(allunits.containsKey("SPY")){
+      int spy_unit=allunits.get("SPY");
+      spyunit.put("SPY",spy_unit);
+      newallunits.remove("SPY");
+    }
+    // First rule checking: owner checking
+    if (checkMyRule(map, source, destination, newallunits,player_color) != null||checkMyRule(map, source, destination, spyunit,player_color) != null) {
+      return checkMyRule(map, source, destination, newallunits,player_color)==null ? checkMyRule(map, source, destination, spyunit,player_color):checkMyRule(map, source, destination, newallunits,player_color);
+    }
+>>>>>>> origin/Eval-3-Development
 
     // Second rule checking: path checking
     if (next != null) {

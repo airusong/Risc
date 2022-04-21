@@ -11,6 +11,7 @@ public class OwnerChecking<T> extends MoveChecking<T> {
   /**
    * Method to check rule for all unit types
    */
+<<<<<<< HEAD
   public String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allUnits) {
     Territory<T> s = map.getAllTerritories().get(source);
     Territory<T> d = map.getAllTerritories().get(destination);
@@ -25,6 +26,38 @@ public class OwnerChecking<T> extends MoveChecking<T> {
       return "Insuffcient units";
     } else {
       return null;
+=======
+  public String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allUnits,String player_color) {
+    Territory<T> s = map.getAllTerritories().get(source);
+    Territory<T> d = map.getAllTerritories().get(destination);
+    //check if allunits contains nothing
+    if(allUnits.isEmpty()){
+      return null;
+    }
+    // first check if both units are owned by the player, except the spy unit
+    if(!allUnits.containsKey("SPY")) {
+      if (!s.getColor().equals(d.getColor())&&!s.getColor().equals(player_color)) {
+        return "not same owner";
+      } else if (!hasEnoughUnits(s, allUnits)) {
+        return "Insuffcient units";
+      } else {
+        return null;
+      }
+    }else{
+      //check the spy move
+      //if the destination is enemy, can only move one spy unit
+      if(!d.getColor().equals(player_color)&&allUnits.get("SPY")>1){
+        return "can only move 1 spy in enemy's territory";
+        //if the source is player's territory, check for spy
+      } else if (!hasEnoughUnits(s, allUnits)&&s.getColor().equals(player_color)){//write firs
+        return " Insuffcient units";
+        //if the source is player's enemy territory,check
+      }else if(!hasEnoughSpyUnits(map,source,player_color,allUnits.get("SPY"))&&!s.getColor().equals(player_color)) {
+        return " Insuffcient units";
+      }else{
+        return null;
+      }
+>>>>>>> origin/Eval-3-Development
     }
   }
 
@@ -41,4 +74,23 @@ public class OwnerChecking<T> extends MoveChecking<T> {
     }
     return true;
   }
+<<<<<<< HEAD
+=======
+
+  /**
+   * function to check if the enemy territory has enough spy_unit to move
+   * @param map
+   * @param source
+   * @param player_color
+   * @param unit
+   * @return
+   */
+  private boolean hasEnoughSpyUnits(Map<T> map,String source,String player_color,int unit){
+    int existed_unit=map.getSPY_map(player_color,source);
+    if(existed_unit>=unit){
+      return true;
+    }
+    return false;
+  }
+>>>>>>> origin/Eval-3-Development
 }

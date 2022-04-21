@@ -1,6 +1,6 @@
 package edu.duke.ece651.mp.common;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class V2MapTest {
   @Test
@@ -22,7 +22,7 @@ public class V2MapTest {
     V2Map<Character> map = new V2Map<>(players_colors);
     assertEquals(map.myTerritories.containsKey("Narnia"), true);
     assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Midemio"), true);
-    assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Elantris"), true);
+    assertEquals(map.myTerritories.get("Narnia").getAdjacency().contains("Oz"), true);
   } 
   @Test 
   @SuppressWarnings("unchecked")
