@@ -285,6 +285,7 @@ public class Master {
       } // end of - if not this player_color
     } // end of - for each color
 
+    /*
     // print fog of war spy map
     System.out.println("**********SPY MAP********");
     for (String color : fogOfWarMap.spy_map.keySet()) {
@@ -292,7 +293,7 @@ public class Master {
       for (String terrString : fogOfWarMap.spy_map.get(color).keySet()) {
         System.out.println("Spy in " + terrString);
       }
-    }
+    }*/
     return fogOfWarMap;
   }
 

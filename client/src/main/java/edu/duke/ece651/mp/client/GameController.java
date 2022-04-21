@@ -162,6 +162,14 @@ public class GameController {
     for (HashMap.Entry<String, Tooltip> entry : TerritoryTooltips.entrySet()) {
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
       entry.getValue().setText(terrDetails);
+
+      // Check if there is any of the player's spies in an enemy territory
+      if(!theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getColor().equals(theTextPlayer.identity)) { // if it's an enemy territory
+        for ( String player_color : theTextPlayer.theMap.spy_map.keySet()) {
+          System.out.println("****SPY*****");
+          System.out.println(player_color + "\n");
+        }
+      }
     }
   }
 
