@@ -27,4 +27,12 @@ public interface Map<T> {
   public void editSPY_map(String player_color,String territory_name,int spy_unit);
 
   public int getSPY_map(String player_color,String territory_name);
+
+  public ArrayList<Territory<T>> getCloakedTerritory();
+
+  public  void editCloakedTerritory();
+
+  public void addCloakedTerritory(Territory<T> terr);
+
+  public ArrayList<String> getPlayerTerritories(String player_color);
 }

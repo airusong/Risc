@@ -16,6 +16,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
   public HashMap<String, HashMap<String, Integer>> spy_map;// key:name value: HashMap<Key:Territory,value:spy_unit>
 
+  public ArrayList<Territory<T>> cloakedTerritory ;
   /**
    * method to initialize all unit types and their bonus
    */
@@ -46,6 +47,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addResources();
     addUnits();
     setSpy_map();
+    this.cloakedTerritory=new ArrayList<>();
   }
 
   public V2Map() {
@@ -60,6 +62,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     addResources();
     addUnits();
     setSpy_map();
+    this.cloakedTerritory=new ArrayList<>();
   }
 
   /**
@@ -81,6 +84,12 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
 
     this.spy_map = new HashMap<>();
     this.spy_map.putAll(rhsMap.spy_map);
+
+    this.cloakedTerritory=new ArrayList<>();
+    for(Territory<T> terr: rhsMap.cloakedTerritory ) {
+      Territory<T> copiedTerr=new Territory<>(terr);
+      this.cloakedTerritory.add(copiedTerr);
+    }
   }
 
   public HashMap<String, Territory<T>> getAllTerritories() {
@@ -99,15 +108,15 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     // PLAYER 1
     String player_color = players_colors.get(0);
     ArrayList<Unit> unit_list = new ArrayList<Unit>();
-    myTerritories.put("Narnia", new Territory<T>("Narnia", player_color, new ArrayList<String>(), 8));
-    myTerritories.put("Midemio", new Territory<T>("Midemio", player_color, new ArrayList<String>(), 3));
-    myTerritories.put("Oz", new Territory<T>("Oz", player_color, new ArrayList<String>(), 12));
+    myTerritories.put("Narnia", new Territory<T>("Narnia", player_color, new ArrayList<String>(), 8, false, 3));
+    myTerritories.put("Midemio", new Territory<T>("Midemio", player_color, new ArrayList<String>(), 3, false,3));
+    myTerritories.put("Oz", new Territory<T>("Oz", player_color, new ArrayList<String>(), 12,false,3));
 
     // PLAYER 2
     player_color = players_colors.get(1);
-    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10));
-    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 6));
+    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7,false,3));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10,false,3));
+    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 6,false,3));
   }
 
   /**
@@ -419,6 +428,11 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     System.out.println("End of turn: Added one basic unit to each territory.");
   }
 
+  /**
+   * function to get a player's territory group
+   * @param player_color
+   * @return terrList
+   */
   public ArrayList<String> getPlayerTerritories(String player_color) {
     HashMap<String, ArrayList<String>> terrGroups = getOwnersTerritoryGroups();
     ArrayList<String> terrList = terrGroups.get(player_color);
@@ -452,4 +466,38 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     return false;
   }
 
+  /**
+   * function to get all cloaked territories
+   * @return
+   */
+  public ArrayList<Territory<T>> getCloakedTerritory(){
+    return cloakedTerritory;
+  }
+
+  /**
+   * function to edit the remained turns for cloaking
+   */
+  public void editCloakedTerritory(){
+    ArrayList<Territory<T>> cloakedTerr=new ArrayList<>();
+    cloakedTerr.addAll(cloakedTerritory);
+    for(Territory<T> terr:cloakedTerr){
+       terr.remainedCloakingTimes--;
+       if(terr.remainedCloakingTimes<0){
+         terr.setCloaked(false);
+         cloakedTerritory.remove(terr);
+       }
+    }
+  }
+
+  /**
+   * function to add the territory to the list: CloakedTerritory
+   * @param terr
+   */
+  public void addCloakedTerritory(Territory<T> terr){
+    if(!cloakedTerritory.contains(terr)){
+      cloakedTerritory.add(terr);
+    }
+    terr.changeRemainedTimes(3);
+    terr.setCloaked(true);
+  }
 }

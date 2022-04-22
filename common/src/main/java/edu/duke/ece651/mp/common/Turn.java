@@ -26,7 +26,7 @@ public abstract class Turn implements Serializable {
   }
 
   public Turn(String cloaking, String player_color) {
-    this.type = type;
+    this.type = cloaking;
     this.player_color = player_color;
   }
 
