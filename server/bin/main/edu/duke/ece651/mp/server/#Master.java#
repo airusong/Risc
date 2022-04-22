@@ -293,7 +293,7 @@ public class Master {
       for (String terrString : fogOfWarMap.spy_map.get(color).keySet()) {
         System.out.println("Spy in " + terrString);
       }
-      }*/
+    }*/
     return fogOfWarMap;
   }
 

@@ -166,6 +166,19 @@ public class GameController {
       }
       
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
+
+      // Check if there is any of the player's spies in an enemy territory
+      if(!theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getColor().equals(theTextPlayer.identity)) {
+        // if it's an enemy territory
+
+        if(theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).containsKey(entry.getKey())) {
+          // if this territory exists in the player's spy map
+          int spyNum = theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).get(entry.getKey());
+          terrDetails += "\n*****************************\n";
+          terrDetails += "\n !!! My Spies : " + spyNum + " !!!\n";
+        }
+      }
+      
       entry.getValue().setText(terrDetails);
     }
   }
