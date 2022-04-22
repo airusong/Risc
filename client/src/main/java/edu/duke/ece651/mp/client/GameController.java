@@ -160,6 +160,11 @@ public class GameController {
    */
   private void updateTerritoryDetailsView() {
     for (HashMap.Entry<String, Tooltip> entry : TerritoryTooltips.entrySet()) {
+      // Before updating the tooltip, see if this territory is hidden or not. If it is hidden now, don't update the tooltip. That way we'll still show the information from previous turn
+      if(theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getColor().equals("Hidden")) {
+        continue; // don't update the tooltip
+      }
+      
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
 
       // Check if there is any of the player's spies in an enemy territory
@@ -251,7 +256,7 @@ public class GameController {
     // get adjacency for each
     for (String terrName : allTerritories.keySet()) {
       ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
-      System.out.println(adjacentTerr);
+      //System.out.println(adjacentTerr);
       // for each adjacent territory
       for (String adjTerr : adjacentTerr) {
         //System.out.println("from: " + terrName + " to: " + adjTerr);
