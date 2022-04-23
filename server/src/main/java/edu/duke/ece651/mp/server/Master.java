@@ -105,7 +105,17 @@ public class Master {
    * @throws IOException
    */
   public void sendTurnStatusToAll(ArrayList<String> turnStatus) throws IOException {
-    theMasterServer.sendToAll(turnStatus);
+    // Eval-3: Fog of War Feature
+    // We cannot send the actual turn status to all the players as it may
+    // information have spy upgrade and move that we don't want the enemy to know
+    // We need hide these spy related information before sending to the enemy
+    for (String playerColor : players_identity) {
+      Socket playerSocket = theMasterServer.player_socket_Map.get(playerColor);
+
+      // Get the version of the turn status with enemies spy related info hidden
+      System.out.println("Sending turn status to player " + playerColor);
+      theMasterServer.sendToPlayer((Object) getFogOfWarTurnStatus(playerColor, turnStatus), playerSocket);
+    }
   }
 
   /**
@@ -247,8 +257,8 @@ public class Master {
 
     // Also need to remove the spy details about the enemy
     // so get the current spy map
-    //HashMap<String, HashMap<String, Integer>> spyHashMap =  fogOfWarMap.spy_map;
-    
+    // HashMap<String, HashMap<String, Integer>> spyHashMap = fogOfWarMap.spy_map;
+
     for (String color : terrGroupByOwner.keySet()) {
       if (color != playerColor) { // if this is not the player
         // go through the list of territories and hide them in the map
@@ -260,17 +270,17 @@ public class Master {
 
           // first check if the territory is adjacent to enemy territory
           // if it is adjacent, then no need to hide
-          //if there is a spy, then no need to hide
-          if (!theMap.isAdjacentToEnemy(terrName) && theMap.getSPY_map(playerColor,terrName) == 0) {
+          // if there is a spy, then no need to hide
+          if (!theMap.isAdjacentToEnemy(terrName) && theMap.getSPY_map(playerColor, terrName) == 0) {
 
             // now hide the details
             currTerritory.hideDetails();
           } // end of - if not adjacent
-            //if currTerritory is cloaked and there is no spy in currTerritory, hide currTerritory
-          else if(currTerritory.getCloakedorNot()&&theMap.getSPY_map(playerColor,terrName)==0){
+            // if currTerritory is cloaked and there is no spy in currTerritory, hide
+            // currTerritory
+          else if (currTerritory.getCloakedorNot() && theMap.getSPY_map(playerColor, terrName) == 0) {
             currTerritory.hideDetails();
-          }
-          else {
+          } else {
             // For all other territories, we just need to hide the spies
             currTerritory.hideSpies();
           }
@@ -282,23 +292,44 @@ public class Master {
         } // end of - for each territory
 
         // now hide this enemy's spy info
-        if(fogOfWarMap.spy_map.containsKey(color)) {
-           fogOfWarMap.spy_map.remove(color);
+        if (fogOfWarMap.spy_map.containsKey(color)) {
+          fogOfWarMap.spy_map.remove(color);
         }
-        
+
       } // end of - if not this player_color
     } // end of - for each color
 
     /*
-    // print fog of war spy map
-    System.out.println("**********SPY MAP********");
-    for (String color : fogOfWarMap.spy_map.keySet()) {
-      System.out.println("Player: " + color);
-      for (String terrString : fogOfWarMap.spy_map.get(color).keySet()) {
-        System.out.println("Spy in " + terrString);
-      }
-      }*/
+     * // print fog of war spy map System.out.println("**********SPY MAP********");
+     * for (String color : fogOfWarMap.spy_map.keySet()) {
+     * System.out.println("Player: " + color); for (String terrString :
+     * fogOfWarMap.spy_map.get(color).keySet()) { System.out.println("Spy in " +
+     * terrString); } }
+     */
     return fogOfWarMap;
+  }
+
+  /**
+   * Method to hide enemies spy related info from turn status
+   * 
+   * @param player's color in String format, original full turn status
+   * @return fog of war turn status
+   */
+  private ArrayList<String> getFogOfWarTurnStatus(String player_color, ArrayList<String> allTurnStatus) {
+    ArrayList<String> fogOfWarTurnStatus = new ArrayList<String>();
+    fogOfWarTurnStatus.addAll(allTurnStatus);
+    
+    ArrayList<String> toRemove = new ArrayList<String>();
+    for (String turn : fogOfWarTurnStatus) {
+      if (!turn.startsWith(player_color)) { // if this turn status for the enemy
+        if (turn.indexOf("Move") != -1 || turn.indexOf("Upgrade") != -1) { // Move and Upgrade may have SPY related
+                                                                           // info, so hide them from enemy
+          toRemove.add(turn);
+        }
+      }
+    }
+    fogOfWarTurnStatus.removeAll(toRemove);
+    return fogOfWarTurnStatus;
   }
 
 }

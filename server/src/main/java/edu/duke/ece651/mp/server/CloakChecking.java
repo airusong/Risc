@@ -16,7 +16,7 @@ public class CloakChecking<T> {
         Territory<T> cloakedTerr=map.getAllTerritories().get(cloakedTerritory);
         ArrayList<String> terrgroup=map.getPlayerTerritories(player_color);
         int available_num = techResourceList.resource_list.get(player_color).getResourceAmount();
-        CloakingStatus+=player_color+"'s order to cloak "+cloakedTerritory;
+        CloakingStatus+=player_color+": Cloak order in "+cloakedTerritory;
         if(!terrgroup.contains(cloakedTerritory)){
             CloakingStatus+=" is invalid as "+cloakedTerritory+
                     " is not owned by the player";
