@@ -289,6 +289,10 @@ public class HandleOrder<T> {
     ArrayList<Unit> defending_copy_list = defender.getUnitList();
     ArrayList<Unit> defending_list = new ArrayList<>();
     for (Unit u : defending_copy_list) {
+      //remove the SPY level from the defending_list
+      if(u.getUnitType().equals("SPY")){
+        continue;
+      }
       if (u.getUnitNum() != 0) {
         defending_list.add(new Unit(u.getUnitType(), u.getUnitNum()));
       }
