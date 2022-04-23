@@ -81,7 +81,7 @@ public class HandleOrder<T> {
       for (int j = 0; j < curr.getListLength(); j++) {
         Turn curr_turn = curr.order_list.get(j);
         if (curr_turn.getTurnType().equals("Attack")) {
-          if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn)) {
+          if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn,food_list)) {
             curr_valid.order_list.add(curr_turn);
             // update the ValidationMap
             // int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
