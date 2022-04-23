@@ -10,105 +10,34 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameController {
 
-  // Stack panes holding all territory elements
-  @FXML
-  private StackPane Territory1;
-  @FXML
-  private StackPane Territory2;
-  @FXML
-  private StackPane Territory3;
-  @FXML
-  private StackPane Territory4;
-  @FXML
-  private StackPane Territory5;
-  @FXML
-  private StackPane Territory6;
-
-  // Shaped for rectangular boxes in the map representing territories
-  @FXML
-  private Shape Terr1Box;
-  @FXML
-  private Shape Terr2Box;
-  @FXML
-  private Shape Terr3Box;
-  @FXML
-  private Shape Terr4Box;
-  @FXML
-  private Shape Terr5Box;
-  @FXML
-  private Shape Terr6Box;
-
-  private ArrayList<Shape> terrBoxes;
-
   // Text fields to show territory names in map
   @FXML
-  private TextField Terr1Name;
+  private Button Terr1Button;
   @FXML
-  private TextField Terr2Name;
+  private Button Terr2Button;
   @FXML
-  private TextField Terr3Name;
+  private Button Terr3Button;
   @FXML
-  private TextField Terr4Name;
+  private Button Terr4Button;
   @FXML
-  private TextField Terr5Name;
+  private Button Terr5Button;
   @FXML
-  private TextField Terr6Name;
+  private Button Terr6Button;
 
-  private ArrayList<TextField> terrNames;
+  private ArrayList<Button> terrButtons;
 
-  private HashMap<String, Shape> TerritoryBoxes;
-  private HashMap<String, TextField> TerritoryNames;
-
-  // Lines between rectangles to show adjacency
-  @FXML
-  private Line Line1to2;
-  @FXML
-  private Line Line1to3;
-  @FXML
-  private Line Line1to4;
-  @FXML
-  private Line Line1to5;
-  @FXML
-  private Line Line1to6;
-  @FXML
-  private Line Line2to3;
-  @FXML
-  private Line Line2to4;
-  @FXML
-  private Line Line2to5;
-  @FXML
-  private Line Line2to6;
-  @FXML
-  private Line Line3to4;
-  @FXML
-  private Line Line3to5;
-  @FXML
-  private Line Line3to6;
-  @FXML
-  private Line Line4to5;
-  @FXML
-  private Line Line4to6;
-  @FXML
-  private Line Line5to6;
-
-  // The first key in the string is from territory, and the second key is to
-  // territory
-  private HashMap<String, HashMap<String, Line>> TerritoryAdjacency;
+  private HashMap<String, Button> TerritoryButtons;
+  private ArrayList<String> TerritoryNames;
 
   // Text field to show game status
   @FXML
@@ -120,7 +49,8 @@ public class GameController {
    */
   public void setUpMap() {
     V2Map<Character> initialMap = theTextPlayer.theMap;
-    setPlayerResourceView();
+    // setPlayerResourceView();
+    setPlayerResourceDisplay();
     setUpTerritories(initialMap);
   }
 
@@ -131,11 +61,8 @@ public class GameController {
     // setup name, units and color of each territory first
     initTerritories(initialMap);
 
-    // draw lines between territories for showing adjacency
-    setAdjacency(initialMap);
-
     // setup tooltips to show territory details
-    setTerritoryDetailsView();
+    // setTerritoryDetailsView();
   }
 
   HashMap<String, Tooltip> TerritoryTooltips;
@@ -144,16 +71,37 @@ public class GameController {
    * Method to set tooltips so that territory details are shown when the user
    * hovers the mouse over it
    */
+
   private void setTerritoryDetailsView() {
     TerritoryTooltips = new HashMap<>();
-    for (String terrName : TerritoryNames.keySet()) {
+    for (String terrName : TerritoryButtons.keySet()) {
       final Tooltip tooltip = new Tooltip();
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(terrName).getTerritoryDetails();
       tooltip.setText(terrDetails);
-      TerritoryNames.get(terrName).setTooltip(tooltip);
+      TerritoryButtons.get(terrName).setTooltip(tooltip);
       TerritoryTooltips.put(terrName, tooltip);
     }
   }
+
+  private void setTerritoryDetailsDisplay(String terrName) {
+    Territory curTerr = theTextPlayer.theMap.getAllTerritories().get(terrName);
+    int foodnum = curTerr.getFoodNum();
+    int technum = curTerr.getTechNum();
+    ArrayList<Unit> unit_list = curTerr.getUnitList();
+
+    for(String unit: UnitNums.keySet()){
+      UnitNums.get(unit).setText(Integer.toString(0)); // default: 0
+      for(Unit u: unit_list){
+        if(unit.equals(u.getUnitType())){
+          UnitNums.get(unit).setText(Integer.toString(u.getUnitNum()));
+          break;
+        }
+      }
+    }
+    terrfood.setText(Integer.toString(foodnum));
+    terrtech.setText(Integer.toString(technum));
+  }
+
 
   /**
    * Method to update the tooltip details
@@ -197,8 +145,8 @@ public class GameController {
     // organize the territories according to player color
     HashMap<String, ArrayList<String>> terrGroups = initialMap.getOwnersTerritoryGroups();
 
-    TerritoryBoxes = new HashMap<>();
-    TerritoryNames = new HashMap<>();
+    TerritoryButtons = new HashMap<>();
+    TerritoryNames = new ArrayList();
     int i = 0;
     //System.out.println(terrGroups.keySet());
     for (String player_color : terrGroups.keySet()) {
@@ -212,11 +160,18 @@ public class GameController {
       ArrayList<String> terrList = terrGroups.get(player_color);
       //System.out.println(player_color + ": " + terrList);
       for (String terrName : terrList) {
-        terrBoxes.get(i).setFill(terrColor);
-        terrNames.get(i).setText(terrName);
 
-        TerritoryBoxes.put(terrName, terrBoxes.get(i));
-        TerritoryNames.put(terrName, terrNames.get(i));
+        String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
+        if(terrColor == Color.GREEN){
+          button_style = "-fx-background-color: rgba(60,179,113,.3)";
+        }
+        else if(terrColor == Color.BLUE){
+          button_style = "-fx-background-color: rgba(0,0,255,.3)";
+        }
+        terrButtons.get(i).setStyle(button_style);
+
+        TerritoryButtons.put(terrName, terrButtons.get(i));
+        TerritoryNames.add(terrName);
         i++;
       }
     }
@@ -227,112 +182,24 @@ public class GameController {
    */
   private void initLists() {
     // Add rectangles
-    terrBoxes = new ArrayList<Shape>();
-    terrBoxes.add(Terr1Box);
-    terrBoxes.add(Terr2Box);
-    terrBoxes.add(Terr3Box);
-    terrBoxes.add(Terr4Box);
-    terrBoxes.add(Terr5Box);
-    terrBoxes.add(Terr6Box);
 
-    // Add names
-    terrNames = new ArrayList<TextField>();
-    terrNames.add(Terr1Name);
-    terrNames.add(Terr2Name);
-    terrNames.add(Terr3Name);
-    terrNames.add(Terr4Name);
-    terrNames.add(Terr5Name);
-    terrNames.add(Terr6Name);
+    terrButtons = new ArrayList<Button>();
+    terrButtons.add(Terr1Button);
+    terrButtons.add(Terr2Button);
+    terrButtons.add(Terr3Button);
+    terrButtons.add(Terr4Button);
+    terrButtons.add(Terr5Button);
+    terrButtons.add(Terr6Button);
 
-  }
-
-  /**
-   * Method to draw lines between territories in the UI based on their adjacency
-   */
-  private void setAdjacency(V2Map<Character> initialMap) {
-    initAdjacencyList();
-
-    HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
-    // get adjacency for each
-    for (String terrName : allTerritories.keySet()) {
-      ArrayList<String> adjacentTerr = allTerritories.get(terrName).getAdjacency();
-      //System.out.println(adjacentTerr);
-      // for each adjacent territory
-      for (String adjTerr : adjacentTerr) {
-        //System.out.println("from: " + terrName + " to: " + adjTerr);
-        TerritoryAdjacency.get(terrName).get(adjTerr).setVisible(true);
-      }
-    }
-  }
-
-  /**
-   * method to create the adjacency map
-   */
-  private void initAdjacencyList() {
-    String fromTerritory;
-
-    TerritoryAdjacency = new HashMap<>();
-
-    // Territory 1
-    fromTerritory = terrNames.get(0).getText();
-    HashMap<String, Line> terr1Adj = new HashMap<>();
-    terr1Adj.put(terrNames.get(1).getText(), Line1to2);
-    terr1Adj.put(terrNames.get(2).getText(), Line1to3);
-    terr1Adj.put(terrNames.get(3).getText(), Line1to4);
-    terr1Adj.put(terrNames.get(4).getText(), Line1to5);
-    terr1Adj.put(terrNames.get(5).getText(), Line1to6);
-    TerritoryAdjacency.put(fromTerritory, terr1Adj);
-
-    // Territory 2
-    fromTerritory = terrNames.get(1).getText();
-    HashMap<String, Line> terr2Adj = new HashMap<>();
-    terr2Adj.put(terrNames.get(0).getText(), Line1to2);
-    terr2Adj.put(terrNames.get(2).getText(), Line2to3);
-    terr2Adj.put(terrNames.get(3).getText(), Line2to4);
-    terr2Adj.put(terrNames.get(4).getText(), Line2to5);
-    terr2Adj.put(terrNames.get(5).getText(), Line2to6);
-    TerritoryAdjacency.put(fromTerritory, terr2Adj);
-
-    // Territory 3
-    fromTerritory = terrNames.get(2).getText();
-    HashMap<String, Line> terr3Adj = new HashMap<>();
-    terr3Adj.put(terrNames.get(0).getText(), Line1to3);
-    terr3Adj.put(terrNames.get(1).getText(), Line2to3);
-    terr3Adj.put(terrNames.get(3).getText(), Line3to4);
-    terr3Adj.put(terrNames.get(4).getText(), Line3to5);
-    terr3Adj.put(terrNames.get(5).getText(), Line3to6);
-    TerritoryAdjacency.put(fromTerritory, terr3Adj);
-
-    // Territory 4
-    fromTerritory = terrNames.get(3).getText();
-    HashMap<String, Line> terr4Adj = new HashMap<>();
-    terr4Adj.put(terrNames.get(0).getText(), Line1to4);
-    terr4Adj.put(terrNames.get(1).getText(), Line2to4);
-    terr4Adj.put(terrNames.get(2).getText(), Line3to4);
-    terr4Adj.put(terrNames.get(4).getText(), Line4to5);
-    terr4Adj.put(terrNames.get(5).getText(), Line4to6);
-    TerritoryAdjacency.put(fromTerritory, terr4Adj);
-
-    // Territory 5
-    fromTerritory = terrNames.get(4).getText();
-    HashMap<String, Line> terr5Adj = new HashMap<>();
-    terr5Adj.put(terrNames.get(0).getText(), Line1to5);
-    terr5Adj.put(terrNames.get(1).getText(), Line2to5);
-    terr5Adj.put(terrNames.get(2).getText(), Line3to5);
-    terr5Adj.put(terrNames.get(3).getText(), Line4to5);
-    terr5Adj.put(terrNames.get(5).getText(), Line5to6);
-    TerritoryAdjacency.put(fromTerritory, terr5Adj);
-
-    // Territory 6
-    fromTerritory = terrNames.get(5).getText();
-    HashMap<String, Line> terr6Adj = new HashMap<>();
-    terr6Adj.put(terrNames.get(0).getText(), Line1to6);
-    terr6Adj.put(terrNames.get(1).getText(), Line2to6);
-    terr6Adj.put(terrNames.get(2).getText(), Line3to6);
-    terr6Adj.put(terrNames.get(3).getText(), Line4to6);
-    terr6Adj.put(terrNames.get(4).getText(), Line5to6);
-    TerritoryAdjacency.put(fromTerritory, terr6Adj);
-
+    // add UnitsTypes hashMap
+    UnitNums = new HashMap<String, Label>();
+    UnitNums.put("Guards",unit1num);
+    UnitNums.put("Infantry",unit2num);
+    UnitNums.put("Archer",unit3num);
+    UnitNums.put("Cavalry",unit4num);
+    UnitNums.put("Dwarves",unit5num);
+    UnitNums.put("Orcs",unit6num);
+    UnitNums.put("Elves",unit7num);
   }
 
   private TextPlayer theTextPlayer;
@@ -399,6 +266,36 @@ public class GameController {
   @FXML
   public ComboBox<String> CloakingTerritory;
 
+
+  @FXML
+  private Label totalfood;
+  @FXML
+  private Label totaltech;
+
+  @FXML
+  private Label unit1num;
+  @FXML
+  private Label unit2num;
+  @FXML
+  private Label unit3num;
+  @FXML
+  private Label unit4num;
+  @FXML
+  private Label unit5num;
+  @FXML
+  private Label unit6num;
+  @FXML
+  private Label unit7num;
+  @FXML
+  private Label unit8num;
+
+  private HashMap<String, Label> UnitNums;
+
+  @FXML
+  private Label terrfood;
+  @FXML
+  private Label terrtech;
+
   public void setPlayer(TextPlayer player) {
     theTextPlayer = player;
   }
@@ -444,14 +341,13 @@ public class GameController {
    */
   private void initiateUnitList() {
     UnitTypeEntries = new HashMap<>();
-    UnitTypeEntries.put("ALEVEL", Units_A);
-    UnitTypeEntries.put("BLEVEL", Units_B);
-    UnitTypeEntries.put("SPY", SPY);
-    UnitTypeEntries.put("CLEVEL", Units_C);
-    UnitTypeEntries.put("DLEVEL", Units_D);
-    UnitTypeEntries.put("ELEVEL", Units_E);
-    UnitTypeEntries.put("FLEVEL", Units_F);
-    UnitTypeEntries.put("GLEVEL", Units_G);
+    UnitTypeEntries.put("Guards", Units_A);
+    UnitTypeEntries.put("Infantry", Units_B);
+    UnitTypeEntries.put("Archer", Units_C);
+    UnitTypeEntries.put("Cavalry", Units_D);
+    UnitTypeEntries.put("Dwarves", Units_E);
+    UnitTypeEntries.put("Orcs", Units_F);
+    UnitTypeEntries.put("Elves", Units_G);
   }
 
   public void setName() {
@@ -474,11 +370,28 @@ public class GameController {
   }
 
   /**
+   * Method to display player's resources
+   */
+  private void setPlayerResourceDisplay(){
+    int food = theTextPlayer.getTotalFoodResourceAmount();
+    int tech = theTextPlayer.getTotalTechResourceAmount();
+    totalfood.setText("total Food:" + Integer.toString(food));
+    totaltech.setText("total Tech:" + Integer.toString(tech));
+  }
+
+  /**
    * Method to update player resources view
    */
   private void updatePlayerResourceView() {
     String resourceDetails = theTextPlayer.getResourcesDtails();
     playerResourceTooltip.setText(resourceDetails);
+  }
+
+  /**
+   * Method to update player resources display
+   */
+  private void updatePlayerResourceDisplay(){
+    setPlayerResourceDisplay();
   }
 
   @FXML
@@ -579,7 +492,7 @@ public class GameController {
   /**
    * Method to get user entered unit number
    * 
-   * @param which textfield
+   * @param indicate which textfield
    */
   public int getUnitNum(TextField UnitType) {
     int enteredVal;
@@ -752,23 +665,23 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources tooltip
-    updatePlayerResourceView();
-    ;
+    // updatePlayerResourceView();
+    updatePlayerResourceDisplay();
 
     // update the tooltips
-    updateTerritoryDetailsView();
+    // updateTerritoryDetailsView();
 
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
-    for (String terrName : TerritoryNames.keySet()) {
+    for (String terrName : TerritoryNames) {
       // Update color of territory
       String player_color = allTerritories.get(terrName).getColor();
-      Color terrColor = Color.WHITE; // default
+      String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
       if (player_color.equals("Green")) {
-        terrColor = Color.GREEN;
+        button_style = "-fx-background-color: rgba(60,179,113,.3)";
       } else if (player_color.equals("Blue")) {
-        terrColor = Color.BLUE;
+        button_style = "-fx-background-color: rgba(0,0,255,.3)";
       }
-      TerritoryBoxes.get(terrName).setFill(terrColor);
+      TerritoryButtons.get(terrName).setStyle(button_style);
     }
   }
 
@@ -807,6 +720,14 @@ public class GameController {
       CloakingPane.setVisible(false);
 
     }
+  }
+
+  @FXML
+  void onTerrButtonClick(MouseEvent event){
+    Button sourceButton = (Button)event.getSource();
+    String terrName = sourceButton.getText();
+
+    setTerritoryDetailsDisplay(terrName);
   }
 
 }

@@ -6,16 +6,19 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="694.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+   <children>
+      <Button fx:id="commit" layoutX="345.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="26.0" prefWidth="109.0" text="Done with turn. Commit!" textFill="#e10909" />
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+=======
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.duke.ece651.mp.client.GameController">
+>>>>>>> origin/Eval-3-Development
    <children>
       <GridPane id="Map" hgap="6.0" layoutX="22.0" layoutY="6.0" prefHeight="294.0" prefWidth="412.0" vgap="20.0">
          <columnConstraints>
@@ -113,45 +116,56 @@
       <Line fx:id="Line1to5" endX="-170.90711975097656" endY="-146.30709838867188" layoutX="287.0" layoutY="168.0" startX="155.0" startY="85.20001220703125" visible="false" />
       <Button fx:id="commit" layoutX="489.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" text="Done with turn. Commit!" textFill="#e10909" />
       <AnchorPane layoutX="65.0" layoutY="52.0" prefHeight="38.0" prefWidth="150.0" />
+>>>>>>> origin/Eval-3-Development
       <Label fx:id="player_info" layoutX="492.0" layoutY="5.0" prefHeight="26.0" prefWidth="149.0" text="Player Info: " textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
+<<<<<<< HEAD
+      <Pane fx:id="MoveAttackPane" layoutX="453.0" layoutY="112.0" prefHeight="181.0" prefWidth="109.0" visible="false">
+=======
       <Pane fx:id="MoveAttackPane" layoutX="491.0" layoutY="68.0" prefHeight="334.0" prefWidth="161.0" visible="false">
+>>>>>>> origin/Eval-3-Development
          <children>
-            <TextField fx:id="Units_A" layoutX="69.0" layoutY="61.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_A" layoutX="2.0" layoutY="61.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
+<<<<<<< HEAD
+            <ComboBox fx:id="from" prefHeight="26.0" prefWidth="109.0" promptText="from territory" />
+            <ComboBox fx:id="to" layoutY="30.0" prefHeight="26.0" prefWidth="109.0" promptText="to territory" />
+            <TextField fx:id="Units_B" layoutX="2.0" layoutY="91.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
+=======
             <ComboBox fx:id="from" prefWidth="150.0" promptText="from territory" />
             <ComboBox fx:id="to" layoutY="30.0" prefWidth="150.0" promptText="to territory" />
             <TextField fx:id="Units_B" layoutX="70.0" layoutY="91.0" prefHeight="10.0" prefWidth="86.0" promptText="Leave blank for none">
+>>>>>>> origin/Eval-3-Development
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <TextField fx:id="Units_C" layoutX="71.0" layoutY="119.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_C" layoutX="4.0" layoutY="119.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <TextField fx:id="Units_D" layoutX="73.0" layoutY="148.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_D" layoutY="148.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <TextField fx:id="Units_E" layoutX="75.0" layoutY="177.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_E" layoutX="1.0" layoutY="177.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <TextField fx:id="Units_F" layoutX="74.0" layoutY="206.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_F" layoutY="206.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <TextField fx:id="Units_G" layoutX="74.0" layoutY="236.0" prefHeight="26.0" prefWidth="86.0" promptText="Leave blank for none">
+            <TextField fx:id="Units_G" layoutY="236.0" prefHeight="26.0" prefWidth="109.0" promptText="Leave blank for none">
                <font>
                   <Font size="8.0" />
                </font>
@@ -171,21 +185,30 @@
             <Label layoutX="3.0" layoutY="267.0" prefHeight="26.0" prefWidth="62.0" text="SPY Units:" />
          </children>
       </Pane>
+<<<<<<< HEAD
+      <Button fx:id="order" layoutX="473.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
+      <ComboBox fx:id="playeraction" layoutX="454.0" layoutY="77.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="109.0" promptText="Select an action" />
+      <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="407.0" prefHeight="30.0" prefWidth="154.0" promptText="Game Status:" />
+      <TextArea fx:id="turnstatus" editable="false" layoutX="23.0" layoutY="316.0" prefHeight="84.0" prefWidth="154.0" promptText="Turn Status: No turns yet" wrapText="true" />
+      <TextArea fx:id="errormessage" editable="false" layoutX="194.0" layoutY="316.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />
+      <Pane fx:id="UpgradePane" layoutX="454.0" layoutY="113.0" prefHeight="163.0" prefWidth="109.0" visible="false">
+=======
       <Button fx:id="order" layoutX="530.0" layoutY="412.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" text="Add order" />
       <ComboBox fx:id="playeraction" layoutX="491.0" layoutY="35.0" onAction="#OnSelectedOrderType" prefHeight="26.0" prefWidth="170.0" promptText="Select an action" />
       <TextField fx:id="GameStatus" editable="false" layoutX="23.0" layoutY="476.0" prefHeight="50.0" prefWidth="422.0" promptText="Game Status:" />
       <TextArea fx:id="turnstatus" editable="false" layoutX="21.0" layoutY="330.0" prefHeight="130.0" prefWidth="422.0" promptText="Turn Status: No turns yet" wrapText="true" />
       <TextArea fx:id="errormessage" editable="false" layoutX="458.0" layoutY="437.0" prefHeight="41.0" prefWidth="218.0" wrapText="true" />
       <Pane fx:id="UpgradePane" layoutX="491.0" layoutY="77.0" visible="false">
+>>>>>>> origin/Eval-3-Development
          <children>
-            <ComboBox fx:id="UpgradeTerritory" layoutX="1.0" prefWidth="150.0" promptText="in which territory" />
-            <ComboBox fx:id="UpgradeFrom" layoutY="47.0" prefWidth="150.0" promptText="From unit type" />
-            <TextField fx:id="UpgradeUnits" layoutX="4.0" layoutY="136.0" prefHeight="26.0" prefWidth="150.0" promptText="How many units to upgrade?">
+            <ComboBox fx:id="UpgradeTerritory" layoutX="1.0" prefHeight="26.0" prefWidth="109.0" promptText="in which territory" />
+            <ComboBox fx:id="UpgradeFrom" layoutY="47.0" prefHeight="26.0" prefWidth="109.0" promptText="From unit type" />
+            <TextField fx:id="UpgradeUnits" layoutX="4.0" layoutY="136.0" prefHeight="26.0" prefWidth="109.0" promptText="How many units to upgrade?">
                <font>
                   <Font size="8.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="UpgradeTo" layoutX="1.0" layoutY="91.0" prefWidth="150.0" promptText="To unit type" />
+            <ComboBox fx:id="UpgradeTo" layoutX="1.0" layoutY="91.0" prefHeight="26.0" prefWidth="109.0" promptText="To unit type" />
          </children>
       </Pane>
       <Pane fx:id="CloakingPane" layoutX="472.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0">

@@ -12,9 +12,11 @@ public abstract class MoveChecking<T> {
 
   protected abstract String checkMyRule(Map<T> map, String source, String destination, HashMap<String, Integer> allunits,String player_color);
 
+
   public String checkMoving(Map<T> map, String source, String destination, HashMap<String, Integer> allunits, String player_color) {
     // update moveStatus
     moveStatus = player_color + ": Move order from " + source + " into " + destination + " was ";
+
     //Hashmap spyunit is to store the unit number for the spy
     HashMap<String,Integer> spyunit=new HashMap<>();
     HashMap<String,Integer> newallunits=new HashMap<>();

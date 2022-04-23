@@ -29,7 +29,7 @@ public class HandleOrder<T> {
   }
 
   HandleOrder(ArrayList<TurnList> all_order_list, Map<T> theMap, MoveChecking<T> moveChecker,
-      ArrayList<String> players_identity, FoodResourceList food_list, TechResourceList tech_list) {
+              ArrayList<String> players_identity, FoodResourceList food_list, TechResourceList tech_list) {
     this.all_order_list = all_order_list;
     this.theMap = theMap;
     MapTextView test = new MapTextView((V2Map) theMap);
@@ -43,7 +43,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to handle All Move Orders
-   * 
+   *
    */
   public void handleAllMoveOrder() {
     for (int i = 0; i < all_order_list.size(); i++) {
@@ -60,7 +60,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to handle All Attack Orders
-   * 
+   *
    */
 
   public void handleAllAttackOrder() {
@@ -130,7 +130,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to handle Move Order
-   * 
+   *
    */
   public void handleSingleMoveOrder(MoveTurn moveOrder) {
     String dep = moveOrder.getSource();
@@ -219,7 +219,7 @@ public class HandleOrder<T> {
       String color = attacker.getColor();
       if (total_attackingunits > food_list.resource_list.get(color).getResourceAmount()) {
         attackResult += attackerTerritory + " failed because of no enough food resource from " + attackerTerritory
-            + "\n";
+                + "\n";
         // restore the units in the attacker
         for (String s : t.getUnitList().keySet()) {
           attacker.updateUnit(s, t.getUnitList().get(s));
@@ -329,7 +329,7 @@ public class HandleOrder<T> {
         for (Unit u : defending_list) {
           String unit_type = u.getUnitType();
           tempMap.updateTerritoryInMap(defenderTerritory, u.getUnitType(), u.getUnitNum() - defender.getUnit(unit_type),
-              defender.getColor());
+                  defender.getColor());
         }
         loserTerr = attackerTerritory;
         combatResult = "Defender won!\n";
@@ -341,7 +341,7 @@ public class HandleOrder<T> {
       // else: defender wins
       if (count % 2 == 0) {
         if (attackerDiceVal + attacking_list.get(attacking_list.size() - 1).getBonus() > defenderDiceVal
-            + defending_list.get(0).getBonus()) {
+                + defending_list.get(0).getBonus()) {
           int origin_unit = defending_list.get(0).getUnitNum();
           int curr_unit = origin_unit - 1;
           defending_list.get(0).updateUnit(curr_unit);
@@ -358,7 +358,7 @@ public class HandleOrder<T> {
         }
       } else {// attacker wins
         if (attackerDiceVal + attacking_list.get(0).getBonus() > defenderDiceVal
-            + defending_list.get(defending_list.size() - 1).getBonus()) {
+                + defending_list.get(defending_list.size() - 1).getBonus()) {
           int origin_unit = defending_list.get(defending_list.size() - 1).getUnitNum();
           int curr_unit = origin_unit - 1;
           defending_list.get(defending_list.size() - 1).updateUnit(curr_unit);
@@ -417,7 +417,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to handle All Upgrade Orders
-   * 
+   *
    */
   public void handleAllUpgradeOrder() {
     for (int i = 0; i < all_order_list.size(); i++) {
@@ -450,7 +450,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to decrease one unit from each territory Used after each turn
-   * 
+   *
    */
   public void updateMapbyOneUnit() {
     theMap.updateMapbyOneUnit();
@@ -483,7 +483,7 @@ public class HandleOrder<T> {
   }
   /**
    * Method to handle All kinds of Orders
-   * 
+   *
    */
   public Map<T> handleOrders(ArrayList<TurnList> all_order_list, Map<T> theMap) {
     this.all_order_list = all_order_list;
@@ -511,7 +511,7 @@ public class HandleOrder<T> {
   /**
    * Method to compute all possible paths from the source territory to destination
    * territory using recursion
-   * 
+   *
    * @param source territory, destination territory, list of all paths (used in
    *               recursion) currPath that's being computed
    * @return ArrayList of all possible path where path is an ArrayList of
@@ -519,7 +519,7 @@ public class HandleOrder<T> {
    *
    */
   private ArrayList<Deque<Territory<T>>> computeAllPossiblePaths(String source, String destination,
-      HashMap<String, Integer> allunits) {
+                                                                 HashMap<String, Integer> allunits) {
     ArrayList<Deque<Territory<T>>> allPaths = new ArrayList<>();
     // Algorithm used: Depth First Search
     Deque<Territory<T>> stack = new ArrayDeque<>();
@@ -572,7 +572,7 @@ public class HandleOrder<T> {
    * @return
    */
   private ArrayList<Deque<Territory<T>>> computeAllPossiblePathsForSpy(String source, String destination,
-                                                                 HashMap<String, Integer> allunits) {
+                                                                       HashMap<String, Integer> allunits) {
     ArrayList<Deque<Territory<T>>> allPaths = new ArrayList<>();
     // Algorithm used: Depth First Search
     Deque<Territory<T>> stack = new ArrayDeque<>();
@@ -615,7 +615,7 @@ public class HandleOrder<T> {
 
   /**
    * Method to caculate the minimum cost to move from source to destination
-   * 
+   *
    * @param source territory, destination territory, number of units to move
    * @return Integer cost
    */

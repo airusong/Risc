@@ -1,0 +1,9 @@
+.text {
+    -fx-font-family: 'Smythe', cursive;
+    -fx-font-size: 10;
+    -fx-opacity: 0;
+}
+
+.button {
+    -fx-border-radius: 15rem;
+}
