@@ -661,7 +661,7 @@ public class GameController {
         GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType()
                 + " to " + getUpgradeToUnitType() + " added");
       } else if (getAction().equals("Cloak")) {
-        Turn newOrder = new CloakingTurn(getUpgradeSource(), getPlayerColor());
+        Turn newOrder = new CloakingTurn(getCloakingTerritory(), getPlayerColor());
         myTurn.addTurn(newOrder);
         GameStatus.setText(getAction() + " " + getCloakingTerritory() + " for 3 Turns");
       }

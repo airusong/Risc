@@ -7,21 +7,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Random;
 
-import edu.duke.ece651.mp.common.AttackTurn;
-import edu.duke.ece651.mp.common.FoodResource;
-import edu.duke.ece651.mp.common.FoodResourceList;
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.MapTextView;
-import edu.duke.ece651.mp.common.MoveChecking;
-import edu.duke.ece651.mp.common.MoveTurn;
-import edu.duke.ece651.mp.common.TechResource;
-import edu.duke.ece651.mp.common.TechResourceList;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.Turn;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.Unit;
-import edu.duke.ece651.mp.common.UpgradeTurn;
-import edu.duke.ece651.mp.common.V2Map;
+import edu.duke.ece651.mp.common.*;
 
 public class HandleOrder<T> {
   public ArrayList<TurnList> all_order_list;
@@ -469,7 +455,32 @@ public class HandleOrder<T> {
   public void updateMapbyOneUnit() {
     theMap.updateMapbyOneUnit();
   }
-
+  public void handleAllCloaking(){
+    for (int i = 0; i < all_order_list.size(); i++) {
+      TurnList curr = all_order_list.get(i);
+       for (int j = 0; j < curr.getListLength(); j++) {
+        Turn curr_turn = curr.order_list.get(j);
+        if (curr_turn.getTurnType().equals("Cloak")) {
+          handleOneCloaking((CloakingTurn) curr_turn);
+        }
+      }
+    }
+  }
+  /**
+   * function to deal with one cloaking order
+   * @param cloakingTurn
+   */
+  public void handleOneCloaking(CloakingTurn cloakingTurn){
+     CloakChecking<T> check=new CloakChecking<>();
+     if(check.checkMyRule(theMap,cloakingTurn,tech_list)) {
+       String territory = cloakingTurn.getFromTerritory();
+       String player_color = cloakingTurn.getPlayerColor();
+       Territory<T> terr = theMap.getAllTerritories().get(territory);
+       //change the state of the territory to be cloaked，and set the remained times to be 3
+       theMap.addCloakedTerritory(terr);
+     }
+     turnStatus.add(check.CloakingStatus);
+  }
   /**
    * Method to handle All kinds of Orders
    * 
@@ -480,6 +491,10 @@ public class HandleOrder<T> {
     handleAllMoveOrder();
     handleAllAttackOrder();
     handleAllUpgradeOrder();
+    handleAllCloaking();
+    //need to decrease the remained cloaking times by 1
+    //if remained time is zero, remove it from the list
+    theMap.editCloakedTerritory();
 
     // NEED TO RETURN UPDATED MAP
     return theMap;

@@ -206,6 +206,7 @@ public class Master {
         receiveTurnListFromAllPlayers();
 
         // Step-4:
+
         ArrayList<String> turnResult = handleOrders();
         sendTurnStatusToAll(turnResult);
         displayTurnStatus(turnResult);
@@ -265,7 +266,10 @@ public class Master {
             // now hide the details
             currTerritory.hideDetails();
           } // end of - if not adjacent
-
+            //if currTerritory is cloaked and there is no spy in currTerritory, hide currTerritory
+          else if(currTerritory.getCloakedorNot()&&theMap.getSPY_map(playerColor,terrName)==0){
+            currTerritory.hideDetails();
+          }
           else {
             // For all other territories, we just need to hide the spies
             currTerritory.hideSpies();
