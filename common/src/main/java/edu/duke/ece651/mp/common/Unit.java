@@ -25,6 +25,7 @@ public class Unit implements Serializable {
     AllUnitTypesBonus.put("Dwarves", 8);
     AllUnitTypesBonus.put("Orcs", 11);
     AllUnitTypesBonus.put("Elves", 15);
+    AllUnitTypesBonus.put("SPY",17);
   }
 
 

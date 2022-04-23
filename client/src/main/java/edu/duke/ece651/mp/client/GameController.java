@@ -136,13 +136,13 @@ public class GameController {
   private void initTerritories(V2Map<Character> initialMap) {
     // init lists with Java FX components
     initLists();
-
+    System.out.println("In initTerritories");
     HashMap<String, Territory<Character>> allTerritories = initialMap.getAllTerritories();
 
     // organize the territories according to player color
     HashMap<String, ArrayList<String>> terrGroups = initialMap.getOwnersTerritoryGroups();
 
-    TerritoryButtons = new HashMap<>();
+    // TerritoryButtons = new HashMap<>();
     TerritoryNames = new ArrayList();
     int i = 0;
     //System.out.println(terrGroups.keySet());
@@ -167,9 +167,10 @@ public class GameController {
           button_style = "-fx-background-color: rgba(0,0,255,.3)";
           System.out.println(terrName + ": blue");
         }
-        terrButtons.get(i).setStyle(button_style);
-
-        TerritoryButtons.put(terrName, terrButtons.get(i));
+        
+        // Button curbutton = TerritoryButtons.get(terrName);
+        TerritoryButtons.get(terrName).setStyle(button_style);
+        // TerritoryButtons.put(terrName, curbutton);
         TerritoryNames.add(terrName);
         i++;
       }
@@ -190,16 +191,25 @@ public class GameController {
     terrButtons.add(Terr5Button);
     terrButtons.add(Terr6Button);
 
+    TerritoryButtons = new HashMap<String, Button>();
+    TerritoryButtons.put("Narnia", terrButtons.get(0));
+    TerritoryButtons.put("Midemio", terrButtons.get(1));
+    TerritoryButtons.put("Oz", terrButtons.get(2));
+    TerritoryButtons.put("Elantris", terrButtons.get(3));
+    TerritoryButtons.put("Roshar", terrButtons.get(4));
+    TerritoryButtons.put("Scadnal", terrButtons.get(5));
+
+
     // add UnitsTypes hashMap
     UnitNums = new HashMap<String, Label>();
     UnitNums.put("Guards",unit1num);
     UnitNums.put("Infantry",unit2num);
+    UnitNums.put("SPY",unit8num);
     UnitNums.put("Archer",unit3num);
     UnitNums.put("Cavalry",unit4num);
     UnitNums.put("Dwarves",unit5num);
     UnitNums.put("Orcs",unit6num);
     UnitNums.put("Elves",unit7num);
-    UnitNums.put("SPY",unit8num);
   }
 
   private TextPlayer theTextPlayer;
