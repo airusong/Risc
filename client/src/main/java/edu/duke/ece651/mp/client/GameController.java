@@ -1,8 +1,5 @@
 package edu.duke.ece651.mp.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import edu.duke.ece651.mp.common.*;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -160,13 +157,15 @@ public class GameController {
       ArrayList<String> terrList = terrGroups.get(player_color);
       //System.out.println(player_color + ": " + terrList);
       for (String terrName : terrList) {
-
         String button_style = "-fx-background-color: rgba(240,240,240,.3)"; // default: white
+        
         if(terrColor == Color.GREEN){
           button_style = "-fx-background-color: rgba(60,179,113,.3)";
+          System.out.println(terrName + ": green");
         }
         else if(terrColor == Color.BLUE){
           button_style = "-fx-background-color: rgba(0,0,255,.3)";
+          System.out.println(terrName + ": blue");
         }
         terrButtons.get(i).setStyle(button_style);
 
@@ -200,6 +199,7 @@ public class GameController {
     UnitNums.put("Dwarves",unit5num);
     UnitNums.put("Orcs",unit6num);
     UnitNums.put("Elves",unit7num);
+    UnitNums.put("SPY",unit8num);
   }
 
   private TextPlayer theTextPlayer;
@@ -348,6 +348,7 @@ public class GameController {
     UnitTypeEntries.put("Dwarves", Units_E);
     UnitTypeEntries.put("Orcs", Units_F);
     UnitTypeEntries.put("Elves", Units_G);
+    UnitTypeEntries.put("SPY", SPY);
   }
 
   public void setName() {

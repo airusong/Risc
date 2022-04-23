@@ -1,7 +1,7 @@
 .text {
     -fx-font-family: 'Smythe', cursive;
     -fx-font-size: 10;
-    -fx-opacity: 0;
+    -fx-opacity: 1;
 }
 
 .button {

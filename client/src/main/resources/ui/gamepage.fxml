@@ -26,19 +26,19 @@
             <Insets left="3.0" />
          </padding>
       </ComboBox>
-      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="634.0" layoutY="396.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="33.0" prefWidth="80.0" stylesheets="@style.css" text="Add order">
+      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="629.0" layoutY="421.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="30.0" prefWidth="84.0" stylesheets="@style.css" text="Add order">
          <font>
             <Font size="8.0" />
          </font>
       </Button>
-      <Button fx:id="commit" alignment="CENTER" layoutX="620.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="33.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
+      <Button fx:id="commit" alignment="CENTER" layoutX="617.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="30.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
       <Label fx:id="player_info" layoutX="505.0" layoutY="94.0" prefHeight="26.0" prefWidth="60.0" text="Player Info: " textAlignment="CENTER">
          <font>
             <Font name="MuktaMahee Regular" size="10.0" />
          </font></Label>
       <Pane fx:id="MoveAttackPane" layoutX="609.0" layoutY="155.0" prefHeight="241.0" prefWidth="129.0">
          <children>
-            <VBox layoutY="-14.0" prefHeight="217.0" prefWidth="129.0">
+            <VBox layoutY="-14.0" prefHeight="280.0" prefWidth="130.0">
                <children>
                   <ComboBox fx:id="from" prefHeight="28.0" prefWidth="144.0" promptText="from territory" stylesheets="@style.css">
                      <VBox.margin>
@@ -169,6 +169,20 @@
                         </TextField>
                      </children>
                   </HBox>
+                  <HBox prefHeight="30.0" prefWidth="130.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="62.0" text="SPY">
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="SPY" prefHeight="26.0" prefWidth="64.0" promptText="Leave blank for none" stylesheets="@style.css">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
@@ -204,6 +218,11 @@
                   </TextField>
                </children>
             </VBox>
+         </children>
+      </Pane>
+      <Pane fx:id="CloakingPane" layoutX="602.0" layoutY="146.0" prefHeight="144.0" prefWidth="147.0" visible="false">
+         <children>
+            <ComboBox fx:id="CloakingTerritory" layoutX="7.0" layoutY="45.0" prefHeight="27.0" prefWidth="129.0" promptText="Choose Cloaking Terr" stylesheets="@style.css" />
          </children>
       </Pane>
       <TextField fx:id="GameStatus" editable="false" layoutX="609.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
