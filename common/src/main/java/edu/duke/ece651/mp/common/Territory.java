@@ -29,7 +29,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   private int size;
   private boolean isCloaked;
   public int remainedCloakingTimes;
-  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int size,boolean cloaked,int times) {
+  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int size,int times) {
     this.name = name;
     this.color = color;
     this.adjacentTerritories = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.food = new FoodResource(0);
     this.tech = new TechResource(0);
     this.size = size;
-    this.isCloaked=cloaked;
+    this.isCloaked=false;
     this.remainedCloakingTimes=times;
   }
 

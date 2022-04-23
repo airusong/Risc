@@ -108,15 +108,15 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     // PLAYER 1
     String player_color = players_colors.get(0);
     ArrayList<Unit> unit_list = new ArrayList<Unit>();
-    myTerritories.put("Narnia", new Territory<T>("Narnia", player_color, new ArrayList<String>(), 8, false, 3));
-    myTerritories.put("Midemio", new Territory<T>("Midemio", player_color, new ArrayList<String>(), 3, false,3));
-    myTerritories.put("Oz", new Territory<T>("Oz", player_color, new ArrayList<String>(), 12,false,3));
+    myTerritories.put("Narnia", new Territory<T>("Narnia", player_color, new ArrayList<String>(), 8,  3));
+    myTerritories.put("Midemio", new Territory<T>("Midemio", player_color, new ArrayList<String>(), 3, 3));
+    myTerritories.put("Oz", new Territory<T>("Oz", player_color, new ArrayList<String>(), 12,3));
 
     // PLAYER 2
     player_color = players_colors.get(1);
-    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7,false,3));
-    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10,false,3));
-    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 6,false,3));
+    myTerritories.put("Elantris", new Territory<T>("Elantris", player_color, new ArrayList<String>(), 7,3));
+    myTerritories.put("Scadnal", new Territory<T>("Scadnal", player_color, new ArrayList<String>(), 10,3));
+    myTerritories.put("Roshar", new Territory<T>("Roshar", player_color, new ArrayList<String>(), 6,3));
   }
 
   /**
