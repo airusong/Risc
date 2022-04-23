@@ -1,5 +1,8 @@
 package edu.duke.ece651.mp.client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import edu.duke.ece651.mp.common.*;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -105,7 +108,25 @@ public class GameController {
    */
   private void updateTerritoryDetailsView() {
     for (HashMap.Entry<String, Tooltip> entry : TerritoryTooltips.entrySet()) {
+      // Before updating the tooltip, see if this territory is hidden or not. If it is hidden now, don't update the tooltip. That way we'll still show the information from previous turn
+      if(theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getColor().equals("Hidden")) {
+        continue; // don't update the tooltip
+      }
+      
       String terrDetails = theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getTerritoryDetails();
+
+      // Check if there is any of the player's spies in an enemy territory
+      if(!theTextPlayer.theMap.getAllTerritories().get(entry.getKey()).getColor().equals(theTextPlayer.identity)) {
+        // if it's an enemy territory
+
+        if(theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).containsKey(entry.getKey())) {
+          // if this territory exists in the player's spy map
+          int spyNum = theTextPlayer.theMap.spy_map.get(theTextPlayer.identity).get(entry.getKey());
+          terrDetails += "\n*****************************\n";
+          terrDetails += "\n !!! My Spies : " + spyNum + " !!!\n";
+        }
+      }
+      
       entry.getValue().setText(terrDetails);
     }
   }
@@ -161,6 +182,7 @@ public class GameController {
    */
   private void initLists() {
     // Add rectangles
+
     terrButtons = new ArrayList<Button>();
     terrButtons.add(Terr1Button);
     terrButtons.add(Terr2Button);
@@ -181,7 +203,7 @@ public class GameController {
   }
 
   private TextPlayer theTextPlayer;
-  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade");
+  ObservableList<String> playeraction_list = FXCollections.observableArrayList("Move", "Attack", "Upgrade","Cloak");
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
   ObservableList<String> unitType_list = FXCollections.observableArrayList();
@@ -238,6 +260,11 @@ public class GameController {
   private ComboBox<String> UpgradeFrom;
   @FXML
   private ComboBox<String> UpgradeTo;
+  //cloaking order inputs
+  @FXML
+  public Pane CloakingPane;
+  @FXML
+  public ComboBox<String> CloakingTerritory;
 
 
   @FXML
@@ -305,6 +332,7 @@ public class GameController {
   private void setTerritoryDropDowns() {
     setSourceBox(from);
     setSourceBox(UpgradeTerritory);
+    setSourceBox(CloakingTerritory);
     setDestinationBox();
   }
 
@@ -404,6 +432,10 @@ public class GameController {
 
   public String getUpgradeSource() {
     return (String) UpgradeTerritory.getValue();
+  }
+
+  public String getCloakingTerritory(){
+    return (String) CloakingTerritory.getValue();
   }
 
   @FXML
@@ -537,14 +569,18 @@ public class GameController {
       } else if (getAction().equals("Upgrade")) {
         // create upgrade
         Turn newOrder = new UpgradeTurn(getUpgradeSource(), getUpgradeFromUnitType(), getUpgradeToUnitType(),
-            getUnitNum(UpgradeUnits), getPlayerColor());
+                getUnitNum(UpgradeUnits), getPlayerColor());
         myTurn.addTurn(newOrder);
         GameStatus.setText(getAction() + " order in " + getUpgradeSource() + " from " + getUpgradeFromUnitType()
-            + " to " + getUpgradeToUnitType() + " added");
+                + " to " + getUpgradeToUnitType() + " added");
+      } else if (getAction().equals("Cloak")) {
+        Turn newOrder = new CloakingTurn(getCloakingTerritory(), getPlayerColor());
+        myTurn.addTurn(newOrder);
+        GameStatus.setText(getAction() + " " + getCloakingTerritory() + " for 3 Turns");
       }
-      // theClient.theTextPlayer.takeAndSendTurn();
-      System.out.println("Added a New Order");
     }
+    // theClient.theTextPlayer.takeAndSendTurn();
+    System.out.println("Added a New Order");
     clearSelectedAction();
 
   }
@@ -667,13 +703,22 @@ public class GameController {
     if (selectedAction.equals("Upgrade")) {
       UpgradePane.setVisible(true);
       MoveAttackPane.setVisible(false);
+      CloakingPane.setVisible(false);
 
-    } else if (selectedAction.equals("Move") || selectedAction.equals("Attack")) {
+    } else if(selectedAction.equals("Cloak")){
+      UpgradePane.setVisible(false);
+      MoveAttackPane.setVisible(false);
+      CloakingPane.setVisible(true);
+    }else if (selectedAction.equals("Move") || selectedAction.equals("Attack")) {
       MoveAttackPane.setVisible(true);
       UpgradePane.setVisible(false);
+      CloakingPane.setVisible(false);
+
     } else {
       MoveAttackPane.setVisible(false);
       UpgradePane.setVisible(false);
+      CloakingPane.setVisible(false);
+
     }
   }
 

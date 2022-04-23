@@ -25,6 +25,11 @@ public abstract class Turn implements Serializable {
     this.num_units = num_units;
   }
 
+  public Turn(String cloaking, String player_color) {
+    this.type = cloaking;
+    this.player_color = player_color;
+  }
+
   private void writeObject(ObjectOutputStream s) throws IOException {
     s.defaultWriteObject();
   }

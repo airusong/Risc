@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/*
+/**
  * construct a Territory class
  * @param: name
 
@@ -17,6 +17,7 @@ import java.util.HashMap;
  * @param: food
  * @param: tech
  * @param: size
+ * @param: isCloaked
  */
 public class Territory<T> implements IITerritory<T>, Serializable {
   private String name;
@@ -26,8 +27,9 @@ public class Territory<T> implements IITerritory<T>, Serializable {
   private FoodResource food;
   private TechResource tech;
   private int size;
-
-  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int size) {
+  private boolean isCloaked;
+  public int remainedCloakingTimes;
+  public Territory(String name, String color, ArrayList<String> adjacentTerritories, int size,int times) {
     this.name = name;
     this.color = color;
     this.adjacentTerritories = new ArrayList<>();
@@ -35,6 +37,8 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.food = new FoodResource(0);
     this.tech = new TechResource(0);
     this.size = size;
+    this.isCloaked=false;
+    this.remainedCloakingTimes=times;
   }
 
 
@@ -52,6 +56,8 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.food = new FoodResource(rhsTerritory.getFoodNum());
     this.tech = new TechResource(rhsTerritory.getTechNum());
     this.size = rhsTerritory.size;
+    this.isCloaked=rhsTerritory.isCloaked;
+    this.remainedCloakingTimes= rhsTerritory.remainedCloakingTimes;
   }
 
   /**
@@ -274,4 +280,25 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     }
 
   }
+
+  /**
+   * function to change the visibility of the territory
+   * @param cloaked
+   */
+  public void setCloaked(boolean cloaked){
+    isCloaked=cloaked;
+  }
+
+  /**
+   * function to get the visibility of the territory
+   * @return
+   */
+  public boolean getCloakedorNot(){
+    return isCloaked;
+  }
+
+  public void changeRemainedTimes(int times){
+    this.remainedCloakingTimes=times;
+  }
+
 }
