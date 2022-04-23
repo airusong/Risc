@@ -326,8 +326,8 @@ public class GameController {
   private void setPlayerResourceDisplay(){
     int food = theTextPlayer.getTotalFoodResourceAmount();
     int tech = theTextPlayer.getTotalTechResourceAmount();
-    totalfood.setText("total Food:" + Integer.toString(food));
-    totaltech.setText("total Tech:" + Integer.toString(tech));
+    totalfood.setText(Integer.toString(food));
+    totaltech.setText(Integer.toString(tech));
   }
 
   /**
