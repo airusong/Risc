@@ -449,7 +449,7 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
   /**
    * Method to check if a territory is adjacent to enemy territory
    * 
-   * @param STring territory name
+   * @param String territory name
    * @return True/False
    */
   public boolean isAdjacentToEnemy(String terrName) {
