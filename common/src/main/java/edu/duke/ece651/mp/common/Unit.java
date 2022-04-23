@@ -18,7 +18,6 @@ public class Unit implements Serializable {
    */
   private void initializeUnitTypes() {
     AllUnitTypesBonus = new HashMap<>();
-<<<<<<< HEAD
     AllUnitTypesBonus.put("Guards", 0);
     AllUnitTypesBonus.put("Infantry", 1);
     AllUnitTypesBonus.put("Archer", 3);
@@ -27,17 +26,6 @@ public class Unit implements Serializable {
     AllUnitTypesBonus.put("Orcs", 11);
     AllUnitTypesBonus.put("Elves", 15);
     AllUnitTypesBonus.put("SPY",17);
-=======
-    AllUnitTypesBonus.put("ALEVEL", 0);
-    AllUnitTypesBonus.put("BLEVEL", 1);
-    AllUnitTypesBonus.put("CLEVEL", 3);
-    AllUnitTypesBonus.put("DLEVEL", 5);
-    AllUnitTypesBonus.put("ELEVEL", 8);
-    AllUnitTypesBonus.put("FLEVEL", 11);
-    AllUnitTypesBonus.put("GLEVEL", 15);
-    AllUnitTypesBonus.put("SPY",17);
-
->>>>>>> origin/Eval-3-Development
   }
 
 
