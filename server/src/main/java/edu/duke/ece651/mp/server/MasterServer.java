@@ -1,16 +1,19 @@
 package edu.duke.ece651.mp.server;
 
-import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.Territory;
-import edu.duke.ece651.mp.common.TurnList;
-import edu.duke.ece651.mp.common.Unit;
-
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import edu.duke.ece651.mp.common.Map;
+import edu.duke.ece651.mp.common.Territory;
+import edu.duke.ece651.mp.common.TurnList;
+import edu.duke.ece651.mp.common.Unit;
 
 public class MasterServer {
   public int port;

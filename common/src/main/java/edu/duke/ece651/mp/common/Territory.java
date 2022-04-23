@@ -41,7 +41,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     this.remainedCloakingTimes=times;
   }
 
-
   /**
    * Copy constructor for deep copy
    */
@@ -69,6 +68,7 @@ public class Territory<T> implements IITerritory<T>, Serializable {
     StringBuilder terrDetails = new StringBuilder("");
     terrDetails.append("Territory: " + name + "\n");
     terrDetails.append("--------------------------------\n");
+
     if (size != 0) {
       terrDetails.append("Size: " + size + "\n");
     }
@@ -87,9 +87,6 @@ public class Territory<T> implements IITerritory<T>, Serializable {
 
     return terrDetails.toString();
   }
-
-
-
 
   /**
    *

@@ -1,9 +1,11 @@
 package edu.duke.ece651.mp.server;
 
+import java.util.ArrayList;
+
 import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.TechResourceList;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.UpgradeTurn;
+import edu.duke.ece651.mp.common.TechResourceList;
 
 public class UpgradeChecking<T> {
     String upgradeStatus;
@@ -88,6 +90,7 @@ public class UpgradeChecking<T> {
                 top = 140;
                 break;
         }
+
         int upgrade_price = top - base;
         // check if the new unit level is higher than the old one
         if (upgrade_price <= 0) {
