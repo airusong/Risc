@@ -1,9 +1,11 @@
 package edu.duke.ece651.mp.server;
 
+import java.util.ArrayList;
+
 import edu.duke.ece651.mp.common.Map;
-import edu.duke.ece651.mp.common.TechResourceList;
 import edu.duke.ece651.mp.common.Territory;
 import edu.duke.ece651.mp.common.UpgradeTurn;
+import edu.duke.ece651.mp.common.TechResourceList;
 
 public class UpgradeChecking<T> {
     String upgradeStatus;
@@ -37,55 +39,55 @@ public class UpgradeChecking<T> {
         int base = 0;
         int top = 0;
         switch (old_unit_type) {
-            case "Guards":
+            case "ALEVEL":
                 base = 0;
                 break;
-            case "Infantry":
+            case "BLEVEL":
                 base = 3;
                 break;
-            case "Archer":
+            case "CLEVEL":
                 base = 11;
-                break;
-            case "Cavalry":
-                base = 30;
-                break;
-            case "Dwarves":
-                base = 55;
-                break;
-            case "Orcs":
-                base = 90;
-                break;
-            case "Elves":
-                base = 140;
                 break;
             case "SPY":
                 base = 20;
+                break;
+            case "DLEVEL":
+                base = 30;
+                break;
+            case "ELEVEL":
+                base = 55;
+                break;
+            case "FLEVEL":
+                base = 90;
+                break;
+            case "GLEVEL":
+                base = 140;
                 break;
         }
         switch (new_unit_type) {
-            case "Guards":
+            case "ALEVEL":
                 top = 0;
                 break;
-            case "Infantry":
+            case "BLEVEL":
                 top = 3;
                 break;
-            case "Archer":
+            case "CLEVEL":
                 top = 11;
                 break;
-            case "Cavalry":
+            case "SPY":
+                top = 20;
+                break;
+            case "DLEVEL":
                 top = 30;
                 break;
-            case "Dwarves":
+            case "ELEVEL":
                 top = 55;
                 break;
-            case "Orcs":
+            case "FLEVEL":
                 top = 90;
                 break;
-            case "Elves":
+            case "GLEVEL":
                 top = 140;
-                break;
-            case "SPY":
-                base = 20;
                 break;
         }
         int upgrade_price = top - base;
