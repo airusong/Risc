@@ -160,7 +160,7 @@ public class HandleOrder<T> {
     int playerFoodResource = food_list.resource_list.get(player_color).getResourceAmount();
     if (minimumCost > playerFoodResource) {
       moveProblem = "Not enough food resource - at least " + minimumCost + " required";
-    } else { // deduct the player's resource
+    } else if(moveProblem == null){ // deduct the player's resource
       food_list.addResource(player_color, -minimumCost);
     }
     //reput the spy level and its unit in the hashmap allunits
