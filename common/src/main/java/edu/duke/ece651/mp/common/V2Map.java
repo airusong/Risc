@@ -22,14 +22,14 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
    */
   private void initializeUnitTypes() {
     AllUnitTypes = new ArrayList<>();
-    AllUnitTypes.add("ALEVEL");
-    AllUnitTypes.add("BLEVEL");
+    AllUnitTypes.add("Guards");
+    AllUnitTypes.add("Infantry");
     AllUnitTypes.add("SPY");
-    AllUnitTypes.add("CLEVEL");
-    AllUnitTypes.add("DLEVEL");
-    AllUnitTypes.add("ELEVEL");
-    AllUnitTypes.add("FLEVEL");
-    AllUnitTypes.add("GLEVEL");
+    AllUnitTypes.add("Archer");
+    AllUnitTypes.add("Cavalry");
+    AllUnitTypes.add("Dwarves");
+    AllUnitTypes.add("Orcs");
+    AllUnitTypes.add("Elves");
   }
 
   /**
@@ -406,11 +406,17 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(territoryName, terr);
   }
 
+  // update Territory in map for combining old and new map
+  public void updateTerritoryInMap(String territoryName, Territory terr){
+    myTerritories.put(territoryName, terr);
+  }
+
+
   public void updateTerritoryInMap(String territoryName, String unitType, int unitChange) {
     updateTerritoryInMap(territoryName, unitType, unitChange, "Unchanged");
   }
 
-  // Increase #Units after fighting - add one basic unit - ALEVEL
+  // Increase #Units after fighting - add one basic unit - Guards
   public void updateMapbyOneUnit() {
     HashMap<String, Territory<T>> myT = myTerritories;
     int basic_unit_num = 0;
@@ -418,11 +424,11 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
       Territory<T> temp = set.getValue();
       // just add One basic Unit to Territory
       for (Unit unit : temp.getUnitList()) {
-        if (unit.getUnitType().equals("ALEVEL")) {
+        if (unit.getUnitType().equals("Guards")) {
           basic_unit_num = unit.getUnitNum();
         }
       }
-      temp.updateUnit("ALEVEL", basic_unit_num + 1);
+      temp.updateUnit("Guards", basic_unit_num + 1);
       myTerritories.put(temp.getName(), temp);
     }
     System.out.println("End of turn: Added one basic unit to each territory.");

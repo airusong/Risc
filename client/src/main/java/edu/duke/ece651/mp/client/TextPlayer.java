@@ -321,14 +321,14 @@ public class TextPlayer {
   /**
    * Method to get total food resource
    **/
-  private int getTotalFoodResourceAmount() {
+  public int getTotalFoodResourceAmount() {
     return this.totalFood.getResourceAmount();
   }
 
   /**
    * Method to get total tech resource
    **/
-  private int getTotalTechResourceAmount() {
+  public int getTotalTechResourceAmount() {
     return this.totalTech.getResourceAmount();
   }
 

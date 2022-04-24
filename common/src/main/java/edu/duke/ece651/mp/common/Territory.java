@@ -258,9 +258,9 @@ public class Territory<T> implements IITerritory<T>, Serializable {
    */
   public void hideDetails() {
     this.color = "Hidden";
-    this.unit_list = null;
-    this.food = null;
-    this.tech = null;
+    this.unit_list = new ArrayList<Unit>();
+    this.food = new FoodResource(0);
+    this.tech = new TechResource(0);
     this.size = 0;
   }
 

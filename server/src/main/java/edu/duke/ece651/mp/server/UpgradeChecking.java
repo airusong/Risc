@@ -39,57 +39,58 @@ public class UpgradeChecking<T> {
         int base = 0;
         int top = 0;
         switch (old_unit_type) {
-            case "ALEVEL":
+            case "Guards":
                 base = 0;
                 break;
-            case "BLEVEL":
+            case "Infantry":
                 base = 3;
                 break;
-            case "CLEVEL":
+            case "Archer":
                 base = 11;
                 break;
             case "SPY":
                 base = 20;
                 break;
-            case "DLEVEL":
+            case "Cavalry":
                 base = 30;
                 break;
-            case "ELEVEL":
+            case "Dwarves":
                 base = 55;
                 break;
-            case "FLEVEL":
+            case "Orcs":
                 base = 90;
                 break;
-            case "GLEVEL":
+            case "Elves":
                 base = 140;
                 break;
         }
         switch (new_unit_type) {
-            case "ALEVEL":
+            case "Guards":
                 top = 0;
                 break;
-            case "BLEVEL":
+            case "Infantry":
                 top = 3;
                 break;
-            case "CLEVEL":
+            case "Archer":
                 top = 11;
                 break;
             case "SPY":
                 top = 20;
                 break;
-            case "DLEVEL":
+            case "Cavalry":
                 top = 30;
                 break;
-            case "ELEVEL":
+            case "Dwarves":
                 top = 55;
                 break;
-            case "FLEVEL":
+            case "Orcs":
                 top = 90;
                 break;
-            case "GLEVEL":
+            case "Elves":
                 top = 140;
                 break;
         }
+
         int upgrade_price = top - base;
         //if the new-unit type is SPY, it can be upgrade from any type and always cost 20 tech resource
         if(new_unit_type.equals("SPY")){
