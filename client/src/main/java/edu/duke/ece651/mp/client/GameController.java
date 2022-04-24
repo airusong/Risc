@@ -485,7 +485,7 @@ public class GameController {
       }
     }
     if (allZero) {
-      errormessage.appendText("Unit number must be provided for atleast one unit type.");
+      errormessage.appendText("Unit number must be provided for at least one unit type.");
       result &= false;
     }
     return result;
@@ -580,10 +580,29 @@ public class GameController {
     // remove the current turnlist
     myTurn.order_list.clear();
 
+    // save old map for display 'hidden' territory's infomation
+    V2Map oldMap = new V2Map(theTextPlayer.theMap);
+
     // receive updated map
     // Step-1 in Master playGame() in server
     theTextPlayer.receiveMap();
     theTextPlayer.receiveResource();
+
+    // combine oldMap and updated Map to a new Map
+    V2Map newMap = new V2Map<>(theTextPlayer.theMap);
+    HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
+    for (String terrName : allTerritories.keySet()) {
+      // Update color of territory
+      String player_color = allTerritories.get(terrName).getColor();
+      if (player_color.equals("Hidden")){
+        Territory<Character> hiddenTerr = (Territory<Character>)oldMap.getAllTerritories().get(terrName);
+        hiddenTerr.updateColor("Hidden");
+        newMap.updateTerritoryInMap(terrName, hiddenTerr);
+      }
+    }
+    theTextPlayer.theMap = new V2Map<Character>(newMap);
+
+
     updateUIMap();
     // updateBox
     setOrderPane();
@@ -608,8 +627,8 @@ public class GameController {
    */
   private void updateUIMap() {
     // update player's resources 
+    
     updatePlayerResourceDisplay();
-
 
     HashMap<String, Territory<Character>> allTerritories = theTextPlayer.theMap.getAllTerritories();
     for (String terrName : TerritoryNames) {

@@ -280,7 +280,8 @@ public class Master {
             // currTerritory
           else if (currTerritory.getCloakedorNot() && theMap.getSPY_map(playerColor, terrName) == 0) {
             currTerritory.hideDetails();
-          } else {
+          } 
+          else {
             // For all other territories, we just need to hide the spies
             currTerritory.hideSpies();
           }

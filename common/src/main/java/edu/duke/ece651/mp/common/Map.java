@@ -17,6 +17,8 @@ public interface Map<T> {
 
   public void updateTerritoryInMap(String territoryName, String unit_type, int unitChage);
 
+  public void updateTerritoryInMap(String territoryName, Territory terr);
+
   public void updateMapbyOneUnit();
 
   public void updateMapForUpgrade(String fromTerritory, String old_type, String new_type, int unitChange);

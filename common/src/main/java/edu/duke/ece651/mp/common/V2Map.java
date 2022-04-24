@@ -406,6 +406,12 @@ public class V2Map<T> implements edu.duke.ece651.mp.common.Map<T>, Serializable 
     myTerritories.put(territoryName, terr);
   }
 
+  // update Territory in map for combining old and new map
+  public void updateTerritoryInMap(String territoryName, Territory terr){
+    myTerritories.put(territoryName, terr);
+  }
+
+
   public void updateTerritoryInMap(String territoryName, String unitType, int unitChange) {
     updateTerritoryInMap(territoryName, unitType, unitChange, "Unchanged");
   }
