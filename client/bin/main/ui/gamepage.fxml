@@ -60,7 +60,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_A" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_A1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -77,7 +77,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_B" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_B1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -94,7 +94,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_C" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_C1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -111,7 +111,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_D" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_D1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -128,7 +128,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_E" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_E1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -145,7 +145,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_F" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_F1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -162,7 +162,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_G" prefHeight="26.0" prefWidth="70.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="Units_G1" prefHeight="26.0" prefWidth="70.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -176,7 +176,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="SPY" prefHeight="26.0" prefWidth="64.0" promptText="Leave blank for none" stylesheets="@style.css">
+                        <TextField fx:id="SPY1" prefHeight="26.0" prefWidth="64.0" promptText="Leave blank for none" stylesheets="@style.css">
                            <font>
                               <Font size="8.0" />
                            </font>
@@ -228,7 +228,7 @@
       <TextField fx:id="GameStatus" editable="false" layoutX="650.0" layoutY="504.0" prefHeight="58.0" prefWidth="129.0" promptText="Game Status:" stylesheets="@style.css" />
       <TextArea fx:id="turnstatus" editable="false" layoutX="135.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
       <TextArea fx:id="errormessage" editable="false" layoutX="360.0" layoutY="539.0" prefHeight="87.0" prefWidth="217.0" styleClass="text-area" stylesheets="@style.css" wrapText="true" />
-      <Button fx:id="Terr1Button" alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Narnia" textAlignment="CENTER">
+      <Button fx:id="Terr1Button" alignment="CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#onTerrButtonClick" prefHeight="25.0" prefWidth="60.0" style="-fx-font-size: 10;" stylesheets="@terr.css" text="Narnia" textAlignment="CENTER">
          <font>
             <Font name="Mshtakan" size="8.0" />
          </font></Button>
