@@ -81,7 +81,7 @@ public class HandleOrder<T> {
       for (int j = 0; j < curr.getListLength(); j++) {
         Turn curr_turn = curr.order_list.get(j);
         if (curr_turn.getTurnType().equals("Attack")) {
-          if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn)) {
+          if (ruleChecker.checkMyRule(tempMap, (AttackTurn) curr_turn,food_list)) {
             curr_valid.order_list.add(curr_turn);
             // update the ValidationMap
             // int move_unit = curr_turn.getNumber(curr_turn.getTurnType());
@@ -289,6 +289,10 @@ public class HandleOrder<T> {
     ArrayList<Unit> defending_copy_list = defender.getUnitList();
     ArrayList<Unit> defending_list = new ArrayList<>();
     for (Unit u : defending_copy_list) {
+      //remove the SPY level from the defending_list
+      if(u.getUnitType().equals("SPY")){
+        continue;
+      }
       if (u.getUnitNum() != 0) {
         defending_list.add(new Unit(u.getUnitType(), u.getUnitNum()));
       }

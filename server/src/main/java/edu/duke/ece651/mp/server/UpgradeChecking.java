@@ -91,6 +91,10 @@ public class UpgradeChecking<T> {
                 break;
         }
         int upgrade_price = top - base;
+        //if the new-unit type is SPY, it can be upgrade from any type and always cost 20 tech resource
+        if(new_unit_type.equals("SPY")){
+            upgrade_price = 20;
+        }
         // check if the new unit level is higher than the old one
         if (upgrade_price <= 0) {
             upgradeStatus += "invalid as the " + new_unit_type + " is lower than " + old_unit_type;

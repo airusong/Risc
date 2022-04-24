@@ -29,9 +29,9 @@ public class OwnerChecking<T> extends MoveChecking<T> {
       }
     }else{
       //check the spy move
-      //if the destination is enemy, can only move one spy unit
-      if(!d.getColor().equals(player_color)&&allUnits.get("SPY")>1){
-        return "can only move 1 spy in enemy's territory";
+      //if the destination is enemy, can only move to adjacent territory
+      if(!d.getColor().equals(player_color)&&!s.getAdjacency().contains(destination)){
+        return destination + " is not adjacent to "+source;
         //if the source is player's territory, check for spy
       } else if (!hasEnoughUnits(s, allUnits)&&s.getColor().equals(player_color)){//write firs
         return " Insuffcient units";
