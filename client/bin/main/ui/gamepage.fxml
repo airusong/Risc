@@ -21,31 +21,31 @@
             <Image url="@risc.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="playeraction" layoutX="649.0" layoutY="113.0" onAction="#OnSelectedOrderType" prefHeight="22.0" prefWidth="130.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
+      <ComboBox fx:id="playeraction" layoutX="649.0" layoutY="113.0" onAction="#OnSelectedOrderType" prefHeight="24.0" prefWidth="130.0" promptText="Select an action" styleClass="combo-box" stylesheets="@style.css">
          <padding>
             <Insets left="3.0" />
          </padding>
       </ComboBox>
-      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="663.0" layoutY="420.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="30.0" prefWidth="84.0" stylesheets="@style.css" text="Add order">
+      <Button fx:id="order" alignment="CENTER" contentDisplay="CENTER" layoutX="664.0" layoutY="430.0" minHeight="10.0" mnemonicParsing="false" onMouseClicked="#onAddOrderButton" prefHeight="30.0" prefWidth="84.0" stylesheets="@style.css" text="Add order">
          <font>
             <Font size="8.0" />
          </font>
       </Button>
-      <Button fx:id="commit" alignment="CENTER" layoutX="651.0" layoutY="457.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="30.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
+      <Button fx:id="commit" alignment="CENTER" layoutX="652.0" layoutY="470.0" mnemonicParsing="false" onMouseClicked="#onCommitButton" prefHeight="30.0" prefWidth="109.0" stylesheets="@style.css" text="Commit!" textFill="#e10909" />
       <Label fx:id="player_info" layoutX="547.0" layoutY="96.0" prefHeight="26.0" prefWidth="84.0" text="Player Info: " textAlignment="CENTER">
          <font>
             <Font name="MuktaMahee Regular" size="15.0" />
          </font></Label>
-      <Pane fx:id="MoveAttackPane" layoutX="649.0" layoutY="159.0" prefHeight="241.0" prefWidth="129.0">
+      <Pane fx:id="MoveAttackPane" layoutX="649.0" layoutY="159.0" prefHeight="241.0" prefWidth="129.0" visible="false">
          <children>
             <VBox layoutY="-14.0" prefHeight="280.0" prefWidth="130.0">
                <children>
-                  <ComboBox fx:id="from" prefHeight="28.0" prefWidth="144.0" promptText="from territory" stylesheets="@style.css">
+                  <ComboBox fx:id="from" prefHeight="20.0" prefWidth="130.0" promptText="from territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="to" prefHeight="28.0" prefWidth="145.0" promptText="to territory" stylesheets="@style.css">
+                  <ComboBox fx:id="to" prefHeight="18.0" prefWidth="130.0" promptText="to territory" stylesheets="@style.css">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
@@ -60,11 +60,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_A1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_A" prefHeight="15.0" prefWidth="71.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="26.0" prefWidth="109.0">
@@ -77,11 +77,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_B1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_B" prefHeight="13.0" prefWidth="73.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="28.0" prefWidth="109.0">
@@ -94,16 +94,16 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_C1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_C" prefHeight="13.0" prefWidth="73.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="28.0" prefWidth="109.0">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="62.0" text="Cavalary">
+                        <Label prefHeight="7.0" prefWidth="59.0" text="Cavalary">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -111,11 +111,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_D1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_D" prefHeight="2.0" prefWidth="71.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="29.0" prefWidth="109.0">
@@ -128,11 +128,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_E1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_E" prefHeight="13.0" prefWidth="73.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="24.0" prefWidth="109.0">
@@ -145,11 +145,7 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_F1" prefHeight="26.0" prefWidth="72.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_F" prefHeight="8.0" prefWidth="71.0" stylesheets="@style.css" />
                      </children>
                   </HBox>
                   <HBox prefHeight="21.0" prefWidth="109.0">
@@ -162,11 +158,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="Units_G1" prefHeight="26.0" prefWidth="70.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="Units_G" prefHeight="13.0" prefWidth="73.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="3.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                   <HBox prefHeight="30.0" prefWidth="130.0">
@@ -176,11 +172,11 @@
                               <Insets left="3.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="SPY1" prefHeight="26.0" prefWidth="64.0" promptText="Leave blank for none" stylesheets="@style.css">
-                           <font>
-                              <Font size="8.0" />
-                           </font>
-                        </TextField>
+                        <ComboBox fx:id="SPY" prefHeight="13.0" prefWidth="73.0" stylesheets="@style.css">
+                           <HBox.margin>
+                              <Insets top="3.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                   </HBox>
                </children>
@@ -190,7 +186,7 @@
             <Insets />
          </opaqueInsets>
       </Pane>
-      <Pane fx:id="UpgradePane" layoutX="641.0" layoutY="148.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css" visible="false">
+      <Pane fx:id="UpgradePane" layoutX="641.0" layoutY="148.0" prefHeight="184.0" prefWidth="147.0" styleClass="combo-box" stylesheets="@style.css">
          <children>
             <VBox layoutX="9.0" layoutY="-3.0" prefHeight="170.0" prefWidth="129.0">
                <children>
