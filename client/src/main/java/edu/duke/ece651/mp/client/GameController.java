@@ -170,6 +170,16 @@ public class GameController {
   ObservableList<String> source_list = FXCollections.observableArrayList();
   ObservableList<String> destination_list = FXCollections.observableArrayList();
   ObservableList<String> unitType_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitANum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitBNum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitCNum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitDNum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitENum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitFNum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> unitGNum_list = FXCollections.observableArrayList();
+  ObservableList<Integer> spyNum_list = FXCollections.observableArrayList();
+
+  ObservableList<Integer> upgradeNum_list = FXCollections.observableArrayList();
 
   TurnList myTurn;
 
@@ -194,23 +204,23 @@ public class GameController {
   @FXML
   private ComboBox<String> to;
   @FXML
-  private TextField Units_A;
+  private ComboBox<Integer> Units_A;
   @FXML
-  private TextField Units_B;
+  private ComboBox<Integer> Units_B;
   @FXML
-  private TextField Units_C;
+  private ComboBox<Integer> Units_C;
   @FXML
-  private TextField Units_D;
+  private ComboBox<Integer> Units_D;
   @FXML
-  private TextField Units_E;
+  private ComboBox<Integer> Units_E;
   @FXML
-  private TextField Units_F;
+  private ComboBox<Integer> Units_F;
   @FXML
-  private TextField Units_G;
+  private ComboBox<Integer> Units_G;
   @FXML
-  private TextField SPY;
+  private ComboBox<Integer> SPY;
 
-  private HashMap<String, TextField> UnitTypeEntries;
+  private HashMap<String, ComboBox<Integer>> UnitTypeEntries;
 
   // Upgrade Order inputs
   @FXML
@@ -296,6 +306,9 @@ public class GameController {
     setSourceBox(UpgradeTerritory);
     setSourceBox(CloakingTerritory);
     setDestinationBox();
+    disableUnitsNumBox();
+    // disable upgrade num box
+    // UpgradeUnits.setDisable(true);
   }
 
   /**
@@ -365,6 +378,7 @@ public class GameController {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         setUnitTypeBox();
+        setUnitsNumBox();
       }
     });
   }
@@ -416,6 +430,89 @@ public class GameController {
     unitType_list.clear();
     unitType_list.addAll(theTextPlayer.theMap.AllUnitTypes);
     UpgradeTo.setItems(unitType_list);
+
+  }
+
+  /*
+  public void setUpgradeUnitNumTypeBox(){
+    String currTerrName = getUpgradeSource();
+    String currUnitType = getUpgradeFromUnitType();
+    ArrayList<Unit> unitList = theTextPlayer.theMap.getAllTerritories().get(currTerrName).getUnitList();
+    for(Unit u: unitList){
+      if(u.getUnitType().equals(currUnitType)){
+        int availableUpgradeNum = u.getUnitNum();
+        if(availableUpgradeNum != 0){
+          UpgradeUnits.setDisable(false);
+        }
+        for(int i=1; i<=availableUpgradeNum; i++){
+          upgradeNum_list.add(i);
+        }
+        UpgradeUnits.setItems(upgradeNum_list);
+
+        break;
+      }
+    }
+  }
+  */
+
+
+  public void setUnitsNumBox(){
+    unitANum_list.clear();
+    unitBNum_list.clear();
+    unitCNum_list.clear();
+    unitDNum_list.clear();
+    unitENum_list.clear();
+    unitFNum_list.clear();
+    unitGNum_list.clear();
+    spyNum_list.clear();
+
+    String currTerrName = getSource();
+    System.out.println("Current source:" + currTerrName);
+    ArrayList<Unit> unitList = theTextPlayer.theMap.getAllTerritories().get(currTerrName).getUnitList();
+    for(Unit u: unitList){
+      if(u.getUnitType().equals("Guards")){
+        setUnitNumBox(unitANum_list, Units_A, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Infantry")){
+
+        setUnitNumBox(unitBNum_list, Units_B, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Archer")){
+        setUnitNumBox(unitCNum_list, Units_C, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Cavalry")){
+        setUnitNumBox(unitDNum_list, Units_D, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Dwarves")){
+        setUnitNumBox(unitENum_list, Units_E, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Orcs")){
+        setUnitNumBox(unitFNum_list, Units_F, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("Elves")){
+        setUnitNumBox(unitGNum_list, Units_G, u.getUnitNum());
+      }
+      else if(u.getUnitType().equals("SPY")){
+        setUnitNumBox(spyNum_list, SPY, u.getUnitNum());
+      }
+    }
+
+  }
+
+  public void disableUnitsNumBox(){
+    for(HashMap.Entry<String, ComboBox<Integer>> unit: UnitTypeEntries.entrySet()){
+      unit.getValue().setDisable(true);
+    }
+  }
+
+  public void setUnitNumBox(ObservableList<Integer> numList, ComboBox<Integer> whichBox, Integer num){
+    if(num !=0){
+      whichBox.setDisable(false);
+    }
+    for(int i=1; i<=num; i++){
+      numList.add(i);
+    }
+    whichBox.setItems(numList);
   }
 
   /**
@@ -437,6 +534,16 @@ public class GameController {
    * 
    * @param which textfield
    */
+  public int getUnitNum(ComboBox<Integer> UnitType) {
+    int enteredVal;
+    try {
+      enteredVal = Integer.parseInt(String.valueOf(UnitType.getValue()));
+    } catch (NumberFormatException e) {
+      enteredVal = 0;
+    }
+    return enteredVal;
+  }
+
   public int getUnitNum(TextField UnitType) {
     int enteredVal;
     try {
@@ -446,6 +553,7 @@ public class GameController {
     }
     return enteredVal;
   }
+
 
   public String getPlayerColor() {
     return theTextPlayer.identity;
